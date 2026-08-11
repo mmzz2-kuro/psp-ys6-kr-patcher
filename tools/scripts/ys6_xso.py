@@ -228,16 +228,32 @@ def find_xso_files(root: Path, recursive: bool) -> Iterable[Path]:
     yield from sorted(path for path in root.glob(pattern) if path.is_file())
 
 
-def rebuild_xso(path: Path) -> tuple[ParsedXso, bytes]:
+def rebuild_xso(
+    path: Path,
+    replacements: dict[int, bytes] | None = None,
+    allow_length_change: bool = False,
+) -> tuple[ParsedXso, bytes]:
     """Rebuild an XSR using parsed raw strings while preserving non-string bytes."""
     parsed = parse_xso(path)
+    replacements = replacements or {}
+    for index, replacement in replacements.items():
+        if not 0 <= index < len(parsed.strings):
+            raise XsoError(f"문자열 인덱스가 범위를 벗어납니다: {index}")
+        original_length = parsed.strings[index].byte_length
+        if b"\x00" in replacement:
+            raise XsoError(f"교체 문자열에 NUL 바이트가 포함돼 있습니다: 인덱스={index}")
+        if len(replacement) != original_length and not allow_length_change:
+            raise XsoError(
+                f"동일 길이 교체만 허용됩니다: 인덱스={index}, "
+                f"원본={original_length}, 새 값={len(replacement)}"
+            )
     original = path.read_bytes()
     prefix = original[: parsed.info.offset_table_offset]
     offsets: list[int] = []
     pool = bytearray()
     for entry in parsed.strings:
         offsets.append(len(pool))
-        pool.extend(bytes.fromhex(entry.raw_hex))
+        pool.extend(replacements.get(entry.index, bytes.fromhex(entry.raw_hex)))
         pool.append(0)
         pool.extend(b"\x00" * entry.padding_length)
     table = b"".join(struct.pack("<I", offset) for offset in offsets)
@@ -405,6 +421,64 @@ def command_roundtrip(args: argparse.Namespace) -> int:
     return 0 if identical else 1
 
 
+def command_replace(args: argparse.Namespace) -> int:
+    if args.raw_hex:
+        try:
+            replacement = bytes.fromhex(args.text)
+        except ValueError as exc:
+            print(f"새 원시 바이트 HEX가 올바르지 않습니다: {exc}", file=sys.stderr)
+            return 1
+    else:
+        try:
+            replacement = args.text.encode("cp932")
+        except UnicodeEncodeError as exc:
+            print(f"새 텍스트를 CP932로 인코딩할 수 없습니다: {exc}", file=sys.stderr)
+            return 1
+    try:
+        parsed, rebuilt = rebuild_xso(
+            args.input,
+            {args.index: replacement},
+            allow_length_change=args.allow_length_change,
+        )
+    except (OSError, XsoError) as exc:
+        print(f"문자열을 교체할 수 없습니다: {exc}", file=sys.stderr)
+        return 1
+    if args.output.exists() and not args.overwrite:
+        print(f"출력 파일이 이미 존재합니다: {args.output}", file=sys.stderr)
+        return 2
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_bytes(rebuilt)
+    try:
+        reparsed = parse_xso(args.output)
+    except XsoError as exc:
+        print(f"재조립 결과 검증 실패: {exc}", file=sys.stderr)
+        return 1
+    original = args.input.read_bytes()
+    code_end = parsed.info.offset_table_offset
+    payload = {
+        "input": str(args.input),
+        "output": str(args.output),
+        "index": args.index,
+        "original_text": parsed.strings[args.index].text,
+        "replacement_text": reparsed.strings[args.index].text,
+        "replacement_raw_hex": replacement.hex().upper(),
+        "original_byte_length": parsed.strings[args.index].byte_length,
+        "replacement_byte_length": reparsed.strings[args.index].byte_length,
+        "byte_length_delta": reparsed.strings[args.index].byte_length
+        - parsed.strings[args.index].byte_length,
+        "original_xso_size": len(original),
+        "replacement_xso_size": len(rebuilt),
+        "string_count": reparsed.info.string_count,
+        "header_and_code_identical": original[:code_end] == rebuilt[:code_end],
+        "output_sha256": hashlib.sha256(rebuilt).hexdigest().upper(),
+        "valid": True,
+    }
+    print(json.dumps(payload, ensure_ascii=False, indent=2) if args.json else "\n".join(
+        f"{key}: {value}" for key, value in payload.items()
+    ))
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Ys VI PSP XSR/XSO 읽기 전용 분석 도구")
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -442,6 +516,23 @@ def build_parser() -> argparse.ArgumentParser:
     roundtrip_parser.add_argument("--overwrite", action="store_true")
     roundtrip_parser.add_argument("--json", action="store_true")
     roundtrip_parser.set_defaults(func=command_roundtrip)
+
+    replace_parser = subparsers.add_parser(
+        "replace", help="문자열 하나를 동일한 CP932 바이트 길이로 안전하게 교체합니다"
+    )
+    replace_parser.add_argument("input", type=Path)
+    replace_parser.add_argument("index", type=int)
+    replace_parser.add_argument("text")
+    replace_parser.add_argument("output", type=Path)
+    replace_parser.add_argument("--raw-hex", action="store_true", help="text 인자를 원시 바이트 HEX로 해석합니다")
+    replace_parser.add_argument(
+        "--allow-length-change",
+        action="store_true",
+        help="문자열 풀 오프셋을 재계산해 바이트 길이 변경을 명시적으로 허용합니다",
+    )
+    replace_parser.add_argument("--overwrite", action="store_true")
+    replace_parser.add_argument("--json", action="store_true")
+    replace_parser.set_defaults(func=command_replace)
     return parser
 
 

@@ -28,6 +28,12 @@
 - 상세 결과는 `/docs/result/006-ys6-xsr-roundtrip-rebuilder.md`에 기록했다.
 - `.z` 대표 32개에서 해제→레벨 9 재압축 후 컨테이너 전체 바이트 동일성을 통과했다.
 - 상세 결과는 `/docs/result/007-ys6-z-recompression-roundtrip.md`에 기록했다.
+- 동일 CP932 바이트 길이 대사 교체→XSR 재조립→`.z` 재압축 PoC를 통과했다.
+- 대상 파일은 기존 한 섹터에 들어가지만 압축 크기가 11바이트 증가해 ISO 9660 LE/BE 논리 크기 갱신이 필요하다.
+- 상세 결과는 `/docs/result/008-ys6-same-length-string-patch-poc.md`에 기록했다.
+- `/patched/009-talkkebin-string-poc`의 단일 ISO 작업본에 대상 XSO를 제자리 교체하고 ISO 9660 LE/BE 크기를 갱신했다.
+- 재추출·재해제·문자열 정적 검증은 통과했으나 PPSSPP 환경이 없어 인게임 표시는 미검증이다.
+- 상세 결과는 `/docs/result/009-ys6-single-file-iso-patch-poc.md`에 기록했다.
 
 ## 대상
 
@@ -122,3 +128,9 @@
 - 대사, 시스템 텍스트, 이미지 텍스트 및 폰트의 유력 후보가 최소 파일 단위로 분류되어 있다.
 - 압축 또는 복호화가 필요한 계층과 그 근거가 정리되어 있다.
 - 다음 PoC 또는 도구 개발 범위를 사용자가 선택할 수 있을 만큼 후속 선택지가 좁혀져 있다.
+
+## 후속 진행 기록
+
+- 2026-08-11: `.xso.z` 1,194개 전수 추출 및 XSR 파싱 완료.
+- 2026-08-11: 7,424개 문자열 카탈로그와 검색용 Python GUI 작성 완료.
+- 상세 결과: `/docs/result/010-ys6-full-dialogue-extraction.md`

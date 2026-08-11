@@ -67,4 +67,6 @@ snes9x-save/
 font/Galmuri8.ttf
 snes/DL-KR-hangul-name-final-build-report.json
 
+*__pycache__*
 .work/
+tools/scripts/tests/
