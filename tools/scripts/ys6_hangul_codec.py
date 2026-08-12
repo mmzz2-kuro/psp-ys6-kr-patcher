@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -76,6 +77,57 @@ def encode_text(text: str, mapping: list[dict]) -> bytes:
     return bytes(output)
 
 
+FULLWIDTH_PUNCTUATION = {",": "，", ".": "．", "?": "？", "!": "！"}
+GAME_CP932_PUNCTUATION = set(FULLWIDTH_PUNCTUATION.values()) | {"…", "　"}
+
+
+def normalize_game_punctuation(text: str) -> str:
+    normalized = re.sub(r"\.{2,}", "……", text)
+    normalized = "".join(FULLWIDTH_PUNCTUATION.get(character, character) for character in normalized)
+    normalized = re.sub(r"([，．？！…]) +", r"\1", normalized)
+    normalized = re.sub(r"(?<=[가-힣])(?=……)", " ", normalized)
+    return normalized
+
+
+def encode_translation(text: str, mapping: list[dict]) -> bytes:
+    text = normalize_game_punctuation(text)
+    codes = {row["character"]: int(row["game_code"], 0) for row in mapping}
+    output = bytearray()
+    for character in text:
+        if character in codes:
+            output.extend(codes[character].to_bytes(2, "big"))
+        elif ord(character) < 0x80:
+            output.append(ord(character))
+        elif character in GAME_CP932_PUNCTUATION:
+            output.extend(character.encode("cp932"))
+        else:
+            raise ValueError(f"unmapped character: {character!r}")
+    return bytes(output)
+
+
+def extend_mapping(usage_document: dict, existing: list[dict], text: str) -> list[dict]:
+    result = [dict(row) for row in existing]
+    mapped_characters = {row["character"] for row in result}
+    assigned_codes = {int(row["game_code"], 0) for row in result}
+    needed = [
+        character for character in unique_characters(text)
+        if ord(character) >= 0x80 and character not in mapped_characters
+    ]
+    candidates = [
+        record for record in usage_document["records"]
+        if record["status"] == "unused_candidate"
+        and record["duplicate_code_count"] == 1
+        and record["original_character"]
+        and int(record["game_code"], 0) not in assigned_codes
+    ]
+    candidates.sort(key=lambda record: record["font_index"], reverse=True)
+    if len(candidates) < len(needed):
+        raise ValueError(f"not enough safe slots: need={len(needed)}, have={len(candidates)}")
+    for character, record in zip(needed, candidates):
+        result.append(_mapping_row(character, record, "translation_assigned"))
+    return result
+
+
 def write_mapping(mapping: list[dict], json_path: Path, csv_path: Path) -> None:
     document = {"schema_version": 1, "mappings": mapping}
     json_path.parent.mkdir(parents=True, exist_ok=True)
@@ -92,11 +144,16 @@ def main() -> int:
     parser.add_argument("text")
     parser.add_argument("output_json", type=Path)
     parser.add_argument("output_csv", type=Path)
+    parser.add_argument("--existing", type=Path)
     args = parser.parse_args()
     usage = json.loads(args.usage_json.read_text(encoding="utf-8"))
-    mapping = allocate_mapping(usage, args.text)
+    if args.existing:
+        existing = json.loads(args.existing.read_text(encoding="utf-8-sig"))["mappings"]
+        mapping = extend_mapping(usage, existing, args.text)
+    else:
+        mapping = allocate_mapping(usage, args.text)
     write_mapping(mapping, args.output_json, args.output_csv)
-    encoded = encode_text(args.text, mapping)
+    encoded = encode_translation(args.text, mapping) if args.existing else encode_text(args.text, mapping)
     print(json.dumps({"characters": len(mapping), "encoded_hex": encoded.hex().upper()}, ensure_ascii=False, indent=2))
     return 0
 

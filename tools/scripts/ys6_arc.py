@@ -15,6 +15,8 @@ from pathlib import Path
 RECORD_SIZE = 40
 NAME_SIZE = 28
 FILE_FLAG = 0x01000000
+AUXILIARY_FILE_FLAG = 0x41000000
+DATA_FLAGS = frozenset({FILE_FLAG, AUXILIARY_FILE_FLAG})
 ALIGNMENT = 0x800
 
 
@@ -54,7 +56,7 @@ def parse_archive(data: bytes) -> list[ArcEntry]:
         flags, offset, size = struct.unpack_from("<III", data, record_offset + NAME_SIZE)
         raw_entries.append((index, name, flags, offset, size, record_offset))
 
-    files = [item for item in raw_entries if item[2] == FILE_FLAG]
+    files = [item for item in raw_entries if item[2] in DATA_FLAGS and item[4] > 0]
     offsets = [item[3] for item in files]
     if len(offsets) != len(set(offsets)):
         raise ArcError("파일 데이터 오프셋이 중복됩니다")
@@ -71,15 +73,19 @@ def parse_archive(data: bytes) -> list[ArcEntry]:
     }
     entries = []
     for index, name, flags, offset, size, record_offset in raw_entries:
-        allocated = next_offsets[offset] - offset if flags == FILE_FLAG else 0
-        if flags == FILE_FLAG and size > allocated:
+        allocated = next_offsets[offset] - offset if flags in DATA_FLAGS and size > 0 else 0
+        if flags in DATA_FLAGS and size > allocated:
             raise ArcError(f"파일 크기가 할당 공간을 초과합니다: {name}")
         entries.append(ArcEntry(index, name, flags, offset, size, record_offset, record_offset + 36, allocated))
     return entries
 
 
-def find_file(entries: list[ArcEntry], name: str) -> ArcEntry:
-    matches = [entry for entry in entries if entry.flags == FILE_FLAG and entry.name.casefold() == name.casefold()]
+def find_file(entries: list[ArcEntry], name: str, *, index: int | None = None, flags: int | None = None) -> ArcEntry:
+    matches = [entry for entry in entries if entry.flags in DATA_FLAGS and entry.name.casefold() == name.casefold()]
+    if index is not None:
+        matches = [entry for entry in matches if entry.index == index]
+    if flags is not None:
+        matches = [entry for entry in matches if entry.flags == flags]
     if not matches:
         raise ArcError(f"파일 엔트리를 찾을 수 없습니다: {name}")
     if len(matches) != 1:
@@ -120,7 +126,9 @@ def command_info(args) -> int:
         "archive_sha256": sha256(data),
         "table_end": struct.unpack_from("<I", data, 0)[0],
         "record_count": len(entries),
-        "file_count": sum(entry.flags == FILE_FLAG for entry in entries),
+        "file_count": sum(entry.flags in DATA_FLAGS and entry.size > 0 for entry in entries),
+        "regular_file_count": sum(entry.flags == FILE_FLAG and entry.size > 0 for entry in entries),
+        "auxiliary_file_count": sum(entry.flags == AUXILIARY_FILE_FLAG and entry.size > 0 for entry in entries),
     }
     if args.name:
         payload["entry"] = entry_json(find_file(entries, args.name))

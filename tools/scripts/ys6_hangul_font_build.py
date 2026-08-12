@@ -56,6 +56,35 @@ def fit_visible_width(bitmap: bytes, visible_width: int) -> tuple[bytes, int, tu
     return image_to_bitmap(image), shift, final_bbox
 
 
+def align_horizontal_center(bitmap: bytes, offset: int = -2) -> tuple[bytes, int, tuple[int, int, int, int] | None]:
+    """Center a glyph in the 16px cell, apply an offset, and keep it in bounds."""
+    image = bitmap_to_image(bitmap)
+    bbox = image.getbbox()
+    if bbox is None:
+        return bitmap, 0, None
+    width = bbox[2] - bbox[0]
+    target_x = (GLYPH_WIDTH - width) // 2 + offset
+    target_x = max(0, min(GLYPH_WIDTH - width, target_x))
+    shift = target_x - bbox[0]
+    aligned = Image.new("L", image.size, 0)
+    aligned.paste(image.crop(bbox), (target_x, bbox[1]))
+    return image_to_bitmap(aligned), shift, aligned.getbbox()
+
+
+def align_horizontal_left(bitmap: bytes, inset: int = 1) -> tuple[bytes, int, tuple[int, int, int, int] | None]:
+    """Align a glyph's ink bbox to a fixed left inset without scaling it."""
+    image = bitmap_to_image(bitmap)
+    bbox = image.getbbox()
+    if bbox is None:
+        return bitmap, 0, None
+    width = bbox[2] - bbox[0]
+    target_x = max(0, min(GLYPH_WIDTH - width, inset))
+    shift = target_x - bbox[0]
+    aligned = Image.new("L", image.size, 0)
+    aligned.paste(image.crop(bbox), (target_x, bbox[1]))
+    return image_to_bitmap(aligned), shift, aligned.getbbox()
+
+
 def parse_overrides(values: list[str]) -> dict[str, Path]:
     result = {}
     for value in values:
@@ -66,7 +95,9 @@ def parse_overrides(values: list[str]) -> dict[str, Path]:
     return result
 
 
-def build(eboot: bytes, mapping: list[dict], font: Path, visible_width: int, overrides: dict[str, Path]) -> tuple[bytes, list[dict], Image.Image]:
+def build(eboot: bytes, mapping: list[dict], font: Path, visible_width: int, overrides: dict[str, Path], horizontal_center_offset: int | None = None, horizontal_left_inset: int | None = None) -> tuple[bytes, list[dict], Image.Image]:
+    if horizontal_center_offset is not None and horizontal_left_inset is not None:
+        raise ValueError("horizontal center and left alignment cannot be used together")
     glyphs = parse_table(eboot, DEFAULT_OFFSET, DEFAULT_COUNT)
     patched = bytearray(eboot)
     previews = []
@@ -88,12 +119,19 @@ def build(eboot: bytes, mapping: list[dict], font: Path, visible_width: int, ove
             bitmap, shift, bbox = fit_visible_width(bitmap, visible_width)
             preview = bitmap_to_image(bitmap)
             source = "gulim"
+        alignment_shift = 0
+        if horizontal_center_offset is not None:
+            bitmap, alignment_shift, bbox = align_horizontal_center(bitmap, horizontal_center_offset)
+            preview = bitmap_to_image(bitmap)
+        elif horizontal_left_inset is not None:
+            bitmap, alignment_shift, bbox = align_horizontal_left(bitmap, horizontal_left_inset)
+            preview = bitmap_to_image(bitmap)
         if not any(bitmap):
             raise ValueError(f"blank glyph: {character}")
         bitmap_offset = DEFAULT_OFFSET + index * RECORD_SIZE + 2
         patched[bitmap_offset : bitmap_offset + GLYPH_SIZE] = bitmap
         previews.append((character, preview))
-        report.append({**row, "source": source, "shift_left": shift, "bbox": list(bbox) if bbox else None, "bitmap_offset": f"0x{bitmap_offset:X}", "bitmap_hex": bitmap.hex().upper()})
+        report.append({**row, "source": source, "shift_left": shift, "alignment_shift": alignment_shift, "horizontal_center_offset": horizontal_center_offset, "horizontal_left_inset": horizontal_left_inset, "bbox": list(bbox) if bbox else None, "bitmap_offset": f"0x{bitmap_offset:X}", "bitmap_hex": bitmap.hex().upper()})
     atlas = Image.new("L", (GLYPH_WIDTH * len(previews), GLYPH_HEIGHT), 0)
     for column, (_, image) in enumerate(previews):
         atlas.paste(image, (column * GLYPH_WIDTH, 0))
@@ -109,13 +147,15 @@ def main() -> int:
     parser.add_argument("atlas_png", type=Path)
     parser.add_argument("--font", type=Path, required=True)
     parser.add_argument("--visible-width", type=int, default=12)
+    parser.add_argument("--horizontal-center-offset", type=int)
+    parser.add_argument("--horizontal-left-inset", type=int)
     parser.add_argument("--override", action="append", default=[])
     args = parser.parse_args()
     if not 1 <= args.visible_width <= GLYPH_WIDTH:
         raise ValueError("visible width must be in 1..16")
     source = args.input_eboot.read_bytes()
     mapping = json.loads(args.mapping_json.read_text(encoding="utf-8"))["mappings"]
-    patched, report, atlas = build(source, mapping, args.font, args.visible_width, parse_overrides(args.override))
+    patched, report, atlas = build(source, mapping, args.font, args.visible_width, parse_overrides(args.override), args.horizontal_center_offset, args.horizontal_left_inset)
     args.output_eboot.parent.mkdir(parents=True, exist_ok=True)
     args.output_eboot.write_bytes(patched)
     args.report_json.write_text(json.dumps({"visible_width": args.visible_width, "glyphs": report}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
