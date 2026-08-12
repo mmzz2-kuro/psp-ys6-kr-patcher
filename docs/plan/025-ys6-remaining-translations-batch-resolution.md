@@ -4,8 +4,8 @@
 
 - 계획 작성: 완료
 - 사용자 확인: 대기
-- 구현: 미착수
-- 정적 검증: 미착수
+- 구현: 일괄 분석·규칙 적용·ISO 생성 완료
+- 정적 검증: 완료
 - 인게임 검증: 미착수
 - 결과 문서: `/docs/result/025-ys6-remaining-translations-batch-resolution.md`
 
@@ -298,6 +298,77 @@ ISO 생성 전에 다음 세 목록을 제공한다.
 
 ## 예상 산출물
 
+## 1차 구현 및 분석 기록 (2026-08-12)
+
+- `ys6_translation_resolver.py` 구현 시작: 전체 인벤토리, 보수적 후보 분석, JSON·CSV·Markdown 보고서 생성
+- 현재 번역 정본: 번역 76개
+- 현재 누적 검수본: 63개
+  - 번역 정본과 동일하게 적용: 53개
+  - 승인된 보정 적용: 1개
+  - 구조 전파로 파생 적용: 9개
+- 신규 미적용: 계획과 동일한 22개 / 19경로
+- 토큰·원문 오류 및 기존 번역 충돌: 0건
+- 모든 신규 대상은 런타임 아카이브 exact 대응이 없어 자동 ISO 적용하지 않고 승인 대상으로 분리됨
+- `s_hidden1` 중 동일 payload의 복수 standalone 경로는 `exact_payload`로 별도 표시하도록 판정 로직 보완
+- `talkkebin`, `talktokusa`는 여러 구조 변형 후보가 있어 추가 구조 비교 대상으로 유지
+- text-only 인물명 후보는 자동 적용 금지 상태 유지
+- 통합 빌더의 확인용 atlas 확대를 `Image.Resampling.NEAREST`로 수정
+- 자동 테스트 80개 통과
+- 분석 산출물: `/.work/ys6-remaining-translations-batch`
+- 최종 1차 등급:
+  - `exact_payload`: 9경로 / 9개 번역
+  - `exact_structure`: 3경로 / 3개 번역
+  - `partial_structure`: 2경로 / 5개 번역
+  - `text_only`: 5경로 / 5개 번역
+- exact payload 9개는 `s_hidden1`과 `s_9000` 또는 `s_9002`에 payload가 완전히 같은 복수 standalone 사본이 존재함.
+- exact structure 3개는 `talkgasshu`, `talkkamara`, `talkromun`이며 전체 비어 있지 않은 문자열 순서가 동일하지만 XSO payload는 다름.
+- partial structure 2개는 `talkkebin`, `talktokusa`로 다수 변형 후보가 있어 추가 승인 규칙이 필요함.
+- text-only 5개는 `talkerunsuto`, `talkisha`, `talkodo`, `talkoruha`, `talkroze`로 자동 적용 대상에서 제외함.
+
+## 승인 반영 및 `talk*` 상세 구조 분석 (2026-08-12)
+
+- 사용자가 1차 판정에 따른 다음 진행을 승인함.
+- exact payload 9경로와 exact structure 3경로를 `/tools/scripts/data/ys6_translation_routes.json`에 명시함.
+- 각 규칙은 source·target 경로, 적용 방식, 인덱스 쌍, 승인 작업 번호를 포함함.
+- text-only 5경로는 규칙에 포함하지 않음.
+
+### `talkkebin` 분석
+
+번역 대상은 `話をする`, `買い物をする`, `話をやめる`이며 각각 바로 뒤에 `SelTalk`, `SelShop`, `SelEnd`가 온다. 다음 네 변형에서 표시 문자열과 분기 식별자 순서가 완전히 같다.
+
+- source `s_0000/talkkebin`: 8→10→12
+- `s_0001/talkkebin`: 1→3→5
+- `s_0230/talkkebin`: 1→3→5
+- `s_3500/talkkuroa`: 5→7→9
+- `s_4030/talkroze`: 6→8→10
+
+마지막 두 파일은 이름은 다르지만 동일한 상점 대화 메뉴 구조다. 원문만 같은 것이 아니라 표시 문자열/분기 식별자가 3쌍 연속으로 일치하므로 구조 전파 후보로 판단한다. 모두 현재 대응표에서는 standalone-only다.
+
+### `talktokusa` 분석
+
+번역 대상은 `はい`, `いいえ`이며 source에서는 `SelYes`, `SelNo`가 바로 뒤따른다. 이 두 문장은 게임 전체에 흔한 범용 선택지이므로 단순 원문 일치 후보 19개로 전파하지 않는다.
+
+동일 인물·동일 교환 이벤트 문맥이 확인되는 다음 변형만 구조 전파 후보로 제한한다.
+
+- source `s_0000/talktokusa`: 3→5
+- `s_0001/talktokusa`: 4→6
+- `s_0220/talktokusa`: 8→10
+- `s_0550/talktokusa`: 3→5
+
+네 파일 모두 선택지 앞에 토쿠사의 술 교환 제안 대사가 있고 뒤에 `SelYes`, `SelNo`, `選んでください`가 이어진다. `RidePedestal`, 다른 NPC, 장치 조작 등 나머지 범용 yes/no 후보는 적용 대상에서 제외한다.
+
+### 다음 승인 범위
+
+다음 9개 구조 전파 target을 규칙 파일에 추가하려면 사용자 확인이 필요하다.
+
+- `talkkebin` 계열 target 4개: `s_0001/talkkebin`, `s_0230/talkkebin`, `s_3500/talkkuroa`, `s_4030/talkroze`
+- `talktokusa` 동일 인물·이벤트 target 3개: `s_0001`, `s_0220`, `s_0550`
+- 각 source standalone 자체 2개도 직접 교체 대상으로 포함
+
+승인 후 규칙을 추가하고 전체 라우팅 검증·누적 검수 입력 생성·할당 사전 검사를 진행한다.
+
+## 예상 산출물 상세
+
 - 계획 문서: `/docs/plan/025-ys6-remaining-translations-batch-resolution.md`
 - 대응 규칙: `/tools/scripts/data/ys6_translation_routes.json`
 - 작업 경로: `/.work/ys6-remaining-translations-batch`
@@ -353,3 +424,69 @@ ISO 생성 전에 다음 세 목록을 제공한다.
 5. 누적 ISO 하나 생성
 
 이 파이프라인이 안정화된 뒤 사용자용 GUI 패치 도구에 번역 검증·대응 보고서·누적 빌드 기능을 연결한다.
+
+## 일괄 빌드 구현 결과 (2026-08-12)
+
+- 사용자가 `talkkebin` 및 동일 토쿠사 이벤트 구조 전파를 승인함.
+- 대응 규칙 총 14개: exact payload 인물명 9개, exact structure 인물명 3개, `talkkebin` 계열 1개, `talktokusa` 계열 1개
+- 라우팅 검증 행 47개, 충돌 0건
+- 기존 024 검수본 63개 + 신규·파생 47개 = 누적 검수 110개
+- text-only 인물명 5개는 제외 상태 유지
+- 통합 빌더가 승인된 standalone-only XSO를 원본 payload와 ISO 할당 검증 후 직접 처리하도록 확장됨.
+- 사전 빌드: XSO 29개, 아카이브 4개, standalone 36개, 글리프 192개
+- 할당 초과 0건, standalone 최소 잔여 공간 382바이트(`s_0220/talktokusa`)
+- 최종 ISO 교체 파일: EBOOT 1 + 아카이브 4 + standalone 36 = 41개
+- 허용 extent 및 길이 필드 밖 변경 0건
+- 한글 글리프 192개 모두 bbox 왼쪽 `x=1`
+- 확인용 atlas는 `NEAREST` 확대 적용
+- 자동 테스트 82개 및 Python 컴파일 통과
+- 원본 ISO와 024 최종 ISO SHA-256 유지
+- 025 ISO SHA-256 `90705107B38ED5948CFA28E34DCD03754EB8D7A22F79727A09E728AAF2D02CB2`
+- 남은 단계: 유형별 대표 인게임 검증 후 결과 문서 작성
+
+## 인게임 검증 진행
+
+- 케빈 상점 선택지 `대화한다 / 물건사기 / 그만두기`: 한글 정상 출력 확인
+- 토쿠사 술 교환 선택지: 현재 진행 상태에서 도달할 수 없어 확인 보류
+- `s_9000`·`s_9002` 인물명: 별도 번역 입력이 필요한 것이 아니라 승인된 exact payload·structure 규칙으로 `s_hidden1` 번역을 이미 대응 파일에 복사해 025 ISO에 포함함. 해당 화면에 자연스럽게 도달할 때 대표 표본을 확인하면 됨.
+
+### `s_9000/talkisha` 직접 번역 추가
+
+- 사용자가 실제 대상 `s_9000/talkisha.xso.z`에 직접 번역을 저장함.
+- 적용 인덱스 및 번역: 0 `이샤1`, 1 `이샤2`, 2 `이샤3`, 4 `이샤`
+- 원문 SHA-256과 토큰 검증 통과
+- 구조 전파 없이 해당 standalone XSO 자체에만 추가 적용
+- 기존 검수 110개 + 신규 4개 = 114개
+- XSO 30개, 아카이브 4개, standalone 37개, 글리프 192개
+- 할당 초과 0건, 허용 extent 밖 변경 0건
+- 새 ISO SHA-256 `00722763BD3A466299BEF3FEDBB6C2E188C338680D474D8585BAE98FAD65B43A`
+- 함께 발견된 다른 신규 번역은 사용자 요청 범위가 아니므로 임의로 포함하지 않음.
+- 남은 단계: 접근 가능한 이샤 화면에서 네 이름 변형의 출력 확인
+
+### `s_9000/talkisha` 인게임 실패 및 `s_hidden1` 직접 적용
+
+- 사용자가 `s_9000/talkisha` 직접 번역 ISO에서도 현재 이샤 이름이 일본어임을 확인함.
+- 전체 카탈로그에서 `イーシャ`, `イーシャ1/2/3`을 가진 XSO는 `s_9000/talkisha`와 `s_hidden1/talkisha` 두 개뿐임.
+- 따라서 현재 화면은 `s_9000`이 아니라 `s_hidden1/talkisha`를 직접 읽는 것으로 판정함.
+- 사용자 정본의 `s_hidden1/talkisha` index 1 `イーシャ` → `이샤`를 구조 전파 없이 해당 파일 자체에 추가함.
+- 누적 검수 115개, XSO 31개, standalone 38개, 글리프 192개
+- 할당 초과 0건, 허용 extent 밖 변경 0건, 자동 테스트 82개 통과
+- 새 ISO SHA-256 `B5FEF2AD9E57BF8C92112476F085373ACA2EDC2CED84DCC427EBB906A26555E1`
+- 남은 단계: 같은 화면에서 `s_hidden1` 직접 적용 결과 확인
+
+### 인물명 공통 테이블 발견
+
+- 사용자가 `s_hidden1/talkisha` 직접 적용 ISO에서도 이샤 이름이 일본어임을 확인함.
+- 전체 대사 XSO 카탈로그에는 `アドル` 또는 `クリスティン` 문자열이 0건임.
+- 원본 ISO의 CP932 바이트를 직접 검색한 결과 `アドル`은 2건, `イーシャ`는 6건 발견됨.
+- `アドル` 2건은 동일 데이터의 두 사본에 있는 `ブラックアドル` 문자열이며 일반 주인공 이름은 아님.
+- 화자명과 직접 관련된 `イーシャ`는 공통 캐릭터 테이블 `castinfo.dat`에서 확인됨.
+- 동일한 `castinfo.dat`가 다음 두 위치에 바이트 단위로 존재함.
+  - `PSP_GAME/USRDIR/data/arc/init.bin` 엔트리 8 `castinfo.dat`
+  - `PSP_GAME/USRDIR/data/misc/castinfo.dat`
+- 두 사본 크기 21,264바이트, SHA-256 `B91C22FC17C6E39A7B9DA8800099A598FB89FEB8ED262112142DD20736E2C730`, 완전 일치
+- `init.bin` 내부 할당 22,528바이트
+- 이샤 레코드 식별자 `CAST_C240`, 이름 필드 오프셋 `0x2D20`, 32바이트 고정 필드에 CP932 `イーシャ` 저장
+- 따라서 대화창 화자명은 `talkisha.xso.z`가 아니라 공통 `castinfo.dat`를 참조하는 것으로 판정함.
+- `talkisha`의 `イーシャ1/2/3`은 화자명 테이블이 아닌 스크립트/리소스용 문자열로 보임.
+- 다음 변경은 XSO 라우팅 범위를 벗어난 고정 레코드 바이너리 패치이므로 별도 계획 보완과 사용자 확인 후 수행함.

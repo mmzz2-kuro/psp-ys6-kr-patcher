@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse,csv,hashlib,json,sys,tempfile
 from collections import defaultdict
 from pathlib import Path
+from PIL import Image
 try:
     from tools.scripts.iso9660_info import SECTOR_SIZE,find_record
     from tools.scripts.ys6_arc import find_file,parse_archive,replace_file
@@ -51,15 +52,16 @@ def group_translations(records:list[dict],catalog:dict,runtime_map:dict)->list[d
  result=[]
  for digest,items in sorted(grouped.items()):
   mapping=mapping_by_hash.get(digest)
-  if not mapping or mapping["status"] not in {"exact_one_to_one","standalone_duplicate"} or len(mapping["runtime_keys"])!=1:
+  if not mapping or mapping["status"] not in {"exact_one_to_one","standalone_duplicate","standalone_only"} or len(mapping["runtime_keys"])>1:
    raise IntegratedBuildError(f"unsupported runtime mapping: {digest}")
+  if not mapping["runtime_keys"] and not mapping["standalone_paths"]:raise IntegratedBuildError(f"mapping has no patch target: {digest}")
   merged={}; origins=defaultdict(list)
   for item in items:
    index=int(item["string_index"])
    if index in merged and merged[index]["translation"]!=item["translation"]:
     raise IntegratedBuildError(f"shared payload translation conflict: {digest} index={index}")
    merged[index]=item; origins[index].append(item["iso_path"])
-  result.append({"xso_sha256":digest,"mapping_status":mapping["status"],"standalone_paths":mapping["standalone_paths"],"runtime_key":mapping["runtime_keys"][0],"records":[{**merged[i],"origin_paths":sorted(set(origins[i]))} for i in sorted(merged)]})
+  result.append({"xso_sha256":digest,"mapping_status":mapping["status"],"standalone_paths":mapping["standalone_paths"],"runtime_key":mapping["runtime_keys"][0] if mapping["runtime_keys"] else None,"records":[{**merged[i],"origin_paths":sorted(set(origins[i]))} for i in sorted(merged)]})
  return result
 
 def read_iso_file(iso:Path,internal_path:str)->tuple[bytes,object]:
@@ -97,27 +99,34 @@ def execute(args)->dict:
  selected=select_reviewed(workspace);groups=group_translations(selected,catalog,runtime_map); runtime={x["runtime_key"]:x for x in runtime_map["runtime_entries"]};mapping=build_mapping(groups,usage,seed)
  args.work.mkdir(parents=True,exist_ok=True);(args.work/"xso").mkdir(exist_ok=True);(args.work/"archives").mkdir(exist_ok=True)
  write_mapping(mapping,args.work/"mapping.json",args.work/"mapping.csv")
- eboot_data=args.original_eboot.read_bytes();overrides={"한":args.han_override};patched_eboot,glyph_report,atlas=build_font(eboot_data,mapping,args.font,12,overrides,horizontal_left_inset=args.horizontal_left_inset);(args.work/"EBOOT.BIN").write_bytes(patched_eboot);(args.work/"glyph-report.json").write_text(json.dumps({"visible_width":12,"horizontal_left_inset":args.horizontal_left_inset,"glyphs":glyph_report},ensure_ascii=False,indent=2)+"\n",encoding="utf-8");atlas.resize((atlas.width*8,atlas.height*8)).save(args.work/"glyph-atlas.png")
+ eboot_data=args.original_eboot.read_bytes();overrides={"한":args.han_override};patched_eboot,glyph_report,atlas=build_font(eboot_data,mapping,args.font,12,overrides,horizontal_left_inset=args.horizontal_left_inset);(args.work/"EBOOT.BIN").write_bytes(patched_eboot);(args.work/"glyph-report.json").write_text(json.dumps({"visible_width":12,"horizontal_left_inset":args.horizontal_left_inset,"glyphs":glyph_report},ensure_ascii=False,indent=2)+"\n",encoding="utf-8");atlas.resize((atlas.width*8,atlas.height*8),Image.Resampling.NEAREST).save(args.work/"glyph-atlas.png")
  archive_cache={};archive_original={};xso_rows=[];translation_rows=[];overflow=[];rebuilt_containers={}
  with tempfile.TemporaryDirectory(dir=args.work) as td:
   temp=Path(td)
   for number,group in enumerate(groups):
-   meta=runtime[group["runtime_key"]];arc_path=meta["archive_iso_path"]
-   if arc_path not in archive_cache:
-    data,_=read_iso_file(iso,arc_path);archive_cache[arc_path]=data;archive_original[arc_path]=data
-   current=archive_cache[arc_path];entry=find_file(parse_archive(current),meta["entry_name"],index=int(meta["entry_index"]),flags=int(meta["flags_hex"],0));container=current[entry.offset:entry.offset+entry.size];valid,payload,error=verify_container_bytes(container)
-   if not valid or payload is None or sha256(payload)!=group["xso_sha256"]:raise IntegratedBuildError(f"runtime payload mismatch: {group['runtime_key']} {error or ''}")
+   if group["runtime_key"] is not None:
+    meta=runtime[group["runtime_key"]];arc_path=meta["archive_iso_path"]
+    if arc_path not in archive_cache:
+     data,_=read_iso_file(iso,arc_path);archive_cache[arc_path]=data;archive_original[arc_path]=data
+    current=archive_cache[arc_path];entry=find_file(parse_archive(current),meta["entry_name"],index=int(meta["entry_index"]),flags=int(meta["flags_hex"],0));container=current[entry.offset:entry.offset+entry.size]
+   else:
+    meta=None;arc_path=None;entry=None;container,_=read_iso_file(iso,group["standalone_paths"][0])
+   valid,payload,error=verify_container_bytes(container)
+   if not valid or payload is None or sha256(payload)!=group["xso_sha256"]:raise IntegratedBuildError(f"runtime payload mismatch: {group['runtime_key'] or group['standalone_paths'][0]} {error or ''}")
    group_temp=temp/f"g{number}";group_temp.mkdir();rebuilt,report,rows=rebuild_group(payload,group,mapping,group_temp);compressed=build_container(rebuilt,9);valid,roundtrip,error=verify_container_bytes(compressed)
    if not valid or roundtrip!=rebuilt:raise IntegratedBuildError(f"compression verification failed: {error}")
-   remaining=entry.allocated_size-len(compressed)
+   remaining=entry.allocated_size-len(compressed) if entry is not None else None
    xso_path=args.work/"xso"/(group["xso_sha256"]+".xso");z_path=xso_path.with_suffix(".xso.z");xso_path.write_bytes(rebuilt);z_path.write_bytes(compressed)
    rebuilt_containers[group["xso_sha256"]]=(group,compressed)
-   xso_rows.append({"xso_sha256":group["xso_sha256"],"runtime_key":group["runtime_key"],"entry_flags_hex":f"0x{entry.flags:08X}","entry_kind":meta.get("entry_kind","regular"),**report,"compressed_size":len(compressed),"allocated_size":entry.allocated_size,"remaining_slack":remaining,"mapping_status":group["mapping_status"]})
+   xso_rows.append({"xso_sha256":group["xso_sha256"],"runtime_key":group["runtime_key"] or group["standalone_paths"][0],"entry_flags_hex":f"0x{entry.flags:08X}" if entry is not None else "","entry_kind":meta.get("entry_kind","regular") if meta is not None else "standalone",**report,"compressed_size":len(compressed),"allocated_size":entry.allocated_size if entry is not None else "","remaining_slack":remaining if remaining is not None else "","mapping_status":group["mapping_status"]})
    translation_rows+=rows
-   if remaining<0:overflow.append({"runtime_key":group["runtime_key"],"compressed_size":len(compressed),"allocated_size":entry.allocated_size,"overflow":-remaining})
-   else:archive_cache[arc_path]=replace_file(current,entry,compressed)
+   if remaining is not None and remaining<0:overflow.append({"runtime_key":group["runtime_key"],"compressed_size":len(compressed),"allocated_size":entry.allocated_size,"overflow":-remaining})
+   elif entry is not None:archive_cache[arc_path]=replace_file(current,entry,compressed)
  standalone_rows=[];standalone_replacements=[]
- for standalone_path in args.standalone_path:
+ standalone_targets=set(args.standalone_path)
+ for group in groups:
+  if group["runtime_key"] is None:standalone_targets.update(group["standalone_paths"])
+ for standalone_path in sorted(standalone_targets):
   matches=[(group,container) for group,container in rebuilt_containers.values() if standalone_path in group["standalone_paths"]]
   if len(matches)!=1:raise IntegratedBuildError(f"standalone path is not uniquely associated with a rebuilt group: {standalone_path}")
   group,container=matches[0];original,record=read_iso_file(iso,standalone_path);valid,payload,error=verify_container_bytes(original)
@@ -130,7 +139,7 @@ def execute(args)->dict:
   preflight={"valid":False,"reason":"allocation_overflow","overflow":overflow,"reviewed_count":len(selected),"xso_count":len(groups)};(args.work/"preflight-report.json").write_text(json.dumps(preflight,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");raise IntegratedBuildError("allocation overflow: "+json.dumps(overflow,ensure_ascii=False))
  archive_rows=[];iso_replacements=[]
  for arc_path,data in sorted(archive_cache.items()):
-  name=Path(arc_path).name;out=args.work/"archives"/name;out.write_bytes(data);original=archive_original[arc_path];archive_rows.append({"iso_path":arc_path,"original_sha256":sha256(original),"output_sha256":sha256(data),"size":len(data),"modified_xso_count":sum(x["runtime_key"].startswith(arc_path+"#") for x in xso_rows)})
+  name=Path(arc_path).name;out=args.work/"archives"/name;out.write_bytes(data);original=archive_original[arc_path];archive_rows.append({"iso_path":arc_path,"original_sha256":sha256(original),"output_sha256":sha256(data),"size":len(data),"modified_xso_count":sum(str(x["runtime_key"]).startswith(arc_path+"#") for x in xso_rows)})
   iso_replacements.append(Replacement(arc_path,out,len(original),sha256(original)))
  iso_replacements.extend(standalone_replacements)
  original_iso_eboot,eboot_record=read_iso_file(iso,EBOOT_PATH);iso_replacements.insert(0,Replacement(EBOOT_PATH,args.work/"EBOOT.BIN",len(original_iso_eboot),sha256(original_iso_eboot)))
