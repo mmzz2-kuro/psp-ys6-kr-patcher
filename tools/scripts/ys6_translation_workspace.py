@@ -15,6 +15,7 @@ VALID_STATUSES = {"untranslated", "draft", "override", "excluded", "conflict", "
 TOKEN_PATTERN = re.compile(r"\\(?:x[0-9A-Fa-f]+|[A-Za-z]+|[0-9]+)")
 MARKUP_PATTERN = re.compile(r"<[^<>]+>")
 FIELDS = ("iso_path", "map_group", "map_id", "xso_name", "string_index", "roles", "source_text", "source_raw_hex", "source_sha256", "translation", "status", "notes")
+OPTIONAL_FIELDS = ("allow_markup_change", "allow_player_name_expansion")
 
 
 def source_hash(raw_hex: str) -> str:
@@ -56,6 +57,8 @@ def synchronize(catalog: dict, existing: dict | None = None) -> dict:
             fresh["notes"] = previous.get("notes", "")
             if "allow_markup_change" in previous:
                 fresh["allow_markup_change"] = bool(previous["allow_markup_change"])
+            if "allow_player_name_expansion" in previous:
+                fresh["allow_player_name_expansion"] = bool(previous["allow_player_name_expansion"])
             if previous.get("source_sha256") != fresh["source_sha256"]:
                 fresh["status"] = "conflict"
             else:
@@ -86,7 +89,22 @@ def validate(workspace: dict) -> dict:
             if not record["translation"]: errors.append(f"{label}: override translation is empty")
             source_tokens = sorted(TOKEN_PATTERN.findall(record["source_text"]))
             target_tokens = sorted(TOKEN_PATTERN.findall(record["translation"]))
-            if source_tokens != target_tokens: errors.append(f"{label}: control token mismatch")
+            if record.get("allow_player_name_expansion", False):
+                source_without_name = list(source_tokens)
+                target_without_name = list(target_tokens)
+                source_name_count = source_without_name.count("\\x1")
+                target_name_count = target_without_name.count("\\x1")
+                source_without_name = [token for token in source_without_name if token != "\\x1"]
+                target_without_name = [token for token in target_without_name if token != "\\x1"]
+                valid_name_expansion = (
+                    source_name_count > target_name_count
+                    and source_without_name == target_without_name
+                    and record["translation"].count("아돌") >= source_name_count - target_name_count
+                )
+                if not valid_name_expansion:
+                    errors.append(f"{label}: invalid player-name expansion")
+            elif source_tokens != target_tokens:
+                errors.append(f"{label}: control token mismatch")
             source_markup = sorted(MARKUP_PATTERN.findall(record["source_text"]))
             target_markup = sorted(MARKUP_PATTERN.findall(record["translation"]))
             if source_markup != target_markup and not record.get("allow_markup_change", False): errors.append(f"{label}: markup mismatch")
@@ -222,9 +240,12 @@ def append_translated_path(prepared: dict, source_workspace: dict, iso_path: str
 
 def write_csv(workspace: dict, path: Path) -> None:
     with path.open("w", encoding="utf-8-sig", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=FIELDS); writer.writeheader()
+        writer = csv.DictWriter(stream, fieldnames=FIELDS + OPTIONAL_FIELDS); writer.writeheader()
         for record in workspace["records"]:
-            row = dict(record); row["roles"] = " | ".join(row["roles"]); writer.writerow(row)
+            row = dict(record); row["roles"] = " | ".join(row["roles"])
+            for field in OPTIONAL_FIELDS:
+                row.setdefault(field, False)
+            writer.writerow(row)
 
 
 def apply_drafts(workspace: dict, drafts: dict) -> dict:
@@ -248,7 +269,10 @@ def apply_drafts(workspace: dict, drafts: dict) -> dict:
         if target.get("status") not in {"untranslated", "draft"}: raise ValueError(f"draft would replace {target.get('status')}: {identity}")
         translation = draft.get("translation", "")
         if not translation: raise ValueError(f"draft translation is empty: {identity}")
-        if sorted(TOKEN_PATTERN.findall(target["source_text"])) != sorted(TOKEN_PATTERN.findall(translation)):
+        source_tokens = sorted(TOKEN_PATTERN.findall(target["source_text"]))
+        target_tokens = sorted(TOKEN_PATTERN.findall(translation))
+        allow_player_name_expansion = bool(draft.get("allow_player_name_expansion", False))
+        if source_tokens != target_tokens and not allow_player_name_expansion:
             raise ValueError(f"draft control token mismatch: {identity}")
         allow_markup_change = bool(draft.get("allow_markup_change", False))
         if sorted(MARKUP_PATTERN.findall(target["source_text"])) != sorted(MARKUP_PATTERN.findall(translation)) and not allow_markup_change:
@@ -258,6 +282,8 @@ def apply_drafts(workspace: dict, drafts: dict) -> dict:
         target["notes"] = draft.get("notes", "Codex 초벌 번역 030")
         if allow_markup_change:
             target["allow_markup_change"] = True
+        if allow_player_name_expansion:
+            target["allow_player_name_expansion"] = True
     result = {"schema_version": workspace.get("schema_version", 1), "records": records}
     report = validate(result)
     if not report["valid"]: raise ValueError("draft workspace is invalid: " + "; ".join(report["errors"]))

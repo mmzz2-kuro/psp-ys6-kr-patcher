@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import shutil
 import sys
 from collections import Counter
 from pathlib import Path
@@ -140,6 +141,66 @@ def apply_drafts(report: dict, translations_path: Path, output_path: Path) -> di
     return {"applied_count": len(applied), "output": str(output_path), "applied": applied}
 
 
+def replace_existing_translations(
+    report: dict,
+    translations_path: Path,
+    output_path: Path,
+    comparison_path: Path,
+    backup_path: Path,
+) -> dict:
+    document = load_json(translations_path)
+    records = {(row["iso_path"].lower(), int(row["string_index"])): row for row in document["records"]}
+    changes = []
+    status_counts: Counter[str] = Counter()
+    for match in report["matches"]:
+        if match["match_status"] != "exact":
+            continue
+        if not DIALOGUE_ROLES.intersection(match["roles"]):
+            continue
+        replacement = match["windows_translation"]
+        if not replacement.strip():
+            continue
+        key = (match["psp_iso_path"].lower(), int(match["string_index"]))
+        target = records.get(key)
+        if target is None or not target.get("translation"):
+            continue
+        previous_translation = target["translation"]
+        previous_status = target.get("status", "")
+        status_counts[previous_status] += 1
+        target["translation"] = replacement
+        target["status"] = "draft"
+        target["notes"] = "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
+        changes.append({
+            "iso_path": target["iso_path"],
+            "string_index": target["string_index"],
+            "previous_status": previous_status,
+            "previous_translation": previous_translation,
+            "windows_translation": replacement,
+            "text_changed": previous_translation != replacement,
+            "status_changed": previous_status != "draft",
+        })
+    backup_path.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(translations_path, backup_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(json.dumps(document, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    comparison = {
+        "schema_version": 1,
+        "source_workspace": str(translations_path).replace("\\", "/"),
+        "backup": str(backup_path).replace("\\", "/"),
+        "output": str(output_path).replace("\\", "/"),
+        "stats": {
+            "selected_count": len(changes),
+            "text_changed_count": sum(row["text_changed"] for row in changes),
+            "status_changed_count": sum(row["status_changed"] for row in changes),
+            "previous_status_counts": dict(status_counts),
+        },
+        "changes": changes,
+    }
+    comparison_path.parent.mkdir(parents=True, exist_ok=True)
+    comparison_path.write_text(json.dumps(comparison, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return {**comparison["stats"], "backup": str(backup_path), "comparison": str(comparison_path)}
+
+
 def main() -> int:
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
@@ -149,6 +210,9 @@ def main() -> int:
     parser.add_argument("--translations", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True, help="match report JSON")
     parser.add_argument("--apply-drafts", type=Path, help="write an updated translation workspace to this path")
+    parser.add_argument("--replace-existing", type=Path, help="replace exact existing translations and write here")
+    parser.add_argument("--backup", type=Path, help="required with --replace-existing")
+    parser.add_argument("--comparison", type=Path, help="required with --replace-existing")
     args = parser.parse_args()
     report = execute(args.windows, args.catalog, args.translations)
     args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -157,6 +221,14 @@ def main() -> int:
     if args.apply_drafts:
         summary["draft_apply"] = apply_drafts(report, args.translations, args.apply_drafts)
         summary["draft_apply"].pop("applied", None)
+    if args.replace_existing:
+        if args.apply_drafts:
+            parser.error("--apply-drafts and --replace-existing cannot be used together")
+        if not args.backup or not args.comparison:
+            parser.error("--replace-existing requires --backup and --comparison")
+        summary["replacement"] = replace_existing_translations(
+            report, args.translations, args.replace_existing, args.comparison, args.backup
+        )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0
 

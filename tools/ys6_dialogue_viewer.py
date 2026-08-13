@@ -55,11 +55,26 @@ def filter_records(records: list[dict], query: str = "", role: str = "") -> list
             continue
         haystack = " ".join(
             str(record.get(key, ""))
-            for key in ("text", "source_text", "translation", "map_group", "map_id", "xso_name", "iso_path")
+            for key in ("text", "source_text", "translation", "map_group", "map_id", "xso_name", "iso_path", "notes")
         ).casefold()
         if needle and needle not in haystack:
             continue
         result.append(record)
+    return result
+
+
+def mark_records_override(records: list[dict]) -> dict[str, int]:
+    """Mark translated records override without changing their text or notes."""
+    result = {"selected": len(records), "changed": 0, "already_override": 0, "empty_translation": 0}
+    for record in records:
+        if not normalize_editor_translation(record.get("translation", "")).strip():
+            result["empty_translation"] += 1
+            continue
+        if record.get("status") == "override":
+            result["already_override"] += 1
+            continue
+        record["status"] = "override"
+        result["changed"] += 1
     return result
 
 
@@ -135,7 +150,7 @@ class DialogueViewer(tk.Tk):
         pane.add(table_frame, weight=3)
         pane.add(detail_frame, weight=2)
         columns = ("map", "file", "index", "roles", "status", "text", "translation")
-        self.tree = ttk.Treeview(table_frame, columns=columns, show="headings")
+        self.tree = ttk.Treeview(table_frame, columns=columns, show="headings", selectmode="extended")
         for column, label, width in zip(columns, ("맵", "XSO", "인덱스", "역할", "상태", "원문", "번역"), (110, 135, 50, 120, 85, 350, 350)):
             self.tree.heading(column, text=label)
             self.tree.column(column, width=width, stretch=column == "text")
@@ -154,7 +169,10 @@ class DialogueViewer(tk.Tk):
         ttk.Combobox(editor, textvariable=self.translation_status, state="readonly", values=("untranslated", "draft", "override", "excluded", "conflict", "orphaned"), width=16).grid(row=1, column=1, sticky="w", pady=(4, 0))
         ttk.Label(editor, text="메모").grid(row=1, column=2, sticky="e", padx=(12, 4), pady=(4, 0))
         self.notes = ttk.Entry(editor); self.notes.grid(row=1, column=3, sticky="ew", pady=(4, 0))
-        ttk.Button(editor, text="현재 항목 반영", command=self.apply_edit).grid(row=2, column=3, sticky="e", pady=(6, 0))
+        actions = ttk.Frame(editor)
+        actions.grid(row=2, column=1, columnspan=3, sticky="e", pady=(6, 0))
+        ttk.Button(actions, text="선택 항목 override", command=self.override_selected).pack(side=tk.LEFT)
+        ttk.Button(actions, text="현재 항목 반영", command=self.apply_edit).pack(side=tk.LEFT, padx=(6, 0))
         editor.columnconfigure(1, weight=1); editor.columnconfigure(3, weight=2)
 
     def choose_catalog(self) -> None:
@@ -240,6 +258,39 @@ class DialogueViewer(tk.Tk):
         if values != (record.get("translation", ""), record.get("status", "untranslated"), record.get("notes", "")):
             record["translation"], record["status"], record["notes"] = values; self.dialogue_dirty = True
         if not silent: self.refresh()
+
+    def override_selected(self) -> None:
+        selected = self.tree.selection()
+        if not selected:
+            messagebox.showwarning("override", "override로 변경할 항목을 선택해 주세요.")
+            return
+        selected_records = [self.filtered[int(item)] for item in selected]
+        result = mark_records_override(selected_records)
+        if result["changed"]:
+            self.dialogue_dirty = True
+
+        # Updating rows in place preserves Ctrl/Shift multi-selection. If a
+        # status filter no longer includes the changed records, refresh instead.
+        active_filter = self.workflow_status.get()
+        if active_filter not in ("전체", "dialogue"):
+            self.refresh()
+        else:
+            for item, record in zip(selected, selected_records):
+                values = list(self.tree.item(item, "values"))
+                if len(values) >= 5:
+                    values[4] = record.get("status", "")
+                    self.tree.item(item, values=values)
+            if selected:
+                first = selected[0]
+                self.tree.selection_set(selected)
+                self.tree.focus(first)
+                self.tree.see(first)
+                self.show_detail()
+
+        self.status.set(
+            f"override 변경 {result['changed']:,}개 / 이미 override {result['already_override']:,}개 / "
+            f"빈 번역 제외 {result['empty_translation']:,}개 (번역 저장 필요)"
+        )
 
     def open_catalog(self, path: Path) -> None:
         try:

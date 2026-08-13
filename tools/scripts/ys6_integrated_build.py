@@ -70,7 +70,7 @@ def group_translations(records:list[dict],catalog:dict,runtime_map:dict)->list[d
  result=[]
  for digest,items in sorted(grouped.items()):
   mapping=mapping_by_hash.get(digest)
-  if not mapping or mapping["status"] not in {"exact_one_to_one","standalone_duplicate","standalone_only"} or len(mapping["runtime_keys"])>1:
+  if not mapping or mapping["status"] not in {"exact_one_to_one","standalone_duplicate","standalone_only","many_to_many"}:
    raise IntegratedBuildError(f"unsupported runtime mapping: {digest}")
   if not mapping["runtime_keys"] and not mapping["standalone_paths"]:raise IntegratedBuildError(f"mapping has no patch target: {digest}")
   merged={}; origins=defaultdict(list)
@@ -79,7 +79,7 @@ def group_translations(records:list[dict],catalog:dict,runtime_map:dict)->list[d
    if index in merged and merged[index]["translation"]!=item["translation"]:
     raise IntegratedBuildError(f"shared payload translation conflict: {digest} index={index}")
    merged[index]=item; origins[index].append(item["iso_path"])
-  result.append({"xso_sha256":digest,"mapping_status":mapping["status"],"standalone_paths":mapping["standalone_paths"],"runtime_key":mapping["runtime_keys"][0] if mapping["runtime_keys"] else None,"records":[{**merged[i],"origin_paths":sorted(set(origins[i]))} for i in sorted(merged)]})
+  result.append({"xso_sha256":digest,"mapping_status":mapping["status"],"standalone_paths":mapping["standalone_paths"],"runtime_keys":list(mapping["runtime_keys"]),"runtime_key":mapping["runtime_keys"][0] if mapping["runtime_keys"] else None,"records":[{**merged[i],"origin_paths":sorted(set(origins[i]))} for i in sorted(merged)]})
  return result
 
 def read_iso_file(iso:Path,internal_path:str)->tuple[bytes,object]:
@@ -100,7 +100,7 @@ def rebuild_group(original:bytes,group:dict,mapping:list[dict],temp:Path)->tuple
   entry=parsed.strings[index]
   if hashlib.sha256(bytes.fromhex(entry.raw_hex)).hexdigest().upper()!=record["source_sha256"]:raise IntegratedBuildError(f"source mismatch: {group['xso_sha256']} index={index}")
   encoded=encode_translation(record["translation"],mapping);replacements[index]=encoded
-  rows.append({"xso_sha256":group["xso_sha256"],"runtime_key":group["runtime_key"],"string_index":index,"source_text":record["source_text"],"translation":record["translation"],"original_length":entry.byte_length,"replacement_length":len(encoded),"delta":len(encoded)-entry.byte_length,"origin_paths":" | ".join(record["origin_paths"])})
+  rows.append({"xso_sha256":group["xso_sha256"],"runtime_key":" | ".join(group["runtime_keys"]),"string_index":index,"source_text":record["source_text"],"translation":record["translation"],"original_length":entry.byte_length,"replacement_length":len(encoded),"delta":len(encoded)-entry.byte_length,"origin_paths":" | ".join(record["origin_paths"])})
  _report,rebuilt=rebuild_xso(source,replacements,allow_length_change=True);check=temp/"check.xso";check.write_bytes(rebuilt);reparsed=parse_xso(check)
  for index,value in replacements.items():
   if bytes.fromhex(reparsed.strings[index].raw_hex)!=value:raise IntegratedBuildError(f"replacement verification failed: {index}")
@@ -139,35 +139,44 @@ def execute(args)->dict:
  with tempfile.TemporaryDirectory(dir=args.work) as td:
   temp=Path(td)
   for number,group in enumerate(groups):
-   if group["runtime_key"] is not None:
-    meta=runtime[group["runtime_key"]];arc_path=meta["archive_iso_path"]
+   runtime_targets=[]
+   for runtime_key in group["runtime_keys"]:
+    meta=runtime[runtime_key];arc_path=meta["archive_iso_path"]
     if arc_path not in archive_cache:
      data,_=read_iso_file(iso,arc_path);archive_cache[arc_path]=data;archive_original[arc_path]=data
     current=archive_cache[arc_path];entry=find_file(parse_archive(current),meta["entry_name"],index=int(meta["entry_index"]),flags=int(meta["flags_hex"],0));container=current[entry.offset:entry.offset+entry.size]
+    valid,payload,error=verify_container_bytes(container)
+    if not valid or payload is None or sha256(payload)!=group["xso_sha256"]:raise IntegratedBuildError(f"runtime payload mismatch: {runtime_key} {error or ''}")
+    runtime_targets.append((runtime_key,meta,arc_path,entry,payload))
+   if runtime_targets:
+    container_payload=runtime_targets[0][4]
    else:
-    meta=None;arc_path=None;entry=None;container,_=read_iso_file(iso,group["standalone_paths"][0])
-   valid,payload,error=verify_container_bytes(container)
-   if not valid or payload is None or sha256(payload)!=group["xso_sha256"]:raise IntegratedBuildError(f"runtime payload mismatch: {group['runtime_key'] or group['standalone_paths'][0]} {error or ''}")
-   group_temp=temp/f"g{number}";group_temp.mkdir();rebuilt,report,rows=rebuild_group(payload,group,mapping,group_temp);compressed=build_container(rebuilt,9);valid,roundtrip,error=verify_container_bytes(compressed)
+    container,_=read_iso_file(iso,group["standalone_paths"][0]);valid,container_payload,error=verify_container_bytes(container)
+    if not valid or container_payload is None or sha256(container_payload)!=group["xso_sha256"]:raise IntegratedBuildError(f"runtime payload mismatch: {group['standalone_paths'][0]} {error or ''}")
+   group_temp=temp/f"g{number}";group_temp.mkdir();rebuilt,report,rows=rebuild_group(container_payload,group,mapping,group_temp);compressed=build_container(rebuilt,9);valid,roundtrip,error=verify_container_bytes(compressed)
    if not valid or roundtrip!=rebuilt:raise IntegratedBuildError(f"compression verification failed: {error}")
-   remaining=entry.allocated_size-len(compressed) if entry is not None else None
    xso_path=args.work/"xso"/(group["xso_sha256"]+".xso");z_path=xso_path.with_suffix(".xso.z");xso_path.write_bytes(rebuilt);z_path.write_bytes(compressed)
    rebuilt_containers[group["xso_sha256"]]=(group,compressed)
-   xso_rows.append({"xso_sha256":group["xso_sha256"],"runtime_key":group["runtime_key"] or group["standalone_paths"][0],"entry_flags_hex":f"0x{entry.flags:08X}" if entry is not None else "","entry_kind":meta.get("entry_kind","regular") if meta is not None else "standalone",**report,"compressed_size":len(compressed),"allocated_size":entry.allocated_size if entry is not None else "","remaining_slack":remaining if remaining is not None else "","mapping_status":group["mapping_status"]})
    translation_rows+=rows
-   if remaining is not None and remaining<0:overflow.append({"runtime_key":group["runtime_key"],"compressed_size":len(compressed),"allocated_size":entry.allocated_size,"overflow":-remaining})
-   elif entry is not None:archive_cache[arc_path]=replace_file(current,entry,compressed)
+   if runtime_targets:
+    for runtime_key,meta,arc_path,_original_entry,_payload in runtime_targets:
+     current=archive_cache[arc_path];entry=find_file(parse_archive(current),meta["entry_name"],index=int(meta["entry_index"]),flags=int(meta["flags_hex"],0));remaining=entry.allocated_size-len(compressed)
+     xso_rows.append({"xso_sha256":group["xso_sha256"],"runtime_key":runtime_key,"runtime_target_count":len(group["runtime_keys"]),"entry_flags_hex":f"0x{entry.flags:08X}","entry_kind":meta.get("entry_kind","regular"),**report,"compressed_size":len(compressed),"allocated_size":entry.allocated_size,"remaining_slack":remaining,"mapping_status":group["mapping_status"]})
+     if remaining<0:overflow.append({"runtime_key":runtime_key,"compressed_size":len(compressed),"allocated_size":entry.allocated_size,"overflow":-remaining})
+     else:archive_cache[arc_path]=replace_file(current,entry,compressed)
+   else:
+    xso_rows.append({"xso_sha256":group["xso_sha256"],"runtime_key":group["standalone_paths"][0],"runtime_target_count":0,"entry_flags_hex":"","entry_kind":"standalone",**report,"compressed_size":len(compressed),"allocated_size":"","remaining_slack":"","mapping_status":group["mapping_status"]})
  standalone_rows=[];standalone_replacements=[]
  standalone_targets=set(args.standalone_path)
  for group in groups:
-  if group["runtime_key"] is None:standalone_targets.update(group["standalone_paths"])
+  if group["runtime_key"] is None or group["mapping_status"]=="many_to_many":standalone_targets.update(group["standalone_paths"])
  for standalone_path in sorted(standalone_targets):
   matches=[(group,container) for group,container in rebuilt_containers.values() if standalone_path in group["standalone_paths"]]
   if len(matches)!=1:raise IntegratedBuildError(f"standalone path is not uniquely associated with a rebuilt group: {standalone_path}")
   group,container=matches[0];original,record=read_iso_file(iso,standalone_path);valid,payload,error=verify_container_bytes(original)
   if not valid or payload is None or sha256(payload)!=group["xso_sha256"]:raise IntegratedBuildError(f"standalone payload mismatch: {standalone_path} {error or ''}")
   allocated=((record.data_length+SECTOR_SIZE-1)//SECTOR_SIZE)*SECTOR_SIZE;remaining=allocated-len(container)
-  standalone_rows.append({"iso_path":standalone_path,"runtime_key":group["runtime_key"],"original_size":len(original),"compressed_size":len(container),"allocated_size":allocated,"remaining_slack":remaining,"original_sha256":sha256(original),"output_sha256":sha256(container)})
+  standalone_rows.append({"iso_path":standalone_path,"runtime_key":" | ".join(group["runtime_keys"]),"original_size":len(original),"compressed_size":len(container),"allocated_size":allocated,"remaining_slack":remaining,"original_sha256":sha256(original),"output_sha256":sha256(container)})
   if remaining<0:overflow.append({"runtime_key":standalone_path,"compressed_size":len(container),"allocated_size":allocated,"overflow":-remaining})
   else:standalone_replacements.append(Replacement(standalone_path,args.work/"xso"/(group["xso_sha256"]+".xso.z"),len(original),sha256(original)))
  if overflow:
