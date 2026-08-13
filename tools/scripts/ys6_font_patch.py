@@ -9,16 +9,22 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
-from ys6_font_table import (
-    DEFAULT_COUNT,
-    DEFAULT_OFFSET,
-    GLYPH_HEIGHT,
-    GLYPH_SIZE,
-    GLYPH_WIDTH,
-    RECORD_SIZE,
-    parse_table,
-    render_glyph,
-)
+try:
+    from tools.scripts.ys6_font_table import (
+        DEFAULT_COUNT, DEFAULT_OFFSET, GLYPH_HEIGHT, GLYPH_SIZE,
+        GLYPH_WIDTH, RECORD_SIZE, parse_table, render_glyph,
+    )
+except ModuleNotFoundError:
+    try:
+        from .ys6_font_table import (
+            DEFAULT_COUNT, DEFAULT_OFFSET, GLYPH_HEIGHT, GLYPH_SIZE,
+            GLYPH_WIDTH, RECORD_SIZE, parse_table, render_glyph,
+        )
+    except ImportError:
+        from ys6_font_table import (
+            DEFAULT_COUNT, DEFAULT_OFFSET, GLYPH_HEIGHT, GLYPH_SIZE,
+            GLYPH_WIDTH, RECORD_SIZE, parse_table, render_glyph,
+        )
 
 
 def render_text_bitmap(

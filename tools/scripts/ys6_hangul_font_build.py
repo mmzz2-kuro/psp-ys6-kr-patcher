@@ -15,8 +15,12 @@ try:
     from tools.scripts.ys6_font_patch import render_pattern_bitmap, render_text_bitmap
     from tools.scripts.ys6_font_table import DEFAULT_COUNT, DEFAULT_OFFSET, GLYPH_HEIGHT, GLYPH_SIZE, GLYPH_WIDTH, RECORD_SIZE, parse_table
 except ModuleNotFoundError:
-    from ys6_font_patch import render_pattern_bitmap, render_text_bitmap
-    from ys6_font_table import DEFAULT_COUNT, DEFAULT_OFFSET, GLYPH_HEIGHT, GLYPH_SIZE, GLYPH_WIDTH, RECORD_SIZE, parse_table
+    try:
+        from .ys6_font_patch import render_pattern_bitmap, render_text_bitmap
+        from .ys6_font_table import DEFAULT_COUNT, DEFAULT_OFFSET, GLYPH_HEIGHT, GLYPH_SIZE, GLYPH_WIDTH, RECORD_SIZE, parse_table
+    except ImportError:
+        from ys6_font_patch import render_pattern_bitmap, render_text_bitmap
+        from ys6_font_table import DEFAULT_COUNT, DEFAULT_OFFSET, GLYPH_HEIGHT, GLYPH_SIZE, GLYPH_WIDTH, RECORD_SIZE, parse_table
 
 
 def bitmap_to_image(bitmap: bytes) -> Image.Image:

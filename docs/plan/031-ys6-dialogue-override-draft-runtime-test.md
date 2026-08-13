@@ -7,7 +7,7 @@
 - preflight: 완료
 - ISO 생성: 완료
 - 정적 역테스트: 완료
-- 인게임 검증: 사용자 확인 대기
+- 인게임 검증: 완료
 - 결과 문서: `/docs/result/031-ys6-dialogue-override-draft-runtime-test.md`
 
 ## 목적

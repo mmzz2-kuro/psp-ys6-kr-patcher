@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "terms": [
+    {"source": "オルハ", "translation": "오르하", "category": "character"},
+    {"source": "イーシャ", "translation": "이샤", "category": "character"},
+    {"source": "オード", "translation": "오드", "category": "character"},
+    {"source": "トクサ", "translation": "토쿠사", "category": "character"},
+    {"source": "レダ族", "translation": "레다족", "category": "people"},
+    {"source": "エレシア人", "translation": "에레시아인", "category": "people"},
+    {"source": "カナン島", "translation": "카나안섬", "category": "place"},
+    {"source": "クアテラ島", "translation": "콰테라섬", "category": "place", "notes": "검토 필요"},
+    {"source": "ゼメス島", "translation": "제메스섬", "category": "place", "notes": "검토 필요"},
+    {"source": "カナン諸島", "translation": "카나안 제도", "category": "place"},
+    {"source": "大渦", "translation": "대소용돌이", "category": "world", "notes": "기존 번역 표기와 대조 필요"},
+    {"source": "精霊神アルマ", "translation": "정령신 알마", "category": "world"},
+    {"source": "ロムン", "translation": "로문", "category": "organization"}
+  ]
+}

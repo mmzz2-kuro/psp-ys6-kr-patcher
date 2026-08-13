@@ -5,10 +5,20 @@ from __future__ import annotations
 
 import json
 import csv
+import hashlib
+import queue
 import sys
+import threading
 import tkinter as tk
 from pathlib import Path
 from tkinter import filedialog, messagebox, ttk
+
+# Direct execution sets sys.path to /tools, while legacy build modules also
+# support being executed from /tools/scripts. Make that sibling directory
+# explicit so both entry styles resolve the same modules.
+SCRIPTS_DIR = Path(__file__).resolve().parent / "scripts"
+if str(SCRIPTS_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPTS_DIR))
 
 try:
     from tools.scripts.ys6_cast_name_workspace import (
@@ -24,8 +34,10 @@ except ModuleNotFoundError:
     )
 try:
     from tools.scripts.ys6_translation_workspace import normalize_editor_translation
+    from tools.scripts.ys6_patch_builder import find_default_font, inspect_inputs, run_build
 except ModuleNotFoundError:
     from scripts.ys6_translation_workspace import normalize_editor_translation
+    from scripts.ys6_patch_builder import find_default_font, inspect_inputs, run_build
 
 
 def load_catalog(path: Path) -> tuple[dict, list[dict]]:
@@ -69,6 +81,7 @@ class DialogueViewer(tk.Tk):
         self.filtered: list[dict] = []
         self.workspace_path: Path | None = None
         self.workspace_document: dict | None = None
+        self.dialogue_dirty = False
         self._build_ui()
         if initial_path:
             self.open_json(initial_path)
@@ -84,8 +97,11 @@ class DialogueViewer(tk.Tk):
         dialogue_tab = ttk.Frame(tabs)
         cast_tab = CastNameEditor(tabs)
         self.cast_editor = cast_tab
+        build_tab = PatchBuildEditor(tabs, self)
+        self.build_editor = build_tab
         tabs.add(dialogue_tab, text="대사")
         tabs.add(cast_tab, text="인물명")
+        tabs.add(build_tab, text="패치 빌드")
         top = ttk.Frame(dialogue_tab, padding=8)
         top.pack(fill=tk.X)
         ttk.Button(top, text="카탈로그 열기", command=self.choose_catalog).pack(side=tk.LEFT)
@@ -184,6 +200,7 @@ class DialogueViewer(tk.Tk):
         document["records"] = self.records
         atomic_write_json(self.workspace_path, document, backup=True)
         self.workspace_document = document
+        self.dialogue_dirty = False
         self.status.set(f"저장 완료: {self.workspace_path.name}")
 
     def export_csv(self) -> None:
@@ -219,9 +236,9 @@ class DialogueViewer(tk.Tk):
             if not silent: messagebox.showwarning("편집", "항목을 선택해 주세요.")
             return
         record = self.filtered[int(selected[0])]
-        record["translation"] = normalize_editor_translation(self.translation.get("1.0", "end-1c"))
-        record["status"] = self.translation_status.get()
-        record["notes"] = self.notes.get()
+        values = (normalize_editor_translation(self.translation.get("1.0", "end-1c")), self.translation_status.get(), self.notes.get())
+        if values != (record.get("translation", ""), record.get("status", "untranslated"), record.get("notes", "")):
+            record["translation"], record["status"], record["notes"] = values; self.dialogue_dirty = True
         if not silent: self.refresh()
 
     def open_catalog(self, path: Path) -> None:
@@ -235,6 +252,7 @@ class DialogueViewer(tk.Tk):
         self.role.set("")
         self.workspace_path = None
         self.workspace_document = None
+        self.dialogue_dirty = False
         self.title(f"Ys VI 대사 뷰어 - {path.name}")
         self.refresh()
 
@@ -373,6 +391,105 @@ class CastNameEditor(ttk.Frame):
         self._selected_identifier = next_row["identifier"]
         self.info.set(f"ID: {next_row['identifier']}\n원문: {next_row['source']}\n식별자 오프셋: 0x{next_row['identifier_offset']:X}\n이름 오프셋: 0x{next_row['name_offset']:X}\n원문 HEX: {next_row['source_raw_hex']}\nSHA-256: {next_row['source_sha256']}")
         self.translation.delete(0, tk.END); self.translation.insert(0, next_row.get("translation", "")); self.edit_status.set(next_row.get("status", "untranslated")); self.notes.delete("1.0", tk.END); self.notes.insert("1.0", next_row.get("notes", ""))
+
+
+class PatchBuildEditor(ttk.Frame):
+    def __init__(self, parent, app: DialogueViewer) -> None:
+        super().__init__(parent, padding=12); self.app = app; self.events = queue.Queue(); self.running = False
+        self.iso = tk.StringVar(); self.output = tk.StringVar(); self.font = tk.StringVar(value=str(find_default_font() or ""))
+        self.counts = tk.StringVar(value="패치 데이터를 확인하지 않았습니다."); self.result = tk.StringVar()
+        self._build_ui(); self.after(100, self._poll); self.refresh_data(silent=True)
+
+    def _build_ui(self) -> None:
+        form = ttk.Frame(self); form.pack(fill=tk.X)
+        for row, (label, variable, command) in enumerate((("원본 ISO", self.iso, self.choose_iso), ("출력 ISO", self.output, self.choose_output), ("글꼴", self.font, self.choose_font))):
+            ttk.Label(form, text=label, width=10).grid(row=row, column=0, sticky="w", pady=4)
+            ttk.Entry(form, textvariable=variable).grid(row=row, column=1, sticky="ew", pady=4)
+            ttk.Button(form, text="찾아보기", command=command).grid(row=row, column=2, padx=(6, 0), pady=4)
+        form.columnconfigure(1, weight=1)
+        ttk.Label(self, textvariable=self.counts).pack(anchor="w", pady=(10, 4))
+        buttons = ttk.Frame(self); buttons.pack(fill=tk.X)
+        self.refresh_button = ttk.Button(buttons, text="데이터 다시 읽기", command=self.refresh_data); self.refresh_button.pack(side=tk.LEFT)
+        self.preflight_button = ttk.Button(buttons, text="사전 검증", command=lambda: self.start("preflight")); self.preflight_button.pack(side=tk.LEFT, padx=(6, 0))
+        self.build_button = ttk.Button(buttons, text="패치 ISO 만들기", command=lambda: self.start("build")); self.build_button.pack(side=tk.LEFT, padx=(6, 0))
+        self.progress = ttk.Progressbar(buttons, mode="indeterminate", length=180); self.progress.pack(side=tk.RIGHT)
+        ttk.Label(self, textvariable=self.result, foreground="#145a32").pack(anchor="w", pady=(8, 4))
+        self.log = tk.Text(self, height=24, wrap=tk.WORD, font=("Consolas", 9), state=tk.DISABLED); self.log.pack(fill=tk.BOTH, expand=True)
+
+    def choose_iso(self) -> None:
+        selected = filedialog.askopenfilename(title="Ys VI 원본 ISO 선택", filetypes=[("ISO", "*.iso")])
+        if selected:
+            self.iso.set(selected)
+            if not self.output.get(): self.output.set(str(Path(selected).with_name("Ys VI - Korean Patched.iso")))
+
+    def choose_output(self) -> None:
+        selected = filedialog.asksaveasfilename(title="패치 ISO 저장", defaultextension=".iso", initialfile="Ys VI - Korean Patched.iso", filetypes=[("ISO", "*.iso")])
+        if selected: self.output.set(selected)
+
+    def choose_font(self) -> None:
+        selected = filedialog.askopenfilename(title="굴림 글꼴 선택", filetypes=[("TrueType", "*.ttc *.ttf"), ("모든 파일", "*.*")])
+        if selected: self.font.set(selected)
+
+    def refresh_data(self, silent: bool = False) -> None:
+        try:
+            info = inspect_inputs(); self.counts.set(f"대사 override {info['override_count']:,}개 / draft {info['draft_count']:,}개(제외) / 인물명 reviewed {info['cast_reviewed_count']:,}개")
+            if not self.font.get(): self.font.set(info["font"])
+        except Exception as exc:
+            self.counts.set(f"패치 데이터 오류: {exc}")
+            if not silent: messagebox.showerror("패치 데이터", str(exc))
+
+    def _save_pending(self) -> bool:
+        self.app.apply_edit(silent=True)
+        self.app.cast_editor._commit_selected()
+        if self.app.dialogue_dirty or self.app.cast_editor.dirty:
+            if not messagebox.askyesno("미저장 번역", "저장하지 않은 번역 변경이 있습니다. 지금 저장하고 빌드하시겠습니까?"): return False
+            if self.app.dialogue_dirty: self.app.save_workspace()
+            if self.app.cast_editor.dirty: self.app.cast_editor.save()
+        return True
+
+    def start(self, mode: str) -> None:
+        if self.running or not self._save_pending(): return
+        iso = Path(self.iso.get().strip()); output = Path(self.output.get().strip()) if self.output.get().strip() else None; font = Path(self.font.get().strip()) if self.font.get().strip() else None
+        if not self.iso.get().strip(): messagebox.showwarning("패치 빌드", "원본 ISO를 선택해 주세요."); return
+        overwrite = False
+        if mode == "build":
+            if output is None: messagebox.showwarning("패치 빌드", "출력 ISO 경로를 선택해 주세요."); return
+            if output.exists():
+                if not messagebox.askyesno("출력 파일", f"기존 파일을 덮어쓰시겠습니까?\n{output}"): return
+                overwrite = True
+        self.running = True; self.result.set(""); self._set_buttons(False); self.progress.start(10); self._append(f"{mode} 시작: {iso}\n")
+        threading.Thread(target=self._worker, args=(mode, iso, output, font, overwrite), daemon=True).start()
+
+    def _worker(self, mode, iso, output, font, overwrite) -> None:
+        try:
+            result = run_build(mode, iso, output, font, overwrite=overwrite)
+            self.events.put(("success", mode, result))
+        except Exception as exc: self.events.put(("error", str(exc)))
+
+    def _poll(self) -> None:
+        try:
+            while True:
+                event = self.events.get_nowait()
+                if event[0] == "success":
+                    _, mode, data = event; summary = data["summary"]
+                    self._append(json.dumps(summary, ensure_ascii=False, indent=2) + "\n")
+                    if mode == "build":
+                        iso = data["iso"]; self.result.set(f"완료: SHA-256 {iso['output_iso_sha256']}"); self._append(f"출력: {iso['path']}\n")
+                    else: self.result.set("사전 검증 완료")
+                    self._finish()
+                else: self._append("오류: " + event[1] + "\n"); self.result.set("실패"); self._finish(); messagebox.showerror("패치 빌드 실패", event[1])
+        except queue.Empty: pass
+        self.after(100, self._poll)
+
+    def _finish(self) -> None:
+        self.running = False; self.progress.stop(); self._set_buttons(True); self.refresh_data(silent=True)
+
+    def _set_buttons(self, enabled: bool) -> None:
+        state = tk.NORMAL if enabled else tk.DISABLED
+        for button in (self.refresh_button, self.preflight_button, self.build_button): button.configure(state=state)
+
+    def _append(self, text: str) -> None:
+        self.log.configure(state=tk.NORMAL); self.log.insert(tk.END, text); self.log.see(tk.END); self.log.configure(state=tk.DISABLED)
 
 
 def main() -> int:

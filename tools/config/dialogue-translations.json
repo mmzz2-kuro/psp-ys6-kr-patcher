@@ -9933,9 +9933,9 @@
       "source_text": "あなたのように《大渦》の外から\\n流れ着いた人は大勢いるんです。",
       "source_raw_hex": "82A082C882BD82CC82E682A482C9817391E58951817482CC8A4F82A982E75C6E97AC82EA928582A282BD906C82CD91E590A882A282E982F182C582B78142",
       "source_sha256": "E331D27A781B85AD2A215826952D023AB661A510357C867DDD79AC267D25AA10",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "당신처럼 《대소용돌이》 밖에서\\n떠밀려 온 사람은 많이 있어요.",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030"
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/abouteresia.xso.z",
@@ -9949,9 +9949,10 @@
       "source_text": "私たちは、そうした人々を\\n<color:0xffBBFDC2>エレシア人<ruby:0,2>びと<endruby><color:>と呼んでいます。",
       "source_raw_hex": "8E8482BD82BF82CD814182BB82A482B582BD906C815882F05C6E3C636F6C6F723A307866664242464443323E8347838C83568341906C3C727562793A302C323E82D182C63C656E64727562793E3C636F6C6F723A3E82C68CC482F182C582A282DC82B78142",
       "source_sha256": "A7E2893C232E0EA7908D55FC1CFBA2376602B949C848C474CC2A8D812A666B94",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "저희는 그런 사람들을\\n<color:0xffBBFDC2>에레시아인<color:>이라고 불러요.",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030",
+      "allow_markup_change": true
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/abouteresia.xso.z",
@@ -9965,9 +9966,9 @@
       "source_text": "流れ着いた彼らは、北東のカナン島で\\n石造りの集落を築いて暮らしています。",
       "source_raw_hex": "97AC82EA928582A282BD94DE82E782CD8141966B938C82CC834A83698393938782C55C6E90CE91A282E882CC8F57978E82F0927A82A282C495E982E782B582C482A282DC82B78142",
       "source_sha256": "EB55101544160D18D3DD1CBB337837FF4A02AA6D95DF7B2673940D0E501FF36B",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "표류해 온 사람들은 북동쪽 카나안섬에\\n석조 마을을 세우고 살고 있어요.",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030"
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/abouteresia.xso.z",
@@ -9981,9 +9982,9 @@
       "source_text": "残念ながら……\\n今は行くことができませんけど。",
       "source_raw_hex": "8E63944F82C882AA82E7816381635C6E8DA182CD8D7382AD82B182C682AA82C582AB82DC82B982F182AF82C78142",
       "source_sha256": "C6D771A7343E50257B4DBF676EF92970844C9CB4F6149E158314A9490463D337",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "안타깝게도……\\n지금은 갈 수 없지만요.",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030"
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/aboutisha.xso.z",
@@ -9997,9 +9998,9 @@
       "source_text": "あ、早速会ったんですね？",
       "source_raw_hex": "82A08141918191AC89EF82C182BD82F182C582B782CB8148",
       "source_sha256": "D871CFC91E5F0678E9B7882CD3CF44909C34951CB716C033038E6C5DF4732B7E",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "아, 벌써 만나셨군요?",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030"
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/aboutisha.xso.z",
@@ -10013,9 +10014,9 @@
       "source_text": "その子は私の妹で、<color:0xffBBFDC2>イーシャ<color:>といいます。",
       "source_raw_hex": "82BB82CC8E7182CD8E8482CC968582C581413C636F6C6F723A307866664242464443323E8343815B835683833C636F6C6F723A3E82C682A282A282DC82B78142",
       "source_sha256": "2887F2472D0F5A96BC8E67EA80866311419532DC0732A109738FBD84C9FBFC43",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "그 아이는 제 동생인 <color:0xffBBFDC2>이샤<color:>라고 해요.",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030"
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/aboutisha.xso.z",
@@ -10029,9 +10030,9 @@
       "source_text": "昔から、エレシアの方々に\\n人見知りするところがあって……",
       "source_raw_hex": "90CC82A982E781418347838C8356834182CC95FB815882C95C6E906C8CA9926D82E882B782E982C682B182EB82AA82A082C182C481638163",
       "source_sha256": "979BA244B5558FA190D6BC1C5F874AF6CC81AE1F5C0C422F2948E366EB8D1D6C",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "예전부터 에레시아인들을\\n낯설어하는 면이 있어서……",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030"
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/aboutisha.xso.z",
@@ -10045,9 +10046,9 @@
       "source_text": "それで、\\x1さんのことを\\n少し避けているのだと思います。",
       "source_raw_hex": "82BB82EA82C581415C783182B382F182CC82B182C682F05C6E8FAD82B594F082AF82C482A282E982CC82BE82C68E7682A282DC82B78142",
       "source_sha256": "DE1981776B8620B3AA6787298BCF65F44D3F3FF3B29EF5270727BA46C2369953",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "그래서 \\x1 씨를\\n조금 피하는 것 같아요.",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030"
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/aboutisha.xso.z",
@@ -10061,9 +10062,9 @@
       "source_text": "引っ込み思案なところはありますけど\\n思いやりのあるいい子ですから……",
       "source_raw_hex": "88F882C18D9E82DD8E7688C482C882C682B182EB82CD82A082E882DC82B782AF82C75C6E8E7682A282E282E882CC82A082E982A282A28E7182C582B782A982E781638163",
       "source_sha256": "6892F0698E8F39C2CEA8342B1AD9A08BDCB008E1EB5933F486092856240C1043",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "수줍음을 많이 타기는 해도\\n마음씨가 따뜻한 착한 아이니까……",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030"
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/aboutisha.xso.z",
@@ -10077,9 +10078,9 @@
       "source_text": "仲良くしていただけると嬉しいです。",
       "source_raw_hex": "928797C782AD82B582C482A282BD82BE82AF82E982C68AF082B582A282C582B78142",
       "source_sha256": "4514448127C1682660E5EA248D5FCCBCBCC51895356D78F8F9A7C79774E76C43",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "사이좋게 지내 주시면 기쁠 것 같아요.",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030"
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/aboutisha.xso.z",
@@ -10093,9 +10094,9 @@
       "source_text": "引っ込み思案な所はありますけど\\n思いやりのあるいい子ですから……",
       "source_raw_hex": "88F882C18D9E82DD8E7688C482C88F8A82CD82A082E882DC82B782AF82C75C6E8E7682A282E282E882CC82A082E982A282A28E7182C582B782A982E781638163",
       "source_sha256": "F074905E55C9FF5CEDC66AFE81415BF3621ADBF09B97AF6C7C71C570564844B4",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "수줍음을 많이 타기는 해도\\n마음씨가 따뜻한 착한 아이니까……",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030"
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/aboutkanan.xso.z",
@@ -10109,9 +10110,9 @@
       "source_text": "あなたが巻き込まれた《大渦》……\\nその中に、カナンの島々があります。",
       "source_raw_hex": "82A082C882BD82AA8AAA82AB8D9E82DC82EA82BD817391E589518174816381635C6E82BB82CC928682C98141834A8369839382CC9387815882AA82A082E882DC82B78142",
       "source_sha256": "1ABB9C75BD88D505DF491489CA73927B8CC5670A97C0EA447E31FA7684981423",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "당신이 휘말렸던 《대소용돌이》……\\n그 안에 카나안의 섬들이 있어요.",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030"
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/aboutkanan.xso.z",
@@ -10125,9 +10126,9 @@
       "source_text": "まずはここ、私たちの住んでいる\\n深い森に恵まれた<color:0xffBBFDC2>クアテラ島<color:>。",
       "source_raw_hex": "82DC82B882CD82B182B181418E8482BD82BF82CC8F5A82F182C582A282E95C6E905B82A2905882C98C6282DC82EA82BD3C636F6C6F723A307866664242464443323E834E83418365838993873C636F6C6F723A3E8142",
       "source_sha256": "9C8A9C745806CE48110A2E4055597EC7B44E0A4BA65A56647BA6243AD53D8395",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "먼저 이곳, 저희가 사는\\n울창한 숲의 <color:0xffBBFDC2>콰테라섬<color:>.",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030"
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/aboutkanan.xso.z",
@@ -10141,9 +10142,9 @@
       "source_text": "次に、平原と山岳地帯に彩られた\\nエレシア人たちの住む<color:0xffBBFDC2>カナン島<color:>。",
       "source_raw_hex": "8E9F82C9814195BD8CB482C68E528A78926E91D182C98DCA82E782EA82BD5C6E8347838C83568341906C82BD82BF82CC8F5A82DE3C636F6C6F723A307866664242464443323E834A8369839393873C636F6C6F723A3E8142",
       "source_sha256": "1C8AF4E35301F7ED830BB49E1BD83663635CF8CDAF25B0204DC6556E9F2B4C10",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "다음은 평원과 산악 지대로 이루어진\\n에레시아인들의 <color:0xffBBFDC2>카나안섬<color:>.",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030"
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/aboutkanan.xso.z",
@@ -10157,9 +10158,9 @@
       "source_text": "そして……\\n内海にある遺跡の島、<color:0xffBBFDC2>ゼメス島<color:>。",
       "source_raw_hex": "82BB82B582C4816381635C6E93E08A4382C982A082E988E290D582CC938781413C636F6C6F723A307866664242464443323E835B8381835893873C636F6C6F723A3E8142",
       "source_sha256": "62374755011B5AB6753553BA8C52F8F6F43A358C989AE3F61FFC942BBE548A51",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "그리고……\\n내해에 있는 유적의 섬, <color:0xffBBFDC2>제메스섬<color:>.",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030"
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/aboutkanan.xso.z",
@@ -10173,9 +10174,9 @@
       "source_text": "この三つを合わせたものが\\n《カナン諸島》と呼ばれています。",
       "source_raw_hex": "82B182CC8E4F82C282F08D8782ED82B982BD82E082CC82AA5C6E8173834A836983938F949387817482C68CC482CE82EA82C482A282DC82B78142",
       "source_sha256": "87044A4F62CDF2A0A62B261A18285DD288D5C04FB51403CE049C32FD47318C01",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "이 세 섬을 모두 합쳐\\n《카나안 제도》라고 불러요.",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030"
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/aboutman.xso.z",
@@ -11601,9 +11602,9 @@
       "source_text": "あ……\\nもう起きられたんですね。",
       "source_raw_hex": "82A0816381635C6E82E082A48B4E82AB82E782EA82BD82F182C582B782CB8142",
       "source_sha256": "A1F7FB6DA39A205D1D58298B56FD7A86D6CB1591BAFBDDC50E95FC2942C7535D",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "아……\\n벌써 일어나실 수 있게 됐군요.",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030"
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z",
@@ -11633,9 +11634,9 @@
       "source_text": "ほっ……\\nだいぶ顔色が良くなりましたね。",
       "source_raw_hex": "82D982C1816381635C6E82BE82A282D48AE7904682AA97C782AD82C882E882DC82B582BD82CB8142",
       "source_sha256": "22614DF5C38DCEDB4BA2B01984B204A48B2DFC1F48BCAA87128E362FB668A761",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "휴……\\n안색이 많이 좋아지셨네요.",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030"
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z",
@@ -11649,9 +11650,9 @@
       "source_text": "あなたは三日間、\\nずっと寝たきりだったんですよ。",
       "source_raw_hex": "82A082C882BD82CD8E4F93FA8AD481415C6E82B882C182C6905182BD82AB82E882BE82C182BD82F182C582B782E68142",
       "source_sha256": "B8C3E0E2C74CC507E55100EC9712A1678EC8E4E3590E6D5DBFD024D36C735F59",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "사흘 동안이나\\n계속 누워 계셨어요.",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030"
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z",
@@ -11665,9 +11666,9 @@
       "source_text": "傷は塞がりましたけど\\n身体が衰弱しきっていましたから。",
       "source_raw_hex": "8F9D82CD8DC782AA82E882DC82B582BD82AF82C75C6E906791CC82AA908A8EE382B582AB82C182C482A282DC82B582BD82A982E78142",
       "source_sha256": "EC46A83C651E7E41A19CFE48410ADF492B6FD9BC0C2935BA81B179CF54CD97AD",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "상처는 아물었지만\\n몸이 몹시 쇠약해져 있었거든요.",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030"
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z",
@@ -11681,9 +11682,9 @@
       "source_text": "でも、よかった。\\nもうすっかり大丈夫みたいですね。",
       "source_raw_hex": "82C582E0814182E682A982C182BD81425C6E82E082A482B782C182A982E891E58FE4957682DD82BD82A282C582B782CB8142",
       "source_sha256": "8D4A7CC58F6CEDB61073FB1B0480C3639E135742940E930194229CC051C94C32",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "그래도 다행이에요.\\n이제 완전히 괜찮아지신 것 같네요.",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030"
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z",
@@ -11697,9 +11698,9 @@
       "source_text": "あ、すみません。\\n改めて自己紹介させて頂きます。",
       "source_raw_hex": "82A0814182B782DD82DC82B982F181425C6E89FC82DF82C48EA98CC88FD089EE82B382B982C492B882AB82DC82B78142",
       "source_sha256": "4851A1612FC7967DEBBD5E10803B564FC4CCCA52977351A41BBCD6401B6175CD",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "아, 죄송해요.\\n다시 정식으로 소개할게요.",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030"
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z",
@@ -11713,9 +11714,9 @@
       "source_text": "私はレダ族の\\n巫女を務めるオルハといいます。",
       "source_raw_hex": "8E8482CD838C835F91B082CC5C6E9BDE8F9782F096B182DF82E98349838B836E82C682A282A282DC82B78142",
       "source_sha256": "83C3653E6D7766E17D81043BEAC5963F90F9F8C66E697D2218DEE7E4C69CE344",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "저는 레다족의 무녀를 맡고 있는\\n오르하라고 해요.",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030"
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z",
@@ -11729,9 +11730,9 @@
       "source_text": "あの……\\n\\x1さんとおっしゃいましたね。",
       "source_raw_hex": "82A082CC816381635C6E5C783182B382F182C682A882C182B582E182A282DC82B582BD82CB8142",
       "source_sha256": "45C2A068C3A32B811C2C5256A6FBFBBE068CAF5433EAF9558817853A67178130",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "저기……\\n\\x1 씨라고 하셨죠.",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030"
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z",
@@ -11745,9 +11746,9 @@
       "source_text": "どういう事情で、この島に\\n流れ着くことになったんですか？",
       "source_raw_hex": "82C782A482A282A48E968FEE82C5814182B182CC938782C95C6E97AC82EA928582AD82B182C682C982C882C182BD82F182C582B782A98148",
       "source_sha256": "F44D048330304035BBDDC58B42EAE8DE2DF6330B81A3CEEBA0C904835F115947",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "어쩌다가 이 섬에\\n떠밀려 오게 되신 건가요?",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030"
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z",
@@ -11761,9 +11762,9 @@
       "source_text": "<color:0xffacdae8>　\\x1は、大渦の近くでロムン艦隊に襲撃され\\n　海賊船から海に転落したことを説明した。",
       "source_raw_hex": "3C636F6C6F723A307866666163646165383E81405C783182CD814191E5895182CC8BDF82AD82C5838D838083938ACD91E082C98F508C8282B382EA5C6E81408A4391AF914482A982E78A4382C9935D978E82B582BD82B182C682F090E096BE82B582BD8142",
       "source_sha256": "CD4F2A7518AB097D1D6BBE4AC30B2BBDAB7E21158B3456A9505A14BDA3510E11",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "<color:0xffacdae8>　\\x1은 대소용돌이 근처에서 로문 함대의 습격을 받아\\n　해적선에서 바다로 떨어졌다고 설명했다.",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030"
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z",
@@ -11777,9 +11778,9 @@
       "source_text": "カイゾクセン……ロムン……？",
       "source_raw_hex": "834A8343835D834E835A839381638163838D83808393816381638148",
       "source_sha256": "2A2D83760128AADCB1D17C79A351B0A78470C5495FB205C14D4DDDA6B03FECBA",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "해적선…… 로문……?",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030"
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z",
@@ -11793,9 +11794,9 @@
       "source_text": "よく判りませんが、他のエレシア人と\\nだいたい同じような事情みたいですね。",
       "source_raw_hex": "82E682AD94BB82E882DC82B982F182AA814191BC82CC8347838C83568341906C82C65C6E82BE82A282BD82A293AF82B682E682A482C88E968FEE82DD82BD82A282C582B782CB8142",
       "source_sha256": "E88708968C11AA5FE9D8207F1BF2BB52E16EBBFFF8E88A0AA4B6F6C01878585E",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "잘은 모르겠지만 다른 에레시아인들과\\n대체로 비슷한 사정인 것 같네요.",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030"
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z",
@@ -11809,9 +11810,9 @@
       "source_text": "あの……\\n分からないことばかりでしょうけど\\n私に答えられることならご説明します。",
       "source_raw_hex": "82A082CC816381635C6E95AA82A982E782C882A282B182C682CE82A982E882C582B582E582A482AF82C75C6E8E8482C9939A82A682E782EA82E982B182C682C882E782B290E096BE82B582DC82B78142",
       "source_sha256": "72435FF280B89D3B5F11E81D43FED49767141978E0D6EFBDD9FCFF89EFA3E9FD",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "저기……\\n모르는 것투성이시겠지만\\n제가 아는 거라면 설명해 드릴게요.",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030"
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z",
@@ -11825,9 +11826,9 @@
       "source_text": "どうぞ、聞いてみてください。",
       "source_raw_hex": "82C782A482BC814195B782A282C482DD82C482AD82BE82B382A28142",
       "source_sha256": "9E994CBD265B56F9C3D30D2D5D3BE505409817515EDC2CAB32DE04B68002D1D5",
-      "translation": "",
-      "status": "untranslated",
-      "notes": ""
+      "translation": "무엇이든 물어보세요.",
+      "status": "draft",
+      "notes": "Codex 초벌 번역 030"
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z",

@@ -17,16 +17,28 @@ try:
     from tools.scripts.ys6_xso import parse_xso,rebuild_xso
     from tools.scripts.ys6_z import build_container,verify_container_bytes
 except ModuleNotFoundError:
-    from iso9660_info import SECTOR_SIZE,find_record
-    from ys6_arc import find_file,parse_archive,replace_file
-    from ys6_castinfo import encode_game_name,patch_name
-    from ys6_cast_name_workspace import load_workspace as load_cast_workspace,reviewed_records as reviewed_cast_records,validate_workspace as validate_cast_workspace
-    from ys6_hangul_codec import encode_translation,extend_mapping,write_mapping
-    from ys6_hangul_font_build import build as build_font
-    from ys6_iso_multi_patch import Replacement,patch_atomic
-    from ys6_translation_workspace import validate
-    from ys6_xso import parse_xso,rebuild_xso
-    from ys6_z import build_container,verify_container_bytes
+    try:
+        from .iso9660_info import SECTOR_SIZE,find_record
+        from .ys6_arc import find_file,parse_archive,replace_file
+        from .ys6_castinfo import encode_game_name,patch_name
+        from .ys6_cast_name_workspace import load_workspace as load_cast_workspace,reviewed_records as reviewed_cast_records,validate_workspace as validate_cast_workspace
+        from .ys6_hangul_codec import encode_translation,extend_mapping,write_mapping
+        from .ys6_hangul_font_build import build as build_font
+        from .ys6_iso_multi_patch import Replacement,patch_atomic
+        from .ys6_translation_workspace import validate
+        from .ys6_xso import parse_xso,rebuild_xso
+        from .ys6_z import build_container,verify_container_bytes
+    except ImportError:
+        from iso9660_info import SECTOR_SIZE,find_record
+        from ys6_arc import find_file,parse_archive,replace_file
+        from ys6_castinfo import encode_game_name,patch_name
+        from ys6_cast_name_workspace import load_workspace as load_cast_workspace,reviewed_records as reviewed_cast_records,validate_workspace as validate_cast_workspace
+        from ys6_hangul_codec import encode_translation,extend_mapping,write_mapping
+        from ys6_hangul_font_build import build as build_font
+        from ys6_iso_multi_patch import Replacement,patch_atomic
+        from ys6_translation_workspace import validate
+        from ys6_xso import parse_xso,rebuild_xso
+        from ys6_z import build_container,verify_container_bytes
 
 EXPECTED_ISO_SHA256="0133DC75EEEFB7E1864180C88E486D2EEBE9AE3D1DBFA990BEF57E28BAAE082B"
 EBOOT_PATH="PSP_GAME/SYSDIR/EBOOT.BIN"

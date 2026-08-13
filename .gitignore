@@ -70,3 +70,4 @@ snes/DL-KR-hangul-name-final-build-report.json
 *__pycache__*
 .work/
 tools/scripts/tests/
+tools/patchdata/

@@ -1,0 +1,125 @@
+#!/usr/bin/env python3
+"""User-facing Ys VI patch builder using tools/config and tools/patchdata."""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import sys
+from pathlib import Path
+from types import SimpleNamespace
+
+try:
+    from tools.scripts.ys6_integrated_build import execute
+    from tools.scripts.ys6_translation_workspace import validate as validate_dialogue
+    from tools.scripts.ys6_cast_name_workspace import validate_workspace as validate_cast
+except ModuleNotFoundError:
+    try:
+        from .ys6_integrated_build import execute
+        from .ys6_translation_workspace import validate as validate_dialogue
+        from .ys6_cast_name_workspace import validate_workspace as validate_cast
+    except ImportError:
+        from ys6_integrated_build import execute
+        from ys6_translation_workspace import validate as validate_dialogue
+        from ys6_cast_name_workspace import validate_workspace as validate_cast
+
+
+class PatchBuilderError(Exception):
+    pass
+
+
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        while chunk := stream.read(1024 * 1024): digest.update(chunk)
+    return digest.hexdigest().upper()
+
+
+def layout(tools_dir: Path | None = None) -> dict[str, Path]:
+    root = (tools_dir or Path(__file__).resolve().parents[1]).resolve()
+    config, patch = root / "config", root / "patchdata"
+    return {
+        "tools": root, "dialogue": config / "dialogue-translations.json",
+        "cast": config / "cast-names.json", "catalog": config / "dialogue-catalog.json",
+        "build_config": patch / "build-config.json", "runtime_map": patch / "runtime-archive-map.json",
+        "font_usage": patch / "font-usage.json", "seed_mapping": patch / "seed-mapping.json",
+        "original_eboot": patch / "original-eboot.bin", "han_override": patch / "hangul-98fc-manual.txt",
+        "standalone_paths": patch / "standalone-paths.json", "work": patch / "work" / "current",
+    }
+
+
+def find_default_font() -> Path | None:
+    candidates = [Path("C:/Windows/Fonts/gulim.ttc"), Path("C:/Windows/Fonts/gulim.ttf")]
+    return next((path for path in candidates if path.exists()), None)
+
+
+def inspect_inputs(tools_dir: Path | None = None) -> dict:
+    paths = layout(tools_dir)
+    required = [value for key, value in paths.items() if key not in {"tools", "work"}]
+    missing = [str(path) for path in required if not path.exists()]
+    if missing: raise PatchBuilderError("필수 파일 없음: " + ", ".join(missing))
+    config = json.loads(paths["build_config"].read_text(encoding="utf-8-sig"))
+    for name, expected in config["assets"].items():
+        path = paths["build_config"].parent / name
+        actual = sha256_file(path)
+        if actual != expected: raise PatchBuilderError(f"패치 데이터 SHA-256 불일치: {name}")
+    dialogue = json.loads(paths["dialogue"].read_text(encoding="utf-8-sig"))
+    cast = json.loads(paths["cast"].read_text(encoding="utf-8-sig"))
+    dialogue_report = validate_dialogue(dialogue)
+    cast_errors = validate_cast(cast)
+    if not dialogue_report["valid"]: raise PatchBuilderError("대사 작업공간 오류: " + "; ".join(dialogue_report["errors"]))
+    if cast_errors: raise PatchBuilderError("인물명 작업공간 오류: " + "; ".join(cast_errors))
+    return {
+        "dialogue_records": len(dialogue["records"]),
+        "override_count": sum(row.get("status") == "override" for row in dialogue["records"]),
+        "draft_count": sum(row.get("status") == "draft" for row in dialogue["records"]),
+        "cast_reviewed_count": sum(row.get("status") == "reviewed" for row in cast["records"]),
+        "font": str(find_default_font() or ""), "paths": paths, "config": config,
+    }
+
+
+def run_build(mode: str, iso: Path, output: Path | None = None, font: Path | None = None,
+              tools_dir: Path | None = None, overwrite: bool = False) -> dict:
+    info = inspect_inputs(tools_dir); paths, config = info["paths"], info["config"]
+    font = font or find_default_font()
+    if font is None or not font.exists(): raise PatchBuilderError("굴림 TTC/TTF 폰트를 찾을 수 없습니다")
+    if not iso.exists(): raise PatchBuilderError(f"원본 ISO를 찾을 수 없습니다: {iso}")
+    if sha256_file(iso) != config["original_iso_sha256"]: raise PatchBuilderError("지원하는 원본 ISO의 SHA-256이 아닙니다")
+    if mode == "build":
+        if output is None: raise PatchBuilderError("출력 ISO 경로가 필요합니다")
+        if iso.resolve() == output.resolve(): raise PatchBuilderError("원본 ISO와 출력 ISO 경로가 같습니다")
+        if output.exists() and not overwrite: raise PatchBuilderError(f"출력 ISO가 이미 존재합니다: {output}")
+        output.parent.mkdir(parents=True, exist_ok=True)
+    args = SimpleNamespace(
+        mode=mode, iso=iso, workspace=paths["dialogue"], cast_name_workspace=paths["cast"],
+        catalog=paths["catalog"], runtime_map=paths["runtime_map"], font_usage=paths["font_usage"],
+        seed_mapping=paths["seed_mapping"], original_eboot=paths["original_eboot"], font=font,
+        han_override=paths["han_override"], horizontal_left_inset=int(config["horizontal_left_inset"]),
+        castinfo_name=None, castinfo_identifier="CAST_C240", castinfo_expected_name="イーシャ",
+        work=paths["work"], standalone_path=json.loads(paths["standalone_paths"].read_text(encoding="utf-8-sig")),
+        output_iso=output, overwrite=overwrite,
+    )
+    return execute(args)
+
+
+def main(argv=None) -> int:
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"): stream.reconfigure(encoding="utf-8", errors="backslashreplace")
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("mode", choices=("inspect", "preflight", "build")); parser.add_argument("--iso", type=Path)
+    parser.add_argument("--output", type=Path); parser.add_argument("--font", type=Path); parser.add_argument("--overwrite", action="store_true")
+    args = parser.parse_args(argv)
+    try:
+        if args.mode == "inspect":
+            result = inspect_inputs(); result = {key:value for key,value in result.items() if key not in {"paths", "config"}}
+        else:
+            if args.iso is None: parser.error(f"{args.mode} requires --iso")
+            result = run_build(args.mode, args.iso, args.output, args.font, overwrite=args.overwrite)
+        print(json.dumps(result.get("summary", result), ensure_ascii=False, indent=2)); return 0
+    except (OSError, ValueError, KeyError, json.JSONDecodeError, PatchBuilderError) as exc:
+        print(f"패치 빌드 실패: {exc}", file=sys.stderr); return 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
