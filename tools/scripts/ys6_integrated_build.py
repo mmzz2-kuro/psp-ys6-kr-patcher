@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Preflight and build reviewed Ys VI translations across runtime archives."""
+"""Preflight and build approved Ys VI dialogue overrides across runtime archives."""
 from __future__ import annotations
 import argparse,csv,hashlib,json,sys,tempfile
 from collections import defaultdict
@@ -43,9 +43,11 @@ def file_sha256(path:Path)->str:
 def select_reviewed(workspace:dict)->list[dict]:
  report=validate(workspace)
  if not report["valid"]:raise IntegratedBuildError("invalid workspace: "+"; ".join(report["errors"]))
- selected=[dict(x) for x in workspace["records"] if x["status"]=="reviewed"]
- if not selected:raise IntegratedBuildError("reviewed translation is empty")
+ selected=[dict(x) for x in workspace["records"] if x["status"]=="override"]
+ if not selected:raise IntegratedBuildError("override translation is empty")
  return selected
+
+select_overrides=select_reviewed
 
 def group_translations(records:list[dict],catalog:dict,runtime_map:dict)->list[dict]:
  files={x["iso_path"]:x for x in catalog["files"]}; mapping_by_hash={x["xso_sha256"]:x for x in runtime_map["mappings"]}; grouped=defaultdict(list)
@@ -105,7 +107,7 @@ def execute(args)->dict:
  cast_selected=reviewed_cast_records(cast_workspace) if cast_workspace else []
  cast_errors=validate_cast_workspace(cast_workspace) if cast_workspace else []
  if cast_errors:raise IntegratedBuildError("invalid cast-name workspace: "+"; ".join(cast_errors))
- selected=select_reviewed(workspace);groups=group_translations(selected,catalog,runtime_map); runtime={x["runtime_key"]:x for x in runtime_map["runtime_entries"]};mapping=build_mapping(groups,usage,seed,"".join(x["translation"] for x in cast_selected))
+ selected=select_overrides(workspace);groups=group_translations(selected,catalog,runtime_map); runtime={x["runtime_key"]:x for x in runtime_map["runtime_entries"]};mapping=build_mapping(groups,usage,seed,"".join(x["translation"] for x in cast_selected))
  args.work.mkdir(parents=True,exist_ok=True);(args.work/"xso").mkdir(exist_ok=True);(args.work/"archives").mkdir(exist_ok=True)
  write_mapping(mapping,args.work/"mapping.json",args.work/"mapping.csv")
  eboot_data=args.original_eboot.read_bytes();overrides={"한":args.han_override};patched_eboot,glyph_report,atlas=build_font(eboot_data,mapping,args.font,12,overrides,horizontal_left_inset=args.horizontal_left_inset);(args.work/"EBOOT.BIN").write_bytes(patched_eboot);(args.work/"glyph-report.json").write_text(json.dumps({"visible_width":12,"horizontal_left_inset":args.horizontal_left_inset,"glyphs":glyph_report},ensure_ascii=False,indent=2)+"\n",encoding="utf-8");atlas.resize((atlas.width*8,atlas.height*8),Image.Resampling.NEAREST).save(args.work/"glyph-atlas.png")
@@ -167,7 +169,7 @@ def execute(args)->dict:
  original_iso_eboot,eboot_record=read_iso_file(iso,EBOOT_PATH);iso_replacements.insert(0,Replacement(EBOOT_PATH,args.work/"EBOOT.BIN",len(original_iso_eboot),sha256(original_iso_eboot)))
  expected_replacement_count=1+len(archive_rows)+len(standalone_rows)+len(extra_replacements)
  if len(iso_replacements)!=expected_replacement_count:raise IntegratedBuildError(f"ISO replacement count mismatch: expected={expected_replacement_count}, actual={len(iso_replacements)}")
- preflight={"valid":True,"reviewed_count":len(selected),"xso_count":len(groups),"archive_count":len(archive_rows),"standalone_count":len(standalone_rows),"castinfo_count":len(castinfo_rows),"glyph_count":len(mapping),"overflow":[]};(args.work/"preflight-report.json").write_text(json.dumps(preflight,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+ preflight={"valid":True,"override_count":len(selected),"reviewed_count":len(selected),"xso_count":len(groups),"archive_count":len(archive_rows),"standalone_count":len(standalone_rows),"castinfo_count":len(castinfo_rows),"glyph_count":len(mapping),"overflow":[]};(args.work/"preflight-report.json").write_text(json.dumps(preflight,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
  write_csv(args.work/"translation-report.csv",translation_rows,["xso_sha256","runtime_key","string_index","source_text","translation","original_length","replacement_length","delta","origin_paths"]);write_csv(args.work/"xso-report.csv",xso_rows,["xso_sha256","runtime_key","entry_flags_hex","entry_kind","mapping_status","replacement_count","original_size","rebuilt_size","compressed_size","allocated_size","remaining_slack","original_sha256","rebuilt_sha256"]);write_csv(args.work/"archive-report.csv",archive_rows,["iso_path","size","modified_xso_count","original_sha256","output_sha256"])
  write_csv(args.work/"standalone-report.csv",standalone_rows,["iso_path","runtime_key","original_size","compressed_size","allocated_size","remaining_slack","original_sha256","output_sha256"])
  write_csv(args.work/"castinfo-report.csv",castinfo_rows,["identifier","source","name","encoded_name_hex","standalone_path","archive_path","entry_index","entry_flags_hex","size","changed_byte_count","original_sha256","output_sha256"])

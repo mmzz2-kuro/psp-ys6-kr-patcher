@@ -1,0 +1,1850 @@
+{
+  "schema_version": 1,
+  "records": [
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0202",
+      "xso_name": "oruhamove",
+      "string_index": 16,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "耳と尻尾について",
+      "source_raw_hex": "8EA882C6904B94F682C982C282A282C4",
+      "source_sha256": "7CCA7C3679DAA829E08D247A68636E2EE87013365D916B92EEDAD01C45D485DD",
+      "translation": "귀와 꼬리에 대해서",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0202",
+      "xso_name": "oruhamove",
+      "string_index": 18,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "レダ族について",
+      "source_raw_hex": "838C835F91B082C982C282A282C4",
+      "source_sha256": "5CC90B45FA760E1DC68668AF3F9824C110B21A4CAA5E04905DCFE3686C18C374",
+      "translation": "레다족에 대해서",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0202",
+      "xso_name": "oruhamove",
+      "string_index": 20,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "エレシア人について",
+      "source_raw_hex": "8347838C83568341906C82C982C282A282C4",
+      "source_sha256": "A2985B566BA9E6CCF7EC086598B51FFEC6E0B6EE38B38C377DC28935B4721BFB",
+      "translation": "에레시아인에 대해서",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0202",
+      "xso_name": "oruhamove",
+      "string_index": 22,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "カナンの島々について",
+      "source_raw_hex": "834A8369839382CC9387815882C982C282A282C4",
+      "source_sha256": "186445DC056127EC6BC87DE9BFF5990DD8EEF34AA2349DDC39147D3FF6012B60",
+      "translation": "카난섬들에 대해서",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0202",
+      "xso_name": "oruhamove",
+      "string_index": 24,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "逃げた少女について",
+      "source_raw_hex": "93A682B082BD8FAD8F9782C982C282A282C4",
+      "source_sha256": "85A7BDB4D5EDC0C2AD86BA9D3AFE69812726A73704BDCAB278B246FCF419BC84",
+      "translation": "도망친 소녀에 대해서",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0202",
+      "xso_name": "oruhamove",
+      "string_index": 26,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "イーシャについて",
+      "source_raw_hex": "8343815B8356838382C982C282A282C4",
+      "source_sha256": "AD89C620400CEE3EB5F50D386AF517A9A9248B4DA768880B0B0E63A0C910DACC",
+      "translation": "이샤에 관해서",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0202",
+      "xso_name": "oruhamove",
+      "string_index": 27,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "巨漢の男性について",
+      "source_raw_hex": "8B908ABF82CC926A90AB82C982C282A282C4",
+      "source_sha256": "2CC8F276CC85AE91F6FF343379823A575796F30A40C9D4A50EF933102FE76180",
+      "translation": "거한 남성에 대해서",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0202",
+      "xso_name": "oruhamove",
+      "string_index": 29,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "オード族長について",
+      "source_raw_hex": "8349815B836891B092B782C982C282A282C4",
+      "source_sha256": "1892164D0FA94E103940EF2C378661766D7BAC4B31BEB19AD2BA89ED73E163BD",
+      "translation": "오드족장에 대해서",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0202",
+      "xso_name": "oruhamove",
+      "string_index": 31,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "話をやめる",
+      "source_raw_hex": "986282F082E282DF82E9",
+      "source_sha256": "9973732F912DA7C63CFBCCF2B830D058372814EBCE69B8C186E7D9215FB4F851",
+      "translation": "대화 그만두기",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_020a/adolsleep.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_020a",
+      "xso_name": "adolsleep",
+      "string_index": 1,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "まさか、あの渚に\\nエレシア人<ruby:0,2>びと<endruby>が流れ着くとは……",
+      "source_raw_hex": "82DC82B382A9814182A082CC8F8D82C95C6E8347838C83568341906C3C727562793A302C323E82D182C63C656E64727562793E82AA97AC82EA928582AD82C682CD81638163",
+      "source_sha256": "9B947F573C097FE5E70AE248651271A619DBEE9B506CEACB2C06BA38EFDD747F",
+      "translation": "설마, 저 해변에\\n에레시아인이 흘러 들어오다니...",
+      "status": "reviewed",
+      "notes": "approved Japanese ruby removal",
+      "allow_markup_change": true
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_020a/adolsleep.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_020a",
+      "xso_name": "adolsleep",
+      "string_index": 2,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "しかも見たところ、\\n鋼の剣を帯びた戦人<ruby:-22,2>いくさびと<endruby>ではないか。",
+      "source_raw_hex": "82B582A982E08CA982BD82C682B182EB81415C6E8D7C82CC8C9582F091D182D182BD90ED906C3C727562793A2D32322C323E82A282AD82B382D182C63C656E64727562793E82C582CD82C882A282A98142",
+      "source_sha256": "B3C8C0EF00BF4B473F33BEBA1B08AFD81118DCE2E8264D505B7612D0359A7F1F",
+      "translation": "게다가 모습은,\\n강철 검을 찬 전사가 아닌가.",
+      "status": "reviewed",
+      "notes": "approved Japanese ruby removal",
+      "allow_markup_change": true
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_020a/adolsleep.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_020a",
+      "xso_name": "adolsleep",
+      "string_index": 3,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "どうして、ここに運ばせたのだ？",
+      "source_raw_hex": "82C782A482B582C4814182B182B182C9895E82CE82B982BD82CC82BE8148",
+      "source_sha256": "A1694C003F9B494F013AA1B19FB04B590F09C14C9B7F21934C73CD1C177D8FA7",
+      "translation": "어째서, 이곳으로 옮긴 것이냐?",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_020a/adolsleep.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_020a",
+      "xso_name": "adolsleep",
+      "string_index": 5,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "……ごめんなさい、伯父様。",
+      "source_raw_hex": "8163816382B282DF82F182C882B382A28141948C9583976C8142",
+      "source_sha256": "C4A451AA121E7948C1F9BE4401A39CDD423137ECE2B27CFF49C7FBA6EE78E344",
+      "translation": "... 미안해요, 큰아버지.",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0551/s_0551.xso.z",
+      "map_group": "s_0551",
+      "map_id": "s_0551.xso.z",
+      "xso_name": "s_0551",
+      "string_index": 35,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "どうしたの、イーシャ？",
+      "source_raw_hex": "82C782A482B582BD82CC81418343815B835683838148",
+      "source_sha256": "9E2FAC6CFFC6218C45E47BC5D8CFFA8BEA013E50EE8D764D71C184BCA127B0D9",
+      "translation": "무슨일이야, 이샤?",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0551/s_0551.xso.z",
+      "map_group": "s_0551",
+      "map_id": "s_0551.xso.z",
+      "xso_name": "s_0551",
+      "string_index": 36,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "あ、ねぇさま……",
+      "source_raw_hex": "82A0814182CB82A582B382DC81638163",
+      "source_sha256": "3F3423E5257838FCD6DF2E87BA6FBA171524DC08436FA9B7D5FFC883A51A33B3",
+      "translation": "아, 언니...",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0551/s_0551.xso.z",
+      "map_group": "s_0551",
+      "map_id": "s_0551.xso.z",
+      "xso_name": "s_0551",
+      "string_index": 37,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "なんだか……\\n風がざわめいた気がして……",
+      "source_raw_hex": "82C882F182BE82A9816381635C6E959782AA82B482ED82DF82A282BD8B4382AA82B582C481638163",
+      "source_sha256": "15F9693E90B0399C07DA12C9EE5AEF7D63BC700F553E4EBD43BD989EAEAD5B97",
+      "translation": "뭔가..\\n바람이 소란스러운것 같아서...",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0551/s_0551.xso.z",
+      "map_group": "s_0551",
+      "map_id": "s_0551.xso.z",
+      "xso_name": "s_0551",
+      "string_index": 38,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "風が……？",
+      "source_raw_hex": "959782AA816381638148",
+      "source_sha256": "7C704CAE06F43587828C63D9B6B7640A453E8EF174762778E0D97B1AAE726E09",
+      "translation": "바람이..?",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0551/s_0551.xso.z",
+      "map_group": "s_0551",
+      "map_id": "s_0551.xso.z",
+      "xso_name": "s_0551",
+      "string_index": 39,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "ごめんなさい……\\nキレイな音色だったのに……",
+      "source_raw_hex": "82B282DF82F182C882B382A2816381635C6E834C838C834382C889B9904682BE82C182BD82CC82C981638163",
+      "source_sha256": "125BA7505A86E43A68C5432010C413146C864199A2CFC8CC00625D7F83474F47",
+      "translation": "미안해...\\n아름다운 음색인데...",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0551/s_0551.xso.z",
+      "map_group": "s_0551",
+      "map_id": "s_0551.xso.z",
+      "xso_name": "s_0551",
+      "string_index": 40,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "気にしないで続けて……",
+      "source_raw_hex": "8B4382C982B582C882A282C591B182AF82C481638163",
+      "source_sha256": "0878B855AF58DED3A68D886DBFE5EA2947116CBB6F38EC7BE8A1AF38B8797A8F",
+      "translation": "신경쓰지말고 계속...",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0551/s_0551.xso.z",
+      "map_group": "s_0551",
+      "map_id": "s_0551.xso.z",
+      "xso_name": "s_0551",
+      "string_index": 41,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "わたし……\\nねぇさまの笛が大好きだから……",
+      "source_raw_hex": "82ED82BD82B5816381635C6E82CB82A582B382DC82CC934A82AA91E58D4482AB82BE82A982E781638163",
+      "source_sha256": "F06DBA6562FA9B77E11BB3F887CE8A9ADD2DA51075A3F904A7D76FEC35F0ED09",
+      "translation": "나...\\n언니의 피리가 좋으니까...",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0551/s_0551.xso.z",
+      "map_group": "s_0551",
+      "map_id": "s_0551.xso.z",
+      "xso_name": "s_0551",
+      "string_index": 42,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "ふふ、ありがとう……",
+      "source_raw_hex": "82D382D3814182A082E882AA82C682A481638163",
+      "source_sha256": "B4CB825F59878AAABD57B0A7FA7606DFA1662A309841CFB09838A7416882D388",
+      "translation": "후후, 고마워...",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0551/s_0551.xso.z",
+      "map_group": "s_0551",
+      "map_id": "s_0551.xso.z",
+      "xso_name": "s_0551",
+      "string_index": 43,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "……あれは………！",
+      "source_raw_hex": "8163816382A082EA82CD8163816381638149",
+      "source_sha256": "01A456DF67CCBD24DEBF07857893160E233EF499F4CEC34486816A457B00E2F4",
+      "translation": "... 저기는...!",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0551/s_0551.xso.z",
+      "map_group": "s_0551",
+      "map_id": "s_0551.xso.z",
+      "xso_name": "s_0551",
+      "string_index": 44,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "……エレシア人<ruby:0,2>びと<endruby>ね。",
+      "source_raw_hex": "816381638347838C83568341906C3C727562793A302C323E82D182C63C656E64727562793E82CB8142",
+      "source_sha256": "C97D6662D82C9402ACD886B88CDB9CEC6387598FC9765FE919F91DA3BB83598F",
+      "translation": "...에레시아인이네.",
+      "status": "reviewed",
+      "notes": "approved Japanese ruby removal",
+      "allow_markup_change": true
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0551/s_0551.xso.z",
+      "map_group": "s_0551",
+      "map_id": "s_0551.xso.z",
+      "xso_name": "s_0551",
+      "string_index": 45,
+      "roles": [
+        "dialogue",
+        "resource_name"
+      ],
+      "source_text": "この渚に流れ着くなんて\\n今まで一度もなかったのに……",
+      "source_raw_hex": "82B182CC8F8D82C997AC82EA928582AD82C882F182C45C6E8DA182DC82C588EA937882E082C882A982C182BD82CC82C981638163",
+      "source_sha256": "F7140027B84957EE1B8EDEE8E1076F2376D7C7764C0785338A06E37298FF223E",
+      "translation": "이 해변에 흘러들어오다니\\n지금까지 없던 일인데...",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0551/s_0551.xso.z",
+      "map_group": "s_0551",
+      "map_id": "s_0551.xso.z",
+      "xso_name": "s_0551",
+      "string_index": 46,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "し、死んでるの……？",
+      "source_raw_hex": "82B581418E8082F182C582E982CC816381638148",
+      "source_sha256": "784477BCE5B5FBC19292F55B456D3F4553CEA106A5E70ED30F289F9F189C6C8F",
+      "translation": "주,죽은거야...?",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0551/s_0551.xso.z",
+      "map_group": "s_0551",
+      "map_id": "s_0551.xso.z",
+      "xso_name": "s_0551",
+      "string_index": 47,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "ううん、大丈夫……\\nまだ息吹は失われていない。",
+      "source_raw_hex": "82A482A482F1814191E58FE49576816381635C6E82DC82BE91A7908182CD8EB882ED82EA82C482A282C882A28142",
+      "source_sha256": "71F560328EA7E7E49701F5734259D396D1F434F7B96629F390E89407BF8FEAD1",
+      "translation": "아니, 괜찮아...\\n아직 숨이 붙어있어.",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0551/s_0551.xso.z",
+      "map_group": "s_0551",
+      "map_id": "s_0551.xso.z",
+      "xso_name": "s_0551",
+      "string_index": 48,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "でも、すぐに手当てしないと……",
+      "source_raw_hex": "82C582E0814182B782AE82C98EE8939682C482B582C882A282C681638163",
+      "source_sha256": "3CDC071F7E870FC65BFDA6DCC8D646EC6A8F1BCB563B75F298225326CAB7DA80",
+      "translation": "하지만, 바로 대처하지 않으면..",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0551/s_0551.xso.z",
+      "map_group": "s_0551",
+      "map_id": "s_0551.xso.z",
+      "xso_name": "s_0551",
+      "string_index": 49,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "イーシャ、お願い。",
+      "source_raw_hex": "8343815B83568383814182A88AE882A28142",
+      "source_sha256": "167613EACB59584DE71ED77A581D6144B01A6CEB1131217894A0553E93BF1670",
+      "translation": "이샤, 부탁이야.",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0551/s_0551.xso.z",
+      "map_group": "s_0551",
+      "map_id": "s_0551.xso.z",
+      "xso_name": "s_0551",
+      "string_index": 50,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "みんなを呼んでくるから\\nこの人のこと、見ていてあげて。",
+      "source_raw_hex": "82DD82F182C882F08CC482F182C582AD82E982A982E75C6E82B182CC906C82CC82B182C681418CA982C482A282C482A082B082C48142",
+      "source_sha256": "0F376ACB824E2B1FDD8A859B135B0D96C4316E15A5DAE8B19F59B418DA72A185",
+      "translation": "모두를 불러올테니까\\n이 사람을 봐줘.",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0551/s_0551.xso.z",
+      "map_group": "s_0551",
+      "map_id": "s_0551.xso.z",
+      "xso_name": "s_0551",
+      "string_index": 51,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "う……うん……",
+      "source_raw_hex": "82A48163816382A482F181638163",
+      "source_sha256": "BA8177E117128A95DE8E5FD8186090F8A0B2043A2448A3E8B541F4245F8918C7",
+      "translation": "으...응...",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0551/s_0551.xso.z",
+      "map_group": "s_0551",
+      "map_id": "s_0551.xso.z",
+      "xso_name": "s_0551",
+      "string_index": 53,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "…………………………",
+      "source_raw_hex": "8163816381638163816381638163816381638163",
+      "source_sha256": "B8AE7D975EDD99284F2671D69B4A5BAFA9F412648D59CF3E907377BBF840E7BB",
+      "translation": "......",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0551/s_0551.xso.z",
+      "map_group": "s_0551",
+      "map_id": "s_0551.xso.z",
+      "xso_name": "s_0551",
+      "string_index": 54,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "やっぱり尻尾……ないんだ……",
+      "source_raw_hex": "82E282C182CF82E8904B94F68163816382C882A282F182BE81638163",
+      "source_sha256": "4252A1216292B20C848F61DA7D2C8CBA715845F1ACA89C81C88029BD6AA6F595",
+      "translation": "역시 꼬리가... 없어...",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0551/s_0551.xso.z",
+      "map_group": "s_0551",
+      "map_id": "s_0551.xso.z",
+      "xso_name": "s_0551",
+      "string_index": 55,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "耳も短いし……",
+      "source_raw_hex": "8EA882E0925A82A282B581638163",
+      "source_sha256": "7D51BBDAE4ED442E60B473452F0CC546B6C93FC472F6E84EF6A34E34483E1434",
+      "translation": "귀도 짧고..",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0551/s_0551.xso.z",
+      "map_group": "s_0551",
+      "map_id": "s_0551.xso.z",
+      "xso_name": "s_0551",
+      "string_index": 56,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "それになんて赤い……\\n……炎みたいな……髪の色……",
+      "source_raw_hex": "82BB82EA82C982C882F182C490D482A2816381635C6E81638163898A82DD82BD82A282C88163816394AF82CC904681638163",
+      "source_sha256": "A4E2D48A8E0496922E6EBD86BFBE5218AE0926A2CBA3528C40F0905996808DCD",
+      "translation": "게다가 붉은...\\n화염같은... 머리색...",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0551/s_0551.xso.z",
+      "map_group": "s_0551",
+      "map_id": "s_0551.xso.z",
+      "xso_name": "s_0551",
+      "string_index": 57,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "………え…………………",
+      "source_raw_hex": "81638163816382A68163816381638163816381638163",
+      "source_sha256": "16500BD633F50AED1949A3D7446FB240866795540218FD3063F8D5B30E126484",
+      "translation": "... 응?...",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0551/s_0551.xso.z",
+      "map_group": "s_0551",
+      "map_id": "s_0551.xso.z",
+      "xso_name": "s_0551",
+      "string_index": 58,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "……いやっ……！",
+      "source_raw_hex": "8163816382A282E282C1816381638149",
+      "source_sha256": "B6A43CFF5219CAAE3F93722B17BEFC57ACFAE9182DE2E4133FF4F9297F625290",
+      "translation": "... 싫어...!",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0551/s_0551.xso.z",
+      "map_group": "s_0551",
+      "map_id": "s_0551.xso.z",
+      "xso_name": "s_0551",
+      "string_index": 59,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "い……今のは………",
+      "source_raw_hex": "82A2816381638DA182CC82CD816381638163",
+      "source_sha256": "8C8983F6BBCC710B3E067C3076CA771A54F3342995D92DD4ED0D72B5C0184ADB",
+      "translation": "지... 지금 것은...",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0551/s_0551.xso.z",
+      "map_group": "s_0551",
+      "map_id": "s_0551.xso.z",
+      "xso_name": "s_0551",
+      "string_index": 60,
+      "roles": [
+        "dialogue",
+        "resource_name"
+      ],
+      "source_text": "……最近あんまり……\\n見なくなったと思ったのに……",
+      "source_raw_hex": "816381638DC58BDF82A082F182DC82E8816381635C6E8CA982C882AD82C882C182BD82C68E7682C182BD82CC82C981638163",
+      "source_sha256": "31ADE0CE1921A5829D7BFC5C9752688D671EB950E0B45B3A0A6C95D75F99232D",
+      "translation": "... 최근에는...\\n안 보인다고 생각했는데...",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0551/s_0551.xso.z",
+      "map_group": "s_0551",
+      "map_id": "s_0551.xso.z",
+      "xso_name": "s_0551",
+      "string_index": 61,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "どうして……\\n……この人を見ていたら……",
+      "source_raw_hex": "82C782A482B582C4816381635C6E8163816382B182CC906C82F08CA982C482A282BD82E781638163",
+      "source_sha256": "248092A9ED9B825209F9A97257B19EA597DD8C5BC5FBF80B86A026521DBCDF02",
+      "translation": "어째서...\\n... 이사람을 보고 있으니까...",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0551/s_0551.xso.z",
+      "map_group": "s_0551",
+      "map_id": "s_0551.xso.z",
+      "xso_name": "s_0551",
+      "string_index": 62,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "…………………………………",
+      "source_raw_hex": "8163816381638163816381638163816381638163816381638163",
+      "source_sha256": "87203F61DF69B5EEC8E00B65671DF1FC19CD5D7EB1F6C5BDD4DCF17C0138582A",
+      "translation": "............",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0551/s_0551.xso.z",
+      "map_group": "s_0551",
+      "map_id": "s_0551.xso.z",
+      "xso_name": "s_0551",
+      "string_index": 63,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "……わたし……震えてる………",
+      "source_raw_hex": "8163816382ED82BD82B581638163906B82A682C482E9816381638163",
+      "source_sha256": "10064C8F5840513499FD2ADA4E13FA23829F4A4C807B57D795ADE848B6E13CD8",
+      "translation": ".... 나... 떨고 있어...",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0551/s_0551.xso.z",
+      "map_group": "s_0551",
+      "map_id": "s_0551.xso.z",
+      "xso_name": "s_0551",
+      "string_index": 64,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "……こわい………\\n…………こわいよ……………",
+      "source_raw_hex": "8163816382B182ED82A28163816381635C6E816381638163816382B182ED82A282E681638163816381638163",
+      "source_sha256": "10D5F28E55FFF5A5295DA675FB7D5055A7B781728F2F015D3D379D4B4AD3F7C5",
+      "translation": "... 무서워...\\n.... 무섭다고...",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0203/askoruha.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0203",
+      "xso_name": "askoruha",
+      "string_index": 1,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "耳と尻尾について",
+      "source_raw_hex": "8EA882C6904B94F682C982C282A282C4",
+      "source_sha256": "7CCA7C3679DAA829E08D247A68636E2EE87013365D916B92EEDAD01C45D485DD",
+      "translation": "귀와 꼬리에 대해서",
+      "status": "reviewed",
+      "notes": "approved exact propagation from PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z#16"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0203/askoruha.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0203",
+      "xso_name": "askoruha",
+      "string_index": 3,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "レダ族について",
+      "source_raw_hex": "838C835F91B082C982C282A282C4",
+      "source_sha256": "5CC90B45FA760E1DC68668AF3F9824C110B21A4CAA5E04905DCFE3686C18C374",
+      "translation": "레다족에 대해서",
+      "status": "reviewed",
+      "notes": "approved exact propagation from PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z#18"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0203/askoruha.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0203",
+      "xso_name": "askoruha",
+      "string_index": 5,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "エレシア人について",
+      "source_raw_hex": "8347838C83568341906C82C982C282A282C4",
+      "source_sha256": "A2985B566BA9E6CCF7EC086598B51FFEC6E0B6EE38B38C377DC28935B4721BFB",
+      "translation": "에레시아인에 대해서",
+      "status": "reviewed",
+      "notes": "approved exact propagation from PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z#20"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0203/askoruha.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0203",
+      "xso_name": "askoruha",
+      "string_index": 7,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "カナンの島々について",
+      "source_raw_hex": "834A8369839382CC9387815882C982C282A282C4",
+      "source_sha256": "186445DC056127EC6BC87DE9BFF5990DD8EEF34AA2349DDC39147D3FF6012B60",
+      "translation": "카난섬들에 대해서",
+      "status": "reviewed",
+      "notes": "approved exact propagation from PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z#22"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0203/askoruha.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0203",
+      "xso_name": "askoruha",
+      "string_index": 9,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "逃げた少女について",
+      "source_raw_hex": "93A682B082BD8FAD8F9782C982C282A282C4",
+      "source_sha256": "85A7BDB4D5EDC0C2AD86BA9D3AFE69812726A73704BDCAB278B246FCF419BC84",
+      "translation": "도망친 소녀에 대해서",
+      "status": "reviewed",
+      "notes": "approved exact propagation from PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z#24"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0203/askoruha.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0203",
+      "xso_name": "askoruha",
+      "string_index": 11,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "イーシャについて",
+      "source_raw_hex": "8343815B8356838382C982C282A282C4",
+      "source_sha256": "AD89C620400CEE3EB5F50D386AF517A9A9248B4DA768880B0B0E63A0C910DACC",
+      "translation": "이샤에 관해서",
+      "status": "reviewed",
+      "notes": "approved exact propagation from PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z#26"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0203/askoruha.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0203",
+      "xso_name": "askoruha",
+      "string_index": 12,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "巨漢の男性について",
+      "source_raw_hex": "8B908ABF82CC926A90AB82C982C282A282C4",
+      "source_sha256": "2CC8F276CC85AE91F6FF343379823A575796F30A40C9D4A50EF933102FE76180",
+      "translation": "거한 남성에 대해서",
+      "status": "reviewed",
+      "notes": "approved exact propagation from PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z#27"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0203/askoruha.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0203",
+      "xso_name": "askoruha",
+      "string_index": 14,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "オード族長について",
+      "source_raw_hex": "8349815B836891B092B782C982C282A282C4",
+      "source_sha256": "1892164D0FA94E103940EF2C378661766D7BAC4B31BEB19AD2BA89ED73E163BD",
+      "translation": "오드족장에 대해서",
+      "status": "reviewed",
+      "notes": "approved exact propagation from PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z#29"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0203/askoruha.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0203",
+      "xso_name": "askoruha",
+      "string_index": 16,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "話をやめる",
+      "source_raw_hex": "986282F082E282DF82E9",
+      "source_sha256": "9973732F912DA7C63CFBCCF2B830D058372814EBCE69B8C186E7D9215FB4F851",
+      "translation": "대화 그만두기",
+      "status": "reviewed",
+      "notes": "approved exact propagation from PSP_GAME/USRDIR/data/map/s_02/s_0202/oruhamove.xso.z#31"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0203/oruhamove.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0203",
+      "xso_name": "oruhamove",
+      "string_index": 2,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "あら……？",
+      "source_raw_hex": "82A082E7816381638148",
+      "source_sha256": "E06E1CD8A8F50F655047356F6FCD7979F7CD2C2358AC56A5169399D90972AFA6",
+      "translation": "어라...?",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0203/oruhamove.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0203",
+      "xso_name": "oruhamove",
+      "string_index": 3,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "きゃっ……！",
+      "source_raw_hex": "82AB82E182C1816381638149",
+      "source_sha256": "AD413C83C42945DC509EDE1059FC78C2FA0A162C09761EF0C88A9C75A71A7B93",
+      "translation": "꺄...!",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0203/oruhamove.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0203",
+      "xso_name": "oruhamove",
+      "string_index": 4,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "ご、ごめんなさい。",
+      "source_raw_hex": "82B2814182B282DF82F182C882B382A28142",
+      "source_sha256": "3BCDEF22289FE21CD77BC79A9A1B1054E58B7F15474C03E3507CA865CD78B0B5",
+      "translation": "죄, 죄송해요.",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0203/oruhamove.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0203",
+      "xso_name": "oruhamove",
+      "string_index": 5,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "私、お祈りを始めると\\n周りが目に入らなくなって……",
+      "source_raw_hex": "8E84814182A88B4682E882F08E6E82DF82E982C65C6E8EFC82E882AA96DA82C993FC82E782C882AD82C882C182C481638163",
+      "source_sha256": "3EE15EFE869135024C5765B6008C4591D1399000ACEAC95FBC2BC82AF4BF7F75",
+      "translation": "저, 기도를 시작하면\\n주위가 보이지 않아서..",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0203/oruhamove.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0203",
+      "xso_name": "oruhamove",
+      "string_index": 7,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "ほっ……\\nだいぶ顔色が良くなりましたね。",
+      "source_raw_hex": "82D982C1816381635C6E82BE82A282D48AE7904682AA97C782AD82C882E882DC82B582BD82CB8142",
+      "source_sha256": "22614DF5C38DCEDB4BA2B01984B204A48B2DFC1F48BCAA87128E362FB668A761",
+      "translation": "앗...\\n정말 안색이 좋아졌어요.",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0203/oruhamove.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0203",
+      "xso_name": "oruhamove",
+      "string_index": 8,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "あなたは三日間、\\nずっと寝たきりだったんですよ。",
+      "source_raw_hex": "82A082C882BD82CD8E4F93FA8AD481415C6E82B882C182C6905182BD82AB82E882BE82C182BD82F182C582B782E68142",
+      "source_sha256": "B8C3E0E2C74CC507E55100EC9712A1678EC8E4E3590E6D5DBFD024D36C735F59",
+      "translation": "당신은 3일 동안\\n쭉 자고 있었어요.",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0203/oruhamove.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0203",
+      "xso_name": "oruhamove",
+      "string_index": 9,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "傷は塞がりましたけど\\n身体が衰弱しきっていましたから。",
+      "source_raw_hex": "8F9D82CD8DC782AA82E882DC82B582BD82AF82C75C6E906791CC82AA908A8EE382B582AB82C182C482A282DC82B582BD82A982E78142",
+      "source_sha256": "EC46A83C651E7E41A19CFE48410ADF492B6FD9BC0C2935BA81B179CF54CD97AD",
+      "translation": "상처는 나았지만\\n체력이 약해져 있어서...",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0203/oruhamove.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0203",
+      "xso_name": "oruhamove",
+      "string_index": 10,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "でも、よかった。\\nもうすっかり大丈夫みたいですね。",
+      "source_raw_hex": "82C582E0814182E682A982C182BD81425C6E82E082A482B782C182A982E891E58FE4957682DD82BD82A282C582B782CB8142",
+      "source_sha256": "8D4A7CC58F6CEDB61073FB1B0480C3639E135742940E930194229CC051C94C32",
+      "translation": "그렇지만, 다행이예요.\\n이제 완전히 괜찮아졌네요.",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0203/oruhamove.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0203",
+      "xso_name": "oruhamove",
+      "string_index": 11,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "あ、すみません。\\n改めて自己紹介させて頂きます。",
+      "source_raw_hex": "82A0814182B782DD82DC82B982F181425C6E89FC82DF82C48EA98CC88FD089EE82B382B982C492B882AB82DC82B78142",
+      "source_sha256": "4851A1612FC7967DEBBD5E10803B564FC4CCCA52977351A41BBCD6401B6175CD",
+      "translation": "아, 죄송합니다.\\n다시 자기소개 할께요.",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0203/oruhamove.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0203",
+      "xso_name": "oruhamove",
+      "string_index": 12,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "私はレダ族の\\n巫女を務めるオルハといいます。",
+      "source_raw_hex": "8E8482CD838C835F91B082CC5C6E9BDE8F9782F096B182DF82E98349838B836E82C682A282A282DC82B78142",
+      "source_sha256": "83C3653E6D7766E17D81043BEAC5963F90F9F8C66E697D2218DEE7E4C69CE344",
+      "translation": "저는 레다족의\\n무녀를 맡고 있는 오르하입니다.",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0203/oruhamove.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0203",
+      "xso_name": "oruhamove",
+      "string_index": 13,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "あの……\\n\\x1さんとおっしゃいましたね。",
+      "source_raw_hex": "82A082CC816381635C6E5C783182B382F182C682A882C182B582E182A282DC82B582BD82CB8142",
+      "source_sha256": "45C2A068C3A32B811C2C5256A6FBFBBE068CAF5433EAF9558817853A67178130",
+      "translation": "저...\\n\\x1씨라고 했나요?",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0203/oruhamove.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0203",
+      "xso_name": "oruhamove",
+      "string_index": 14,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "どういう事情で、この島に\\n流れ着くことになったんですか？",
+      "source_raw_hex": "82C782A482A282A48E968FEE82C5814182B182CC938782C95C6E97AC82EA928582AD82B182C682C982C882C182BD82F182C582B782A98148",
+      "source_sha256": "F44D048330304035BBDDC58B42EAE8DE2DF6330B81A3CEEBA0C904835F115947",
+      "translation": "무슨 사정으로, 이 섬에\\n흘러들어 오셨을까요?",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_hidden1/talkanisu.xso.z",
+      "map_group": "s_hidden1",
+      "map_id": "s_hidden1",
+      "xso_name": "talkanisu",
+      "string_index": 0,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "アニス",
+      "source_raw_hex": "8341836A8358",
+      "source_sha256": "34221A665D89B43A93618ABBC7EA159121C54B9118A5D8FB92FE46E4EEE7720C",
+      "translation": "아니스",
+      "status": "reviewed",
+      "notes": "approved exact_payload route from PSP_GAME/USRDIR/data/map/s_hidden1/talkanisu.xso.z#0 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_90/s_9002/talkanisu.xso.z",
+      "map_group": "s_90",
+      "map_id": "s_9002",
+      "xso_name": "talkanisu",
+      "string_index": 0,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "アニス",
+      "source_raw_hex": "8341836A8358",
+      "source_sha256": "34221A665D89B43A93618ABBC7EA159121C54B9118A5D8FB92FE46E4EEE7720C",
+      "translation": "아니스",
+      "status": "reviewed",
+      "notes": "approved exact_payload route from PSP_GAME/USRDIR/data/map/s_hidden1/talkanisu.xso.z#0 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_hidden1/talkemirio.xso.z",
+      "map_group": "s_hidden1",
+      "map_id": "s_hidden1",
+      "xso_name": "talkemirio",
+      "string_index": 0,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "エミリオ",
+      "source_raw_hex": "8347837E838A8349",
+      "source_sha256": "9344135E2C73230B92D39996775556237F3CB3A1C4B9D217080F1BED92C1CBE1",
+      "translation": "에밀리오",
+      "status": "reviewed",
+      "notes": "approved exact_payload route from PSP_GAME/USRDIR/data/map/s_hidden1/talkemirio.xso.z#0 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_90/s_9002/talkemirio.xso.z",
+      "map_group": "s_90",
+      "map_id": "s_9002",
+      "xso_name": "talkemirio",
+      "string_index": 0,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "エミリオ",
+      "source_raw_hex": "8347837E838A8349",
+      "source_sha256": "9344135E2C73230B92D39996775556237F3CB3A1C4B9D217080F1BED92C1CBE1",
+      "translation": "에밀리오",
+      "status": "reviewed",
+      "notes": "approved exact_payload route from PSP_GAME/USRDIR/data/map/s_hidden1/talkemirio.xso.z#0 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_hidden1/talkgazeru.xso.z",
+      "map_group": "s_hidden1",
+      "map_id": "s_hidden1",
+      "xso_name": "talkgazeru",
+      "string_index": 0,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "ガゼル",
+      "source_raw_hex": "834B835B838B",
+      "source_sha256": "C7C0A9C96A22E3B516D73459220E03C36240512AA0E6CE84FD0CB5425455CF2E",
+      "translation": "가젤",
+      "status": "reviewed",
+      "notes": "approved exact_payload route from PSP_GAME/USRDIR/data/map/s_hidden1/talkgazeru.xso.z#0 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_90/s_9002/talkgazeru.xso.z",
+      "map_group": "s_90",
+      "map_id": "s_9002",
+      "xso_name": "talkgazeru",
+      "string_index": 0,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "ガゼル",
+      "source_raw_hex": "834B835B838B",
+      "source_sha256": "C7C0A9C96A22E3B516D73459220E03C36240512AA0E6CE84FD0CB5425455CF2E",
+      "translation": "가젤",
+      "status": "reviewed",
+      "notes": "approved exact_payload route from PSP_GAME/USRDIR/data/map/s_hidden1/talkgazeru.xso.z#0 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_hidden1/talkjedo.xso.z",
+      "map_group": "s_hidden1",
+      "map_id": "s_hidden1",
+      "xso_name": "talkjedo",
+      "string_index": 0,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "ジェド",
+      "source_raw_hex": "835783468368",
+      "source_sha256": "7DB691C4C77620D12AFE15CB7F4623994C6FBDFEC5C6CE449E2AEB4A36734374",
+      "translation": "제드",
+      "status": "reviewed",
+      "notes": "approved exact_payload route from PSP_GAME/USRDIR/data/map/s_hidden1/talkjedo.xso.z#0 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_90/s_9000/talkjedo.xso.z",
+      "map_group": "s_90",
+      "map_id": "s_9000",
+      "xso_name": "talkjedo",
+      "string_index": 0,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "ジェド",
+      "source_raw_hex": "835783468368",
+      "source_sha256": "7DB691C4C77620D12AFE15CB7F4623994C6FBDFEC5C6CE449E2AEB4A36734374",
+      "translation": "제드",
+      "status": "reviewed",
+      "notes": "approved exact_payload route from PSP_GAME/USRDIR/data/map/s_hidden1/talkjedo.xso.z#0 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_hidden1/talkrivu.xso.z",
+      "map_group": "s_hidden1",
+      "map_id": "s_hidden1",
+      "xso_name": "talkrivu",
+      "string_index": 1,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "リーヴ",
+      "source_raw_hex": "838A815B8394",
+      "source_sha256": "700593CD489F2D524B4DFF29B9D3628B792274AE16144F6850EE44D9E95D9ACB",
+      "translation": "리브",
+      "status": "reviewed",
+      "notes": "approved exact_payload route from PSP_GAME/USRDIR/data/map/s_hidden1/talkrivu.xso.z#1 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_90/s_9000/talkrivu.xso.z",
+      "map_group": "s_90",
+      "map_id": "s_9000",
+      "xso_name": "talkrivu",
+      "string_index": 1,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "リーヴ",
+      "source_raw_hex": "838A815B8394",
+      "source_sha256": "700593CD489F2D524B4DFF29B9D3628B792274AE16144F6850EE44D9E95D9ACB",
+      "translation": "리브",
+      "status": "reviewed",
+      "notes": "approved exact_payload route from PSP_GAME/USRDIR/data/map/s_hidden1/talkrivu.xso.z#1 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_hidden1/talkroido.xso.z",
+      "map_group": "s_hidden1",
+      "map_id": "s_hidden1",
+      "xso_name": "talkroido",
+      "string_index": 0,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "ロイド",
+      "source_raw_hex": "838D83438368",
+      "source_sha256": "F9EC40152A787FF792929EE7419A479966195A9A6DEA30A7435356F4E2E8AD5D",
+      "translation": "로이드",
+      "status": "reviewed",
+      "notes": "approved exact_payload route from PSP_GAME/USRDIR/data/map/s_hidden1/talkroido.xso.z#0 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_90/s_9002/talkroido.xso.z",
+      "map_group": "s_90",
+      "map_id": "s_9002",
+      "xso_name": "talkroido",
+      "string_index": 0,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "ロイド",
+      "source_raw_hex": "838D83438368",
+      "source_sha256": "F9EC40152A787FF792929EE7419A479966195A9A6DEA30A7435356F4E2E8AD5D",
+      "translation": "로이드",
+      "status": "reviewed",
+      "notes": "approved exact_payload route from PSP_GAME/USRDIR/data/map/s_hidden1/talkroido.xso.z#0 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_hidden1/talksera.xso.z",
+      "map_group": "s_hidden1",
+      "map_id": "s_hidden1",
+      "xso_name": "talksera",
+      "string_index": 1,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "セラ",
+      "source_raw_hex": "835A8389",
+      "source_sha256": "88D1E148A95D23851EFAA9B6A5164741DC14FF56B83BFE911A1160695D0BFF44",
+      "translation": "세라",
+      "status": "reviewed",
+      "notes": "approved exact_payload route from PSP_GAME/USRDIR/data/map/s_hidden1/talksera.xso.z#1 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_90/s_9000/talksera.xso.z",
+      "map_group": "s_90",
+      "map_id": "s_9000",
+      "xso_name": "talksera",
+      "string_index": 1,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "セラ",
+      "source_raw_hex": "835A8389",
+      "source_sha256": "88D1E148A95D23851EFAA9B6A5164741DC14FF56B83BFE911A1160695D0BFF44",
+      "translation": "세라",
+      "status": "reviewed",
+      "notes": "approved exact_payload route from PSP_GAME/USRDIR/data/map/s_hidden1/talksera.xso.z#1 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_hidden1/talksia.xso.z",
+      "map_group": "s_hidden1",
+      "map_id": "s_hidden1",
+      "xso_name": "talksia",
+      "string_index": 0,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "シア",
+      "source_raw_hex": "83568341",
+      "source_sha256": "833D39A3D9EA3A2BB0EA0BC7219EB3ED375816DAAD9752C9562A62974DAE416B",
+      "translation": "시아",
+      "status": "reviewed",
+      "notes": "approved exact_payload route from PSP_GAME/USRDIR/data/map/s_hidden1/talksia.xso.z#0 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_90/s_9002/talksia.xso.z",
+      "map_group": "s_90",
+      "map_id": "s_9002",
+      "xso_name": "talksia",
+      "string_index": 0,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "シア",
+      "source_raw_hex": "83568341",
+      "source_sha256": "833D39A3D9EA3A2BB0EA0BC7219EB3ED375816DAAD9752C9562A62974DAE416B",
+      "translation": "시아",
+      "status": "reviewed",
+      "notes": "approved exact_payload route from PSP_GAME/USRDIR/data/map/s_hidden1/talksia.xso.z#0 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_hidden1/talksofia.xso.z",
+      "map_group": "s_hidden1",
+      "map_id": "s_hidden1",
+      "xso_name": "talksofia",
+      "string_index": 0,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "ソフィア",
+      "source_raw_hex": "835C837483428341",
+      "source_sha256": "97134E097C959FD5F18659B71945F81A95D28432DA3C1E4518F7DDF6DBA105A9",
+      "translation": "소피아",
+      "status": "reviewed",
+      "notes": "approved exact_payload route from PSP_GAME/USRDIR/data/map/s_hidden1/talksofia.xso.z#0 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_90/s_9002/talksofia.xso.z",
+      "map_group": "s_90",
+      "map_id": "s_9002",
+      "xso_name": "talksofia",
+      "string_index": 0,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "ソフィア",
+      "source_raw_hex": "835C837483428341",
+      "source_sha256": "97134E097C959FD5F18659B71945F81A95D28432DA3C1E4518F7DDF6DBA105A9",
+      "translation": "소피아",
+      "status": "reviewed",
+      "notes": "approved exact_payload route from PSP_GAME/USRDIR/data/map/s_hidden1/talksofia.xso.z#0 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_hidden1/talkgasshu.xso.z",
+      "map_group": "s_hidden1",
+      "map_id": "s_hidden1",
+      "xso_name": "talkgasshu",
+      "string_index": 1,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "ガッシュ",
+      "source_raw_hex": "834B836283568385",
+      "source_sha256": "42FB021929CC3860EB7ADD2A3B1857E4A90935AA2FCD4A0EA3C5A8FB50C53493",
+      "translation": "갓슈",
+      "status": "reviewed",
+      "notes": "approved exact_structure route from PSP_GAME/USRDIR/data/map/s_hidden1/talkgasshu.xso.z#1 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_90/s_9012/talkgasshu.xso.z",
+      "map_group": "s_90",
+      "map_id": "s_9012",
+      "xso_name": "talkgasshu",
+      "string_index": 1,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "ガッシュ",
+      "source_raw_hex": "834B836283568385",
+      "source_sha256": "42FB021929CC3860EB7ADD2A3B1857E4A90935AA2FCD4A0EA3C5A8FB50C53493",
+      "translation": "갓슈",
+      "status": "reviewed",
+      "notes": "approved exact_structure route from PSP_GAME/USRDIR/data/map/s_hidden1/talkgasshu.xso.z#1 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_hidden1/talkkamara.xso.z",
+      "map_group": "s_hidden1",
+      "map_id": "s_hidden1",
+      "xso_name": "talkkamara",
+      "string_index": 0,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "カマラ",
+      "source_raw_hex": "834A837D8389",
+      "source_sha256": "442B6847848F3E1B18F411829C1536D6BFB676FA60B3415DED0AA66225BF150A",
+      "translation": "카말라",
+      "status": "reviewed",
+      "notes": "approved exact_structure route from PSP_GAME/USRDIR/data/map/s_hidden1/talkkamara.xso.z#0 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_90/s_9000/talkkamara.xso.z",
+      "map_group": "s_90",
+      "map_id": "s_9000",
+      "xso_name": "talkkamara",
+      "string_index": 0,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "カマラ",
+      "source_raw_hex": "834A837D8389",
+      "source_sha256": "442B6847848F3E1B18F411829C1536D6BFB676FA60B3415DED0AA66225BF150A",
+      "translation": "카말라",
+      "status": "reviewed",
+      "notes": "approved exact_structure route from PSP_GAME/USRDIR/data/map/s_hidden1/talkkamara.xso.z#0 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_hidden1/talkromun.xso.z",
+      "map_group": "s_hidden1",
+      "map_id": "s_hidden1",
+      "xso_name": "talkromun",
+      "string_index": 0,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "ロムン兵",
+      "source_raw_hex": "838D8380839395BA",
+      "source_sha256": "48C90757849B12B3461DCA6CE4FEB353BB6D580C2A0F63895E350F72C36B51DE",
+      "translation": "로문병",
+      "status": "reviewed",
+      "notes": "approved exact_structure route from PSP_GAME/USRDIR/data/map/s_hidden1/talkromun.xso.z#0 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_90/s_9000/talkromun.xso.z",
+      "map_group": "s_90",
+      "map_id": "s_9000",
+      "xso_name": "talkromun",
+      "string_index": 0,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "ロムン兵",
+      "source_raw_hex": "838D8380839395BA",
+      "source_sha256": "48C90757849B12B3461DCA6CE4FEB353BB6D580C2A0F63895E350F72C36B51DE",
+      "translation": "로문병",
+      "status": "reviewed",
+      "notes": "approved exact_structure route from PSP_GAME/USRDIR/data/map/s_hidden1/talkromun.xso.z#0 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_00/s_0000/talkkebin.xso.z",
+      "map_group": "s_00",
+      "map_id": "s_0000",
+      "xso_name": "talkkebin",
+      "string_index": 8,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "話をする",
+      "source_raw_hex": "986282F082B782E9",
+      "source_sha256": "34431F852308CA97ECD395002AFA17AA88BD58DD528B4076EC8071BAACC14C9A",
+      "translation": "대화한다",
+      "status": "reviewed",
+      "notes": "approved exact_structure route from PSP_GAME/USRDIR/data/map/s_00/s_0000/talkkebin.xso.z#8 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_00/s_0000/talkkebin.xso.z",
+      "map_group": "s_00",
+      "map_id": "s_0000",
+      "xso_name": "talkkebin",
+      "string_index": 10,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "買い物をする",
+      "source_raw_hex": "948382A295A882F082B782E9",
+      "source_sha256": "2E742CDBE9D5C607061E48A39D2F80B72720227AE60361328869C193C523531E",
+      "translation": "물건사기",
+      "status": "reviewed",
+      "notes": "approved exact_structure route from PSP_GAME/USRDIR/data/map/s_00/s_0000/talkkebin.xso.z#10 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_00/s_0000/talkkebin.xso.z",
+      "map_group": "s_00",
+      "map_id": "s_0000",
+      "xso_name": "talkkebin",
+      "string_index": 12,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "話をやめる",
+      "source_raw_hex": "986282F082E282DF82E9",
+      "source_sha256": "9973732F912DA7C63CFBCCF2B830D058372814EBCE69B8C186E7D9215FB4F851",
+      "translation": "그만두기",
+      "status": "reviewed",
+      "notes": "approved exact_structure route from PSP_GAME/USRDIR/data/map/s_00/s_0000/talkkebin.xso.z#12 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_00/s_0001/talkkebin.xso.z",
+      "map_group": "s_00",
+      "map_id": "s_0001",
+      "xso_name": "talkkebin",
+      "string_index": 1,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "話をする",
+      "source_raw_hex": "986282F082B782E9",
+      "source_sha256": "34431F852308CA97ECD395002AFA17AA88BD58DD528B4076EC8071BAACC14C9A",
+      "translation": "대화한다",
+      "status": "reviewed",
+      "notes": "approved exact_structure route from PSP_GAME/USRDIR/data/map/s_00/s_0000/talkkebin.xso.z#8 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_00/s_0001/talkkebin.xso.z",
+      "map_group": "s_00",
+      "map_id": "s_0001",
+      "xso_name": "talkkebin",
+      "string_index": 3,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "買い物をする",
+      "source_raw_hex": "948382A295A882F082B782E9",
+      "source_sha256": "2E742CDBE9D5C607061E48A39D2F80B72720227AE60361328869C193C523531E",
+      "translation": "물건사기",
+      "status": "reviewed",
+      "notes": "approved exact_structure route from PSP_GAME/USRDIR/data/map/s_00/s_0000/talkkebin.xso.z#10 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_00/s_0001/talkkebin.xso.z",
+      "map_group": "s_00",
+      "map_id": "s_0001",
+      "xso_name": "talkkebin",
+      "string_index": 5,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "話をやめる",
+      "source_raw_hex": "986282F082E282DF82E9",
+      "source_sha256": "9973732F912DA7C63CFBCCF2B830D058372814EBCE69B8C186E7D9215FB4F851",
+      "translation": "그만두기",
+      "status": "reviewed",
+      "notes": "approved exact_structure route from PSP_GAME/USRDIR/data/map/s_00/s_0000/talkkebin.xso.z#12 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0230/talkkebin.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0230",
+      "xso_name": "talkkebin",
+      "string_index": 1,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "話をする",
+      "source_raw_hex": "986282F082B782E9",
+      "source_sha256": "34431F852308CA97ECD395002AFA17AA88BD58DD528B4076EC8071BAACC14C9A",
+      "translation": "대화한다",
+      "status": "reviewed",
+      "notes": "approved exact_structure route from PSP_GAME/USRDIR/data/map/s_00/s_0000/talkkebin.xso.z#8 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0230/talkkebin.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0230",
+      "xso_name": "talkkebin",
+      "string_index": 3,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "買い物をする",
+      "source_raw_hex": "948382A295A882F082B782E9",
+      "source_sha256": "2E742CDBE9D5C607061E48A39D2F80B72720227AE60361328869C193C523531E",
+      "translation": "물건사기",
+      "status": "reviewed",
+      "notes": "approved exact_structure route from PSP_GAME/USRDIR/data/map/s_00/s_0000/talkkebin.xso.z#10 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0230/talkkebin.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0230",
+      "xso_name": "talkkebin",
+      "string_index": 5,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "話をやめる",
+      "source_raw_hex": "986282F082E282DF82E9",
+      "source_sha256": "9973732F912DA7C63CFBCCF2B830D058372814EBCE69B8C186E7D9215FB4F851",
+      "translation": "그만두기",
+      "status": "reviewed",
+      "notes": "approved exact_structure route from PSP_GAME/USRDIR/data/map/s_00/s_0000/talkkebin.xso.z#12 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_35/s_3500/talkkuroa.xso.z",
+      "map_group": "s_35",
+      "map_id": "s_3500",
+      "xso_name": "talkkuroa",
+      "string_index": 5,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "話をする",
+      "source_raw_hex": "986282F082B782E9",
+      "source_sha256": "34431F852308CA97ECD395002AFA17AA88BD58DD528B4076EC8071BAACC14C9A",
+      "translation": "대화한다",
+      "status": "reviewed",
+      "notes": "approved exact_structure route from PSP_GAME/USRDIR/data/map/s_00/s_0000/talkkebin.xso.z#8 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_35/s_3500/talkkuroa.xso.z",
+      "map_group": "s_35",
+      "map_id": "s_3500",
+      "xso_name": "talkkuroa",
+      "string_index": 7,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "買い物をする",
+      "source_raw_hex": "948382A295A882F082B782E9",
+      "source_sha256": "2E742CDBE9D5C607061E48A39D2F80B72720227AE60361328869C193C523531E",
+      "translation": "물건사기",
+      "status": "reviewed",
+      "notes": "approved exact_structure route from PSP_GAME/USRDIR/data/map/s_00/s_0000/talkkebin.xso.z#10 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_35/s_3500/talkkuroa.xso.z",
+      "map_group": "s_35",
+      "map_id": "s_3500",
+      "xso_name": "talkkuroa",
+      "string_index": 9,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "話をやめる",
+      "source_raw_hex": "986282F082E282DF82E9",
+      "source_sha256": "9973732F912DA7C63CFBCCF2B830D058372814EBCE69B8C186E7D9215FB4F851",
+      "translation": "그만두기",
+      "status": "reviewed",
+      "notes": "approved exact_structure route from PSP_GAME/USRDIR/data/map/s_00/s_0000/talkkebin.xso.z#12 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_40/s_4030/talkroze.xso.z",
+      "map_group": "s_40",
+      "map_id": "s_4030",
+      "xso_name": "talkroze",
+      "string_index": 6,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "話をする",
+      "source_raw_hex": "986282F082B782E9",
+      "source_sha256": "34431F852308CA97ECD395002AFA17AA88BD58DD528B4076EC8071BAACC14C9A",
+      "translation": "대화한다",
+      "status": "reviewed",
+      "notes": "approved exact_structure route from PSP_GAME/USRDIR/data/map/s_00/s_0000/talkkebin.xso.z#8 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_40/s_4030/talkroze.xso.z",
+      "map_group": "s_40",
+      "map_id": "s_4030",
+      "xso_name": "talkroze",
+      "string_index": 8,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "買い物をする",
+      "source_raw_hex": "948382A295A882F082B782E9",
+      "source_sha256": "2E742CDBE9D5C607061E48A39D2F80B72720227AE60361328869C193C523531E",
+      "translation": "물건사기",
+      "status": "reviewed",
+      "notes": "approved exact_structure route from PSP_GAME/USRDIR/data/map/s_00/s_0000/talkkebin.xso.z#10 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_40/s_4030/talkroze.xso.z",
+      "map_group": "s_40",
+      "map_id": "s_4030",
+      "xso_name": "talkroze",
+      "string_index": 10,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "話をやめる",
+      "source_raw_hex": "986282F082E282DF82E9",
+      "source_sha256": "9973732F912DA7C63CFBCCF2B830D058372814EBCE69B8C186E7D9215FB4F851",
+      "translation": "그만두기",
+      "status": "reviewed",
+      "notes": "approved exact_structure route from PSP_GAME/USRDIR/data/map/s_00/s_0000/talkkebin.xso.z#12 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_00/s_0000/talktokusa.xso.z",
+      "map_group": "s_00",
+      "map_id": "s_0000",
+      "xso_name": "talktokusa",
+      "string_index": 3,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "はい",
+      "source_raw_hex": "82CD82A2",
+      "source_sha256": "F8AC19F830979CBD635D4315B9791D2B666B9DF7C7D37AAE180AB20C49630A3A",
+      "translation": "네",
+      "status": "reviewed",
+      "notes": "approved exact_context route from PSP_GAME/USRDIR/data/map/s_00/s_0000/talktokusa.xso.z#3 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_00/s_0000/talktokusa.xso.z",
+      "map_group": "s_00",
+      "map_id": "s_0000",
+      "xso_name": "talktokusa",
+      "string_index": 5,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "いいえ",
+      "source_raw_hex": "82A282A282A6",
+      "source_sha256": "93C28C10CAD7E4252CE3AC531C73BD2A53663FF85B53EB7E1CEAD863A9CDF150",
+      "translation": "아니요",
+      "status": "reviewed",
+      "notes": "approved exact_context route from PSP_GAME/USRDIR/data/map/s_00/s_0000/talktokusa.xso.z#5 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_00/s_0001/talktokusa.xso.z",
+      "map_group": "s_00",
+      "map_id": "s_0001",
+      "xso_name": "talktokusa",
+      "string_index": 4,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "はい",
+      "source_raw_hex": "82CD82A2",
+      "source_sha256": "F8AC19F830979CBD635D4315B9791D2B666B9DF7C7D37AAE180AB20C49630A3A",
+      "translation": "네",
+      "status": "reviewed",
+      "notes": "approved exact_context route from PSP_GAME/USRDIR/data/map/s_00/s_0000/talktokusa.xso.z#3 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_00/s_0001/talktokusa.xso.z",
+      "map_group": "s_00",
+      "map_id": "s_0001",
+      "xso_name": "talktokusa",
+      "string_index": 6,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "いいえ",
+      "source_raw_hex": "82A282A282A6",
+      "source_sha256": "93C28C10CAD7E4252CE3AC531C73BD2A53663FF85B53EB7E1CEAD863A9CDF150",
+      "translation": "아니요",
+      "status": "reviewed",
+      "notes": "approved exact_context route from PSP_GAME/USRDIR/data/map/s_00/s_0000/talktokusa.xso.z#5 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0220/talktokusa.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0220",
+      "xso_name": "talktokusa",
+      "string_index": 8,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "はい",
+      "source_raw_hex": "82CD82A2",
+      "source_sha256": "F8AC19F830979CBD635D4315B9791D2B666B9DF7C7D37AAE180AB20C49630A3A",
+      "translation": "네",
+      "status": "reviewed",
+      "notes": "approved exact_context route from PSP_GAME/USRDIR/data/map/s_00/s_0000/talktokusa.xso.z#3 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_0220/talktokusa.xso.z",
+      "map_group": "s_02",
+      "map_id": "s_0220",
+      "xso_name": "talktokusa",
+      "string_index": 10,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "いいえ",
+      "source_raw_hex": "82A282A282A6",
+      "source_sha256": "93C28C10CAD7E4252CE3AC531C73BD2A53663FF85B53EB7E1CEAD863A9CDF150",
+      "translation": "아니요",
+      "status": "reviewed",
+      "notes": "approved exact_context route from PSP_GAME/USRDIR/data/map/s_00/s_0000/talktokusa.xso.z#5 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0550/talktokusa.xso.z",
+      "map_group": "s_05",
+      "map_id": "s_0550",
+      "xso_name": "talktokusa",
+      "string_index": 3,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "はい",
+      "source_raw_hex": "82CD82A2",
+      "source_sha256": "F8AC19F830979CBD635D4315B9791D2B666B9DF7C7D37AAE180AB20C49630A3A",
+      "translation": "네",
+      "status": "reviewed",
+      "notes": "approved exact_context route from PSP_GAME/USRDIR/data/map/s_00/s_0000/talktokusa.xso.z#3 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_05/s_0550/talktokusa.xso.z",
+      "map_group": "s_05",
+      "map_id": "s_0550",
+      "xso_name": "talktokusa",
+      "string_index": 5,
+      "roles": [
+        "choice"
+      ],
+      "source_text": "いいえ",
+      "source_raw_hex": "82A282A282A6",
+      "source_sha256": "93C28C10CAD7E4252CE3AC531C73BD2A53663FF85B53EB7E1CEAD863A9CDF150",
+      "translation": "아니요",
+      "status": "reviewed",
+      "notes": "approved exact_context route from PSP_GAME/USRDIR/data/map/s_00/s_0000/talktokusa.xso.z#5 (issue 025)"
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_90/s_9000/talkisha.xso.z",
+      "map_group": "s_90",
+      "map_id": "s_9000",
+      "xso_name": "talkisha",
+      "string_index": 0,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "イーシャ1",
+      "source_raw_hex": "8343815B8356838331",
+      "source_sha256": "0AF5D2626F6DD646A57A1C71B9FFB5C6D0398121B1062EA10F2C5AC3963A5C02",
+      "translation": "이샤1",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_90/s_9000/talkisha.xso.z",
+      "map_group": "s_90",
+      "map_id": "s_9000",
+      "xso_name": "talkisha",
+      "string_index": 1,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "イーシャ2",
+      "source_raw_hex": "8343815B8356838332",
+      "source_sha256": "F00B496058AF6368B49310E3A76D2F5E7649F6BBBE322B8F1675967CB034504F",
+      "translation": "이샤2",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_90/s_9000/talkisha.xso.z",
+      "map_group": "s_90",
+      "map_id": "s_9000",
+      "xso_name": "talkisha",
+      "string_index": 2,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "イーシャ3",
+      "source_raw_hex": "8343815B8356838333",
+      "source_sha256": "810E35BCFECC7C8A68566D68CB1DBDF3DB631259D38DED7CAC48B0B7D5801CEB",
+      "translation": "이샤3",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_90/s_9000/talkisha.xso.z",
+      "map_group": "s_90",
+      "map_id": "s_9000",
+      "xso_name": "talkisha",
+      "string_index": 4,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "イーシャ",
+      "source_raw_hex": "8343815B83568383",
+      "source_sha256": "53DD7BE77FAD9C6C0DFFF0F401B53ABCE574EF3815FB1C440563FB378EF3252A",
+      "translation": "이샤",
+      "status": "reviewed",
+      "notes": ""
+    },
+    {
+      "iso_path": "PSP_GAME/USRDIR/data/map/s_hidden1/talkisha.xso.z",
+      "map_group": "s_hidden1",
+      "map_id": "s_hidden1",
+      "xso_name": "talkisha",
+      "string_index": 1,
+      "roles": [
+        "dialogue"
+      ],
+      "source_text": "イーシャ",
+      "source_raw_hex": "8343815B83568383",
+      "source_sha256": "53DD7BE77FAD9C6C0DFFF0F401B53ABCE574EF3815FB1C440563FB378EF3252A",
+      "translation": "이샤",
+      "status": "reviewed",
+      "notes": ""
+    }
+  ]
+}

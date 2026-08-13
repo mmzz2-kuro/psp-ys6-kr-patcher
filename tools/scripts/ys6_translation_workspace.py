@@ -11,7 +11,7 @@ import re
 import sys
 from pathlib import Path
 
-VALID_STATUSES = {"untranslated", "draft", "reviewed", "excluded", "conflict", "orphaned"}
+VALID_STATUSES = {"untranslated", "draft", "override", "excluded", "conflict", "orphaned"}
 TOKEN_PATTERN = re.compile(r"\\(?:x[0-9A-Fa-f]+|[A-Za-z]+|[0-9]+)")
 MARKUP_PATTERN = re.compile(r"<[^<>]+>")
 FIELDS = ("iso_path", "map_group", "map_id", "xso_name", "string_index", "roles", "source_text", "source_raw_hex", "source_sha256", "translation", "status", "notes")
@@ -19,6 +19,11 @@ FIELDS = ("iso_path", "map_group", "map_id", "xso_name", "string_index", "roles"
 
 def source_hash(raw_hex: str) -> str:
     return hashlib.sha256(bytes.fromhex(raw_hex)).hexdigest().upper()
+
+
+def normalize_editor_translation(text: str) -> str:
+    """Store editor line breaks as the game's literal backslash-n control token."""
+    return text.rstrip("\r\n").replace("\r\n", "\\n").replace("\r", "\\n").replace("\n", "\\n")
 
 
 def catalog_record(record: dict) -> dict:
@@ -49,6 +54,8 @@ def synchronize(catalog: dict, existing: dict | None = None) -> dict:
         if previous:
             fresh["translation"] = previous.get("translation", "")
             fresh["notes"] = previous.get("notes", "")
+            if "allow_markup_change" in previous:
+                fresh["allow_markup_change"] = bool(previous["allow_markup_change"])
             if previous.get("source_sha256") != fresh["source_sha256"]:
                 fresh["status"] = "conflict"
             else:
@@ -75,8 +82,8 @@ def validate(workspace: dict) -> dict:
         except ValueError: errors.append(f"{label}: invalid source_raw_hex"); continue
         if actual_hash != record["source_sha256"]: errors.append(f"{label}: source hash mismatch")
         if "\x00" in record["translation"]: errors.append(f"{label}: translation contains NUL")
-        if record["status"] == "reviewed":
-            if not record["translation"]: errors.append(f"{label}: reviewed translation is empty")
+        if record["status"] == "override":
+            if not record["translation"]: errors.append(f"{label}: override translation is empty")
             source_tokens = sorted(TOKEN_PATTERN.findall(record["source_text"]))
             target_tokens = sorted(TOKEN_PATTERN.findall(record["translation"]))
             if source_tokens != target_tokens: errors.append(f"{label}: control token mismatch")
@@ -85,7 +92,8 @@ def validate(workspace: dict) -> dict:
             if source_markup != target_markup and not record.get("allow_markup_change", False): errors.append(f"{label}: markup mismatch")
         elif record["translation"]:
             warnings.append(f"{label}: translation exists but status is {record['status']}")
-    return {"valid": not errors, "record_count": len(workspace.get("records", [])), "reviewed_count": sum(r.get("status") == "reviewed" for r in workspace.get("records", [])), "errors": errors, "warnings": warnings}
+    override_count = sum(r.get("status") == "override" for r in workspace.get("records", []))
+    return {"valid": not errors, "record_count": len(workspace.get("records", [])), "override_count": override_count, "reviewed_count": override_count, "errors": errors, "warnings": warnings}
 
 
 def prepare_reviewed(workspace: dict, iso_path: str, first_index: int, last_index: int) -> dict:
@@ -96,7 +104,7 @@ def prepare_reviewed(workspace: dict, iso_path: str, first_index: int, last_inde
             continue
         prepared = dict(record)
         prepared["translation"] = prepared.get("translation", "").replace("\r\n", "\n").replace("\r", "\n").replace("\n", "\\n")
-        prepared["status"] = "reviewed"
+        prepared["status"] = "override"
         selected.append(prepared)
     expected = set(range(first_index, last_index + 1))
     actual = {int(record["string_index"]) for record in selected}
@@ -119,7 +127,7 @@ def prepare_translated(workspace: dict, iso_path: str, overrides: dict[int, str]
         if int(prepared["string_index"]) in overrides:
             prepared["translation"] = overrides[int(prepared["string_index"])]
         prepared["translation"] = prepared["translation"].replace("\r\n", "\n").replace("\r", "\n").replace("\n", "\\n")
-        prepared["status"] = "reviewed"
+        prepared["status"] = "override"
         selected.append(prepared)
     if not selected:
         raise ValueError(f"no translated records for ISO path: {iso_path}")
@@ -150,7 +158,7 @@ def prepare_translated_paths(workspace: dict, iso_paths: list[str], overrides: d
             prepared["allow_markup_change"] = True
             prepared["notes"] = (prepared.get("notes", "") + " | approved Japanese ruby removal").strip(" |")
         prepared["translation"] = prepared["translation"].replace("\r\n", "\n").replace("\r", "\n").replace("\n", "\\n")
-        prepared["status"] = "reviewed"
+        prepared["status"] = "override"
         selected.append(prepared)
     missing = requested - {record["iso_path"] for record in selected}
     if missing:
@@ -183,7 +191,7 @@ def append_propagated(prepared: dict, source_workspace: dict, source_path: str, 
             raise ValueError(f"propagation target already exists: {target_index}")
         propagated = dict(target_record)
         propagated["translation"] = source_record["translation"].replace("\r\n", "\n").replace("\r", "\n").replace("\n", "\\n")
-        propagated["status"] = "reviewed"
+        propagated["status"] = "override"
         propagated["notes"] = f"approved exact propagation from {source_path}#{source_index}"
         records.append(propagated); existing.add(key(propagated))
     result = {"schema_version": 1, "records": records}
@@ -219,15 +227,48 @@ def write_csv(workspace: dict, path: Path) -> None:
             row = dict(record); row["roles"] = " | ".join(row["roles"]); writer.writerow(row)
 
 
+def apply_drafts(workspace: dict, drafts: dict) -> dict:
+    records = [dict(record) for record in workspace.get("records", [])]
+    by_key = {key(record): record for record in records}
+    if len(by_key) != len(records): raise ValueError("translation workspace contains duplicate keys")
+    seen = set()
+    for draft in drafts.get("records", []):
+        identity = (draft["iso_path"], int(draft["string_index"]))
+        if identity in seen: raise ValueError(f"duplicate draft key: {identity}")
+        seen.add(identity)
+        target = by_key.get(identity)
+        if target is None: raise ValueError(f"draft target missing: {identity}")
+        if "dialogue" not in target.get("roles", []): raise ValueError(f"draft target is not dialogue: {identity}")
+        if target["source_sha256"] != draft["source_sha256"]: raise ValueError(f"draft source hash mismatch: {identity}")
+        if target.get("status") not in {"untranslated", "draft"}: raise ValueError(f"draft would replace {target.get('status')}: {identity}")
+        translation = draft.get("translation", "")
+        if not translation: raise ValueError(f"draft translation is empty: {identity}")
+        if sorted(TOKEN_PATTERN.findall(target["source_text"])) != sorted(TOKEN_PATTERN.findall(translation)):
+            raise ValueError(f"draft control token mismatch: {identity}")
+        allow_markup_change = bool(draft.get("allow_markup_change", False))
+        if sorted(MARKUP_PATTERN.findall(target["source_text"])) != sorted(MARKUP_PATTERN.findall(translation)) and not allow_markup_change:
+            raise ValueError(f"draft markup mismatch: {identity}")
+        target["translation"] = translation
+        target["status"] = "draft"
+        target["notes"] = draft.get("notes", "Codex 초벌 번역 030")
+        if allow_markup_change:
+            target["allow_markup_change"] = True
+    result = {"schema_version": workspace.get("schema_version", 1), "records": records}
+    report = validate(result)
+    if not report["valid"]: raise ValueError("draft workspace is invalid: " + "; ".join(report["errors"]))
+    return result
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(); sub = parser.add_subparsers(dest="command", required=True)
-    create = sub.add_parser("sync"); create.add_argument("catalog", type=Path); create.add_argument("output_json", type=Path); create.add_argument("--existing", type=Path); create.add_argument("--csv", type=Path); create.add_argument("--overwrite", action="store_true")
+    create = sub.add_parser("sync"); create.add_argument("catalog", type=Path); create.add_argument("output_json", type=Path); create.add_argument("--existing", type=Path); create.add_argument("--csv", type=Path); create.add_argument("--migrate-reviewed-to-override", action="store_true"); create.add_argument("--overwrite", action="store_true")
     check = sub.add_parser("validate"); check.add_argument("workspace", type=Path)
     prepare = sub.add_parser("prepare"); prepare.add_argument("workspace", type=Path); prepare.add_argument("iso_path"); prepare.add_argument("first_index", type=int); prepare.add_argument("last_index", type=int); prepare.add_argument("output", type=Path); prepare.add_argument("--overwrite", action="store_true")
     prepare_translated_parser = sub.add_parser("prepare-translated"); prepare_translated_parser.add_argument("workspace", type=Path); prepare_translated_parser.add_argument("iso_path"); prepare_translated_parser.add_argument("output", type=Path); prepare_translated_parser.add_argument("--translation-override", action="append", default=[]); prepare_translated_parser.add_argument("--overwrite", action="store_true")
     prepare_paths_parser = sub.add_parser("prepare-translated-paths"); prepare_paths_parser.add_argument("workspace", type=Path); prepare_paths_parser.add_argument("output", type=Path); prepare_paths_parser.add_argument("iso_paths", nargs="+"); prepare_paths_parser.add_argument("--translation-override", action="append", default=[]); prepare_paths_parser.add_argument("--allow-markup-change", action="append", default=[]); prepare_paths_parser.add_argument("--overwrite", action="store_true")
     propagate_parser = sub.add_parser("append-propagated"); propagate_parser.add_argument("prepared", type=Path); propagate_parser.add_argument("source_workspace", type=Path); propagate_parser.add_argument("source_path"); propagate_parser.add_argument("target_path"); propagate_parser.add_argument("output", type=Path); propagate_parser.add_argument("index_pairs", nargs="+"); propagate_parser.add_argument("--overwrite", action="store_true")
     append_path_parser = sub.add_parser("append-translated-path"); append_path_parser.add_argument("prepared", type=Path); append_path_parser.add_argument("source_workspace", type=Path); append_path_parser.add_argument("iso_path"); append_path_parser.add_argument("output", type=Path); append_path_parser.add_argument("--overwrite", action="store_true")
+    draft_parser = sub.add_parser("apply-drafts"); draft_parser.add_argument("workspace", type=Path); draft_parser.add_argument("drafts", type=Path); draft_parser.add_argument("output", type=Path); draft_parser.add_argument("--overwrite", action="store_true")
     args = parser.parse_args()
     if args.command == "validate":
         report = validate(json.loads(args.workspace.read_text(encoding="utf-8-sig"))); print(json.dumps(report, ensure_ascii=False, indent=2)); return 0 if report["valid"] else 1
@@ -279,8 +320,17 @@ def main() -> int:
         result = append_translated_path(prepared, source_workspace, args.iso_path)
         args.output.parent.mkdir(parents=True, exist_ok=True); args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         print(json.dumps({"records": len(result["records"]), "added": len(result["records"]) - len(prepared["records"]), "output": str(args.output)}, ensure_ascii=False, indent=2)); return 0
+    if args.command == "apply-drafts":
+        if args.output.exists() and not args.overwrite: raise FileExistsError(args.output)
+        workspace = json.loads(args.workspace.read_text(encoding="utf-8-sig")); drafts = json.loads(args.drafts.read_text(encoding="utf-8-sig"))
+        result = apply_drafts(workspace, drafts)
+        args.output.parent.mkdir(parents=True, exist_ok=True); args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        print(json.dumps({"records": len(result["records"]), "drafts": len(drafts.get("records", [])), "output": str(args.output)}, ensure_ascii=False, indent=2)); return 0
     if args.output_json.exists() and not args.overwrite: raise FileExistsError(args.output_json)
     catalog = json.loads(args.catalog.read_text(encoding="utf-8-sig")); existing = json.loads(args.existing.read_text(encoding="utf-8-sig")) if args.existing else None
+    if existing and args.migrate_reviewed_to_override:
+        for record in existing.get("records", []):
+            if record.get("status") == "reviewed": record["status"] = "override"
     workspace = synchronize(catalog, existing); args.output_json.parent.mkdir(parents=True, exist_ok=True); args.output_json.write_text(json.dumps(workspace, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     if args.csv: write_csv(workspace, args.csv)
     print(json.dumps({"records": len(workspace["records"]), "output": str(args.output_json)}, ensure_ascii=False, indent=2)); return 0

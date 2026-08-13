@@ -39,7 +39,7 @@ def inventory(workspace: dict, applied: dict) -> dict:
             errors.append("markup")
         if current and current.get("translation") == normalized:
             status = "already_applied"
-        elif current and current.get("status") == "reviewed":
+        elif current and current.get("status") == "override":
             status = "already_applied_override"
         elif errors:
             status = "invalid_tokens" if any(x in errors for x in ("control_tokens", "markup")) else "source_changed"
@@ -150,7 +150,7 @@ def prepare_routes(applied: dict, workspace: dict, catalog: dict, routes: dict) 
                     if current["translation"] != normalized: raise ValueError(f"route conflicts with applied translation: {identity}")
                     action = "kept"
                 else:
-                    prepared = {"iso_path":target_path,"map_group":target.get("map_group",""),"map_id":target.get("map_id",""),"xso_name":target.get("xso_name",""),"string_index":int(target_index),"roles":list(target.get("roles",[])),"source_text":target["text"],"source_raw_hex":target["raw_hex"],"source_sha256":source_hash(target["raw_hex"]),"translation":normalized,"status":"reviewed","notes":f"approved {route['mode']} route from {source_path}#{source_index} (issue {route['approved_issue']})"}
+                    prepared = {"iso_path":target_path,"map_group":target.get("map_group",""),"map_id":target.get("map_id",""),"xso_name":target.get("xso_name",""),"string_index":int(target_index),"roles":list(target.get("roles",[])),"source_text":target["text"],"source_raw_hex":target["raw_hex"],"source_sha256":source_hash(target["raw_hex"]),"translation":normalized,"status":"override","notes":f"approved {route['mode']} route from {source_path}#{source_index} (issue {route['approved_issue']})"}
                     result.append(prepared);existing.add(identity);action="added"
                 rows.append({"source_path":source_path,"source_index":source_index,"target_path":target_path,"target_index":target_index,"mode":route["mode"],"action":action,"translation":normalized})
     prepared={"schema_version":1,"records":result};report=validate(prepared)

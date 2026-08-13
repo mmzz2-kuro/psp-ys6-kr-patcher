@@ -22,6 +22,10 @@ except ModuleNotFoundError:
         load_workspace as load_cast_workspace,
         validate_workspace as validate_cast_workspace, write_csv as write_cast_csv,
     )
+try:
+    from tools.scripts.ys6_translation_workspace import normalize_editor_translation
+except ModuleNotFoundError:
+    from scripts.ys6_translation_workspace import normalize_editor_translation
 
 
 def load_catalog(path: Path) -> tuple[dict, list[dict]]:
@@ -99,6 +103,12 @@ class DialogueViewer(tk.Tk):
         self.role_box = ttk.Combobox(top, textvariable=self.role, state="readonly", width=18)
         self.role_box.pack(side=tk.LEFT)
         self.role_box.bind("<<ComboboxSelected>>", lambda _event: self.refresh())
+        ttk.Label(top, text="상태").pack(side=tk.LEFT, padx=(12, 4))
+        self.workflow_status = tk.StringVar(value="전체")
+        workflow_box = ttk.Combobox(top, textvariable=self.workflow_status, state="readonly", width=12,
+                                    values=("전체", "dialogue", "draft", "override", "untranslated", "excluded", "conflict", "orphaned"))
+        workflow_box.pack(side=tk.LEFT)
+        workflow_box.bind("<<ComboboxSelected>>", lambda _event: self.refresh())
         self.status = tk.StringVar(value="카탈로그를 열어 주세요.")
         ttk.Label(top, textvariable=self.status).pack(side=tk.RIGHT)
 
@@ -108,9 +118,9 @@ class DialogueViewer(tk.Tk):
         detail_frame = ttk.Frame(pane)
         pane.add(table_frame, weight=3)
         pane.add(detail_frame, weight=2)
-        columns = ("map", "file", "index", "roles", "text", "translation")
+        columns = ("map", "file", "index", "roles", "status", "text", "translation")
         self.tree = ttk.Treeview(table_frame, columns=columns, show="headings")
-        for column, label, width in zip(columns, ("맵", "XSO", "인덱스", "역할", "원문", "번역"), (120, 150, 55, 150, 390, 390)):
+        for column, label, width in zip(columns, ("맵", "XSO", "인덱스", "역할", "상태", "원문", "번역"), (110, 135, 50, 120, 85, 350, 350)):
             self.tree.heading(column, text=label)
             self.tree.column(column, width=width, stretch=column == "text")
         scrollbar = ttk.Scrollbar(table_frame, orient=tk.VERTICAL, command=self.tree.yview)
@@ -125,7 +135,7 @@ class DialogueViewer(tk.Tk):
         self.translation = tk.Text(editor, height=4, wrap=tk.WORD, font=("맑은 고딕", 10)); self.translation.grid(row=0, column=1, columnspan=3, sticky="ew")
         ttk.Label(editor, text="상태").grid(row=1, column=0, sticky="w", pady=(4, 0))
         self.translation_status = tk.StringVar(value="untranslated")
-        ttk.Combobox(editor, textvariable=self.translation_status, state="readonly", values=("untranslated", "draft", "reviewed", "excluded", "conflict", "orphaned"), width=16).grid(row=1, column=1, sticky="w", pady=(4, 0))
+        ttk.Combobox(editor, textvariable=self.translation_status, state="readonly", values=("untranslated", "draft", "override", "excluded", "conflict", "orphaned"), width=16).grid(row=1, column=1, sticky="w", pady=(4, 0))
         ttk.Label(editor, text="메모").grid(row=1, column=2, sticky="e", padx=(12, 4), pady=(4, 0))
         self.notes = ttk.Entry(editor); self.notes.grid(row=1, column=3, sticky="ew", pady=(4, 0))
         ttk.Button(editor, text="현재 항목 반영", command=self.apply_edit).grid(row=2, column=3, sticky="e", pady=(6, 0))
@@ -209,7 +219,7 @@ class DialogueViewer(tk.Tk):
             if not silent: messagebox.showwarning("편집", "항목을 선택해 주세요.")
             return
         record = self.filtered[int(selected[0])]
-        record["translation"] = self.translation.get("1.0", "end-1c")
+        record["translation"] = normalize_editor_translation(self.translation.get("1.0", "end-1c"))
         record["status"] = self.translation_status.get()
         record["notes"] = self.notes.get()
         if not silent: self.refresh()
@@ -230,12 +240,17 @@ class DialogueViewer(tk.Tk):
 
     def refresh(self) -> None:
         self.filtered = filter_records(self.records, self.query.get(), self.role.get())
+        workflow_status = self.workflow_status.get()
+        if workflow_status == "dialogue":
+            self.filtered = [record for record in self.filtered if "dialogue" in record.get("roles", [])]
+        elif workflow_status != "전체":
+            self.filtered = [record for record in self.filtered if record.get("status") == workflow_status]
         self.tree.delete(*self.tree.get_children())
         for index, record in enumerate(self.filtered):
             text = record.get("text", record.get("source_text", "")).replace("\\n", " / ")
             self.tree.insert("", tk.END, iid=str(index), values=(
                 f"{record.get('map_group','')}/{record.get('map_id','')}", record.get("xso_name", ""),
-                record.get("string_index", ""), ", ".join(record.get("roles", [])), text,
+                record.get("string_index", ""), ", ".join(record.get("roles", [])), record.get("status", ""), text,
                 record.get("translation", "").replace("\\n", " / "),
             ))
         self.status.set(f"{len(self.filtered):,} / {len(self.records):,}개")

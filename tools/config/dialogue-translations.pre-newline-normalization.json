@@ -17747,7 +17747,7 @@
       "source_text": "でも、この人の息吹が\\n今にも消えてしまいそうで……",
       "source_raw_hex": "82C582E0814182B182CC906C82CC91A7908182AA5C6E8DA182C982E08FC182A682C482B582DC82A282BB82A482C581638163",
       "source_sha256": "E248E41B0939A429F1713BDCC26D768332EAC9DF03D39E739BD6D7D029825F4B",
-      "translation": "하지만, 이 사람의 생명이\\n지금이라도 사라질 것 같아서...",
+      "translation": "하지만, 이 사람의 생명이\n지금이라도 사라질 것 같아서...",
       "status": "override",
       "notes": ""
     },
@@ -17763,7 +17763,7 @@
       "source_text": "手当てをするには\\nここが一番だと思ったんです。",
       "source_raw_hex": "8EE8939682C482F082B782E982C982CD5C6E82B182B182AA88EA94D482BE82C68E7682C182BD82F182C582B78142",
       "source_sha256": "61B8A09F6E06517FC3D825B7F14D701207F0D04E94E60A9B30B0573455B76C93",
-      "translation": "구해주려면\\n여기가 제일 좋다고 생각했어요.",
+      "translation": "구해주려면\n여기가 제일 좋다고 생각했어요.",
       "status": "override",
       "notes": ""
     },
@@ -17779,7 +17779,7 @@
       "source_text": "だが、エレシア人への不信は\\nこれまで以上に強くなっている。",
       "source_raw_hex": "82BE82AA81418347838C83568341906C82D682CC9573904D82CD5C6E82B182EA82DC82C588C88FE382C98BAD82AD82C882C182C482A282E98142",
       "source_sha256": "93D1D36EC62750BE0927C1DA7F5FD9FC5CB419E840B2AB15D9284BCA1AC535D3",
-      "translation": "하지만, 에레시아인의 불신은\\n이 이상으로 강해지고 있어.",
+      "translation": "하지만, 에레시아인의 불신은\n이 이상으로 강해지고 있어.",
       "status": "override",
       "notes": ""
     },
@@ -17795,7 +17795,7 @@
       "source_text": "巫女たるおぬしがその調子では\\n火に油を注ぐことにもなりかねんぞ。",
       "source_raw_hex": "9BDE8F9782BD82E982A882CA82B582AA82BB82CC92B28E7182C582CD5C6E89CE82C996FB82F0928D82AE82B182C682C982E082C882E882A982CB82F182BC8142",
       "source_sha256": "0BDAED30F37C0C4C1D3BD03041AA5C7E64CD922C0C848965674803355546F012",
-      "translation": "무녀라는 애가 그 상태로는\\n불에 기름을 붓는 격 아닐까.",
+      "translation": "무녀라는 애가 그 상태로는\n불에 기름을 붓는 격 아닐까.",
       "status": "override",
       "notes": ""
     },
@@ -17843,7 +17843,7 @@
       "source_text": "よかった……\\n目を覚ましたんですね。",
       "source_raw_hex": "82E682A982C182BD816381635C6E96DA82F08A6F82DC82B582BD82F182C582B782CB8142",
       "source_sha256": "FB9C1C6C858CC9F13561EDF81085E654299DF5F26EB5348F0FD7F4E93B80A5F2",
-      "translation": "다행이다...\\n눈을 뜨셨네요.",
+      "translation": "다행이다...\n눈을 뜨셨네요.",
       "status": "override",
       "notes": ""
     },
@@ -17877,8 +17877,7 @@
       "source_sha256": "3DB1A11E0BCD316497B335E2E91DE832713CE1BE8EF7C05D088E51E63EA71F28",
       "translation": "<color:0xffacdae8>　\\x1은 천천히 고개를 끄덕였다.",
       "status": "override",
-      "notes": "승인된 일본어 ruby 제거",
-      "allow_markup_change": true
+      "notes": ""
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_020a/adolsleep.xso.z",
@@ -17909,7 +17908,7 @@
       "source_text": "俺は<color:0xffBBFDC2>レダ族<color:>の長を務める\\nオードという者だ。",
       "source_raw_hex": "89B482CD3C636F6C6F723A307866664242464443323E838C835F91B03C636F6C6F723A3E82CC92B782F096B182DF82E95C6E8349815B836882C682A282A48ED282BE8142",
       "source_sha256": "40F6CA3398A8514AAAE3FEA58A802161FCB434C8BDC6A2639806FAB84BAD1A48",
-      "translation": "나는 <color:0xffBBFDC2>레다족<color:>의 장을 맡고있는\\n오드라고 한다.",
+      "translation": "나는 <color:0xffBBFDC2>레다족<color:>의 장을 맡고있는\n오드라고 한다.",
       "status": "override",
       "notes": ""
     },
@@ -17925,7 +17924,7 @@
       "source_text": "赤毛のエレシア人よ。\\nおぬしの名はなんという？",
       "source_raw_hex": "90D496D182CC8347838C83568341906C82E681425C6E82A882CA82B582CC96BC82CD82C882F182C682A282A48148",
       "source_sha256": "8B62AE85A381E3239CED61B5E1885BDA99388C11B643AAD388BC83862BA5E4EF",
-      "translation": "빨간머리의 에레시아인이여.\\n이름은 무엇인가?",
+      "translation": "빨간머리의 에레시아인이여.\n이름은 무엇인가?",
       "status": "override",
       "notes": ""
     },
@@ -17941,7 +17940,7 @@
       "source_text": "<color:0xffacdae8>　\\x1は名乗ってから手当ての礼を言った。",
       "source_raw_hex": "3C636F6C6F723A307866666163646165383E81405C783182CD96BC8FE682C182C482A982E78EE8939682C482CC97E782F08CBE82C182BD8142",
       "source_sha256": "C100FBFA9B3ABF1DAF586295A3C2FF420CEAF2E32CFC7EDAB1CDD1227629CA59",
-      "translation": "<color:0xffacdae8>　\\x1는 이름을 대고 예를 취했다.",
+      "translation": "<color:0xffacdae8>　\\x1는 이름을 대고 예를 취했다.\n",
       "status": "override",
       "notes": ""
     },
@@ -17957,7 +17956,7 @@
       "source_text": "……エレシア人の名は\\n変わった響きのものが多いな。",
       "source_raw_hex": "816381638347838C83568341906C82CC96BC82CD5C6E95CF82ED82C182BD8BBF82AB82CC82E082CC82AA91BD82A282C88142",
       "source_sha256": "992EC0611CE0E98A94429EF68C8353AF15FE5CAFB277FA0352D4C34B4B9FC6AB",
-      "translation": "... 에레시아인의 이름은\\n특이한 울림이 많군.",
+      "translation": "... 에레시아인의 이름은\n특이한 울림이 많군.",
       "status": "override",
       "notes": ""
     },
@@ -17973,7 +17972,7 @@
       "source_text": "\\x1とやら。\\n礼ならばこの娘に言うがいい。",
       "source_raw_hex": "5C783182C682E282E781425C6E97E782C882E782CE82B182CC96BA82C98CBE82A482AA82A282A28142",
       "source_sha256": "AD6A77AC887E4FF9C2F2D15A7951C5480057D876CB2B704ACDC3E3E3612C7198",
-      "translation": "\\x1이라고했나.\\n예를 갖출거면 이 아이에게 해라.",
+      "translation": "\\x1이라고했나.\n예를 갖출거면 이 아이에게 해라.\n",
       "status": "override",
       "notes": ""
     },
@@ -17989,7 +17988,7 @@
       "source_text": "流れ着いたおぬしを発見し、\\n手当てを施したのはこの娘だ。",
       "source_raw_hex": "97AC82EA928582A282BD82A882CA82B582F094AD8CA982B581415C6E8EE8939682C482F08E7B82B582BD82CC82CD82B182CC96BA82BE8142",
       "source_sha256": "7CED811FDE9F108259629AA038F02B793DA4908EDB359DC4A27BEA85057E5023",
-      "translation": "흘러들어온 너를 발견하고,\\n조치한건 이 아이다.",
+      "translation": "흘러들어온 너를 발견하고,\n조치한건 이 아이다.",
       "status": "override",
       "notes": ""
     },
@@ -18021,7 +18020,7 @@
       "source_text": "一通り手当てはしましたけど\\n傷は完全には塞がっていません。",
       "source_raw_hex": "88EA92CA82E88EE8939682C482CD82B582DC82B582BD82AF82C75C6E8F9D82CD8AAE915382C982CD8DC782AA82C182C482A282DC82B982F18142",
       "source_sha256": "4E57C069C680B1601D40A5DABF5A5BF4FFCB5D73553C11ABB3599A45A85F2C68",
-      "translation": "일단 조치는 했지만\\n상처가 완전히 낫지 않았어요.",
+      "translation": "일단 조치는 했지만\n상처가 완전히 낫지 않았어요.",
       "status": "override",
       "notes": ""
     },
@@ -18037,7 +18036,7 @@
       "source_text": "無理はしないで\\nゆっくりと休んでくださいね。",
       "source_raw_hex": "96B3979D82CD82B582C882A282C55C6E82E482C182AD82E882C68B7882F182C582AD82BE82B382A282CB8142",
       "source_sha256": "51376FB6E2EEDA9D3FB488AC59328AABBE51812EAB8660BD2E34F8B1539B779B",
-      "translation": "무리하지 말고\\n푹 쉬세요.",
+      "translation": "무리하지 말고\n푹 쉬세요.",
       "status": "override",
       "notes": ""
     },
@@ -18069,7 +18068,7 @@
       "source_text": "非力なエレシア人といえど\\n若ければ回復するのも早かろう。",
       "source_raw_hex": "94F197CD82C88347838C83568341906C82C682A282A682C75C6E8EE182AF82EA82CE89F1959C82B782E982CC82E0918182A982EB82A48142",
       "source_sha256": "5597B874E9BF3EF7D56A9EC25638F2C8AF2C3C46C7D9F7059C3B0E8788F589DD",
-      "translation": "무력한 에레시아인이라고 해도\\n젊으면 회복하는 것도 빠르겠지.",
+      "translation": "무력한 에레시아인이라고 해도\n젊으면 회복하는 것도 빠르겠지.",
       "status": "override",
       "notes": ""
     },
@@ -18085,7 +18084,7 @@
       "source_text": "動けるようになったら\\nこの家から出ていってもらうぞ。",
       "source_raw_hex": "93AE82AF82E982E682A482C982C882C182BD82E75C6E82B182CC89C682A982E78F6F82C482A282C182C482E082E782A482BC8142",
       "source_sha256": "6028C30AAC3ED7CEF018F1D533C8A6C6DAD895AFC2037A2B32355C8D32322C0E",
-      "translation": "움직일 수 있게 되면\\n이집에서 나가주면 좋겠다.",
+      "translation": "움직일 수 있게 되면\n이집에서 나가주면 좋겠다.",
       "status": "override",
       "notes": ""
     },
@@ -18117,9 +18116,9 @@
       "source_text": "オルハよ、くれぐれも忘れるな。",
       "source_raw_hex": "8349838B836E82E6814182AD82EA82AE82EA82E0965982EA82E982C88142",
       "source_sha256": "96EF4192C48271F4EB008877C9DC1941C08AF2D16BD32E0D2AB9E18ED020A275",
-      "translation": "오르하야, 부디 잊지 말거라.",
-      "status": "override",
-      "notes": "Codex 초벌 번역 030 adolsleep"
+      "translation": "",
+      "status": "untranslated",
+      "notes": ""
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_020a/adolsleep.xso.z",
@@ -18134,10 +18133,9 @@
       "source_text": "精霊神<ruby:-33,2>ア   ル   マ<endruby>の末裔<ruby:-15,2>す   え<endruby>たる巫女としての立場を。",
       "source_raw_hex": "90B897EC905F3C727562793A2D33332C323E8341202020838B202020837D3C656E64727562793E82CC9696E5E13C727562793A2D31352C323E82B720202082A63C656E64727562793E82BD82E99BDE8F9782C682B582C482CC97A78FEA82F08142",
       "source_sha256": "11F57518B0D8136486F257FD382D7FCE0F6055526A5064BD974F19BD8F947B64",
-      "translation": "정령신 알마의 후예인 무녀로서의 본분을.",
-      "status": "override",
-      "notes": "Codex 초벌 번역 030 adolsleep | 일본어 ruby 제거",
-      "allow_markup_change": true
+      "translation": "",
+      "status": "untranslated",
+      "notes": ""
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_020a/adolsleep.xso.z",
@@ -18151,9 +18149,9 @@
       "source_text": "あの、ごめんなさい。\\n伯父様に悪気はないんです。",
       "source_raw_hex": "82A082CC814182B282DF82F182C882B382A281425C6E948C9583976C82C988AB8B4382CD82C882A282F182C582B78142",
       "source_sha256": "9EC517715DE6CB18C1190AB121A9E61B081B58CA13411FBA185774966AF0E57B",
-      "translation": "저기, 죄송해요.\\n큰아버지께 악의가 있는 건 아니에요.",
-      "status": "override",
-      "notes": "Codex 초벌 번역 030 adolsleep"
+      "translation": "",
+      "status": "untranslated",
+      "notes": ""
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_020a/adolsleep.xso.z",
@@ -18167,10 +18165,9 @@
       "source_text": "ただ最近、エレシアの方々に\\n少し頑<ruby:-4,2>かたく<endruby>なになってしまって……",
       "source_raw_hex": "82BD82BE8DC58BDF81418347838C8356834182CC95FB815882C95C6E8FAD82B58AE63C727562793A2D342C323E82A982BD82AD3C656E64727562793E82C882C982C882C182C482B582DC82C182C481638163",
       "source_sha256": "B893DA2AB1488FC68B65423958F61822318FE0B8480534BB00423EBD7CB428B0",
-      "translation": "다만 요즘 에레시아인들에게\\n조금 완고해지셔서……",
-      "status": "override",
-      "notes": "Codex 초벌 번역 030 adolsleep | 일본어 ruby 제거",
-      "allow_markup_change": true
+      "translation": "",
+      "status": "untranslated",
+      "notes": ""
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_020a/adolsleep.xso.z",
@@ -18184,9 +18181,9 @@
       "source_text": "……とにかく今は\\nゆっくりお休みになってください。",
       "source_raw_hex": "8163816382C682C982A982AD8DA182CD5C6E82E482C182AD82E882A88B7882DD82C982C882C182C482AD82BE82B382A28142",
       "source_sha256": "BEF8E06F928A9EDEF8F103443907D97E2F5AA2C3A0713BE944F5303C6D8F4782",
-      "translation": "……아무튼 지금은\\n편히 쉬세요.",
-      "status": "draft",
-      "notes": "Codex 초벌 번역 030 adolsleep"
+      "translation": "",
+      "status": "untranslated",
+      "notes": ""
     },
     {
       "iso_path": "PSP_GAME/USRDIR/data/map/s_02/s_020a/adolsleep.xso.z",

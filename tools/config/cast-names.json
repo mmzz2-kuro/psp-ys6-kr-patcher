@@ -959,7 +959,7 @@
       "source_raw_hex": "8349838B836E0000000000000000000000000000000000000000000000000000",
       "source_sha256": "9E549958BB15F018614227944500ED89AF27E659D7CAD50ECFEA41D544491E53",
       "translation": "오르하",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -992,7 +992,7 @@
       "source_raw_hex": "8349815B836891B092B700000000000000000000000000000000000000000000",
       "source_sha256": "E63D6D556B21B1B6B75626A0A31DC43629991D801BD0E31E98F035C4D29FEDDE",
       "translation": "오드족장",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1399,7 +1399,7 @@
       "source_raw_hex": "838D838D00000000000000000000000000000000000000000000000000000000",
       "source_sha256": "0319B508DE3A7A791468D94D479C910C211DCF53202FC020AFBD630D2AC47CA1",
       "translation": "로로",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1410,7 +1410,7 @@
       "source_raw_hex": "8367834E83540000000000000000000000000000000000000000000000000000",
       "source_sha256": "D2AD109EA49540350956DFAE9B43F522B7C44623D39625A01ECCB276187B7F98",
       "translation": "토쿠사",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1432,7 +1432,7 @@
       "source_raw_hex": "837D815B83940000000000000000000000000000000000000000000000000000",
       "source_sha256": "31E31B8AE81A016B9F1BCBA6B77CCCF6CE8F5A067F56D7FC225C149667224354",
       "translation": "마브",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1454,7 +1454,7 @@
       "source_raw_hex": "835C838900000000000000000000000000000000000000000000000000000000",
       "source_sha256": "66B37880AEA14B67226A61665D8D1C938047BE2FC0760F6D87C53584BC98418B",
       "translation": "소라",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1476,7 +1476,7 @@
       "source_raw_hex": "8389815B83530000000000000000000000000000000000000000000000000000",
       "source_sha256": "6003766E971D73492BE126CD6384A7F2250432896A224FB286DB0B621C5D2873",
       "translation": "라고",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1487,7 +1487,7 @@
       "source_raw_hex": "8356838B836F0000000000000000000000000000000000000000000000000000",
       "source_sha256": "D4A5D89543B239E4A21F68419E2DF25F8A3585B9C2F46CDBBB8805D62E7C62E9",
       "translation": "실바",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1520,7 +1520,7 @@
       "source_raw_hex": "834A837D83890000000000000000000000000000000000000000000000000000",
       "source_sha256": "51903F93F9397F1043AC86B0BE68D18730A44CF5807607CAEB5DC2E6AA6A5FF4",
       "translation": "카말라",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1531,7 +1531,7 @@
       "source_raw_hex": "944C008983628363000000000000000000000000000000000000000000000000",
       "source_sha256": "2225500ACCA623DD603052AF1A8F6501EBE03AF988573217EC5713C313FAD9DA",
       "translation": "고양이",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1542,7 +1542,7 @@
       "source_raw_hex": "837E836E8343838B000000000000000000000000000000000000000000000000",
       "source_sha256": "FCEE59401A6F3F55CCAAB96CC7A2D884C2EEBC576C1FE952EF8F78F7E779B4D9",
       "translation": "미하일",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1553,7 +1553,7 @@
       "source_raw_hex": "834F834783930000000000000000000000000000000000000000000000000000",
       "source_sha256": "5CAC2A0250D84155F04C19AE41B16AE0B818E2E148DA93F8F1880C3831B7C40B",
       "translation": "구엔",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1564,7 +1564,7 @@
       "source_raw_hex": "836A815B83580000000000000000000000000000000000000000000000000000",
       "source_sha256": "CB46E2E06F92717D7937BF6D151FF6242DF7FE282CC3458FF61BE1AAC782354F",
       "translation": "니스",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
