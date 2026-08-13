@@ -239,7 +239,12 @@ def apply_drafts(workspace: dict, drafts: dict) -> dict:
         target = by_key.get(identity)
         if target is None: raise ValueError(f"draft target missing: {identity}")
         if "dialogue" not in target.get("roles", []): raise ValueError(f"draft target is not dialogue: {identity}")
-        if target["source_sha256"] != draft["source_sha256"]: raise ValueError(f"draft source hash mismatch: {identity}")
+        if "source_sha256" in draft:
+            if target["source_sha256"] != draft["source_sha256"]: raise ValueError(f"draft source hash mismatch: {identity}")
+        elif "source_text" in draft:
+            if target["source_text"] != draft["source_text"]: raise ValueError(f"draft source text mismatch: {identity}")
+        else:
+            raise ValueError(f"draft source fingerprint missing: {identity}")
         if target.get("status") not in {"untranslated", "draft"}: raise ValueError(f"draft would replace {target.get('status')}: {identity}")
         translation = draft.get("translation", "")
         if not translation: raise ValueError(f"draft translation is empty: {identity}")

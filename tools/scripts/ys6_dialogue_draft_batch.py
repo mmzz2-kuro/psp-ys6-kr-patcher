@@ -37,16 +37,45 @@ def progress(snapshot: dict, workspace: dict) -> dict:
     return {"schema_version": 1, "target_count": len(snapshot["records"]), "status_counts": dict(sorted(counts.items())), "draft_path_count": len(paths)}
 
 
+def propagate_exact(workspace: dict) -> tuple[dict, dict]:
+    translations: dict[str, set[tuple[str, bool]]] = {}
+    for row in workspace["records"]:
+        if "dialogue" not in row.get("roles", []): continue
+        text = row["source_text"]
+        if row.get("translation") and row.get("status") in {"draft", "override"}:
+            translations.setdefault(text, set()).add(
+                (row["translation"], bool(row.get("allow_markup_change", False)))
+            )
+    applied, ambiguous = 0, 0
+    records = [dict(row) for row in workspace["records"]]
+    for row in records:
+        if row.get("status") != "untranslated" or "dialogue" not in row.get("roles", []): continue
+        candidates = translations.get(row["source_text"], set())
+        if len(candidates) == 1:
+            translation, allow_markup_change = next(iter(candidates))
+            row["translation"] = translation; row["status"] = "draft"
+            if allow_markup_change:
+                row["allow_markup_change"] = True
+            row["notes"] = "exact-source draft propagation 033"; applied += 1
+        elif len(candidates) > 1: ambiguous += 1
+    return {"schema_version": workspace.get("schema_version", 1), "records": records}, {"applied":applied,"ambiguous":ambiguous}
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__); sub = parser.add_subparsers(dest="command", required=True)
     snap = sub.add_parser("snapshot"); snap.add_argument("workspace", type=Path); snap.add_argument("output", type=Path)
     report = sub.add_parser("progress"); report.add_argument("snapshot", type=Path); report.add_argument("workspace", type=Path); report.add_argument("output", type=Path)
+    exact = sub.add_parser("propagate-exact"); exact.add_argument("workspace", type=Path); exact.add_argument("output", type=Path)
     args = parser.parse_args(argv)
     if args.command == "snapshot":
         data = make_snapshot(json.loads(args.workspace.read_text(encoding="utf-8-sig")))
-    else:
+    elif args.command == "progress":
         data = progress(json.loads(args.snapshot.read_text(encoding="utf-8-sig")), json.loads(args.workspace.read_text(encoding="utf-8-sig")))
-    atomic_write_json(args.output, data); print(json.dumps(data if args.command == "progress" else {"targets":len(data["records"])}, ensure_ascii=False)); return 0
+    else:
+        data, report_data = propagate_exact(json.loads(args.workspace.read_text(encoding="utf-8-sig")))
+    atomic_write_json(args.output, data)
+    shown = report_data if args.command == "propagate-exact" else (data if args.command == "progress" else {"targets":len(data["records"])})
+    print(json.dumps(shown, ensure_ascii=False)); return 0
 
 
 if __name__ == "__main__": raise SystemExit(main())
