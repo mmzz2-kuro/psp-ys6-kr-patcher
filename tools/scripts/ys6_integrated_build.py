@@ -8,6 +8,8 @@ from PIL import Image
 try:
     from tools.scripts.iso9660_info import SECTOR_SIZE,find_record
     from tools.scripts.ys6_arc import find_file,parse_archive,replace_file
+    from tools.scripts.ys6_castinfo import encode_game_name,patch_name
+    from tools.scripts.ys6_cast_name_workspace import load_workspace as load_cast_workspace,reviewed_records as reviewed_cast_records,validate_workspace as validate_cast_workspace
     from tools.scripts.ys6_hangul_codec import encode_translation,extend_mapping,write_mapping
     from tools.scripts.ys6_hangul_font_build import build as build_font
     from tools.scripts.ys6_iso_multi_patch import Replacement,patch_atomic
@@ -17,6 +19,8 @@ try:
 except ModuleNotFoundError:
     from iso9660_info import SECTOR_SIZE,find_record
     from ys6_arc import find_file,parse_archive,replace_file
+    from ys6_castinfo import encode_game_name,patch_name
+    from ys6_cast_name_workspace import load_workspace as load_cast_workspace,reviewed_records as reviewed_cast_records,validate_workspace as validate_cast_workspace
     from ys6_hangul_codec import encode_translation,extend_mapping,write_mapping
     from ys6_hangul_font_build import build as build_font
     from ys6_iso_multi_patch import Replacement,patch_atomic
@@ -69,8 +73,8 @@ def read_iso_file(iso:Path,internal_path:str)->tuple[bytes,object]:
  with iso.open("rb") as f:f.seek(record.extent_lba*SECTOR_SIZE);data=f.read(record.data_length)
  return data,record
 
-def build_mapping(groups:list[dict],usage:dict,seed:list[dict])->list[dict]:
- text="".join(r["translation"] for g in groups for r in g["records"])
+def build_mapping(groups:list[dict],usage:dict,seed:list[dict],extra_text:str="")->list[dict]:
+ text="".join(r["translation"] for g in groups for r in g["records"])+extra_text
  hangul="".join(dict.fromkeys(c for c in text if "가"<=c<="힣"))
  return extend_mapping(usage,seed,hangul)
 
@@ -96,11 +100,28 @@ def execute(args)->dict:
  if int(runtime_map.get("schema_version",0))<2:raise IntegratedBuildError("runtime map schema v2 or newer is required")
  if file_sha256(iso)!=EXPECTED_ISO_SHA256:raise IntegratedBuildError("original ISO SHA-256 mismatch")
  if file_sha256(args.original_eboot)!=EBOOT_ORIGINAL_SHA256:raise IntegratedBuildError("decrypted original EBOOT SHA-256 mismatch")
- selected=select_reviewed(workspace);groups=group_translations(selected,catalog,runtime_map); runtime={x["runtime_key"]:x for x in runtime_map["runtime_entries"]};mapping=build_mapping(groups,usage,seed)
+ if args.castinfo_name is not None and args.cast_name_workspace is not None:raise IntegratedBuildError("--castinfo-name and --cast-name-workspace cannot be used together")
+ cast_workspace=load_cast_workspace(args.cast_name_workspace) if args.cast_name_workspace else None
+ cast_selected=reviewed_cast_records(cast_workspace) if cast_workspace else []
+ cast_errors=validate_cast_workspace(cast_workspace) if cast_workspace else []
+ if cast_errors:raise IntegratedBuildError("invalid cast-name workspace: "+"; ".join(cast_errors))
+ selected=select_reviewed(workspace);groups=group_translations(selected,catalog,runtime_map); runtime={x["runtime_key"]:x for x in runtime_map["runtime_entries"]};mapping=build_mapping(groups,usage,seed,"".join(x["translation"] for x in cast_selected))
  args.work.mkdir(parents=True,exist_ok=True);(args.work/"xso").mkdir(exist_ok=True);(args.work/"archives").mkdir(exist_ok=True)
  write_mapping(mapping,args.work/"mapping.json",args.work/"mapping.csv")
  eboot_data=args.original_eboot.read_bytes();overrides={"한":args.han_override};patched_eboot,glyph_report,atlas=build_font(eboot_data,mapping,args.font,12,overrides,horizontal_left_inset=args.horizontal_left_inset);(args.work/"EBOOT.BIN").write_bytes(patched_eboot);(args.work/"glyph-report.json").write_text(json.dumps({"visible_width":12,"horizontal_left_inset":args.horizontal_left_inset,"glyphs":glyph_report},ensure_ascii=False,indent=2)+"\n",encoding="utf-8");atlas.resize((atlas.width*8,atlas.height*8),Image.Resampling.NEAREST).save(args.work/"glyph-atlas.png")
  archive_cache={};archive_original={};xso_rows=[];translation_rows=[];overflow=[];rebuilt_containers={}
+ castinfo_rows=[];extra_replacements=[]
+ if args.castinfo_name is not None or cast_selected:
+  cast_path="PSP_GAME/USRDIR/data/misc/castinfo.dat";init_path="PSP_GAME/USRDIR/data/arc/init.bin"
+  standalone_cast,cast_record=read_iso_file(iso,cast_path);init_data,_=read_iso_file(iso,init_path);init_entry=find_file(parse_archive(init_data),"castinfo.dat",index=8,flags=0x01000000);embedded_cast=init_data[init_entry.offset:init_entry.offset+init_entry.size]
+  if standalone_cast!=embedded_cast:raise IntegratedBuildError("castinfo standalone and init.bin copies differ")
+  patched_cast=standalone_cast
+  patch_items=cast_selected if cast_selected else [{"identifier":args.castinfo_identifier,"translation":args.castinfo_name,"source":args.castinfo_expected_name}]
+  for item in patch_items:
+   before=patched_cast;patched_cast,cast_report=patch_name(patched_cast,item["identifier"],encode_game_name(item["translation"],mapping),item.get("source"))
+   castinfo_rows.append({"identifier":item["identifier"],"name":item["translation"],"source":item.get("source", ""),"standalone_path":cast_path,"archive_path":init_path,"entry_index":init_entry.index,"entry_flags_hex":f"0x{init_entry.flags:08X}","original_sha256":sha256(before),"output_sha256":sha256(patched_cast),"size":len(patched_cast),"changed_byte_count":cast_report["changed_byte_count"],"encoded_name_hex":cast_report["encoded_name_hex"]})
+  patched_init=replace_file(init_data,init_entry,patched_cast);cast_dir=args.work/"castinfo";cast_dir.mkdir(exist_ok=True);cast_file=cast_dir/"castinfo.dat";init_file=cast_dir/"init.bin";cast_file.write_bytes(patched_cast);init_file.write_bytes(patched_init)
+  extra_replacements.extend([Replacement(init_path,init_file,len(init_data),sha256(init_data)),Replacement(cast_path,cast_file,len(standalone_cast),sha256(standalone_cast))])
  with tempfile.TemporaryDirectory(dir=args.work) as td:
   temp=Path(td)
   for number,group in enumerate(groups):
@@ -142,13 +163,15 @@ def execute(args)->dict:
   name=Path(arc_path).name;out=args.work/"archives"/name;out.write_bytes(data);original=archive_original[arc_path];archive_rows.append({"iso_path":arc_path,"original_sha256":sha256(original),"output_sha256":sha256(data),"size":len(data),"modified_xso_count":sum(str(x["runtime_key"]).startswith(arc_path+"#") for x in xso_rows)})
   iso_replacements.append(Replacement(arc_path,out,len(original),sha256(original)))
  iso_replacements.extend(standalone_replacements)
+ iso_replacements.extend(extra_replacements)
  original_iso_eboot,eboot_record=read_iso_file(iso,EBOOT_PATH);iso_replacements.insert(0,Replacement(EBOOT_PATH,args.work/"EBOOT.BIN",len(original_iso_eboot),sha256(original_iso_eboot)))
- expected_replacement_count=1+len(archive_rows)+len(standalone_rows)
+ expected_replacement_count=1+len(archive_rows)+len(standalone_rows)+len(extra_replacements)
  if len(iso_replacements)!=expected_replacement_count:raise IntegratedBuildError(f"ISO replacement count mismatch: expected={expected_replacement_count}, actual={len(iso_replacements)}")
- preflight={"valid":True,"reviewed_count":len(selected),"xso_count":len(groups),"archive_count":len(archive_rows),"standalone_count":len(standalone_rows),"glyph_count":len(mapping),"overflow":[]};(args.work/"preflight-report.json").write_text(json.dumps(preflight,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+ preflight={"valid":True,"reviewed_count":len(selected),"xso_count":len(groups),"archive_count":len(archive_rows),"standalone_count":len(standalone_rows),"castinfo_count":len(castinfo_rows),"glyph_count":len(mapping),"overflow":[]};(args.work/"preflight-report.json").write_text(json.dumps(preflight,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
  write_csv(args.work/"translation-report.csv",translation_rows,["xso_sha256","runtime_key","string_index","source_text","translation","original_length","replacement_length","delta","origin_paths"]);write_csv(args.work/"xso-report.csv",xso_rows,["xso_sha256","runtime_key","entry_flags_hex","entry_kind","mapping_status","replacement_count","original_size","rebuilt_size","compressed_size","allocated_size","remaining_slack","original_sha256","rebuilt_sha256"]);write_csv(args.work/"archive-report.csv",archive_rows,["iso_path","size","modified_xso_count","original_sha256","output_sha256"])
  write_csv(args.work/"standalone-report.csv",standalone_rows,["iso_path","runtime_key","original_size","compressed_size","allocated_size","remaining_slack","original_sha256","output_sha256"])
- manifest={"schema_version":1,"mode":args.mode,"inputs":{"iso":str(iso),"iso_sha256":EXPECTED_ISO_SHA256,"workspace":str(args.workspace),"workspace_sha256":file_sha256(args.workspace),"catalog_sha256":file_sha256(args.catalog),"runtime_map_sha256":file_sha256(args.runtime_map),"original_eboot_sha256":file_sha256(args.original_eboot),"seed_mapping_sha256":file_sha256(args.seed_mapping)},"font":{"visible_width":12,"horizontal_left_inset":args.horizontal_left_inset},"summary":preflight,"eboot":{"sha256":sha256(patched_eboot)},"xso":xso_rows,"archives":archive_rows,"iso":None,"valid":True}
+ write_csv(args.work/"castinfo-report.csv",castinfo_rows,["identifier","source","name","encoded_name_hex","standalone_path","archive_path","entry_index","entry_flags_hex","size","changed_byte_count","original_sha256","output_sha256"])
+ manifest={"schema_version":1,"mode":args.mode,"inputs":{"iso":str(iso),"iso_sha256":EXPECTED_ISO_SHA256,"workspace":str(args.workspace),"workspace_sha256":file_sha256(args.workspace),"cast_name_workspace":str(args.cast_name_workspace) if args.cast_name_workspace else None,"cast_name_workspace_sha256":file_sha256(args.cast_name_workspace) if args.cast_name_workspace else None,"catalog_sha256":file_sha256(args.catalog),"runtime_map_sha256":file_sha256(args.runtime_map),"original_eboot_sha256":file_sha256(args.original_eboot),"seed_mapping_sha256":file_sha256(args.seed_mapping)},"font":{"visible_width":12,"horizontal_left_inset":args.horizontal_left_inset},"summary":preflight,"eboot":{"sha256":sha256(patched_eboot)},"xso":xso_rows,"archives":archive_rows,"castinfo":castinfo_rows,"iso":None,"valid":True}
  if args.mode=="build":
   result=patch_atomic(iso,args.output_iso,iso_replacements,EXPECTED_ISO_SHA256,args.overwrite);manifest["iso"]={"path":str(args.output_iso),**result}
  (args.work/"build-manifest.json").write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return manifest
@@ -156,7 +179,7 @@ def execute(args)->dict:
 def main(argv=None):
  for s in (sys.stdout,sys.stderr):
   if hasattr(s,"reconfigure"):s.reconfigure(encoding="utf-8",errors="backslashreplace")
- p=argparse.ArgumentParser(description=__doc__);p.add_argument("mode",choices=("preflight","build"));p.add_argument("--iso",type=Path,required=True);p.add_argument("--workspace",type=Path,required=True);p.add_argument("--catalog",type=Path,required=True);p.add_argument("--runtime-map",type=Path,required=True);p.add_argument("--font-usage",type=Path,required=True);p.add_argument("--seed-mapping",type=Path,required=True);p.add_argument("--original-eboot",type=Path,required=True);p.add_argument("--font",type=Path,required=True);p.add_argument("--han-override",type=Path,required=True);p.add_argument("--horizontal-left-inset",type=int);p.add_argument("--work",type=Path,required=True);p.add_argument("--standalone-path",action="append",default=[]);p.add_argument("--output-iso",type=Path);p.add_argument("--overwrite",action="store_true");a=p.parse_args(argv)
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument("mode",choices=("preflight","build"));p.add_argument("--iso",type=Path,required=True);p.add_argument("--workspace",type=Path,required=True);p.add_argument("--catalog",type=Path,required=True);p.add_argument("--runtime-map",type=Path,required=True);p.add_argument("--font-usage",type=Path,required=True);p.add_argument("--seed-mapping",type=Path,required=True);p.add_argument("--original-eboot",type=Path,required=True);p.add_argument("--font",type=Path,required=True);p.add_argument("--han-override",type=Path,required=True);p.add_argument("--horizontal-left-inset",type=int);p.add_argument("--cast-name-workspace",type=Path);p.add_argument("--castinfo-name");p.add_argument("--castinfo-identifier",default="CAST_C240");p.add_argument("--castinfo-expected-name",default="イーシャ");p.add_argument("--work",type=Path,required=True);p.add_argument("--standalone-path",action="append",default=[]);p.add_argument("--output-iso",type=Path);p.add_argument("--overwrite",action="store_true");a=p.parse_args(argv)
  if a.mode=="build" and a.output_iso is None:p.error("build requires --output-iso")
  try:result=execute(a);print(json.dumps(result["summary"],ensure_ascii=False,indent=2));return 0
  except (OSError,KeyError,ValueError,json.JSONDecodeError,IntegratedBuildError) as exc:print(f"통합 빌드 실패: {exc}",file=sys.stderr);return 1

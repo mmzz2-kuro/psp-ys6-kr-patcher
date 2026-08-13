@@ -10,6 +10,19 @@ import tkinter as tk
 from pathlib import Path
 from tkinter import filedialog, messagebox, ttk
 
+try:
+    from tools.scripts.ys6_cast_name_workspace import (
+        STATUSES as CAST_STATUSES, atomic_write_json,
+        load_workspace as load_cast_workspace,
+        validate_workspace as validate_cast_workspace, write_csv as write_cast_csv,
+    )
+except ModuleNotFoundError:
+    from scripts.ys6_cast_name_workspace import (
+        STATUSES as CAST_STATUSES, atomic_write_json,
+        load_workspace as load_cast_workspace,
+        validate_workspace as validate_cast_workspace, write_csv as write_cast_csv,
+    )
+
 
 def load_catalog(path: Path) -> tuple[dict, list[dict]]:
     data = json.loads(path.read_text(encoding="utf-8-sig"))
@@ -34,20 +47,42 @@ def filter_records(records: list[dict], query: str = "", role: str = "") -> list
     return result
 
 
+def default_config_paths(script_path: Path | None = None) -> tuple[Path, Path, Path]:
+    config_dir = (script_path or Path(__file__)).resolve().parent / "config"
+    return (
+        config_dir / "dialogue-translations.json",
+        config_dir / "cast-names.json",
+        config_dir / "dialogue-catalog.json",
+    )
+
+
 class DialogueViewer(tk.Tk):
-    def __init__(self, initial_path: Path | None = None) -> None:
+    def __init__(self, initial_path: Path | None = None, cast_path: Path | None = None) -> None:
         super().__init__()
         self.title("Ys VI 대사 뷰어")
         self.geometry("1280x760")
         self.records: list[dict] = []
         self.filtered: list[dict] = []
         self.workspace_path: Path | None = None
+        self.workspace_document: dict | None = None
         self._build_ui()
         if initial_path:
-            self.open_catalog(initial_path)
+            self.open_json(initial_path)
+        else:
+            self.status.set("기본 대사 JSON을 찾지 못했습니다. 파일을 직접 열어 주세요.")
+        if cast_path:
+            if cast_path.exists(): self.cast_editor.open(cast_path)
+            else: self.cast_editor.message.set(f"기본 인물명 JSON 없음: {cast_path}")
 
     def _build_ui(self) -> None:
-        top = ttk.Frame(self, padding=8)
+        tabs = ttk.Notebook(self)
+        tabs.pack(fill=tk.BOTH, expand=True)
+        dialogue_tab = ttk.Frame(tabs)
+        cast_tab = CastNameEditor(tabs)
+        self.cast_editor = cast_tab
+        tabs.add(dialogue_tab, text="대사")
+        tabs.add(cast_tab, text="인물명")
+        top = ttk.Frame(dialogue_tab, padding=8)
         top.pack(fill=tk.X)
         ttk.Button(top, text="카탈로그 열기", command=self.choose_catalog).pack(side=tk.LEFT)
         ttk.Button(top, text="번역 작업공간 열기", command=self.choose_workspace).pack(side=tk.LEFT, padx=(6, 0))
@@ -67,7 +102,7 @@ class DialogueViewer(tk.Tk):
         self.status = tk.StringVar(value="카탈로그를 열어 주세요.")
         ttk.Label(top, textvariable=self.status).pack(side=tk.RIGHT)
 
-        pane = ttk.Panedwindow(self, orient=tk.VERTICAL)
+        pane = ttk.Panedwindow(dialogue_tab, orient=tk.VERTICAL)
         pane.pack(fill=tk.BOTH, expand=True, padx=8, pady=(0, 8))
         table_frame = ttk.Frame(pane)
         detail_frame = ttk.Frame(pane)
@@ -104,18 +139,41 @@ class DialogueViewer(tk.Tk):
     def choose_workspace(self) -> None:
         selected = filedialog.askopenfilename(title="번역 작업공간 열기", filetypes=[("JSON", "*.json")])
         if not selected: return
+        self.open_workspace(Path(selected))
+
+    def open_workspace(self, path: Path) -> None:
         try:
-            data = json.loads(Path(selected).read_text(encoding="utf-8-sig"))
-            if not isinstance(data.get("records"), list): raise ValueError("지원하는 번역 작업공간 형식이 아닙니다")
-            self.records = data["records"]; self.workspace_path = Path(selected)
+            data = json.loads(path.read_text(encoding="utf-8-sig"))
+            if not isinstance(data, dict) or not isinstance(data.get("records"), list):
+                raise ValueError("지원하는 번역 작업공간 형식이 아닙니다")
+            self.records = data["records"]
+            self.workspace_document = data
+            self.workspace_path = path
             roles = sorted({role for record in self.records for role in record.get("roles", [])})
-            self.role_box["values"] = [""] + roles; self.role.set(""); self.title(f"Ys VI 번역 편집기 - {self.workspace_path.name}"); self.refresh()
-        except Exception as exc: messagebox.showerror("열기 실패", str(exc))
+            self.role_box["values"] = [""] + roles; self.role.set(""); self.title(f"Ys VI 번역 편집기 - {path.name}"); self.refresh()
+        except Exception as exc:
+            messagebox.showerror("열기 실패", f"{path}\n\n{exc}")
+
+    def open_json(self, path: Path) -> None:
+        try:
+            data = json.loads(path.read_text(encoding="utf-8-sig"))
+        except Exception as exc:
+            messagebox.showerror("기본 데이터 열기 실패", f"{path}\n\n{exc}")
+            return
+        if isinstance(data, dict) and isinstance(data.get("records"), list):
+            self.open_workspace(path)
+        elif isinstance(data, dict) and isinstance(data.get("strings"), list):
+            self.open_catalog(path)
+        else:
+            messagebox.showerror("열기 실패", f"지원하는 JSON 형식이 아닙니다.\n\n{path}")
 
     def save_workspace(self) -> None:
         if self.workspace_path is None: messagebox.showwarning("저장", "번역 작업공간을 먼저 열어 주세요."); return
         self.apply_edit(silent=True)
-        self.workspace_path.write_text(json.dumps({"schema_version": 1, "records": self.records}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        document = dict(self.workspace_document or {"schema_version": 1})
+        document["records"] = self.records
+        atomic_write_json(self.workspace_path, document, backup=True)
+        self.workspace_document = document
         self.status.set(f"저장 완료: {self.workspace_path.name}")
 
     def export_csv(self) -> None:
@@ -165,6 +223,8 @@ class DialogueViewer(tk.Tk):
         roles = sorted({role for record in self.records for role in record.get("roles", [])})
         self.role_box["values"] = [""] + roles
         self.role.set("")
+        self.workspace_path = None
+        self.workspace_document = None
         self.title(f"Ys VI 대사 뷰어 - {path.name}")
         self.refresh()
 
@@ -201,19 +261,112 @@ class DialogueViewer(tk.Tk):
         self.translation_status.set(record.get("status", "untranslated")); self.notes.delete(0, tk.END); self.notes.insert(0, record.get("notes", ""))
 
 
+class CastNameEditor(ttk.Frame):
+    def __init__(self, parent) -> None:
+        super().__init__(parent, padding=8)
+        self.path: Path | None = None
+        self.workspace: dict = {"schema_version": 1, "records": []}
+        self.filtered: list[dict] = []
+        self.dirty = False
+        self._selected_identifier: str | None = None
+        self._build_ui()
+
+    def _build_ui(self) -> None:
+        bar = ttk.Frame(self); bar.pack(fill=tk.X)
+        ttk.Button(bar, text="작업공간 열기", command=self.choose).pack(side=tk.LEFT)
+        ttk.Button(bar, text="저장", command=self.save).pack(side=tk.LEFT, padx=(6, 0))
+        ttk.Button(bar, text="검증", command=self.validate).pack(side=tk.LEFT, padx=(6, 0))
+        ttk.Button(bar, text="CSV 내보내기", command=self.export_csv).pack(side=tk.LEFT, padx=(6, 0))
+        ttk.Label(bar, text="검색").pack(side=tk.LEFT, padx=(14, 4))
+        self.query = tk.StringVar(); entry = ttk.Entry(bar, textvariable=self.query, width=30); entry.pack(side=tk.LEFT); entry.bind("<KeyRelease>", lambda _e: self.refresh())
+        self.filter_status = tk.StringVar(value="전체")
+        box = ttk.Combobox(bar, textvariable=self.filter_status, state="readonly", values=("전체", "미번역", "검수 완료") + CAST_STATUSES, width=12); box.pack(side=tk.LEFT, padx=(6, 0)); box.bind("<<ComboboxSelected>>", lambda _e: self.refresh())
+        self.message = tk.StringVar(value="인물명 작업공간을 열어 주세요."); ttk.Label(bar, textvariable=self.message).pack(side=tk.RIGHT)
+
+        pane = ttk.Panedwindow(self, orient=tk.HORIZONTAL); pane.pack(fill=tk.BOTH, expand=True, pady=(8, 0))
+        left, right = ttk.Frame(pane), ttk.Frame(pane, padding=(8, 0, 0, 0)); pane.add(left, weight=3); pane.add(right, weight=2)
+        columns = ("identifier", "source", "translation", "status")
+        self.tree = ttk.Treeview(left, columns=columns, show="headings")
+        for col, label, width in zip(columns, ("ID", "일본어 원문", "한국어 번역", "상태"), (110, 180, 180, 100)):
+            self.tree.heading(col, text=label); self.tree.column(col, width=width)
+        scroll = ttk.Scrollbar(left, orient=tk.VERTICAL, command=self.tree.yview); self.tree.configure(yscrollcommand=scroll.set)
+        self.tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True); scroll.pack(side=tk.RIGHT, fill=tk.Y); self.tree.bind("<<TreeviewSelect>>", self.show)
+
+        self.info = tk.StringVar(); ttk.Label(right, textvariable=self.info, justify=tk.LEFT).pack(fill=tk.X)
+        ttk.Label(right, text="번역").pack(anchor="w", pady=(10, 0)); self.translation = ttk.Entry(right, font=("맑은 고딕", 11)); self.translation.pack(fill=tk.X)
+        ttk.Label(right, text="상태").pack(anchor="w", pady=(8, 0)); self.edit_status = tk.StringVar(value="untranslated"); ttk.Combobox(right, textvariable=self.edit_status, state="readonly", values=CAST_STATUSES).pack(fill=tk.X)
+        ttk.Label(right, text="메모").pack(anchor="w", pady=(8, 0)); self.notes = tk.Text(right, height=5, wrap=tk.WORD, font=("맑은 고딕", 10)); self.notes.pack(fill=tk.X)
+        ttk.Button(right, text="현재 항목 반영", command=self.apply_edit).pack(anchor="e", pady=(8, 0))
+
+    def choose(self) -> None:
+        if self.dirty and not messagebox.askyesno("미저장 변경", "저장하지 않은 변경을 버리고 다른 파일을 여시겠습니까?"): return
+        selected = filedialog.askopenfilename(title="인물명 작업공간 열기", filetypes=[("JSON", "*.json")])
+        if selected: self.open(Path(selected))
+
+    def open(self, path: Path) -> None:
+        try: self.workspace = load_cast_workspace(path)
+        except Exception as exc: messagebox.showerror("열기 실패", str(exc)); return
+        self.path = path; self.dirty = False; self.refresh(); self.message.set(f"{path.name}: {len(self.workspace['records']):,}개")
+
+    def _commit_selected(self) -> None:
+        if not self._selected_identifier: return
+        row = next((r for r in self.workspace["records"] if r["identifier"] == self._selected_identifier), None)
+        if row is None: return
+        values = (self.translation.get(), self.edit_status.get(), self.notes.get("1.0", "end-1c"))
+        if values != (row.get("translation", ""), row.get("status", "untranslated"), row.get("notes", "")):
+            row["translation"], row["status"], row["notes"] = values; self.dirty = True
+
+    def apply_edit(self) -> None:
+        if not self._selected_identifier: messagebox.showwarning("편집", "항목을 선택해 주세요."); return
+        self._commit_selected(); self.refresh(select=self._selected_identifier)
+
+    def save(self) -> None:
+        if self.path is None: messagebox.showwarning("저장", "작업공간을 먼저 열어 주세요."); return
+        self._commit_selected(); errors = validate_cast_workspace(self.workspace)
+        if errors: messagebox.showerror("저장 전 검증 실패", "\n".join(errors[:20])); return
+        atomic_write_json(self.path, self.workspace, backup=True); self.dirty = False; self.message.set(f"저장 완료: {self.path.name}")
+
+    def validate(self) -> None:
+        self._commit_selected(); errors = validate_cast_workspace(self.workspace)
+        if errors: messagebox.showerror("검증 실패", "\n".join(errors[:20]))
+        else: messagebox.showinfo("검증", f"정상: {len(self.workspace.get('records', [])):,}개")
+
+    def export_csv(self) -> None:
+        if not self.workspace.get("records"): messagebox.showwarning("CSV", "작업공간을 먼저 열어 주세요."); return
+        selected = filedialog.asksaveasfilename(title="인물명 CSV 내보내기", defaultextension=".csv", filetypes=[("CSV", "*.csv")])
+        if selected: self._commit_selected(); write_cast_csv(Path(selected), self.workspace); self.message.set(f"CSV 내보내기 완료: {Path(selected).name}")
+
+    def refresh(self, select: str | None = None) -> None:
+        needle = self.query.get().casefold().strip(); status = self.filter_status.get()
+        rows = self.workspace.get("records", [])
+        if status == "미번역": rows = [r for r in rows if r.get("status") == "untranslated"]
+        elif status == "검수 완료": rows = [r for r in rows if r.get("status") == "reviewed"]
+        elif status != "전체": rows = [r for r in rows if r.get("status") == status]
+        self.filtered = [r for r in rows if not needle or needle in " ".join(str(r.get(k, "")) for k in ("identifier", "source", "translation", "notes")).casefold()]
+        self.tree.delete(*self.tree.get_children())
+        for i, row in enumerate(self.filtered): self.tree.insert("", tk.END, iid=str(i), values=(row["identifier"], row["source"], row.get("translation", ""), row.get("status", "")))
+        self.message.set(f"{len(self.filtered):,} / {len(self.workspace.get('records', [])):,}개")
+        if select:
+            for i, row in enumerate(self.filtered):
+                if row["identifier"] == select: self.tree.selection_set(str(i)); self.tree.see(str(i)); self.show(); break
+
+    def show(self, _event=None) -> None:
+        selected = self.tree.selection()
+        if not selected: return
+        next_row = self.filtered[int(selected[0])]
+        if self._selected_identifier and self._selected_identifier != next_row["identifier"]: self._commit_selected()
+        self._selected_identifier = next_row["identifier"]
+        self.info.set(f"ID: {next_row['identifier']}\n원문: {next_row['source']}\n식별자 오프셋: 0x{next_row['identifier_offset']:X}\n이름 오프셋: 0x{next_row['name_offset']:X}\n원문 HEX: {next_row['source_raw_hex']}\nSHA-256: {next_row['source_sha256']}")
+        self.translation.delete(0, tk.END); self.translation.insert(0, next_row.get("translation", "")); self.edit_status.set(next_row.get("status", "untranslated")); self.notes.delete("1.0", tk.END); self.notes.insert("1.0", next_row.get("notes", ""))
+
+
 def main() -> int:
+    default_workspace, default_cast, default_catalog = default_config_paths()
     if len(sys.argv) > 1:
         initial = Path(sys.argv[1])
     else:
-        default_catalog = (
-            Path(__file__).resolve().parents[1]
-            / ".work"
-            / "ys6-full-dialogue"
-            / "catalog"
-            / "dialogue_catalog.json"
-        )
-        initial = default_catalog if default_catalog.exists() else None
-    app = DialogueViewer(initial)
+        initial = default_workspace if default_workspace.exists() else (default_catalog if default_catalog.exists() else None)
+    app = DialogueViewer(initial, default_cast)
     app.mainloop()
     return 0
 
