@@ -937,7 +937,7 @@
       "source_raw_hex": "8345838B00000000000000000000000000000000557275000000000000000000",
       "source_sha256": "E87310863BA143907261E33039971728E6870511F5EF1ECD40AF6A1892705C55",
       "translation": "울",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -948,7 +948,7 @@
       "source_raw_hex": "838983688362834E914492B70000000000000000000000000000000000000000",
       "source_sha256": "EEB13B26342F930E46E65E22C6C779DB986E303ED7E939D3C48281B0964C5C76",
       "translation": "라독선장",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -970,7 +970,7 @@
       "source_raw_hex": "8B8C8347838B8393835883670000000000000000000000000000000000000000",
       "source_sha256": "99BB9845F97FB8BD6B0352A77E79DB14A2414B440E72C3BB0422DB04D19F53CE",
       "translation": "에른스트",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1003,7 +1003,7 @@
       "source_raw_hex": "8368834D00000000000000000000000000000000000000000000000000000000",
       "source_sha256": "261167E2A66AE511F75CAF303BBF7925E344E0054A8CDCEAE116D563E9EC037B",
       "translation": "도기",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1014,7 +1014,7 @@
       "source_raw_hex": "836F835883898380000000000000000000000000000000000000000000000000",
       "source_sha256": "186A41BAF6F8346B4D6F0E8CC88C698BB49725D616439372FED624D941ED87CB",
       "translation": "바스람",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1025,7 +1025,7 @@
       "source_raw_hex": "838A815B83940000000000000000000000000000000000000000000000000000",
       "source_sha256": "FF93941F7C9F61BF17CD46C7824FACF63D3130B2B990F035E2EC8A2572E1CFDE",
       "translation": "리브",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1036,7 +1036,7 @@
       "source_raw_hex": "8386834700000000000000000000000000000000000000000000000000000000",
       "source_sha256": "6DCB27533106D956D7CAF28D0998DABF1B7B2FE257A739F783EE1F36DF56F3A1",
       "translation": "유에",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1047,7 +1047,7 @@
       "source_raw_hex": "835A838900000000000000000000000000000000000000000000000000000000",
       "source_sha256": "50686C925DD6059E7463B9CDA35674783F366BC833933395C1B4396872C93769",
       "translation": "세라",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1058,7 +1058,7 @@
       "source_raw_hex": "834C835400000000000000000000000000000000000000000000000000000000",
       "source_sha256": "9AA1C5793B081ABDE07C997A4518663DB4BA802B7B7A03179AB6D999659E3027",
       "translation": "키사",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1068,8 +1068,8 @@
       "source": "旧ガッシュ",
       "source_raw_hex": "8B8C834B83628356838500000000000000000000000000000000000000000000",
       "source_sha256": "6CC833F1F483A855709231D6E61C09D665592982329B1ABD0A2FDE6C03D472E0",
-      "translation": "가슈",
-      "status": "untranslated",
+      "translation": "갓슈",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1080,7 +1080,7 @@
       "source_raw_hex": "8365838900000000000000000000000000000000006572610000000000000000",
       "source_sha256": "11487D7FBD670E18E9161E09A97E5382E34FD8519B93C909B6B1BEF57A948F77",
       "translation": "테라",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1091,7 +1091,7 @@
       "source_raw_hex": "8389815B836F0000000000000000000000000000000000000000000000000000",
       "source_sha256": "47098D67FC9CBE2F109BF9E0917C809C5D3212EA3FA4BD71654D330EB02DCFE5",
       "translation": "라바",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1102,7 +1102,7 @@
       "source_raw_hex": "8341834B838C835892F193C20000000000000000000000000000000000000000",
       "source_sha256": "9EFCA629ED661717554D86BAE85E35D61C85A8A24B7C1826AC08A0C48BE21968",
       "translation": "아가레스제독",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1113,7 +1113,7 @@
       "source_raw_hex": "838D834383680000000000000000000000000000000000000000000000000000",
       "source_sha256": "00125B6E2917F74D4E4D2ACF932083AB0E7A39DCE41FE4DAB19F5A0414DF1979",
       "translation": "로이드",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1123,8 +1123,8 @@
       "source": "ザクソン",
       "source_raw_hex": "8355834E835C8393000000000000000000000000000000000000000000000000",
       "source_sha256": "F508D3C30023578919246CFA0E0BDA480D87E523662C38F31C66CD9EE760C98D",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "잭슨",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1135,7 +1135,7 @@
       "source_raw_hex": "838183438376838B000000000000000000000000000000000000000000000000",
       "source_sha256": "25F5E00ABD69C84649EF44C40861157901C2CD735D105A51033A20B962130FF9",
       "translation": "메이플",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1146,7 +1146,7 @@
       "source_raw_hex": "838D835B00000000000000000000000000000000000000000000000000000000",
       "source_sha256": "41F530D6C90FB88BBAB68A298521B363C90E821657473CF804B449A2A8E26F4E",
       "translation": "로제",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1157,7 +1157,7 @@
       "source_raw_hex": "834E838D83410000000000000000000000000000000000000000000000000000",
       "source_sha256": "45711AE0D73ED106308AB1DD9AC5F55720B269D3B31A0739B66BB2D16BB00642",
       "translation": "크로아",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1168,7 +1168,7 @@
       "source_raw_hex": "8347837E838A8349000000000000000000000000000000000000000000000000",
       "source_sha256": "419DF0E2DBD95644C4BE5CC319937AB55DC5BD7EBB61E3214E99396BEF8AC2A9",
       "translation": "에밀리오",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1179,7 +1179,7 @@
       "source_raw_hex": "8350837283930000000000000000000000000000000000000000000000000000",
       "source_sha256": "B2B54B5F97E70500F1B30D5FDCAD6E22ED943D53EA38165B30280D34347D28AE",
       "translation": "케빈",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1189,8 +1189,8 @@
       "source": "イザック",
       "source_raw_hex": "834383558362834E000000000000000000000000007A61630000000000000000",
       "source_sha256": "34D1572AB79D9680880633CC3304A9595E4B3617BA838F3A73A7EC4B736C1CE4",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "이자크",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1201,7 +1201,7 @@
       "source_raw_hex": "8386837E83690000000000000000000000000000000000000000000000000000",
       "source_sha256": "2FD26C10F61B43FB60D9053C0EA7A9463BD840B0872D9A6270B1947908573B54",
       "translation": "유미나",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1212,7 +1212,7 @@
       "source_raw_hex": "83658342835A0000000000000000000000000000000000000000000000000000",
       "source_sha256": "BF3576EA3717996D890A418E6FAE69048C9AD90568989B4B90787DC0F697B7B8",
       "translation": "티세",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1223,7 +1223,7 @@
       "source_raw_hex": "834A838B837D8393000000000000000000000000000000000000000000000000",
       "source_sha256": "51BD7E550646BD7E98CEB690CEE8DD01B852BD4009B28116411CAE0627BBF380",
       "translation": "카르만",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1234,7 +1234,7 @@
       "source_raw_hex": "8349815B834B8358836700000000000000000000000000000000000000000000",
       "source_sha256": "C4C88BDE6F6604EA0A54693DFC595C009DC0753263C904A69F02F24D94D1FE67",
       "translation": "오가스트",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1245,7 +1245,7 @@
       "source_raw_hex": "834B835B838B0000000000000000000000000000000000000000000000000000",
       "source_sha256": "4D1F7349079173242C3AB929D28D909F7BDFB433DFA3A56C7BFFF38A9A55A00F",
       "translation": "가젤",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1256,7 +1256,7 @@
       "source_raw_hex": "835C837483428341000000000000000000000000000000000000000000000000",
       "source_sha256": "9D4A30D1A3DF102D10F7F4B843CF89EF7584A704AAADF062FC51730ADB31F339",
       "translation": "소피아",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1267,7 +1267,7 @@
       "source_raw_hex": "8386815B83530000000000000000000000000000000000000000000000000000",
       "source_sha256": "62E50DDC8738806E088F96BB4C395A4C79232BA279605B9B4C7BE4D9B3BC56BB",
       "translation": "유고",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1278,7 +1278,7 @@
       "source_raw_hex": "8356834100000000000000000000000000000000000000000000000000000000",
       "source_sha256": "AA9C14D65778F1A95B3DA1C67612E9D67233AFFD195FEB1074916A9B02D06DFE",
       "translation": "시아",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1289,7 +1289,7 @@
       "source_raw_hex": "8354834583680000000000000000000000000000000000000000000000000000",
       "source_sha256": "7D05C14BB6C7294802E091F506E555F4A05E635145350C5456C2D21DFA0F6C42",
       "translation": "사우드",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1300,7 +1300,7 @@
       "source_raw_hex": "83568378815B838B000000000000000000000000000000000000000000000000",
       "source_sha256": "EF3C150F4984323B7B2DD2AC57A71FA9C041E9E25AB879C4FA57B00D37AF2FFB",
       "translation": "시벨",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1311,7 +1311,7 @@
       "source_raw_hex": "8341836A83580000000000000000000000000000000000000000000000000000",
       "source_sha256": "8CBE6C2707C2333B032C8DD273ACA6E576C8B051511DB639B9F5DA4AB933EB26",
       "translation": "아니스",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1322,7 +1322,7 @@
       "source_raw_hex": "83418367838A0000000000000000000000000000000000000000000000000000",
       "source_sha256": "1AABEF1E188A01EF5689AF00279EAF25959475041292B5715023EE3387596BCE",
       "translation": "아토리",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1333,7 +1333,7 @@
       "source_raw_hex": "834E83948340838B000000000000000000000000000000000000000000000000",
       "source_sha256": "A82F254460933DBEAB09D6AA3EABF8AE2438F48D5D7CBE938699A8CEE6A9C693",
       "translation": "크발",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1344,7 +1344,7 @@
       "source_raw_hex": "837E838B834A0000000000000000000000000000000000000000000000000000",
       "source_sha256": "29BF74CD032AECD05D28504925BB6FC500588AFB9D7460C485C3277210A7FD67",
       "translation": "미르카",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1355,7 +1355,7 @@
       "source_raw_hex": "8389834E83568346000000000000000000000000000000000000000000000000",
       "source_sha256": "9E1817E717A00BEF4273BF92D70EC94FBB881D4C2C7C433230905387AA5BAF08",
       "translation": "라크쉐",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1366,7 +1366,7 @@
       "source_raw_hex": "837D836983930000000000000000000000000000000000000000000000000000",
       "source_sha256": "9E984CDDEBD354AED89D97294D59F29CF30B0393480EFAA0E3576C126BD45901",
       "translation": "마난",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1377,7 +1377,7 @@
       "source_raw_hex": "835A8375838D0000000000000000000000000000000000000000000000000000",
       "source_sha256": "B1D2AA41FDEAFEB8D500AE98A7F64DEB5AEC3BD8246416C24CCE14C4D9FF1692",
       "translation": "세브로",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1387,8 +1387,8 @@
       "source": "ウェヌカ",
       "source_raw_hex": "83458346836B834A000000000000000000000000000000000000000000000000",
       "source_sha256": "97E029894B5AF590DFBA8465E6F678C36DC23198E5D8B855C714E179A70D63B4",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "웨느카",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1421,7 +1421,7 @@
       "source_raw_hex": "8369815B838A8383000000000000000000000000000000000000000000000000",
       "source_sha256": "24758A955CC0F09903B1FDED4A01E13E59C14129DCEC8B249DC02F27E2E2AE09",
       "translation": "나랴",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1443,7 +1443,7 @@
       "source_raw_hex": "838A8385815B834F000000000000000000000000000000000000000000000000",
       "source_sha256": "FC1157E65F539B6F96EC10C0E490DC6CC18B8632DCF8D17BAD74211E75D521D3",
       "translation": "류그",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1465,7 +1465,7 @@
       "source_raw_hex": "836D834300000000000000000000000000000000000000000000000000000000",
       "source_sha256": "E62579082168FC5FE624BC9D0DCC16CB176985026CC31998CFE2883A513CBB28",
       "translation": "노이",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1498,7 +1498,7 @@
       "source_raw_hex": "8341834F00000000000000000000000000000000000000000000000000000000",
       "source_sha256": "DF58C45408CECDC0CD31D1C3A21D4DBB923551A02C73398BAEC579D1E4F1FD46",
       "translation": "아그",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1509,7 +1509,7 @@
       "source_raw_hex": "8357834683680000000000000000000000000000000000000000000000000000",
       "source_sha256": "0E66F0DCAB8C5CA8EEE51C331457646CEBBCDD0EBE97920DA20043A5DA17287B",
       "translation": "제드",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {

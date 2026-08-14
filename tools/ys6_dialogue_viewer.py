@@ -35,9 +35,11 @@ except ModuleNotFoundError:
 try:
     from tools.scripts.ys6_translation_workspace import normalize_editor_translation
     from tools.scripts.ys6_patch_builder import find_default_font, inspect_inputs, run_build
+    from tools.scripts.ys6_item_workspace import encoded_length as item_encoded_length, load_workspace as load_item_workspace, validate_workspace as validate_item_workspace
 except ModuleNotFoundError:
     from scripts.ys6_translation_workspace import normalize_editor_translation
     from scripts.ys6_patch_builder import find_default_font, inspect_inputs, run_build
+    from scripts.ys6_item_workspace import encoded_length as item_encoded_length, load_workspace as load_item_workspace, validate_workspace as validate_item_workspace
 
 
 def load_catalog(path: Path) -> tuple[dict, list[dict]]:
@@ -78,17 +80,18 @@ def mark_records_override(records: list[dict]) -> dict[str, int]:
     return result
 
 
-def default_config_paths(script_path: Path | None = None) -> tuple[Path, Path, Path]:
+def default_config_paths(script_path: Path | None = None) -> tuple[Path, Path, Path, Path]:
     config_dir = (script_path or Path(__file__)).resolve().parent / "config"
     return (
         config_dir / "dialogue-translations.json",
         config_dir / "cast-names.json",
+        config_dir / "item-translations.json",
         config_dir / "dialogue-catalog.json",
     )
 
 
 class DialogueViewer(tk.Tk):
-    def __init__(self, initial_path: Path | None = None, cast_path: Path | None = None) -> None:
+    def __init__(self, initial_path: Path | None = None, cast_path: Path | None = None, item_path: Path | None = None) -> None:
         super().__init__()
         self.title("Ys VI 대사 뷰어")
         self.geometry("1280x760")
@@ -105,6 +108,9 @@ class DialogueViewer(tk.Tk):
         if cast_path:
             if cast_path.exists(): self.cast_editor.open(cast_path)
             else: self.cast_editor.message.set(f"기본 인물명 JSON 없음: {cast_path}")
+        if item_path:
+            if item_path.exists(): self.item_editor.open(item_path)
+            else: self.item_editor.message.set(f"기본 아이템 JSON 없음: {item_path}")
 
     def _build_ui(self) -> None:
         tabs = ttk.Notebook(self)
@@ -112,10 +118,13 @@ class DialogueViewer(tk.Tk):
         dialogue_tab = ttk.Frame(tabs)
         cast_tab = CastNameEditor(tabs)
         self.cast_editor = cast_tab
+        item_tab = ItemEditor(tabs)
+        self.item_editor = item_tab
         build_tab = PatchBuildEditor(tabs, self)
         self.build_editor = build_tab
         tabs.add(dialogue_tab, text="대사")
-        tabs.add(cast_tab, text="인물명")
+        tabs.add(cast_tab, text="인물·몬스터명")
+        tabs.add(item_tab, text="아이템")
         tabs.add(build_tab, text="패치 빌드")
         top = ttk.Frame(dialogue_tab, padding=8)
         top.pack(fill=tk.X)
@@ -365,12 +374,14 @@ class CastNameEditor(ttk.Frame):
         self.query = tk.StringVar(); entry = ttk.Entry(bar, textvariable=self.query, width=30); entry.pack(side=tk.LEFT); entry.bind("<KeyRelease>", lambda _e: self.refresh())
         self.filter_status = tk.StringVar(value="전체")
         box = ttk.Combobox(bar, textvariable=self.filter_status, state="readonly", values=("전체", "미번역", "검수 완료") + CAST_STATUSES, width=12); box.pack(side=tk.LEFT, padx=(6, 0)); box.bind("<<ComboboxSelected>>", lambda _e: self.refresh())
+        self.category = tk.StringVar(value="전체")
+        category_box = ttk.Combobox(bar, textvariable=self.category, state="readonly", values=("전체", "인물", "몬스터"), width=9); category_box.pack(side=tk.LEFT, padx=(6, 0)); category_box.bind("<<ComboboxSelected>>", lambda _e: self.refresh())
         self.message = tk.StringVar(value="인물명 작업공간을 열어 주세요."); ttk.Label(bar, textvariable=self.message).pack(side=tk.RIGHT)
 
         pane = ttk.Panedwindow(self, orient=tk.HORIZONTAL); pane.pack(fill=tk.BOTH, expand=True, pady=(8, 0))
         left, right = ttk.Frame(pane), ttk.Frame(pane, padding=(8, 0, 0, 0)); pane.add(left, weight=3); pane.add(right, weight=2)
         columns = ("identifier", "source", "translation", "status")
-        self.tree = ttk.Treeview(left, columns=columns, show="headings")
+        self.tree = ttk.Treeview(left, columns=columns, show="headings", selectmode="extended")
         for col, label, width in zip(columns, ("ID", "일본어 원문", "한국어 번역", "상태"), (110, 180, 180, 100)):
             self.tree.heading(col, text=label); self.tree.column(col, width=width)
         scroll = ttk.Scrollbar(left, orient=tk.VERTICAL, command=self.tree.yview); self.tree.configure(yscrollcommand=scroll.set)
@@ -380,7 +391,7 @@ class CastNameEditor(ttk.Frame):
         ttk.Label(right, text="번역").pack(anchor="w", pady=(10, 0)); self.translation = ttk.Entry(right, font=("맑은 고딕", 11)); self.translation.pack(fill=tk.X)
         ttk.Label(right, text="상태").pack(anchor="w", pady=(8, 0)); self.edit_status = tk.StringVar(value="untranslated"); ttk.Combobox(right, textvariable=self.edit_status, state="readonly", values=CAST_STATUSES).pack(fill=tk.X)
         ttk.Label(right, text="메모").pack(anchor="w", pady=(8, 0)); self.notes = tk.Text(right, height=5, wrap=tk.WORD, font=("맑은 고딕", 10)); self.notes.pack(fill=tk.X)
-        ttk.Button(right, text="현재 항목 반영", command=self.apply_edit).pack(anchor="e", pady=(8, 0))
+        actions=ttk.Frame(right);actions.pack(anchor="e",pady=(8,0));ttk.Button(actions,text="선택 항목 reviewed",command=self.review_selected).pack(side=tk.LEFT);ttk.Button(actions, text="현재 항목 반영", command=self.apply_edit).pack(side=tk.LEFT,padx=(6,0))
 
     def choose(self) -> None:
         if self.dirty and not messagebox.askyesno("미저장 변경", "저장하지 않은 변경을 버리고 다른 파일을 여시겠습니까?"): return
@@ -404,6 +415,16 @@ class CastNameEditor(ttk.Frame):
         if not self._selected_identifier: messagebox.showwarning("편집", "항목을 선택해 주세요."); return
         self._commit_selected(); self.refresh(select=self._selected_identifier)
 
+    def review_selected(self) -> None:
+        selected=self.tree.selection()
+        if not selected:messagebox.showwarning("reviewed","항목을 선택해 주세요.");return
+        self._commit_selected();changed=0;empty=0
+        for item in selected:
+            row=self.filtered[int(item)]
+            if not row.get("translation","").strip():empty+=1;continue
+            if row.get("status")!="reviewed":row["status"]="reviewed";changed+=1
+        self.dirty|=bool(changed);self.refresh();self.message.set(f"reviewed 변경 {changed:,}개 / 빈 번역 제외 {empty:,}개")
+
     def save(self) -> None:
         if self.path is None: messagebox.showwarning("저장", "작업공간을 먼저 열어 주세요."); return
         self._commit_selected(); errors = validate_cast_workspace(self.workspace)
@@ -423,13 +444,16 @@ class CastNameEditor(ttk.Frame):
     def refresh(self, select: str | None = None) -> None:
         needle = self.query.get().casefold().strip(); status = self.filter_status.get()
         rows = self.workspace.get("records", [])
+        category=self.category.get()
+        if category=="몬스터":rows=[r for r in rows if r.get("identifier","").startswith("CAST_M")]
+        elif category=="인물":rows=[r for r in rows if not r.get("identifier","").startswith("CAST_M")]
         if status == "미번역": rows = [r for r in rows if r.get("status") == "untranslated"]
         elif status == "검수 완료": rows = [r for r in rows if r.get("status") == "reviewed"]
         elif status != "전체": rows = [r for r in rows if r.get("status") == status]
         self.filtered = [r for r in rows if not needle or needle in " ".join(str(r.get(k, "")) for k in ("identifier", "source", "translation", "notes")).casefold()]
         self.tree.delete(*self.tree.get_children())
         for i, row in enumerate(self.filtered): self.tree.insert("", tk.END, iid=str(i), values=(row["identifier"], row["source"], row.get("translation", ""), row.get("status", "")))
-        self.message.set(f"{len(self.filtered):,} / {len(self.workspace.get('records', [])):,}개")
+        monsters=sum(r.get("identifier","").startswith("CAST_M") for r in self.workspace.get("records",[]));reviewed_monsters=sum(r.get("identifier","").startswith("CAST_M") and r.get("status")=="reviewed" for r in self.workspace.get("records",[]));self.message.set(f"{len(self.filtered):,}/{len(self.workspace.get('records', [])):,}개 · 몬스터 {monsters} (reviewed {reviewed_monsters})")
         if select:
             for i, row in enumerate(self.filtered):
                 if row["identifier"] == select: self.tree.selection_set(str(i)); self.tree.see(str(i)); self.show(); break
@@ -442,6 +466,95 @@ class CastNameEditor(ttk.Frame):
         self._selected_identifier = next_row["identifier"]
         self.info.set(f"ID: {next_row['identifier']}\n원문: {next_row['source']}\n식별자 오프셋: 0x{next_row['identifier_offset']:X}\n이름 오프셋: 0x{next_row['name_offset']:X}\n원문 HEX: {next_row['source_raw_hex']}\nSHA-256: {next_row['source_sha256']}")
         self.translation.delete(0, tk.END); self.translation.insert(0, next_row.get("translation", "")); self.edit_status.set(next_row.get("status", "untranslated")); self.notes.delete("1.0", tk.END); self.notes.insert("1.0", next_row.get("notes", ""))
+
+
+class ItemEditor(ttk.Frame):
+    STATUSES = ("untranslated", "draft", "override", "excluded", "conflict")
+
+    def __init__(self, parent) -> None:
+        super().__init__(parent, padding=8)
+        self.path: Path | None = None; self.workspace = {"schema_version": 1, "records": []}
+        self.filtered: list[dict] = []; self.dirty = False; self._selected_index: int | None = None
+        bar = ttk.Frame(self); bar.pack(fill=tk.X)
+        ttk.Button(bar, text="작업공간 열기", command=self.choose).pack(side=tk.LEFT)
+        ttk.Button(bar, text="저장", command=self.save).pack(side=tk.LEFT, padx=(6, 0))
+        ttk.Button(bar, text="검증", command=self.validate).pack(side=tk.LEFT, padx=(6, 0))
+        ttk.Button(bar, text="선택 항목 override", command=self.override_selected).pack(side=tk.LEFT, padx=(6, 0))
+        ttk.Label(bar, text="검색").pack(side=tk.LEFT, padx=(14, 4))
+        self.query=tk.StringVar(); search=ttk.Entry(bar,textvariable=self.query,width=32);search.pack(side=tk.LEFT);search.bind("<KeyRelease>",lambda _e:self.refresh())
+        self.filter_status=tk.StringVar(value="전체");box=ttk.Combobox(bar,textvariable=self.filter_status,state="readonly",values=("전체",)+self.STATUSES,width=12);box.pack(side=tk.LEFT,padx=(6,0));box.bind("<<ComboboxSelected>>",lambda _e:self.refresh())
+        self.message=tk.StringVar(value="아이템 작업공간을 열어 주세요.");ttk.Label(bar,textvariable=self.message).pack(side=tk.RIGHT)
+        pane=ttk.Panedwindow(self,orient=tk.HORIZONTAL);pane.pack(fill=tk.BOTH,expand=True,pady=(8,0));left,right=ttk.Frame(pane),ttk.Frame(pane,padding=(8,0,0,0));pane.add(left,weight=3);pane.add(right,weight=2)
+        columns=("index","id","source","translation","status");self.tree=ttk.Treeview(left,columns=columns,show="headings",selectmode="extended")
+        for col,label,width in zip(columns,("번호","ID","일본어 이름","한국어 이름","상태"),(55,90,170,170,90)):
+            self.tree.heading(col,text=label);self.tree.column(col,width=width)
+        scroll=ttk.Scrollbar(left,orient=tk.VERTICAL,command=self.tree.yview);self.tree.configure(yscrollcommand=scroll.set);self.tree.pack(side=tk.LEFT,fill=tk.BOTH,expand=True);scroll.pack(side=tk.RIGHT,fill=tk.Y);self.tree.bind("<<TreeviewSelect>>",self.show)
+        self.info=tk.StringVar();ttk.Label(right,textvariable=self.info,justify=tk.LEFT).pack(fill=tk.X)
+        ttk.Label(right,text="한국어 이름").pack(anchor="w",pady=(8,0));self.name=ttk.Entry(right,font=("맑은 고딕",11));self.name.pack(fill=tk.X)
+        ttk.Label(right,text="일본어 설명").pack(anchor="w",pady=(8,0));self.source_desc=tk.Text(right,height=5,wrap=tk.WORD,font=("맑은 고딕",10),state=tk.DISABLED);self.source_desc.pack(fill=tk.X)
+        ttk.Label(right,text="한국어 설명").pack(anchor="w",pady=(8,0));self.description=tk.Text(right,height=6,wrap=tk.WORD,font=("맑은 고딕",10));self.description.pack(fill=tk.X)
+        row=ttk.Frame(right);row.pack(fill=tk.X,pady=(8,0));ttk.Label(row,text="상태").pack(side=tk.LEFT);self.edit_status=tk.StringVar(value="draft");ttk.Combobox(row,textvariable=self.edit_status,state="readonly",values=self.STATUSES,width=14).pack(side=tk.LEFT,padx=(6,12));ttk.Label(row,text="메모").pack(side=tk.LEFT);self.notes=ttk.Entry(row);self.notes.pack(side=tk.LEFT,fill=tk.X,expand=True)
+        ttk.Button(right,text="현재 항목 반영",command=self.apply_edit).pack(anchor="e",pady=(8,0))
+
+    def choose(self):
+        selected=filedialog.askopenfilename(title="아이템 작업공간 열기",filetypes=[("JSON","*.json")]);
+        if selected:self.open(Path(selected))
+
+    def open(self,path:Path):
+        try:self.workspace=load_item_workspace(path)
+        except Exception as exc:messagebox.showerror("열기 실패",str(exc));return
+        self.path=path;self.dirty=False;self.refresh()
+
+    def _commit_selected(self):
+        if self._selected_index is None:return
+        row=next((x for x in self.workspace["records"] if x["index"]==self._selected_index),None)
+        if row is None:return
+        values=(self.name.get(),self.description.get("1.0","end-1c").replace("\r\n","\n").replace("\r","\n"),self.edit_status.get(),self.notes.get())
+        old=(row.get("translation_name",""),row.get("translation_description",""),row.get("status","draft"),row.get("notes",""))
+        if values!=old:row["translation_name"],row["translation_description"],row["status"],row["notes"]=values;self.dirty=True
+
+    def apply_edit(self):
+        self._commit_selected();self.refresh(select=self._selected_index)
+
+    def save(self):
+        if self.path is None:messagebox.showwarning("저장","작업공간을 먼저 열어 주세요.");return
+        self._commit_selected();errors=validate_item_workspace(self.workspace)
+        if errors:messagebox.showerror("저장 전 검증 실패","\n".join(errors[:20]));return
+        atomic_write_json(self.path,self.workspace,backup=True);self.dirty=False;self.message.set(f"저장 완료: {self.path.name}")
+
+    def validate(self):
+        self._commit_selected();errors=validate_item_workspace(self.workspace)
+        if errors:messagebox.showerror("검증 실패","\n".join(errors[:20]))
+        else:messagebox.showinfo("검증",f"정상: {len(self.workspace.get('records',[])):,}개")
+
+    def override_selected(self):
+        selected=self.tree.selection()
+        if not selected:messagebox.showwarning("override","항목을 선택해 주세요.");return
+        self._commit_selected();changed=0;empty=0
+        for item in selected:
+            row=self.filtered[int(item)]
+            if not row.get("translation_name","").strip():empty+=1;continue
+            if row.get("status")!="override":row["status"]="override";changed+=1
+        self.dirty|=bool(changed);self.refresh();self.message.set(f"override 변경 {changed:,}개 / 빈 이름 제외 {empty:,}개")
+
+    def refresh(self,select=None):
+        rows=self.workspace.get("records",[]);status=self.filter_status.get();needle=self.query.get().casefold().strip()
+        if status!="전체":rows=[x for x in rows if x.get("status")==status]
+        self.filtered=[x for x in rows if not needle or needle in " ".join(str(x.get(k,"")) for k in ("resource_id","source_name","source_description","translation_name","translation_description","notes")).casefold()]
+        self.tree.delete(*self.tree.get_children())
+        for i,row in enumerate(self.filtered):self.tree.insert("",tk.END,iid=str(i),values=(row["index"],row["resource_id"],row["source_name"],row.get("translation_name",""),row.get("status","")))
+        counts={s:sum(x.get("status")==s for x in self.workspace.get("records",[])) for s in self.STATUSES};self.message.set(f"{len(self.filtered):,}/{len(self.workspace.get('records',[])):,}개 · override {counts['override']} · draft {counts['draft']}")
+        if select is not None:
+            for i,row in enumerate(self.filtered):
+                if row["index"]==select:self.tree.selection_set(str(i));self.tree.see(str(i));self.show();break
+
+    def show(self,_event=None):
+        selected=self.tree.selection()
+        if not selected:return
+        row=self.filtered[int(selected[0])]
+        if self._selected_index is not None and self._selected_index!=row["index"]:self._commit_selected()
+        self._selected_index=row["index"];name_length=item_encoded_length(row.get("translation_name",""))+1;description_length=item_encoded_length(row.get("translation_description",""),True)+1;self.info.set(f"번호: {row['index']}\nID: {row['resource_id']}\n일본어 이름: {row['source_name']}\n인코딩 길이: 이름 {name_length}/32 · 설명 {description_length}/108바이트\n원본 레코드 SHA-256: {row['source_record_sha256']}")
+        self.name.delete(0,tk.END);self.name.insert(0,row.get("translation_name",""));self.source_desc.configure(state=tk.NORMAL);self.source_desc.delete("1.0",tk.END);self.source_desc.insert("1.0",row.get("source_description",""));self.source_desc.configure(state=tk.DISABLED);self.description.delete("1.0",tk.END);self.description.insert("1.0",row.get("translation_description",""));self.edit_status.set(row.get("status","draft"));self.notes.delete(0,tk.END);self.notes.insert(0,row.get("notes",""))
 
 
 class PatchBuildEditor(ttk.Frame):
@@ -483,7 +596,7 @@ class PatchBuildEditor(ttk.Frame):
 
     def refresh_data(self, silent: bool = False) -> None:
         try:
-            info = inspect_inputs(); self.counts.set(f"대사 override {info['override_count']:,}개 / draft {info['draft_count']:,}개(제외) / 인물명 reviewed {info['cast_reviewed_count']:,}개")
+            info = inspect_inputs(); self.counts.set(f"대사 override {info['override_count']:,} / 아이템 override {info['item_override_count']:,}·draft {info['item_draft_count']:,} / 인물 reviewed {info['cast_person_reviewed_count']:,} / 몬스터 reviewed {info['monster_reviewed_count']:,}")
             if not self.font.get(): self.font.set(info["font"])
         except Exception as exc:
             self.counts.set(f"패치 데이터 오류: {exc}")
@@ -492,10 +605,12 @@ class PatchBuildEditor(ttk.Frame):
     def _save_pending(self) -> bool:
         self.app.apply_edit(silent=True)
         self.app.cast_editor._commit_selected()
-        if self.app.dialogue_dirty or self.app.cast_editor.dirty:
+        self.app.item_editor._commit_selected()
+        if self.app.dialogue_dirty or self.app.cast_editor.dirty or self.app.item_editor.dirty:
             if not messagebox.askyesno("미저장 번역", "저장하지 않은 번역 변경이 있습니다. 지금 저장하고 빌드하시겠습니까?"): return False
             if self.app.dialogue_dirty: self.app.save_workspace()
             if self.app.cast_editor.dirty: self.app.cast_editor.save()
+            if self.app.item_editor.dirty: self.app.item_editor.save()
         return True
 
     def start(self, mode: str) -> None:
@@ -544,12 +659,12 @@ class PatchBuildEditor(ttk.Frame):
 
 
 def main() -> int:
-    default_workspace, default_cast, default_catalog = default_config_paths()
+    default_workspace, default_cast, default_items, default_catalog = default_config_paths()
     if len(sys.argv) > 1:
         initial = Path(sys.argv[1])
     else:
         initial = default_workspace if default_workspace.exists() else (default_catalog if default_catalog.exists() else None)
-    app = DialogueViewer(initial, default_cast)
+    app = DialogueViewer(initial, default_cast, default_items)
     app.mainloop()
     return 0
 

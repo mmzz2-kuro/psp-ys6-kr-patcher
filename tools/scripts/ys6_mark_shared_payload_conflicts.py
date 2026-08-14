@@ -25,7 +25,7 @@ def find_conflicts(workspace: dict, catalog: dict) -> dict[tuple[str, int], list
     hashes = {row["iso_path"]: row["xso_sha256"] for row in catalog["files"]}
     grouped: dict[tuple[str, int], list[dict]] = defaultdict(list)
     for row in workspace["records"]:
-        if row.get("status") not in {"draft", "conflict"} or not row.get("translation"):
+        if row.get("status") not in {"draft", "override", "conflict"} or not row.get("translation"):
             continue
         digest = hashes.get(row["iso_path"])
         if digest:

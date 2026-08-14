@@ -14,15 +14,18 @@ try:
     from tools.scripts.ys6_integrated_build import execute
     from tools.scripts.ys6_translation_workspace import validate as validate_dialogue
     from tools.scripts.ys6_cast_name_workspace import validate_workspace as validate_cast
+    from tools.scripts.ys6_item_workspace import validate_workspace as validate_items
 except ModuleNotFoundError:
     try:
         from .ys6_integrated_build import execute
         from .ys6_translation_workspace import validate as validate_dialogue
         from .ys6_cast_name_workspace import validate_workspace as validate_cast
+        from .ys6_item_workspace import validate_workspace as validate_items
     except ImportError:
         from ys6_integrated_build import execute
         from ys6_translation_workspace import validate as validate_dialogue
         from ys6_cast_name_workspace import validate_workspace as validate_cast
+        from ys6_item_workspace import validate_workspace as validate_items
 
 
 class PatchBuilderError(Exception):
@@ -42,6 +45,7 @@ def layout(tools_dir: Path | None = None) -> dict[str, Path]:
     return {
         "tools": root, "dialogue": config / "dialogue-translations.json",
         "cast": config / "cast-names.json", "catalog": config / "dialogue-catalog.json",
+        "items": config / "item-translations.json",
         "build_config": patch / "build-config.json", "runtime_map": patch / "runtime-archive-map.json",
         "font_usage": patch / "font-usage.json", "seed_mapping": patch / "seed-mapping.json",
         "original_eboot": patch / "original-eboot.bin", "han_override": patch / "hangul-98fc-manual.txt",
@@ -66,15 +70,22 @@ def inspect_inputs(tools_dir: Path | None = None) -> dict:
         if actual != expected: raise PatchBuilderError(f"패치 데이터 SHA-256 불일치: {name}")
     dialogue = json.loads(paths["dialogue"].read_text(encoding="utf-8-sig"))
     cast = json.loads(paths["cast"].read_text(encoding="utf-8-sig"))
+    items = json.loads(paths["items"].read_text(encoding="utf-8-sig"))
     dialogue_report = validate_dialogue(dialogue)
     cast_errors = validate_cast(cast)
+    item_errors = validate_items(items)
     if not dialogue_report["valid"]: raise PatchBuilderError("대사 작업공간 오류: " + "; ".join(dialogue_report["errors"]))
     if cast_errors: raise PatchBuilderError("인물명 작업공간 오류: " + "; ".join(cast_errors))
+    if item_errors: raise PatchBuilderError("아이템 작업공간 오류: " + "; ".join(item_errors))
     return {
         "dialogue_records": len(dialogue["records"]),
         "override_count": sum(row.get("status") == "override" for row in dialogue["records"]),
         "draft_count": sum(row.get("status") == "draft" for row in dialogue["records"]),
         "cast_reviewed_count": sum(row.get("status") == "reviewed" for row in cast["records"]),
+        "cast_person_reviewed_count": sum(row.get("status") == "reviewed" and not row.get("identifier", "").startswith("CAST_M") for row in cast["records"]),
+        "monster_reviewed_count": sum(row.get("status") == "reviewed" and row.get("identifier", "").startswith("CAST_M") for row in cast["records"]),
+        "item_override_count": sum(row.get("status") == "override" for row in items["records"]),
+        "item_draft_count": sum(row.get("status") == "draft" for row in items["records"]),
         "font": str(find_default_font() or ""), "paths": paths, "config": config,
     }
 
@@ -93,6 +104,7 @@ def run_build(mode: str, iso: Path, output: Path | None = None, font: Path | Non
         output.parent.mkdir(parents=True, exist_ok=True)
     args = SimpleNamespace(
         mode=mode, iso=iso, workspace=paths["dialogue"], cast_name_workspace=paths["cast"],
+        item_workspace=paths["items"],
         catalog=paths["catalog"], runtime_map=paths["runtime_map"], font_usage=paths["font_usage"],
         seed_mapping=paths["seed_mapping"], original_eboot=paths["original_eboot"], font=font,
         han_override=paths["han_override"], horizontal_left_inset=int(config["horizontal_left_inset"]),

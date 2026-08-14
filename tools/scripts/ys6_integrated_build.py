@@ -12,6 +12,8 @@ try:
     from tools.scripts.ys6_cast_name_workspace import load_workspace as load_cast_workspace,reviewed_records as reviewed_cast_records,validate_workspace as validate_cast_workspace
     from tools.scripts.ys6_hangul_codec import encode_translation,extend_mapping,write_mapping
     from tools.scripts.ys6_hangul_font_build import build as build_font
+    from tools.scripts.ys6_invinfo import parse as parse_invinfo,patch as patch_invinfo,sha256 as invinfo_sha256
+    from tools.scripts.ys6_item_workspace import load_workspace as load_item_workspace,validate_workspace as validate_item_workspace
     from tools.scripts.ys6_iso_multi_patch import Replacement,patch_atomic
     from tools.scripts.ys6_translation_workspace import validate
     from tools.scripts.ys6_xso import parse_xso,rebuild_xso
@@ -24,6 +26,8 @@ except ModuleNotFoundError:
         from .ys6_cast_name_workspace import load_workspace as load_cast_workspace,reviewed_records as reviewed_cast_records,validate_workspace as validate_cast_workspace
         from .ys6_hangul_codec import encode_translation,extend_mapping,write_mapping
         from .ys6_hangul_font_build import build as build_font
+        from .ys6_invinfo import parse as parse_invinfo,patch as patch_invinfo,sha256 as invinfo_sha256
+        from .ys6_item_workspace import load_workspace as load_item_workspace,validate_workspace as validate_item_workspace
         from .ys6_iso_multi_patch import Replacement,patch_atomic
         from .ys6_translation_workspace import validate
         from .ys6_xso import parse_xso,rebuild_xso
@@ -35,6 +39,8 @@ except ModuleNotFoundError:
         from ys6_cast_name_workspace import load_workspace as load_cast_workspace,reviewed_records as reviewed_cast_records,validate_workspace as validate_cast_workspace
         from ys6_hangul_codec import encode_translation,extend_mapping,write_mapping
         from ys6_hangul_font_build import build as build_font
+        from ys6_invinfo import parse as parse_invinfo,patch as patch_invinfo,sha256 as invinfo_sha256
+        from ys6_item_workspace import load_workspace as load_item_workspace,validate_workspace as validate_item_workspace
         from ys6_iso_multi_patch import Replacement,patch_atomic
         from ys6_translation_workspace import validate
         from ys6_xso import parse_xso,rebuild_xso
@@ -89,8 +95,8 @@ def read_iso_file(iso:Path,internal_path:str)->tuple[bytes,object]:
 
 def build_mapping(groups:list[dict],usage:dict,seed:list[dict],extra_text:str="")->list[dict]:
  text="".join(r["translation"] for g in groups for r in g["records"])+extra_text
- hangul="".join(dict.fromkeys(c for c in text if "가"<=c<="힣"))
- return extend_mapping(usage,seed,hangul)
+ additional="".join(dict.fromkeys(c for c in text if "가"<=c<="힣" or c in "「」"))
+ return extend_mapping(usage,seed,additional)
 
 def rebuild_group(original:bytes,group:dict,mapping:list[dict],temp:Path)->tuple[bytes,dict,list[dict]]:
  source=temp/"source.xso";source.write_bytes(original);parsed=parse_xso(source); replacements={};rows=[]
@@ -119,23 +125,53 @@ def execute(args)->dict:
  cast_selected=reviewed_cast_records(cast_workspace) if cast_workspace else []
  cast_errors=validate_cast_workspace(cast_workspace) if cast_workspace else []
  if cast_errors:raise IntegratedBuildError("invalid cast-name workspace: "+"; ".join(cast_errors))
- selected=select_overrides(workspace);groups=group_translations(selected,catalog,runtime_map); runtime={x["runtime_key"]:x for x in runtime_map["runtime_entries"]};mapping=build_mapping(groups,usage,seed,"".join(x["translation"] for x in cast_selected))
+ item_workspace=load_item_workspace(args.item_workspace) if getattr(args,"item_workspace",None) else None
+ item_errors=validate_item_workspace(item_workspace) if item_workspace else []
+ if item_errors:raise IntegratedBuildError("invalid item workspace: "+"; ".join(item_errors))
+ item_selected=[x for x in item_workspace.get("records",[]) if x.get("status")=="override"] if item_workspace else []
+ item_text="".join(x.get("translation_name","")+x.get("translation_description","") for x in item_selected)
+ selected=select_overrides(workspace);groups=group_translations(selected,catalog,runtime_map); runtime={x["runtime_key"]:x for x in runtime_map["runtime_entries"]};mapping=build_mapping(groups,usage,seed,"".join(x["translation"] for x in cast_selected)+item_text)
  args.work.mkdir(parents=True,exist_ok=True);(args.work/"xso").mkdir(exist_ok=True);(args.work/"archives").mkdir(exist_ok=True)
  write_mapping(mapping,args.work/"mapping.json",args.work/"mapping.csv")
  eboot_data=args.original_eboot.read_bytes();overrides={"한":args.han_override};patched_eboot,glyph_report,atlas=build_font(eboot_data,mapping,args.font,12,overrides,horizontal_left_inset=args.horizontal_left_inset);(args.work/"EBOOT.BIN").write_bytes(patched_eboot);(args.work/"glyph-report.json").write_text(json.dumps({"visible_width":12,"horizontal_left_inset":args.horizontal_left_inset,"glyphs":glyph_report},ensure_ascii=False,indent=2)+"\n",encoding="utf-8");atlas.resize((atlas.width*8,atlas.height*8),Image.Resampling.NEAREST).save(args.work/"glyph-atlas.png")
  archive_cache={};archive_original={};xso_rows=[];translation_rows=[];overflow=[];rebuilt_containers={}
- castinfo_rows=[];extra_replacements=[]
+ castinfo_rows=[];item_rows=[];extra_replacements=[];init_original=None;patched_init=None
  if args.castinfo_name is not None or cast_selected:
   cast_path="PSP_GAME/USRDIR/data/misc/castinfo.dat";init_path="PSP_GAME/USRDIR/data/arc/init.bin"
-  standalone_cast,cast_record=read_iso_file(iso,cast_path);init_data,_=read_iso_file(iso,init_path);init_entry=find_file(parse_archive(init_data),"castinfo.dat",index=8,flags=0x01000000);embedded_cast=init_data[init_entry.offset:init_entry.offset+init_entry.size]
+  standalone_cast,cast_record=read_iso_file(iso,cast_path);init_data,_=read_iso_file(iso,init_path);init_original=init_data;patched_init=init_data;init_entry=find_file(parse_archive(init_data),"castinfo.dat",index=8,flags=0x01000000);embedded_cast=init_data[init_entry.offset:init_entry.offset+init_entry.size]
   if standalone_cast!=embedded_cast:raise IntegratedBuildError("castinfo standalone and init.bin copies differ")
   patched_cast=standalone_cast
   patch_items=cast_selected if cast_selected else [{"identifier":args.castinfo_identifier,"translation":args.castinfo_name,"source":args.castinfo_expected_name}]
   for item in patch_items:
    before=patched_cast;patched_cast,cast_report=patch_name(patched_cast,item["identifier"],encode_game_name(item["translation"],mapping),item.get("source"))
    castinfo_rows.append({"identifier":item["identifier"],"name":item["translation"],"source":item.get("source", ""),"standalone_path":cast_path,"archive_path":init_path,"entry_index":init_entry.index,"entry_flags_hex":f"0x{init_entry.flags:08X}","original_sha256":sha256(before),"output_sha256":sha256(patched_cast),"size":len(patched_cast),"changed_byte_count":cast_report["changed_byte_count"],"encoded_name_hex":cast_report["encoded_name_hex"]})
-  patched_init=replace_file(init_data,init_entry,patched_cast);cast_dir=args.work/"castinfo";cast_dir.mkdir(exist_ok=True);cast_file=cast_dir/"castinfo.dat";init_file=cast_dir/"init.bin";cast_file.write_bytes(patched_cast);init_file.write_bytes(patched_init)
-  extra_replacements.extend([Replacement(init_path,init_file,len(init_data),sha256(init_data)),Replacement(cast_path,cast_file,len(standalone_cast),sha256(standalone_cast))])
+  patched_init=replace_file(patched_init,init_entry,patched_cast);cast_dir=args.work/"castinfo";cast_dir.mkdir(exist_ok=True);cast_file=cast_dir/"castinfo.dat";cast_file.write_bytes(patched_cast)
+  extra_replacements.append(Replacement(cast_path,cast_file,len(standalone_cast),sha256(standalone_cast)))
+ if item_selected:
+  item_path="PSP_GAME/USRDIR/data/misc/invinfo.dat";init_path="PSP_GAME/USRDIR/data/arc/init.bin"
+  standalone_item,item_record=read_iso_file(iso,item_path)
+  if invinfo_sha256(standalone_item)!=item_workspace.get("source_sha256"):raise IntegratedBuildError("invinfo workspace source mismatch")
+  if init_original is None:
+   init_original,_=read_iso_file(iso,init_path);patched_init=init_original
+  item_entry=find_file(parse_archive(init_original),"invinfo.dat",index=10,flags=0x01000000);embedded_item=init_original[item_entry.offset:item_entry.offset+item_entry.size]
+  if standalone_item!=embedded_item:raise IntegratedBuildError("invinfo standalone and init.bin copies differ")
+  parsed_items=parse_invinfo(standalone_item);replacements={}
+  for item in item_selected:
+   index=int(item["index"]);source=parsed_items[index]
+   source_bytes=standalone_item[source.offset:source.offset+184]
+   if sha256(source_bytes)!=item.get("source_record_sha256"):raise IntegratedBuildError(f"item source mismatch: {index}")
+   name=encode_translation(item["translation_name"],mapping)
+   description=encode_translation(item.get("translation_description","").replace("\r\n","\n").replace("\r","\n").replace("\n","\r\n"),mapping)
+   replacements[index]=(name,description)
+  patched_item,reports=patch_invinfo(standalone_item,replacements)
+  for report in reports:
+   item=next(x for x in item_selected if int(x["index"])==report["index"])
+   item_rows.append({**report,"source_name":item["source_name"],"translation_name":item["translation_name"],"translation_description":item.get("translation_description","")})
+  patched_init=replace_file(patched_init,item_entry,patched_item);item_dir=args.work/"items";item_dir.mkdir(exist_ok=True);item_file=item_dir/"invinfo.dat";item_file.write_bytes(patched_item)
+  extra_replacements.append(Replacement(item_path,item_file,len(standalone_item),sha256(standalone_item)))
+ if init_original is not None:
+  misc_dir=args.work/"misc";misc_dir.mkdir(exist_ok=True);init_file=misc_dir/"init.bin";init_file.write_bytes(patched_init)
+  extra_replacements.append(Replacement("PSP_GAME/USRDIR/data/arc/init.bin",init_file,len(init_original),sha256(init_original)))
  with tempfile.TemporaryDirectory(dir=args.work) as td:
   temp=Path(td)
   for number,group in enumerate(groups):
@@ -190,11 +226,12 @@ def execute(args)->dict:
  original_iso_eboot,eboot_record=read_iso_file(iso,EBOOT_PATH);iso_replacements.insert(0,Replacement(EBOOT_PATH,args.work/"EBOOT.BIN",len(original_iso_eboot),sha256(original_iso_eboot)))
  expected_replacement_count=1+len(archive_rows)+len(standalone_rows)+len(extra_replacements)
  if len(iso_replacements)!=expected_replacement_count:raise IntegratedBuildError(f"ISO replacement count mismatch: expected={expected_replacement_count}, actual={len(iso_replacements)}")
- preflight={"valid":True,"override_count":len(selected),"reviewed_count":len(selected),"xso_count":len(groups),"archive_count":len(archive_rows),"standalone_count":len(standalone_rows),"castinfo_count":len(castinfo_rows),"glyph_count":len(mapping),"overflow":[]};(args.work/"preflight-report.json").write_text(json.dumps(preflight,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+ preflight={"valid":True,"override_count":len(selected),"reviewed_count":len(selected),"xso_count":len(groups),"archive_count":len(archive_rows),"standalone_count":len(standalone_rows),"castinfo_count":len(castinfo_rows),"item_count":len(item_rows),"glyph_count":len(mapping),"overflow":[]};(args.work/"preflight-report.json").write_text(json.dumps(preflight,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
  write_csv(args.work/"translation-report.csv",translation_rows,["xso_sha256","runtime_key","string_index","source_text","translation","original_length","replacement_length","delta","origin_paths"]);write_csv(args.work/"xso-report.csv",xso_rows,["xso_sha256","runtime_key","entry_flags_hex","entry_kind","mapping_status","replacement_count","original_size","rebuilt_size","compressed_size","allocated_size","remaining_slack","original_sha256","rebuilt_sha256"]);write_csv(args.work/"archive-report.csv",archive_rows,["iso_path","size","modified_xso_count","original_sha256","output_sha256"])
  write_csv(args.work/"standalone-report.csv",standalone_rows,["iso_path","runtime_key","original_size","compressed_size","allocated_size","remaining_slack","original_sha256","output_sha256"])
  write_csv(args.work/"castinfo-report.csv",castinfo_rows,["identifier","source","name","encoded_name_hex","standalone_path","archive_path","entry_index","entry_flags_hex","size","changed_byte_count","original_sha256","output_sha256"])
- manifest={"schema_version":1,"mode":args.mode,"inputs":{"iso":str(iso),"iso_sha256":EXPECTED_ISO_SHA256,"workspace":str(args.workspace),"workspace_sha256":file_sha256(args.workspace),"cast_name_workspace":str(args.cast_name_workspace) if args.cast_name_workspace else None,"cast_name_workspace_sha256":file_sha256(args.cast_name_workspace) if args.cast_name_workspace else None,"catalog_sha256":file_sha256(args.catalog),"runtime_map_sha256":file_sha256(args.runtime_map),"original_eboot_sha256":file_sha256(args.original_eboot),"seed_mapping_sha256":file_sha256(args.seed_mapping)},"font":{"visible_width":12,"horizontal_left_inset":args.horizontal_left_inset},"summary":preflight,"eboot":{"sha256":sha256(patched_eboot)},"xso":xso_rows,"archives":archive_rows,"castinfo":castinfo_rows,"iso":None,"valid":True}
+ write_csv(args.work/"item-report.csv",item_rows,["index","resource_id","source_name","translation_name","translation_description","name_length","description_length"])
+ manifest={"schema_version":1,"mode":args.mode,"inputs":{"iso":str(iso),"iso_sha256":EXPECTED_ISO_SHA256,"workspace":str(args.workspace),"workspace_sha256":file_sha256(args.workspace),"cast_name_workspace":str(args.cast_name_workspace) if args.cast_name_workspace else None,"cast_name_workspace_sha256":file_sha256(args.cast_name_workspace) if args.cast_name_workspace else None,"item_workspace":str(args.item_workspace) if getattr(args,"item_workspace",None) else None,"item_workspace_sha256":file_sha256(args.item_workspace) if getattr(args,"item_workspace",None) else None,"catalog_sha256":file_sha256(args.catalog),"runtime_map_sha256":file_sha256(args.runtime_map),"original_eboot_sha256":file_sha256(args.original_eboot),"seed_mapping_sha256":file_sha256(args.seed_mapping)},"font":{"visible_width":12,"horizontal_left_inset":args.horizontal_left_inset},"summary":preflight,"eboot":{"sha256":sha256(patched_eboot)},"xso":xso_rows,"archives":archive_rows,"castinfo":castinfo_rows,"items":item_rows,"iso":None,"valid":True}
  if args.mode=="build":
   result=patch_atomic(iso,args.output_iso,iso_replacements,EXPECTED_ISO_SHA256,args.overwrite);manifest["iso"]={"path":str(args.output_iso),**result}
  (args.work/"build-manifest.json").write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return manifest
@@ -202,7 +239,7 @@ def execute(args)->dict:
 def main(argv=None):
  for s in (sys.stdout,sys.stderr):
   if hasattr(s,"reconfigure"):s.reconfigure(encoding="utf-8",errors="backslashreplace")
- p=argparse.ArgumentParser(description=__doc__);p.add_argument("mode",choices=("preflight","build"));p.add_argument("--iso",type=Path,required=True);p.add_argument("--workspace",type=Path,required=True);p.add_argument("--catalog",type=Path,required=True);p.add_argument("--runtime-map",type=Path,required=True);p.add_argument("--font-usage",type=Path,required=True);p.add_argument("--seed-mapping",type=Path,required=True);p.add_argument("--original-eboot",type=Path,required=True);p.add_argument("--font",type=Path,required=True);p.add_argument("--han-override",type=Path,required=True);p.add_argument("--horizontal-left-inset",type=int);p.add_argument("--cast-name-workspace",type=Path);p.add_argument("--castinfo-name");p.add_argument("--castinfo-identifier",default="CAST_C240");p.add_argument("--castinfo-expected-name",default="イーシャ");p.add_argument("--work",type=Path,required=True);p.add_argument("--standalone-path",action="append",default=[]);p.add_argument("--output-iso",type=Path);p.add_argument("--overwrite",action="store_true");a=p.parse_args(argv)
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument("mode",choices=("preflight","build"));p.add_argument("--iso",type=Path,required=True);p.add_argument("--workspace",type=Path,required=True);p.add_argument("--catalog",type=Path,required=True);p.add_argument("--runtime-map",type=Path,required=True);p.add_argument("--font-usage",type=Path,required=True);p.add_argument("--seed-mapping",type=Path,required=True);p.add_argument("--original-eboot",type=Path,required=True);p.add_argument("--font",type=Path,required=True);p.add_argument("--han-override",type=Path,required=True);p.add_argument("--horizontal-left-inset",type=int);p.add_argument("--cast-name-workspace",type=Path);p.add_argument("--item-workspace",type=Path);p.add_argument("--castinfo-name");p.add_argument("--castinfo-identifier",default="CAST_C240");p.add_argument("--castinfo-expected-name",default="イーシャ");p.add_argument("--work",type=Path,required=True);p.add_argument("--standalone-path",action="append",default=[]);p.add_argument("--output-iso",type=Path);p.add_argument("--overwrite",action="store_true");a=p.parse_args(argv)
  if a.mode=="build" and a.output_iso is None:p.error("build requires --output-iso")
  try:result=execute(a);print(json.dumps(result["summary"],ensure_ascii=False,indent=2));return 0
  except (OSError,KeyError,ValueError,json.JSONDecodeError,IntegratedBuildError) as exc:print(f"통합 빌드 실패: {exc}",file=sys.stderr);return 1
