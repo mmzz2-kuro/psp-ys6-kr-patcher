@@ -11,7 +11,7 @@
       "source_record_sha256": "82DC27BEB131ABC23B43C1163250DA6A74CDF9DB68EBA45C4E3DDFCB6784E074",
       "translation_name": "리발트",
       "translation_description": "푸른 에멜라스로 만든 외날 검.\n바람 정령의 힘이\n깃들어 있다.",
-      "status": "draft",
+      "status": "override",
       "notes": "Windows 한글판 초깃값"
     },
     {

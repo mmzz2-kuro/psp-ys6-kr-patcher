@@ -794,7 +794,7 @@
       "source_raw_hex": "834B836283568385000000000000000000000000000000000000000000000000",
       "source_sha256": "F0482D0071474BF9C2A3AFC45B155E5396D8E4BC4343F696B14100300A188822",
       "translation": "가슈",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -805,7 +805,7 @@
       "source_raw_hex": "838D8380839395BA006D00000000000000000000000000000000000000000000",
       "source_sha256": "1B2505A7EDE71ABD5F20D01943CAF04B166C3D5219511E49F98C0B19E32F9F1C",
       "translation": "로문병",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -838,7 +838,7 @@
       "source_raw_hex": "83868347004E838B8251816989CE8E96816A0000000000000000000000000000",
       "source_sha256": "23CD2900B4C96EBD1593D1C5D0DDE3FE6FD6C61CD162821EEA6153DE8E36CCFE",
       "translation": "유에",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -849,7 +849,7 @@
       "source_raw_hex": "834C8354004E838B8252816990868E96816A0000000000000000000000000000",
       "source_sha256": "DCBAF5CBC9A542F5AF4275C21E0287AFAAED98431BF6904038574F83DCC3C338",
       "translation": "키사",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -893,7 +893,7 @@
       "source_raw_hex": "8349838B836E0000000000000000000000000000000000000000000000000000",
       "source_sha256": "9E549958BB15F018614227944500ED89AF27E659D7CAD50ECFEA41D544491E53",
       "translation": "오르하",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -904,7 +904,7 @@
       "source_raw_hex": "8365838900000000000000000000000000000000000000000000000000000000",
       "source_sha256": "BD56BF93A3DDE17643C5922458B9C12EB3190A0EF204FDD2DE1CC8AF060F052D",
       "translation": "테라",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1585,8 +1585,8 @@
       "source": "旧ロムン軍兵士",
       "source_raw_hex": "8B8C838D838083938C5295BA8E6D000000000000526F6D656E73000000000000",
       "source_sha256": "268169C57EB85A69DE93AE32B04F2142CDC2C2AF3089F0EA66B35DBAB82EAD05",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "로문군병사",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1773,7 +1773,7 @@
       "source_raw_hex": "908592858349838B836E00000000000000000000000000000000000000000000",
       "source_sha256": "02A833AE1E3EF51C83D1DAC966BB800E4C2EAD8576974F53422A05B92FE6A808",
       "translation": "수영복오르하",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {

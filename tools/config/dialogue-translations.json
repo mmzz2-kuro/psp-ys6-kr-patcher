@@ -1201,8 +1201,8 @@
       "source_text": "<color:0xfff2ea8c>金のロケット<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8BE082CC838D8350836283673C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "8A5D162C03569CE61A0365B90A259E2E32E98FDAE7B57D3C08F3C85A3A4FB915",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>금 로켓<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -1217,8 +1217,8 @@
       "source_text": "<color:0xfff2ea8c>バスラムへの手紙<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E836F83588389838082D682CC8EE88E863C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "C7F96EEBE8E69A27742417F01E2EA6EDE1A2D5EB6B8E826E0A54A879188791C0",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>바스람에게 보내는 편지<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -1672,8 +1672,8 @@
       "source_text": "<color:0xfff2ea8c>力の種<color:>を\\nもらった。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E97CD82CC8EED3C636F6C6F723A3E82F05C6E82E082E782C182BD8142",
       "source_sha256": "863A36DA6F46960E49525177BC9C0CDC08603CF3E6A6ECD4201F461D89C7653E",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>힘의 씨앗<color:>을\\n받았다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -5727,8 +5727,8 @@
       "source_text": "<color:0xfff2ea8c>金のロケット<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8BE082CC838D8350836283673C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "8A5D162C03569CE61A0365B90A259E2E32E98FDAE7B57D3C08F3C85A3A4FB915",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>금 로켓<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -8266,8 +8266,8 @@
       "source_text": "<color:0xfff2ea8c>リヴァルト<color:>を\\n受け取った。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E838A83948340838B83673C636F6C6F723A3E82F05C6E8EF382AF8EE682C182BD8142",
       "source_sha256": "3216D5E4DA7DAA5FFA1527A83B8A40CCD7FB8A28536BF96E5D6E3C1BEFE0198A",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>리발트<color:>를\\n받았다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -11257,8 +11257,8 @@
       "source_text": "<color:0xfff2ea8c>守の種<color:>を\\nもらった。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8EE782CC8EED3C636F6C6F723A3E82F05C6E82E082E782C182BD8142",
       "source_sha256": "2F82C0E749306D57763512E372F3815FA76F0E1E423682DAE0341E46C33D0B8F",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>수호의 씨앗<color:>을\\n받았다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -11452,8 +11452,8 @@
       "source_text": "<color:0xfff2ea8c>力の種<color:>を\\nもらった。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E97CD82CC8EED3C636F6C6F723A3E82F05C6E82E082E782C182BD8142",
       "source_sha256": "863A36DA6F46960E49525177BC9C0CDC08603CF3E6A6ECD4201F461D89C7653E",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>힘의 씨앗<color:>을\\n받았다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -11567,8 +11567,8 @@
       "source_text": "<color:0xfff2ea8c>カプラの輝水<color:>を\\nもらった。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E834A8376838982CC8B5090853C636F6C6F723A3E82F05C6E82E082E782C182BD8142",
       "source_sha256": "0F6957C69CC0CBB15C87F9988DDBD338F9549E0250A5C492C50239603D70D65D",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>카프라의 휘수<color:>를\\n받았다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -12203,7 +12203,7 @@
       "source_text": "何を聞く？",
       "source_raw_hex": "89BD82F095B782AD8148",
       "source_sha256": "23F440AA43DF7F87B380CE9B50E328A146F65EE3B1B677481C6A2D1A29116D65",
-      "translation": "",
+      "translation": "무엇을 들을래?",
       "status": "untranslated",
       "notes": ""
     },
@@ -13549,8 +13549,8 @@
       "source_text": "<color:0xfff2ea8c>守の種<color:>を\\nもらった。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8EE782CC8EED3C636F6C6F723A3E82F05C6E82E082E782C182BD8142",
       "source_sha256": "2F82C0E749306D57763512E372F3815FA76F0E1E423682DAE0341E46C33D0B8F",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>수호의 씨앗<color:>을\\n받았다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -13744,8 +13744,8 @@
       "source_text": "<color:0xfff2ea8c>力の種<color:>を\\nもらった。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E97CD82CC8EED3C636F6C6F723A3E82F05C6E82E082E782C182BD8142",
       "source_sha256": "863A36DA6F46960E49525177BC9C0CDC08603CF3E6A6ECD4201F461D89C7653E",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>힘의 씨앗<color:>을\\n받았다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -13859,8 +13859,8 @@
       "source_text": "<color:0xfff2ea8c>命の種<color:>を\\nもらった。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E96BD82CC8EED3C636F6C6F723A3E82F05C6E82E082E782C182BD8142",
       "source_sha256": "1F794CE95C1C6764925E64D64B90ADDEB4BB88F10DDEED65BA7C6D011DEB9CFA",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>생명의 씨앗<color:>을\\n받았다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -16422,8 +16422,8 @@
       "source_text": "そういえば\\nエレシア人の町はいかがでした？",
       "source_raw_hex": "82BB82A482A282A682CE5C6E8347838C83568341906C82CC92AC82CD82A282A982AA82C582B582BD8148",
       "source_sha256": "0A9FC44F7AAC1193A5B62E382B72571343DFA80F86815FB7887A675D417A2C97",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "그러고 보니\\n에레시아인의 마을은 어땠어요?",
+      "status": "override",
       "notes": ""
     },
     {
@@ -16438,8 +16438,8 @@
       "source_text": "<color:0xffacdae8>　\\x1は町での出来事に加え\\n　ウルと知り合ったことを話した。",
       "source_raw_hex": "3C636F6C6F723A307866666163646165383E81405C783182CD92AC82C582CC8F6F97888E9682C989C182A65C6E81408345838B82C6926D82E88D8782C182BD82B182C682F0986282B582BD8142",
       "source_sha256": "A870067A7E138529A8FDE7DAC891D7EC0DA40C0F45EB5D0B11A84DF1774653A7",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xffacdae8>　\\x1은 마을에서의 사건에 더해\\n　울을 알게 된 것을 말했다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -16454,8 +16454,8 @@
       "source_text": "まあ……\\nそんな事があったなんて。",
       "source_raw_hex": "82DC82A0816381635C6E82BB82F182C88E9682AA82A082C182BD82C882F182C48142",
       "source_sha256": "5642C1ABB06019D19222D9B44042B748A0E78A60E97C782C64961D6936578F7B",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "어머....\\n그런 일이 있었군요.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -16470,8 +16470,8 @@
       "source_text": "でも、あの子が元気に\\n暮らしていると判って安心しました。",
       "source_raw_hex": "82C582E0814182A082CC8E7182AA8CB38B4382C95C6E95E982E782B582C482A282E982C694BB82C182C488C0905382B582DC82B582BD8142",
       "source_sha256": "671935111E768C1BAB9E8C4934C64A8E27297D829D9B08C4089151FFA346556F",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "그렇지만, 그 아이가 건강하게\\n살고 있다니 안심했어요.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -16742,8 +16742,8 @@
       "source_text": "<color:0xfff2ea8c>守の種<color:>を\\nもらった。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8EE782CC8EED3C636F6C6F723A3E82F05C6E82E082E782C182BD8142",
       "source_sha256": "2F82C0E749306D57763512E372F3815FA76F0E1E423682DAE0341E46C33D0B8F",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>수호의 씨앗<color:>을\\n받았다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -16919,8 +16919,8 @@
       "source_text": "<color:0xfff2ea8c>力の種<color:>を\\nもらった。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E97CD82CC8EED3C636F6C6F723A3E82F05C6E82E082E782C182BD8142",
       "source_sha256": "863A36DA6F46960E49525177BC9C0CDC08603CF3E6A6ECD4201F461D89C7653E",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>힘의 씨앗<color:>을\\n받았다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -17672,8 +17672,8 @@
       "source_text": "<color:0xfff2ea8c>命の種<color:>を\\nもらった。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E96BD82CC8EED3C636F6C6F723A3E82F05C6E82E082E782C182BD8142",
       "source_sha256": "1F794CE95C1C6764925E64D64B90ADDEB4BB88F10DDEED65BA7C6D011DEB9CFA",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>생명의 씨앗<color:>을\\n받았다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -22474,8 +22474,8 @@
       "source_text": "<color:0xfff2ea8c>金のロケット<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8BE082CC838D8350836283673C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "8A5D162C03569CE61A0365B90A259E2E32E98FDAE7B57D3C08F3C85A3A4FB915",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>금 로켓<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -29117,7 +29117,7 @@
       "source_text": "　<color:0xfff2ea8c>蜂蜜<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E964996A83C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "1F84A2AD675D4F235CE77A0AC81964C0E0EEFF56424BBF8AF158B0CE3F52208A",
-      "translation": "　<color:0xfff2ea8c>벌꿀<color:>을 찾았지만\\n　이 이상 가질수 없다.",
+      "translation": "　<color:0xfff2ea8c>벌꿀<color:>을 발견했지만\\n　더 이상 가질수 없다.",
       "status": "override",
       "notes": ""
     },
@@ -29133,8 +29133,8 @@
       "source_text": "<color:0xfff2ea8c>蜂蜜<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E964996A83C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "6CAF0815EEE177EECCB33678905B3E53F96555F76287B3E850D6BCD3F1E2C9E1",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>벌꿀<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -29262,8 +29262,8 @@
       "source_text": "　<color:0xfff2ea8c>薬草<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E96F291903C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "F70176205B5B1CA9F0DEE2F97C232E71B4E66E45566675D7EDFFA97F60976DCA",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>약초<color:>를 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -29278,8 +29278,8 @@
       "source_text": "<color:0xfff2ea8c>薬草<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E96F291903C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "B55FFC62183E967B1B3160F86489D2EFECFCE8D25D35D53315D04C976867494C",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>약초<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -29358,8 +29358,8 @@
       "source_text": "<color:0xfff2ea8c>ルーンピアス<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E838B815B83938373834183583C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "A36C0E2251857945F3EB34CD40DF826D2D148A2D17CB66FADE63BF1601986DA2",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>룬 피어싱<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -29470,8 +29470,8 @@
       "source_text": "　<color:0xfff2ea8c>骨付き肉<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E8D9C957482AB93F73C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "38BA42FC22911A5D32390222F74BDD9B84288746D51E7DF3B69A9F1BA521CFE7",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>뼈에 붙은 고기<color:>를 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -29486,8 +29486,8 @@
       "source_text": "<color:0xfff2ea8c>骨付き肉<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8D9C957482AB93F73C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "229F6E658DD9D60E39F59059E4425D76E7840B9247ACB4A6BE33BDE9D0FC3246",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>뼈에 붙은 고기<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -30196,8 +30196,8 @@
       "source_text": "<color:0xfff2ea8c>力の種<color:>を\\nもらった。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E97CD82CC8EED3C636F6C6F723A3E82F05C6E82E082E782C182BD8142",
       "source_sha256": "863A36DA6F46960E49525177BC9C0CDC08603CF3E6A6ECD4201F461D89C7653E",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>힘의 씨앗<color:>을\\n받았다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -31955,8 +31955,8 @@
       "source_text": "　<color:0xfff2ea8c>カプラの輝水<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E834A8376838982CC8B5090853C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "BE769B4DE99DA7563A6D34EF421987F1C2E094CF05BA9B055A5115CC82CF1269",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>카프라의 휘수<color:>를 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -31971,8 +31971,8 @@
       "source_text": "<color:0xfff2ea8c>カプラの輝水<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E834A8376838982CC8B5090853C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "DE273CCB7BE2D49DCAB535CE29DD478235133D455E6BC2759CA923724FC5902C",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>카프라의 휘수<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -41021,8 +41021,8 @@
       "source_text": "オルハに鏡の欠片を渡した？",
       "source_raw_hex": "8349838B836E82C98BBE82CC8C8795D082F0936E82B582BD8148",
       "source_sha256": "81425A49940D5593A2FC2FB7C2F0C7653794F995BE5F2A29A439080000CCE3D4",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "오르하에게 거울 조각을 줄까요?",
+      "status": "override",
       "notes": ""
     },
     {
@@ -42497,8 +42497,8 @@
       "source_text": "<color:0xfff2ea8c>守の種<color:>を\\nもらった。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8EE782CC8EED3C636F6C6F723A3E82F05C6E82E082E782C182BD8142",
       "source_sha256": "2F82C0E749306D57763512E372F3815FA76F0E1E423682DAE0341E46C33D0B8F",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>수호의 씨앗<color:>을\\n받았다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -42678,8 +42678,8 @@
       "source_text": "<color:0xfff2ea8c>力の種<color:>を\\nもらった。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E97CD82CC8EED3C636F6C6F723A3E82F05C6E82E082E782C182BD8142",
       "source_sha256": "863A36DA6F46960E49525177BC9C0CDC08603CF3E6A6ECD4201F461D89C7653E",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>힘의 씨앗<color:>을\\n받았다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -42809,8 +42809,8 @@
       "source_text": "<color:0xfff2ea8c>カプラの輝水<color:>を\\nもらった。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E834A8376838982CC8B5090853C636F6C6F723A3E82F05C6E82E082E782C182BD8142",
       "source_sha256": "0F6957C69CC0CBB15C87F9988DDBD338F9549E0250A5C492C50239603D70D65D",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>카프라의 휘수<color:>를\\n받았다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -45610,8 +45610,8 @@
       "source_text": "　<color:0xfff2ea8c>命の種<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E96BD82CC8EED3C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "358E3D93D884227FCBD60C7E3F166F5EA9BE78406E02123B0A68DB6D1CC52080",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>생명의 씨앗<color:>을 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -45626,8 +45626,8 @@
       "source_text": "<color:0xfff2ea8c>命の種<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E96BD82CC8EED3C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "7351A2D3EB5029B916BFC3D79A9A9E7A030455372484C3B42C0C636965D2ED1B",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>생명의 씨앗<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -46348,8 +46348,8 @@
       "source_text": "　<color:0xfff2ea8c>カプラの輝水<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E834A8376838982CC8B5090853C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "BE769B4DE99DA7563A6D34EF421987F1C2E094CF05BA9B055A5115CC82CF1269",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>카프라의 휘수<color:>를 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -46364,8 +46364,8 @@
       "source_text": "<color:0xfff2ea8c>カプラの輝水<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E834A8376838982CC8B5090853C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "DE273CCB7BE2D49DCAB535CE29DD478235133D455E6BC2759CA923724FC5902C",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>카프라의 휘수<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -49132,8 +49132,8 @@
       "source_text": "　<color:0xfff2ea8c>薬草<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E96F291903C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "F70176205B5B1CA9F0DEE2F97C232E71B4E66E45566675D7EDFFA97F60976DCA",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>약초<color:>를 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -49148,8 +49148,8 @@
       "source_text": "<color:0xfff2ea8c>薬草<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E96F291903C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "B55FFC62183E967B1B3160F86489D2EFECFCE8D25D35D53315D04C976867494C",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>약초<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -49292,8 +49292,8 @@
       "source_text": "　<color:0xfff2ea8c>骨付き肉<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E8D9C957482AB93F73C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "38BA42FC22911A5D32390222F74BDD9B84288746D51E7DF3B69A9F1BA521CFE7",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>뼈에 붙은 고기<color:>를 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -49308,8 +49308,8 @@
       "source_text": "<color:0xfff2ea8c>骨付き肉<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8D9C957482AB93F73C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "229F6E658DD9D60E39F59059E4425D76E7840B9247ACB4A6BE33BDE9D0FC3246",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>뼈에 붙은 고기<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -49436,8 +49436,8 @@
       "source_text": "　<color:0xfff2ea8c>薬草<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E96F291903C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "F70176205B5B1CA9F0DEE2F97C232E71B4E66E45566675D7EDFFA97F60976DCA",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>약초<color:>를 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -49452,8 +49452,8 @@
       "source_text": "<color:0xfff2ea8c>薬草<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E96F291903C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "B55FFC62183E967B1B3160F86489D2EFECFCE8D25D35D53315D04C976867494C",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>약초<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -49948,8 +49948,8 @@
       "source_text": "　<color:0xfff2ea8c>カプラの輝水<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E834A8376838982CC8B5090853C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "BE769B4DE99DA7563A6D34EF421987F1C2E094CF05BA9B055A5115CC82CF1269",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>카프라의 휘수<color:>를 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -49964,8 +49964,8 @@
       "source_text": "<color:0xfff2ea8c>カプラの輝水<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E834A8376838982CC8B5090853C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "DE273CCB7BE2D49DCAB535CE29DD478235133D455E6BC2759CA923724FC5902C",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>카프라의 휘수<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -51072,8 +51072,8 @@
       "source_text": "<color:0xfff2ea8c>鏡の欠片<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8BBE82CC8C8795D03C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "4AF88D3A86EE10C766BC1BF294F794BB2E11E8DFFA2BFF0133BEFAC07F048E19",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>거울 조각<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -51442,8 +51442,8 @@
       "source_text": "　<color:0xfff2ea8c>薬草<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E96F291903C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "F70176205B5B1CA9F0DEE2F97C232E71B4E66E45566675D7EDFFA97F60976DCA",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>약초<color:>를 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -51458,8 +51458,8 @@
       "source_text": "<color:0xfff2ea8c>薬草<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E96F291903C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "B55FFC62183E967B1B3160F86489D2EFECFCE8D25D35D53315D04C976867494C",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>약초<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -51554,8 +51554,8 @@
       "source_text": "　<color:0xfff2ea8c>蜂蜜<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E964996A83C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "1F84A2AD675D4F235CE77A0AC81964C0E0EEFF56424BBF8AF158B0CE3F52208A",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>벌꿀<color:>을 발견했지만\\n　더 이상 가질수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -51570,8 +51570,8 @@
       "source_text": "<color:0xfff2ea8c>蜂蜜<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E964996A83C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "6CAF0815EEE177EECCB33678905B3E53F96555F76287B3E850D6BCD3F1E2C9E1",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>벌꿀<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -52860,8 +52860,8 @@
       "source_text": "　<color:0xfff2ea8c>骨付き肉<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E8D9C957482AB93F73C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "38BA42FC22911A5D32390222F74BDD9B84288746D51E7DF3B69A9F1BA521CFE7",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>뼈에 붙은 고기<color:>를 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -52876,8 +52876,8 @@
       "source_text": "<color:0xfff2ea8c>骨付き肉<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8D9C957482AB93F73C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "229F6E658DD9D60E39F59059E4425D76E7840B9247ACB4A6BE33BDE9D0FC3246",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>뼈에 붙은 고기<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -61533,8 +61533,8 @@
       "source_text": "<color:0xfff2ea8c>力の種<color:>を\\nもらった。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E97CD82CC8EED3C636F6C6F723A3E82F05C6E82E082E782C182BD8142",
       "source_sha256": "863A36DA6F46960E49525177BC9C0CDC08603CF3E6A6ECD4201F461D89C7653E",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>힘의 씨앗<color:>을\\n받았다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -81232,8 +81232,8 @@
       "source_text": "<color:0xfff2ea8c>カナンの地図<color:>を\\nもらった。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E834A8369839382CC926E907D3C636F6C6F723A3E82F05C6E82E082E782C182BD8142",
       "source_sha256": "8D215035E790E28EC39C0C95648ED991E8F4D52C4CA9036FD231D011774AFA77",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>카난 지도<color:>를\\n받았다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -84512,8 +84512,8 @@
       "source_text": "<color:0xfff2ea8c>カナンの地図<color:>を\\nもらった。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E834A8369839382CC926E907D3C636F6C6F723A3E82F05C6E82E082E782C182BD8142",
       "source_sha256": "8D215035E790E28EC39C0C95648ED991E8F4D52C4CA9036FD231D011774AFA77",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>카난 지도<color:>를\\n받았다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -97148,8 +97148,8 @@
       "source_text": "　<color:0xfff2ea8c>薬草<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E96F291903C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "F70176205B5B1CA9F0DEE2F97C232E71B4E66E45566675D7EDFFA97F60976DCA",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>약초<color:>를 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -97164,8 +97164,8 @@
       "source_text": "<color:0xfff2ea8c>薬草<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E96F291903C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "B55FFC62183E967B1B3160F86489D2EFECFCE8D25D35D53315D04C976867494C",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>약초<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -97452,8 +97452,8 @@
       "source_text": "<color:0xfff2ea8c>シルフェンブーツ<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8356838B8374834683938375815B83633C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "D21E83A60B91F5831579D9C60A05F87A67273D3152F15B157A184D09B5E03895",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>실펜 부츠<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -97983,8 +97983,8 @@
       "source_text": "平原で薬草を摘んでいる時に\\n赤い妖精が、キラキラした何かを\\n持って飛んでるのを見かけてさ。",
       "source_raw_hex": "95BD8CB482C596F2919082F0934582F182C582A282E98E9E82C95C6E90D482A2976490B882AA8141834C8389834C838982B582BD89BD82A982F05C6E8E9D82C182C494F282F182C582E982CC82F08CA982A982AF82C482B38142",
       "source_sha256": "481334D187E039499B3639FB68BF6F0D284B74928D403C92E8FEDF9DF8097FA7",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "평원에서 약초를 채집할 때\\n붉은 요정이 반짝반짝한 뭔가를\\n가지고 날아가는 것을 봤어.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -98467,8 +98467,8 @@
       "source_text": "<color:0xfff2ea8c>鏡の欠片<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8BBE82CC8C8795D03C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "4AF88D3A86EE10C766BC1BF294F794BB2E11E8DFFA2BFF0133BEFAC07F048E19",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>거울 조각<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -98646,8 +98646,8 @@
       "source_text": "<color:0xfff2ea8c>鏡の欠片<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8BBE82CC8C8795D03C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "4AF88D3A86EE10C766BC1BF294F794BB2E11E8DFFA2BFF0133BEFAC07F048E19",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>거울 조각<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -99643,8 +99643,8 @@
       "source_text": "　<color:0xfff2ea8c>骨付き肉<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E8D9C957482AB93F73C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "38BA42FC22911A5D32390222F74BDD9B84288746D51E7DF3B69A9F1BA521CFE7",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>뼈에 붙은 고기<color:>를 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -99659,8 +99659,8 @@
       "source_text": "<color:0xfff2ea8c>骨付き肉<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8D9C957482AB93F73C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "229F6E658DD9D60E39F59059E4425D76E7840B9247ACB4A6BE33BDE9D0FC3246",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>뼈에 붙은 고기<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -99691,8 +99691,8 @@
       "source_text": "　<color:0xfff2ea8c>薬草<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E96F291903C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "F70176205B5B1CA9F0DEE2F97C232E71B4E66E45566675D7EDFFA97F60976DCA",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>약초<color:>를 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -99707,8 +99707,8 @@
       "source_text": "<color:0xfff2ea8c>薬草<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E96F291903C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "B55FFC62183E967B1B3160F86489D2EFECFCE8D25D35D53315D04C976867494C",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>약초<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -99931,8 +99931,8 @@
       "source_text": "　<color:0xfff2ea8c>薬草<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E96F291903C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "F70176205B5B1CA9F0DEE2F97C232E71B4E66E45566675D7EDFFA97F60976DCA",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>약초<color:>를 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -99947,8 +99947,8 @@
       "source_text": "<color:0xfff2ea8c>薬草<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E96F291903C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "B55FFC62183E967B1B3160F86489D2EFECFCE8D25D35D53315D04C976867494C",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>약초<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -100123,8 +100123,8 @@
       "source_text": "　<color:0xfff2ea8c>骨付き肉<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E8D9C957482AB93F73C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "38BA42FC22911A5D32390222F74BDD9B84288746D51E7DF3B69A9F1BA521CFE7",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>뼈에 붙은 고기<color:>를 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -100139,8 +100139,8 @@
       "source_text": "<color:0xfff2ea8c>骨付き肉<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8D9C957482AB93F73C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "229F6E658DD9D60E39F59059E4425D76E7840B9247ACB4A6BE33BDE9D0FC3246",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>뼈에 붙은 고기<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -100299,8 +100299,8 @@
       "source_text": "　<color:0xfff2ea8c>骨付き肉<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E8D9C957482AB93F73C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "38BA42FC22911A5D32390222F74BDD9B84288746D51E7DF3B69A9F1BA521CFE7",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>뼈에 붙은 고기<color:>를 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -100315,8 +100315,8 @@
       "source_text": "<color:0xfff2ea8c>骨付き肉<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8D9C957482AB93F73C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "229F6E658DD9D60E39F59059E4425D76E7840B9247ACB4A6BE33BDE9D0FC3246",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>뼈에 붙은 고기<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -100395,8 +100395,8 @@
       "source_text": "　<color:0xfff2ea8c>薬草<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E96F291903C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "F70176205B5B1CA9F0DEE2F97C232E71B4E66E45566675D7EDFFA97F60976DCA",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>약초<color:>를 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -100411,8 +100411,8 @@
       "source_text": "<color:0xfff2ea8c>薬草<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E96F291903C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "B55FFC62183E967B1B3160F86489D2EFECFCE8D25D35D53315D04C976867494C",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>약초<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -100475,8 +100475,8 @@
       "source_text": "　<color:0xfff2ea8c>カプラの輝水<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E834A8376838982CC8B5090853C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "BE769B4DE99DA7563A6D34EF421987F1C2E094CF05BA9B055A5115CC82CF1269",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>카프라의 휘수<color:>를 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -100491,8 +100491,8 @@
       "source_text": "<color:0xfff2ea8c>カプラの輝水<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E834A8376838982CC8B5090853C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "DE273CCB7BE2D49DCAB535CE29DD478235133D455E6BC2759CA923724FC5902C",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>카프라의 휘수<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -100635,8 +100635,8 @@
       "source_text": "　<color:0xfff2ea8c>守の種<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E8EE782CC8EED3C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "C220E45FF28F6E8B84E1BBDFF7308A253121EC3756CA578FF68A962D1E8831FF",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>수호의 씨앗<color:>을 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -100651,8 +100651,8 @@
       "source_text": "<color:0xfff2ea8c>守の種<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8EE782CC8EED3C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "169224E0E528AF6F4F8458EA0A165BC94FE33CC921B07BF873204245CC86AB62",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>수호의 씨앗<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -102009,8 +102009,8 @@
       "source_text": "<color:0xfff2ea8c>鏡の欠片<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8BBE82CC8C8795D03C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "4AF88D3A86EE10C766BC1BF294F794BB2E11E8DFFA2BFF0133BEFAC07F048E19",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>거울 조각<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -107797,8 +107797,8 @@
       "source_text": "　<color:0xfff2ea8c>力の種<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E97CD82CC8EED3C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "7427E443AD225C4EF1F51D5388D14EB328AF5087E31567B37DB2AE8152D4B2D2",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>힘의 씨앗<color:>을 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -107813,8 +107813,8 @@
       "source_text": "<color:0xfff2ea8c>力の種<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E97CD82CC8EED3C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "494C950D562066F3755ABC1F8D96C8E62B5DB91E6AA6AC5EC17AA6EB29D94429",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>힘의 씨앗<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -109066,8 +109066,8 @@
       "source_text": "　<color:0xfff2ea8c>カプラの輝水<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E834A8376838982CC8B5090853C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "BE769B4DE99DA7563A6D34EF421987F1C2E094CF05BA9B055A5115CC82CF1269",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>카프라의 휘수<color:>를 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -109082,8 +109082,8 @@
       "source_text": "<color:0xfff2ea8c>カプラの輝水<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E834A8376838982CC8B5090853C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "DE273CCB7BE2D49DCAB535CE29DD478235133D455E6BC2759CA923724FC5902C",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>카프라의 휘수<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -109451,8 +109451,8 @@
       "source_text": "　<color:0xfff2ea8c>カプラの輝水<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E834A8376838982CC8B5090853C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "BE769B4DE99DA7563A6D34EF421987F1C2E094CF05BA9B055A5115CC82CF1269",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>카프라의 휘수<color:>를 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -109467,8 +109467,8 @@
       "source_text": "<color:0xfff2ea8c>カプラの輝水<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E834A8376838982CC8B5090853C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "DE273CCB7BE2D49DCAB535CE29DD478235133D455E6BC2759CA923724FC5902C",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>카프라의 휘수<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -116331,8 +116331,8 @@
       "source_text": "<color:0xfff2ea8c>骨付き肉<color:>を見つけたが\\nこれ以上持てない。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8D9C957482AB93F73C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E82B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "06F265622A1AACD73BD8E2040B9AACBF0C20EF196C18183F4C5FE9C33E463C16",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>뼈에 붙은 고기<color:>를 발견했지만\\n더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -116363,8 +116363,8 @@
       "source_text": "<color:0xfff2ea8c>シルフェンブーツ<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8356838B8374834683938375815B83633C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "D21E83A60B91F5831579D9C60A05F87A67273D3152F15B157A184D09B5E03895",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>실펜 부츠<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -116395,8 +116395,8 @@
       "source_text": "<color:0xfff2ea8c>シルフェンブーツ<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8356838B8374834683938375815B83633C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "D21E83A60B91F5831579D9C60A05F87A67273D3152F15B157A184D09B5E03895",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>실펜 부츠<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -116427,8 +116427,8 @@
       "source_text": "<color:0xfff2ea8c>骨付き肉<color:>を見つけたが\\nこれ以上持てない。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8D9C957482AB93F73C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E82B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "06F265622A1AACD73BD8E2040B9AACBF0C20EF196C18183F4C5FE9C33E463C16",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>뼈에 붙은 고기<color:>를 발견했지만\\n더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -116459,8 +116459,8 @@
       "source_text": "<color:0xfff2ea8c>骨付き肉<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8D9C957482AB93F73C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "229F6E658DD9D60E39F59059E4425D76E7840B9247ACB4A6BE33BDE9D0FC3246",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>뼈에 붙은 고기<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -116492,7 +116492,7 @@
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8356838B8374834683938375815B83633C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "D21E83A60B91F5831579D9C60A05F87A67273D3152F15B157A184D09B5E03895",
       "translation": "<color:0xfff2ea8c>실펜 부츠<color:>를\\n얻었다.",
-      "status": "draft",
+      "status": "override",
       "notes": ""
     },
     {
