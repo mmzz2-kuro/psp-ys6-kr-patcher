@@ -690,6 +690,7 @@ class PatchBuildEditor(ttk.Frame):
         buttons = ttk.Frame(self); buttons.pack(fill=tk.X)
         self.refresh_button = ttk.Button(buttons, text="데이터 다시 읽기", command=self.refresh_data); self.refresh_button.pack(side=tk.LEFT)
         self.option_images_button = ttk.Button(buttons, text="메뉴 이미지 폴더", command=self.open_option_images); self.option_images_button.pack(side=tk.LEFT, padx=(6, 0))
+        self.additional_images_button = ttk.Button(buttons, text="추가 이미지 폴더", command=self.open_additional_images); self.additional_images_button.pack(side=tk.LEFT, padx=(6, 0))
         self.preflight_button = ttk.Button(buttons, text="사전 검증", command=lambda: self.start("preflight")); self.preflight_button.pack(side=tk.LEFT, padx=(6, 0))
         self.build_button = ttk.Button(buttons, text="패치 ISO 만들기", command=lambda: self.start("build")); self.build_button.pack(side=tk.LEFT, padx=(6, 0))
         self.progress = ttk.Progressbar(buttons, mode="indeterminate", length=180); self.progress.pack(side=tk.RIGHT)
@@ -719,9 +720,18 @@ class PatchBuildEditor(ttk.Frame):
         except Exception as exc:
             messagebox.showerror("메뉴 이미지", str(exc))
 
+    def open_additional_images(self) -> None:
+        try:
+            info = inspect_inputs()
+            folder = info["paths"]["additional_images_edited"]
+            folder.mkdir(parents=True, exist_ok=True)
+            os.startfile(folder)
+        except Exception as exc:
+            messagebox.showerror("추가 이미지", str(exc))
+
     def refresh_data(self, silent: bool = False) -> None:
         try:
-            info = inspect_inputs(); self.counts.set(f"대사 override {info['override_count']:,} / 시스템 override {info['system_override_count']:,}·draft {info['system_draft_count']:,} / 아이템 override {info['item_override_count']:,}·draft {info['item_draft_count']:,} / 인물 reviewed {info['cast_person_reviewed_count']:,} / 몬스터 reviewed {info['monster_reviewed_count']:,} / 메뉴 이미지 {info['option_menu_image_count']:,}")
+            info = inspect_inputs(); self.counts.set(f"대사 override {info['override_count']:,} / 시스템 override {info['system_override_count']:,}·draft {info['system_draft_count']:,} / 아이템 override {info['item_override_count']:,}·draft {info['item_draft_count']:,} / 인물 reviewed {info['cast_person_reviewed_count']:,} / 몬스터 reviewed {info['monster_reviewed_count']:,} / 메뉴 이미지 {info['option_menu_image_count']:,} / 추가 이미지 {info['additional_image_count']:,}")
             if not self.font.get(): self.font.set(info["font"])
         except Exception as exc:
             self.counts.set(f"패치 데이터 오류: {exc}")
@@ -779,7 +789,7 @@ class PatchBuildEditor(ttk.Frame):
 
     def _set_buttons(self, enabled: bool) -> None:
         state = tk.NORMAL if enabled else tk.DISABLED
-        for button in (self.refresh_button, self.option_images_button, self.preflight_button, self.build_button): button.configure(state=state)
+        for button in (self.refresh_button, self.option_images_button, self.additional_images_button, self.preflight_button, self.build_button): button.configure(state=state)
 
     def _append(self, text: str) -> None:
         self.log.configure(state=tk.NORMAL); self.log.insert(tk.END, text); self.log.see(tk.END); self.log.configure(state=tk.DISABLED)

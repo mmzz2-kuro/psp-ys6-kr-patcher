@@ -58,6 +58,8 @@ def layout(tools_dir: Path | None = None) -> dict[str, Path]:
         "option_menu_source": patch / "ys6_option_menu" / "original-static_tex.dds",
         "option_menu_manifest": patch / "ys6_option_menu" / "manifest.json",
         "option_menu_edited": patch / "ys6_option_menu" / "edited_buttons",
+        "additional_images": patch / "ys6_additional_images",
+        "additional_images_edited": patch / "ys6_additional_images" / "edited_parts",
     }
 
 
@@ -68,7 +70,7 @@ def find_default_font() -> Path | None:
 
 def inspect_inputs(tools_dir: Path | None = None) -> dict:
     paths = layout(tools_dir)
-    required = [value for key, value in paths.items() if key not in {"tools", "work", "option_menu_edited"}]
+    required = [value for key, value in paths.items() if key not in {"tools", "work", "option_menu_edited", "additional_images_edited"}]
     missing = [str(path) for path in required if not path.exists()]
     if missing: raise PatchBuilderError("필수 파일 없음: " + ", ".join(missing))
     config = json.loads(paths["build_config"].read_text(encoding="utf-8-sig"))
@@ -89,6 +91,7 @@ def inspect_inputs(tools_dir: Path | None = None) -> dict:
     if item_errors: raise PatchBuilderError("아이템 작업공간 오류: " + "; ".join(item_errors))
     if system_errors: raise PatchBuilderError("시스템 메시지 작업공간 오류: " + "; ".join(system_errors))
     option_files = sorted(paths["option_menu_edited"].glob("*.png")) if paths["option_menu_edited"].exists() else []
+    additional_files = sorted(paths["additional_images_edited"].rglob("*.png")) if paths["additional_images_edited"].exists() else []
     return {
         "dialogue_records": len(dialogue["records"]),
         "override_count": sum(row.get("status") == "override" for row in dialogue["records"]),
@@ -103,6 +106,8 @@ def inspect_inputs(tools_dir: Path | None = None) -> dict:
         "system_draft_count": sum(row.get("status") == "draft" for row in system_messages["records"]),
         "option_menu_image_count": len(option_files),
         "option_menu_image_files": [path.name for path in option_files],
+        "additional_image_count": len(additional_files),
+        "additional_image_files": [str(path.relative_to(paths["additional_images_edited"])).replace("\\", "/") for path in additional_files],
         "font": str(find_default_font() or ""), "paths": paths, "config": config,
     }
 
@@ -129,6 +134,7 @@ def run_build(mode: str, iso: Path, output: Path | None = None, font: Path | Non
         castinfo_name=None, castinfo_identifier="CAST_C240", castinfo_expected_name="イーシャ",
         work=paths["work"], standalone_path=json.loads(paths["standalone_paths"].read_text(encoding="utf-8-sig")),
         option_menu_workspace=paths["option_menu"], option_menu_source=paths["option_menu_source"],
+        additional_image_workspace=paths["additional_images"],
         output_iso=output, overwrite=overwrite,
     )
     return execute(args)

@@ -110,6 +110,155 @@ def encode_atlas(image: Image.Image) -> bytes:
     return pc_dxt1_to_psp(blocks)
 
 
+def rgb565_to_rgb(value: int) -> tuple[int, int, int]:
+    r5 = (value >> 11) & 0x1F
+    g6 = (value >> 5) & 0x3F
+    b5 = value & 0x1F
+    return (
+        (r5 << 3) | (r5 >> 2),
+        (g6 << 2) | (g6 >> 4),
+        (b5 << 3) | (b5 >> 2),
+    )
+
+
+def rgb_to_565(rgb: tuple[int, int, int]) -> int:
+    r, g, b = rgb
+    return (
+        ((r * 31 + 127) // 255) << 11
+        | ((g * 63 + 127) // 255) << 5
+        | ((b * 31 + 127) // 255)
+    )
+
+
+def dxt1_palette(color0: int, color1: int) -> tuple[tuple[int, int, int, int], ...]:
+    first = rgb565_to_rgb(color0)
+    second = rgb565_to_rgb(color1)
+    if color0 > color1:
+        third = tuple((2 * first[i] + second[i]) // 3 for i in range(3))
+        fourth = tuple((first[i] + 2 * second[i]) // 3 for i in range(3))
+        return (
+            (*first, 255), (*second, 255), (*third, 255), (*fourth, 255),
+        )
+    third = tuple((first[i] + second[i]) // 2 for i in range(3))
+    return ((*first, 255), (*second, 255), (*third, 255), (0, 0, 0, 0))
+
+
+def fit_dxt1_block(pixels: list[tuple[int, int, int, int]], color0: int,
+                   color1: int) -> tuple[int, bytes]:
+    transparent = any(pixel[3] < 128 for pixel in pixels)
+    if transparent:
+        if color0 > color1:
+            color0, color1 = color1, color0
+        choices = 3
+    else:
+        if color0 <= color1:
+            color0, color1 = color1, color0
+        if color0 == color1:
+            color0 = min(0xFFFF, color0 + 1)
+            if color0 <= color1:
+                color1 = max(0, color1 - 1)
+        choices = 4
+    palette = dxt1_palette(color0, color1)
+    indices = 0
+    error = 0
+    for pixel_index, pixel in enumerate(pixels):
+        if pixel[3] < 128:
+            choice = 3
+        else:
+            choice = min(
+                range(choices),
+                key=lambda candidate: sum(
+                    (pixel[channel] - palette[candidate][channel]) ** 2
+                    for channel in range(3)
+                ),
+            )
+            error += sum(
+                (pixel[channel] - palette[choice][channel]) ** 2
+                for channel in range(3)
+            )
+        indices |= choice << (pixel_index * 2)
+    # PSP stores the four index bytes before the two little-endian RGB565 endpoints.
+    return error, struct.pack("<IHH", indices, color0, color1)
+
+
+def decode_psp_dxt1_block(block: bytes) -> list[tuple[int, int, int, int]]:
+    indices, color0, color1 = struct.unpack("<IHH", block)
+    palette = dxt1_palette(color0, color1)
+    return [palette[(indices >> (pixel_index * 2)) & 3] for pixel_index in range(16)]
+
+
+def block_rgb_error(pixels: list[tuple[int, int, int, int]], block: bytes) -> int:
+    decoded = decode_psp_dxt1_block(block)
+    error = 0
+    for source, restored in zip(pixels, decoded):
+        if (source[3] < 128) != (restored[3] < 128):
+            error += 255 * 255 * 4
+        elif source[3] >= 128:
+            error += sum((source[channel] - restored[channel]) ** 2 for channel in range(3))
+    return error
+
+
+def adjacent_565(value: int) -> set[int]:
+    r = (value >> 11) & 0x1F
+    g = (value >> 5) & 0x3F
+    b = value & 0x1F
+    candidates = {value}
+    for channel, limit in ((0, 31), (1, 63), (2, 31)):
+        for delta in (-1, 1):
+            values = [r, g, b]
+            values[channel] = max(0, min(limit, values[channel] + delta))
+            candidates.add((values[0] << 11) | (values[1] << 5) | values[2])
+    return candidates
+
+
+def encode_dxt1_block_high_quality(
+    pixels: list[tuple[int, int, int, int]], baseline: bytes,
+) -> bytes:
+    opaque = [pixel[:3] for pixel in pixels if pixel[3] >= 128]
+    if not opaque:
+        return struct.pack("<IHH", 0xFFFFFFFF, 0, 0)
+
+    # Start from the existing encoder plus several image-derived endpoint pairs.
+    _, base0, base1 = struct.unpack("<IHH", baseline)
+    by_luma = sorted(opaque, key=lambda rgb: 299 * rgb[0] + 587 * rgb[1] + 114 * rgb[2])
+    seeds = [
+        (base0, base1),
+        (rgb_to_565(by_luma[-1]), rgb_to_565(by_luma[0])),
+    ]
+    best_block = baseline
+    best_error = block_rgb_error(pixels, baseline)
+    for seed0, seed1 in seeds:
+        _, current = fit_dxt1_block(pixels, seed0, seed1)
+        current_error = block_rgb_error(pixels, current)
+        # Coordinate descent in RGB565 endpoint space. Each accepted move strictly
+        # lowers decoded RGB error, and the Pillow block remains the fallback.
+        for _ in range(8):
+            improved = False
+            _, current0, current1 = struct.unpack("<IHH", current)
+            for candidate0 in adjacent_565(current0):
+                if candidate0 == current0:
+                    continue
+                _, candidate = fit_dxt1_block(pixels, candidate0, current1)
+                candidate_error = block_rgb_error(pixels, candidate)
+                if candidate_error < current_error:
+                    current, current_error = candidate, candidate_error
+                    improved = True
+            _, current0, current1 = struct.unpack("<IHH", current)
+            for candidate1 in adjacent_565(current1):
+                if candidate1 == current1:
+                    continue
+                _, candidate = fit_dxt1_block(pixels, current0, candidate1)
+                candidate_error = block_rgb_error(pixels, candidate)
+                if candidate_error < current_error:
+                    current, current_error = candidate, candidate_error
+                    improved = True
+            if not improved:
+                break
+        if current_error < best_error:
+            best_block, best_error = current, current_error
+    return best_block
+
+
 def default_manifest(source_sha256: str) -> dict:
     return {
         "schema_version": 1,
@@ -228,10 +377,13 @@ def compose(source_payload: Path, workspace: Path, output_payload: Path,
                 box = tuple(raw_box)
                 left = piece_index * region["piece_width"]
                 piece = patch.crop((left, 0, left + region["piece_width"], region["piece_height"]))
-                composed.paste(piece, (box[0], box[1]), piece)
+                # Copy the edited RGBA pixels verbatim.  Supplying the image
+                # again as a mask would alpha-blend it with the original atlas
+                # and alter the pixels around antialiased text.
+                composed.paste(piece, (box[0], box[1]))
         else:
             box = tuple(region["box"])
-            composed.paste(patch, (box[0], box[1]), patch)
+            composed.paste(patch, (box[0], box[1]))
         applied.append(region["id"])
     if not applied:
         raise ValueError("edited_buttons contains no applicable PNG files")
@@ -254,7 +406,9 @@ def compose(source_payload: Path, workspace: Path, output_payload: Path,
                 continue
             index = block_y * BLOCKS_PER_ROW + block_x
             start = index * DXT1_BLOCK_SIZE
-            replacement = encoded[start:start + DXT1_BLOCK_SIZE]
+            baseline = encoded[start:start + DXT1_BLOCK_SIZE]
+            pixels = list(composed.crop(pixel_box).getdata())
+            replacement = encode_dxt1_block_high_quality(pixels, baseline)
             target = ATLAS_OFFSET + start
             before = bytes(patched[target:target + DXT1_BLOCK_SIZE])
             if replacement != before:
