@@ -15,17 +15,20 @@ try:
     from tools.scripts.ys6_translation_workspace import validate as validate_dialogue
     from tools.scripts.ys6_cast_name_workspace import validate_workspace as validate_cast
     from tools.scripts.ys6_item_workspace import validate_workspace as validate_items
+    from tools.scripts.ys6_system_message_workspace import validate_workspace as validate_system_messages
 except ModuleNotFoundError:
     try:
         from .ys6_integrated_build import execute
         from .ys6_translation_workspace import validate as validate_dialogue
         from .ys6_cast_name_workspace import validate_workspace as validate_cast
         from .ys6_item_workspace import validate_workspace as validate_items
+        from .ys6_system_message_workspace import validate_workspace as validate_system_messages
     except ImportError:
         from ys6_integrated_build import execute
         from ys6_translation_workspace import validate as validate_dialogue
         from ys6_cast_name_workspace import validate_workspace as validate_cast
         from ys6_item_workspace import validate_workspace as validate_items
+        from ys6_system_message_workspace import validate_workspace as validate_system_messages
 
 
 class PatchBuilderError(Exception):
@@ -46,10 +49,15 @@ def layout(tools_dir: Path | None = None) -> dict[str, Path]:
         "tools": root, "dialogue": config / "dialogue-translations.json",
         "cast": config / "cast-names.json", "catalog": config / "dialogue-catalog.json",
         "items": config / "item-translations.json",
+        "system_messages": config / "system-messages.json",
         "build_config": patch / "build-config.json", "runtime_map": patch / "runtime-archive-map.json",
         "font_usage": patch / "font-usage.json", "seed_mapping": patch / "seed-mapping.json",
         "original_eboot": patch / "original-eboot.bin", "han_override": patch / "hangul-98fc-manual.txt",
         "standalone_paths": patch / "standalone-paths.json", "work": patch / "work" / "current",
+        "option_menu": patch / "ys6_option_menu",
+        "option_menu_source": patch / "ys6_option_menu" / "original-static_tex.dds",
+        "option_menu_manifest": patch / "ys6_option_menu" / "manifest.json",
+        "option_menu_edited": patch / "ys6_option_menu" / "edited_buttons",
     }
 
 
@@ -60,7 +68,7 @@ def find_default_font() -> Path | None:
 
 def inspect_inputs(tools_dir: Path | None = None) -> dict:
     paths = layout(tools_dir)
-    required = [value for key, value in paths.items() if key not in {"tools", "work"}]
+    required = [value for key, value in paths.items() if key not in {"tools", "work", "option_menu_edited"}]
     missing = [str(path) for path in required if not path.exists()]
     if missing: raise PatchBuilderError("필수 파일 없음: " + ", ".join(missing))
     config = json.loads(paths["build_config"].read_text(encoding="utf-8-sig"))
@@ -71,12 +79,16 @@ def inspect_inputs(tools_dir: Path | None = None) -> dict:
     dialogue = json.loads(paths["dialogue"].read_text(encoding="utf-8-sig"))
     cast = json.loads(paths["cast"].read_text(encoding="utf-8-sig"))
     items = json.loads(paths["items"].read_text(encoding="utf-8-sig"))
+    system_messages = json.loads(paths["system_messages"].read_text(encoding="utf-8-sig"))
     dialogue_report = validate_dialogue(dialogue)
     cast_errors = validate_cast(cast)
     item_errors = validate_items(items)
+    system_errors = validate_system_messages(system_messages)
     if not dialogue_report["valid"]: raise PatchBuilderError("대사 작업공간 오류: " + "; ".join(dialogue_report["errors"]))
     if cast_errors: raise PatchBuilderError("인물명 작업공간 오류: " + "; ".join(cast_errors))
     if item_errors: raise PatchBuilderError("아이템 작업공간 오류: " + "; ".join(item_errors))
+    if system_errors: raise PatchBuilderError("시스템 메시지 작업공간 오류: " + "; ".join(system_errors))
+    option_files = sorted(paths["option_menu_edited"].glob("*.png")) if paths["option_menu_edited"].exists() else []
     return {
         "dialogue_records": len(dialogue["records"]),
         "override_count": sum(row.get("status") == "override" for row in dialogue["records"]),
@@ -86,6 +98,11 @@ def inspect_inputs(tools_dir: Path | None = None) -> dict:
         "monster_reviewed_count": sum(row.get("status") == "reviewed" and row.get("identifier", "").startswith("CAST_M") for row in cast["records"]),
         "item_override_count": sum(row.get("status") == "override" for row in items["records"]),
         "item_draft_count": sum(row.get("status") == "draft" for row in items["records"]),
+        "system_message_count": len(system_messages["records"]),
+        "system_override_count": sum(row.get("status") == "override" for row in system_messages["records"]),
+        "system_draft_count": sum(row.get("status") == "draft" for row in system_messages["records"]),
+        "option_menu_image_count": len(option_files),
+        "option_menu_image_files": [path.name for path in option_files],
         "font": str(find_default_font() or ""), "paths": paths, "config": config,
     }
 
@@ -105,11 +122,13 @@ def run_build(mode: str, iso: Path, output: Path | None = None, font: Path | Non
     args = SimpleNamespace(
         mode=mode, iso=iso, workspace=paths["dialogue"], cast_name_workspace=paths["cast"],
         item_workspace=paths["items"],
+        system_message_workspace=paths["system_messages"],
         catalog=paths["catalog"], runtime_map=paths["runtime_map"], font_usage=paths["font_usage"],
         seed_mapping=paths["seed_mapping"], original_eboot=paths["original_eboot"], font=font,
         han_override=paths["han_override"], horizontal_left_inset=int(config["horizontal_left_inset"]),
         castinfo_name=None, castinfo_identifier="CAST_C240", castinfo_expected_name="イーシャ",
         work=paths["work"], standalone_path=json.loads(paths["standalone_paths"].read_text(encoding="utf-8-sig")),
+        option_menu_workspace=paths["option_menu"], option_menu_source=paths["option_menu_source"],
         output_iso=output, overwrite=overwrite,
     )
     return execute(args)

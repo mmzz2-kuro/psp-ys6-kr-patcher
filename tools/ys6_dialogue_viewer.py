@@ -6,6 +6,7 @@ from __future__ import annotations
 import json
 import csv
 import hashlib
+import os
 import queue
 import sys
 import threading
@@ -36,10 +37,12 @@ try:
     from tools.scripts.ys6_translation_workspace import normalize_editor_translation
     from tools.scripts.ys6_patch_builder import find_default_font, inspect_inputs, run_build
     from tools.scripts.ys6_item_workspace import encoded_length as item_encoded_length, load_workspace as load_item_workspace, validate_workspace as validate_item_workspace
+    from tools.scripts.ys6_system_message_workspace import encoded_length as system_encoded_length, load_workspace as load_system_workspace, validate_workspace as validate_system_workspace
 except ModuleNotFoundError:
     from scripts.ys6_translation_workspace import normalize_editor_translation
     from scripts.ys6_patch_builder import find_default_font, inspect_inputs, run_build
     from scripts.ys6_item_workspace import encoded_length as item_encoded_length, load_workspace as load_item_workspace, validate_workspace as validate_item_workspace
+    from scripts.ys6_system_message_workspace import encoded_length as system_encoded_length, load_workspace as load_system_workspace, validate_workspace as validate_system_workspace
 
 
 def load_catalog(path: Path) -> tuple[dict, list[dict]]:
@@ -80,18 +83,19 @@ def mark_records_override(records: list[dict]) -> dict[str, int]:
     return result
 
 
-def default_config_paths(script_path: Path | None = None) -> tuple[Path, Path, Path, Path]:
+def default_config_paths(script_path: Path | None = None) -> tuple[Path, Path, Path, Path, Path]:
     config_dir = (script_path or Path(__file__)).resolve().parent / "config"
     return (
         config_dir / "dialogue-translations.json",
         config_dir / "cast-names.json",
         config_dir / "item-translations.json",
+        config_dir / "system-messages.json",
         config_dir / "dialogue-catalog.json",
     )
 
 
 class DialogueViewer(tk.Tk):
-    def __init__(self, initial_path: Path | None = None, cast_path: Path | None = None, item_path: Path | None = None) -> None:
+    def __init__(self, initial_path: Path | None = None, cast_path: Path | None = None, item_path: Path | None = None, system_path: Path | None = None) -> None:
         super().__init__()
         self.title("Ys VI 대사 뷰어")
         self.geometry("1280x760")
@@ -111,6 +115,9 @@ class DialogueViewer(tk.Tk):
         if item_path:
             if item_path.exists(): self.item_editor.open(item_path)
             else: self.item_editor.message.set(f"기본 아이템 JSON 없음: {item_path}")
+        if system_path:
+            if system_path.exists(): self.system_editor.open(system_path)
+            else: self.system_editor.message.set(f"기본 시스템 메시지 JSON 없음: {system_path}")
 
     def _build_ui(self) -> None:
         tabs = ttk.Notebook(self)
@@ -120,11 +127,14 @@ class DialogueViewer(tk.Tk):
         self.cast_editor = cast_tab
         item_tab = ItemEditor(tabs)
         self.item_editor = item_tab
+        system_tab = SystemMessageEditor(tabs)
+        self.system_editor = system_tab
         build_tab = PatchBuildEditor(tabs, self)
         self.build_editor = build_tab
         tabs.add(dialogue_tab, text="대사")
         tabs.add(cast_tab, text="인물·몬스터명")
         tabs.add(item_tab, text="아이템")
+        tabs.add(system_tab, text="시스템 메시지")
         tabs.add(build_tab, text="패치 빌드")
         top = ttk.Frame(dialogue_tab, padding=8)
         top.pack(fill=tk.X)
@@ -557,6 +567,111 @@ class ItemEditor(ttk.Frame):
         self.name.delete(0,tk.END);self.name.insert(0,row.get("translation_name",""));self.source_desc.configure(state=tk.NORMAL);self.source_desc.delete("1.0",tk.END);self.source_desc.insert("1.0",row.get("source_description",""));self.source_desc.configure(state=tk.DISABLED);self.description.delete("1.0",tk.END);self.description.insert("1.0",row.get("translation_description",""));self.edit_status.set(row.get("status","draft"));self.notes.delete(0,tk.END);self.notes.insert(0,row.get("notes",""))
 
 
+class SystemMessageEditor(ttk.Frame):
+    STATUSES = ("untranslated", "draft", "override", "excluded", "conflict")
+
+    def __init__(self, parent) -> None:
+        super().__init__(parent, padding=8)
+        self.path: Path | None = None
+        self.workspace = {"schema_version": 1, "encoding": "euc_jp", "record_count": 0, "records": []}
+        self.filtered: list[dict] = []
+        self.dirty = False
+        self._selected_identifier: str | None = None
+        bar = ttk.Frame(self); bar.pack(fill=tk.X)
+        ttk.Button(bar, text="작업공간 열기", command=self.choose).pack(side=tk.LEFT)
+        ttk.Button(bar, text="저장", command=self.save).pack(side=tk.LEFT, padx=(6, 0))
+        ttk.Button(bar, text="검증", command=self.validate).pack(side=tk.LEFT, padx=(6, 0))
+        ttk.Button(bar, text="선택 항목 override", command=self.override_selected).pack(side=tk.LEFT, padx=(6, 0))
+        ttk.Label(bar, text="검색").pack(side=tk.LEFT, padx=(14, 4))
+        self.query = tk.StringVar(); search = ttk.Entry(bar, textvariable=self.query, width=34); search.pack(side=tk.LEFT); search.bind("<KeyRelease>", lambda _e: self.refresh())
+        self.filter_status = tk.StringVar(value="전체")
+        box = ttk.Combobox(bar, textvariable=self.filter_status, state="readonly", values=("전체",) + self.STATUSES, width=12); box.pack(side=tk.LEFT, padx=(6, 0)); box.bind("<<ComboboxSelected>>", lambda _e: self.refresh())
+        self.message = tk.StringVar(value="시스템 메시지 작업공간을 열어 주세요."); ttk.Label(bar, textvariable=self.message).pack(side=tk.RIGHT)
+        pane = ttk.Panedwindow(self, orient=tk.HORIZONTAL); pane.pack(fill=tk.BOTH, expand=True, pady=(8, 0))
+        left, right = ttk.Frame(pane), ttk.Frame(pane, padding=(8, 0, 0, 0)); pane.add(left, weight=3); pane.add(right, weight=2)
+        columns = ("offset", "source", "translation", "length", "status")
+        self.tree = ttk.Treeview(left, columns=columns, show="headings", selectmode="extended")
+        for col, label, width in zip(columns, ("EBOOT 오프셋", "일본어 원문", "한국어 번역", "길이", "상태"), (105, 300, 300, 80, 95)):
+            self.tree.heading(col, text=label); self.tree.column(col, width=width, stretch=col in ("source", "translation"))
+        scroll = ttk.Scrollbar(left, orient=tk.VERTICAL, command=self.tree.yview); self.tree.configure(yscrollcommand=scroll.set); self.tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True); scroll.pack(side=tk.RIGHT, fill=tk.Y); self.tree.bind("<<TreeviewSelect>>", self.show)
+        self.info = tk.StringVar(); ttk.Label(right, textvariable=self.info, justify=tk.LEFT, wraplength=460).pack(fill=tk.X)
+        ttk.Label(right, text="일본어 원문").pack(anchor="w", pady=(8, 0)); self.source = tk.Text(right, height=5, wrap=tk.WORD, font=("맑은 고딕", 10), state=tk.DISABLED); self.source.pack(fill=tk.X)
+        ttk.Label(right, text="한국어 번역").pack(anchor="w", pady=(8, 0)); self.translation = tk.Text(right, height=5, wrap=tk.WORD, font=("맑은 고딕", 10)); self.translation.pack(fill=tk.X)
+        row = ttk.Frame(right); row.pack(fill=tk.X, pady=(8, 0)); ttk.Label(row, text="상태").pack(side=tk.LEFT)
+        self.edit_status = tk.StringVar(value="untranslated"); ttk.Combobox(row, textvariable=self.edit_status, state="readonly", values=self.STATUSES, width=14).pack(side=tk.LEFT, padx=(6, 12))
+        ttk.Label(row, text="분류").pack(side=tk.LEFT); self.category = ttk.Entry(row, width=14); self.category.pack(side=tk.LEFT, padx=(6, 12))
+        ttk.Label(row, text="메모").pack(side=tk.LEFT); self.notes = ttk.Entry(row); self.notes.pack(side=tk.LEFT, fill=tk.X, expand=True)
+        ttk.Button(right, text="현재 항목 반영", command=self.apply_edit).pack(anchor="e", pady=(8, 0))
+
+    def choose(self):
+        selected = filedialog.askopenfilename(title="시스템 메시지 작업공간 열기", filetypes=[("JSON", "*.json")])
+        if selected: self.open(Path(selected))
+
+    def open(self, path: Path):
+        try: self.workspace = load_system_workspace(path)
+        except Exception as exc: messagebox.showerror("열기 실패", str(exc)); return
+        self.path = path; self.dirty = False; self._selected_identifier = None; self.refresh()
+
+    def _commit_selected(self):
+        if self._selected_identifier is None: return
+        row = next((x for x in self.workspace["records"] if x["identifier"] == self._selected_identifier), None)
+        if row is None: return
+        values = (self.translation.get("1.0", "end-1c"), self.edit_status.get(), self.category.get(), self.notes.get())
+        old = (row.get("translation", ""), row.get("status", "untranslated"), row.get("category", ""), row.get("notes", ""))
+        if values != old:
+            row["translation"], row["status"], row["category"], row["notes"] = values; self.dirty = True
+
+    def apply_edit(self):
+        identifier = self._selected_identifier; self._commit_selected(); self.refresh(select=identifier)
+
+    def save(self):
+        if self.path is None: messagebox.showwarning("저장", "작업공간을 먼저 열어 주세요."); return
+        self._commit_selected(); errors = validate_system_workspace(self.workspace)
+        if errors: messagebox.showerror("저장 전 검증 실패", "\n".join(errors[:20])); return
+        atomic_write_json(self.path, self.workspace, backup=True); self.dirty = False; self.message.set(f"저장 완료: {self.path.name}")
+
+    def validate(self):
+        self._commit_selected(); errors = validate_system_workspace(self.workspace)
+        if errors: messagebox.showerror("검증 실패", "\n".join(errors[:20]))
+        else: messagebox.showinfo("검증", f"정상: {len(self.workspace.get('records', [])):,}개")
+
+    def override_selected(self):
+        selected = self.tree.selection()
+        if not selected: messagebox.showwarning("override", "항목을 선택해 주세요."); return
+        self._commit_selected(); changed = 0; empty = 0; overflow = 0
+        for item in selected:
+            row = self.filtered[int(item)]; translation = row.get("translation", "")
+            if not translation.strip(): empty += 1; continue
+            if system_encoded_length(translation) + 1 > row["allocated_size"]:
+                row["status"] = "conflict"; overflow += 1; continue
+            if row.get("status") != "override": row["status"] = "override"; changed += 1
+        self.dirty |= bool(changed or overflow); self.refresh(); self.message.set(f"override 변경 {changed:,}개 / 빈 번역 {empty:,}개 / 길이 초과 conflict {overflow:,}개")
+
+    def refresh(self, select=None):
+        rows = self.workspace.get("records", []); status = self.filter_status.get(); needle = self.query.get().casefold().strip()
+        if status != "전체": rows = [x for x in rows if x.get("status") == status]
+        self.filtered = [x for x in rows if not needle or needle in " ".join(str(x.get(k, "")) for k in ("identifier", "offset", "source", "translation", "category", "notes")).casefold()]
+        self.tree.delete(*self.tree.get_children())
+        for i, row in enumerate(self.filtered):
+            used = system_encoded_length(row.get("translation", "")) + 1 if row.get("translation") else 0
+            self.tree.insert("", tk.END, iid=str(i), values=(f"0x{row['offset']:X}", row["source"], row.get("translation", ""), f"{used}/{row['allocated_size']}", row.get("status", "")))
+        counts = {s: sum(x.get("status") == s for x in self.workspace.get("records", [])) for s in self.STATUSES}; self.message.set(f"{len(self.filtered):,}/{len(self.workspace.get('records', [])):,}개 · override {counts['override']} · draft {counts['draft']} · conflict {counts['conflict']}")
+        if select is not None:
+            for i, row in enumerate(self.filtered):
+                if row["identifier"] == select: self.tree.selection_set(str(i)); self.tree.see(str(i)); self.show(); break
+
+    def show(self, _event=None):
+        selected = self.tree.selection()
+        if not selected: return
+        row = self.filtered[int(selected[0])]
+        if self._selected_identifier is not None and self._selected_identifier != row["identifier"]: self._commit_selected()
+        self._selected_identifier = row["identifier"]
+        used = system_encoded_length(row.get("translation", "")) + 1 if row.get("translation") else 0
+        self.info.set(f"ID: {row['identifier']}\nEBOOT 오프셋: 0x{row['offset']:X}\n번역 길이: {used}/{row['allocated_size']}바이트\n원본 SHA-256: {row['source_sha256']}\n원본 HEX: {row['source_raw_hex']}")
+        self.source.configure(state=tk.NORMAL); self.source.delete("1.0", tk.END); self.source.insert("1.0", row["source"]); self.source.configure(state=tk.DISABLED)
+        self.translation.delete("1.0", tk.END); self.translation.insert("1.0", row.get("translation", "")); self.edit_status.set(row.get("status", "untranslated")); self.category.delete(0, tk.END); self.category.insert(0, row.get("category", "")); self.notes.delete(0, tk.END); self.notes.insert(0, row.get("notes", ""))
+
+
 class PatchBuildEditor(ttk.Frame):
     def __init__(self, parent, app: DialogueViewer) -> None:
         super().__init__(parent, padding=12); self.app = app; self.events = queue.Queue(); self.running = False
@@ -574,6 +689,7 @@ class PatchBuildEditor(ttk.Frame):
         ttk.Label(self, textvariable=self.counts).pack(anchor="w", pady=(10, 4))
         buttons = ttk.Frame(self); buttons.pack(fill=tk.X)
         self.refresh_button = ttk.Button(buttons, text="데이터 다시 읽기", command=self.refresh_data); self.refresh_button.pack(side=tk.LEFT)
+        self.option_images_button = ttk.Button(buttons, text="메뉴 이미지 폴더", command=self.open_option_images); self.option_images_button.pack(side=tk.LEFT, padx=(6, 0))
         self.preflight_button = ttk.Button(buttons, text="사전 검증", command=lambda: self.start("preflight")); self.preflight_button.pack(side=tk.LEFT, padx=(6, 0))
         self.build_button = ttk.Button(buttons, text="패치 ISO 만들기", command=lambda: self.start("build")); self.build_button.pack(side=tk.LEFT, padx=(6, 0))
         self.progress = ttk.Progressbar(buttons, mode="indeterminate", length=180); self.progress.pack(side=tk.RIGHT)
@@ -594,9 +710,18 @@ class PatchBuildEditor(ttk.Frame):
         selected = filedialog.askopenfilename(title="굴림 글꼴 선택", filetypes=[("TrueType", "*.ttc *.ttf"), ("모든 파일", "*.*")])
         if selected: self.font.set(selected)
 
+    def open_option_images(self) -> None:
+        try:
+            info = inspect_inputs()
+            folder = info["paths"]["option_menu_edited"]
+            folder.mkdir(parents=True, exist_ok=True)
+            os.startfile(folder)
+        except Exception as exc:
+            messagebox.showerror("메뉴 이미지", str(exc))
+
     def refresh_data(self, silent: bool = False) -> None:
         try:
-            info = inspect_inputs(); self.counts.set(f"대사 override {info['override_count']:,} / 아이템 override {info['item_override_count']:,}·draft {info['item_draft_count']:,} / 인물 reviewed {info['cast_person_reviewed_count']:,} / 몬스터 reviewed {info['monster_reviewed_count']:,}")
+            info = inspect_inputs(); self.counts.set(f"대사 override {info['override_count']:,} / 시스템 override {info['system_override_count']:,}·draft {info['system_draft_count']:,} / 아이템 override {info['item_override_count']:,}·draft {info['item_draft_count']:,} / 인물 reviewed {info['cast_person_reviewed_count']:,} / 몬스터 reviewed {info['monster_reviewed_count']:,} / 메뉴 이미지 {info['option_menu_image_count']:,}")
             if not self.font.get(): self.font.set(info["font"])
         except Exception as exc:
             self.counts.set(f"패치 데이터 오류: {exc}")
@@ -606,11 +731,13 @@ class PatchBuildEditor(ttk.Frame):
         self.app.apply_edit(silent=True)
         self.app.cast_editor._commit_selected()
         self.app.item_editor._commit_selected()
-        if self.app.dialogue_dirty or self.app.cast_editor.dirty or self.app.item_editor.dirty:
+        self.app.system_editor._commit_selected()
+        if self.app.dialogue_dirty or self.app.cast_editor.dirty or self.app.item_editor.dirty or self.app.system_editor.dirty:
             if not messagebox.askyesno("미저장 번역", "저장하지 않은 번역 변경이 있습니다. 지금 저장하고 빌드하시겠습니까?"): return False
             if self.app.dialogue_dirty: self.app.save_workspace()
             if self.app.cast_editor.dirty: self.app.cast_editor.save()
             if self.app.item_editor.dirty: self.app.item_editor.save()
+            if self.app.system_editor.dirty: self.app.system_editor.save()
         return True
 
     def start(self, mode: str) -> None:
@@ -652,19 +779,19 @@ class PatchBuildEditor(ttk.Frame):
 
     def _set_buttons(self, enabled: bool) -> None:
         state = tk.NORMAL if enabled else tk.DISABLED
-        for button in (self.refresh_button, self.preflight_button, self.build_button): button.configure(state=state)
+        for button in (self.refresh_button, self.option_images_button, self.preflight_button, self.build_button): button.configure(state=state)
 
     def _append(self, text: str) -> None:
         self.log.configure(state=tk.NORMAL); self.log.insert(tk.END, text); self.log.see(tk.END); self.log.configure(state=tk.DISABLED)
 
 
 def main() -> int:
-    default_workspace, default_cast, default_items, default_catalog = default_config_paths()
+    default_workspace, default_cast, default_items, default_system, default_catalog = default_config_paths()
     if len(sys.argv) > 1:
         initial = Path(sys.argv[1])
     else:
         initial = default_workspace if default_workspace.exists() else (default_catalog if default_catalog.exists() else None)
-    app = DialogueViewer(initial, default_cast, default_items)
+    app = DialogueViewer(initial, default_cast, default_items, default_system)
     app.mainloop()
     return 0
 

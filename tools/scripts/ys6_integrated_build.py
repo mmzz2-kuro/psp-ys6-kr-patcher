@@ -14,7 +14,9 @@ try:
     from tools.scripts.ys6_hangul_font_build import build as build_font
     from tools.scripts.ys6_invinfo import parse as parse_invinfo,patch as patch_invinfo,sha256 as invinfo_sha256
     from tools.scripts.ys6_item_workspace import load_workspace as load_item_workspace,validate_workspace as validate_item_workspace
+    from tools.scripts.ys6_system_message_workspace import load_workspace as load_system_workspace,patch_overrides as patch_system_messages,validate_workspace as validate_system_workspace
     from tools.scripts.ys6_iso_multi_patch import Replacement,patch_atomic
+    from tools.scripts.ys6_option_menu_image import compose as compose_option_menu
     from tools.scripts.ys6_translation_workspace import validate
     from tools.scripts.ys6_xso import parse_xso,rebuild_xso
     from tools.scripts.ys6_z import build_container,verify_container_bytes
@@ -28,7 +30,9 @@ except ModuleNotFoundError:
         from .ys6_hangul_font_build import build as build_font
         from .ys6_invinfo import parse as parse_invinfo,patch as patch_invinfo,sha256 as invinfo_sha256
         from .ys6_item_workspace import load_workspace as load_item_workspace,validate_workspace as validate_item_workspace
+        from .ys6_system_message_workspace import load_workspace as load_system_workspace,patch_overrides as patch_system_messages,validate_workspace as validate_system_workspace
         from .ys6_iso_multi_patch import Replacement,patch_atomic
+        from .ys6_option_menu_image import compose as compose_option_menu
         from .ys6_translation_workspace import validate
         from .ys6_xso import parse_xso,rebuild_xso
         from .ys6_z import build_container,verify_container_bytes
@@ -41,7 +45,9 @@ except ModuleNotFoundError:
         from ys6_hangul_font_build import build as build_font
         from ys6_invinfo import parse as parse_invinfo,patch as patch_invinfo,sha256 as invinfo_sha256
         from ys6_item_workspace import load_workspace as load_item_workspace,validate_workspace as validate_item_workspace
+        from ys6_system_message_workspace import load_workspace as load_system_workspace,patch_overrides as patch_system_messages,validate_workspace as validate_system_workspace
         from ys6_iso_multi_patch import Replacement,patch_atomic
+        from ys6_option_menu_image import compose as compose_option_menu
         from ys6_translation_workspace import validate
         from ys6_xso import parse_xso,rebuild_xso
         from ys6_z import build_container,verify_container_bytes
@@ -130,12 +136,22 @@ def execute(args)->dict:
  if item_errors:raise IntegratedBuildError("invalid item workspace: "+"; ".join(item_errors))
  item_selected=[x for x in item_workspace.get("records",[]) if x.get("status")=="override"] if item_workspace else []
  item_text="".join(x.get("translation_name","")+x.get("translation_description","") for x in item_selected)
- selected=select_overrides(workspace);groups=group_translations(selected,catalog,runtime_map); runtime={x["runtime_key"]:x for x in runtime_map["runtime_entries"]};mapping=build_mapping(groups,usage,seed,"".join(x["translation"] for x in cast_selected)+item_text)
+ system_workspace=load_system_workspace(args.system_message_workspace) if getattr(args,"system_message_workspace",None) else None
+ system_errors=validate_system_workspace(system_workspace) if system_workspace else []
+ if system_errors:raise IntegratedBuildError("invalid system-message workspace: "+"; ".join(system_errors))
+ system_selected=[x for x in system_workspace.get("records",[]) if x.get("status")=="override"] if system_workspace else []
+ system_text="".join(x.get("translation","") for x in system_selected)
+ selected=select_overrides(workspace);groups=group_translations(selected,catalog,runtime_map); runtime={x["runtime_key"]:x for x in runtime_map["runtime_entries"]};mapping=build_mapping(groups,usage,seed,"".join(x["translation"] for x in cast_selected)+item_text+system_text)
  args.work.mkdir(parents=True,exist_ok=True);(args.work/"xso").mkdir(exist_ok=True);(args.work/"archives").mkdir(exist_ok=True)
  write_mapping(mapping,args.work/"mapping.json",args.work/"mapping.csv")
- eboot_data=args.original_eboot.read_bytes();overrides={"한":args.han_override};patched_eboot,glyph_report,atlas=build_font(eboot_data,mapping,args.font,12,overrides,horizontal_left_inset=args.horizontal_left_inset);(args.work/"EBOOT.BIN").write_bytes(patched_eboot);(args.work/"glyph-report.json").write_text(json.dumps({"visible_width":12,"horizontal_left_inset":args.horizontal_left_inset,"glyphs":glyph_report},ensure_ascii=False,indent=2)+"\n",encoding="utf-8");atlas.resize((atlas.width*8,atlas.height*8),Image.Resampling.NEAREST).save(args.work/"glyph-atlas.png")
+ eboot_data=args.original_eboot.read_bytes();system_rows=[]
+ if system_workspace:
+  try:eboot_data,system_rows=patch_system_messages(eboot_data,system_workspace,mapping)
+  except ValueError as exc:raise IntegratedBuildError(f"system-message patch failed: {exc}") from exc
+ overrides={"한":args.han_override};patched_eboot,glyph_report,atlas=build_font(eboot_data,mapping,args.font,12,overrides,horizontal_left_inset=args.horizontal_left_inset)
+ (args.work/"EBOOT.BIN").write_bytes(patched_eboot);(args.work/"glyph-report.json").write_text(json.dumps({"visible_width":12,"horizontal_left_inset":args.horizontal_left_inset,"glyphs":glyph_report},ensure_ascii=False,indent=2)+"\n",encoding="utf-8");atlas.resize((atlas.width*8,atlas.height*8),Image.Resampling.NEAREST).save(args.work/"glyph-atlas.png")
  archive_cache={};archive_original={};xso_rows=[];translation_rows=[];overflow=[];rebuilt_containers={}
- castinfo_rows=[];item_rows=[];extra_replacements=[];init_original=None;patched_init=None
+ castinfo_rows=[];item_rows=[];extra_replacements=[];init_original=None;patched_init=None;option_menu_report=None
  if args.castinfo_name is not None or cast_selected:
   cast_path="PSP_GAME/USRDIR/data/misc/castinfo.dat";init_path="PSP_GAME/USRDIR/data/arc/init.bin"
   standalone_cast,cast_record=read_iso_file(iso,cast_path);init_data,_=read_iso_file(iso,init_path);init_original=init_data;patched_init=init_data;init_entry=find_file(parse_archive(init_data),"castinfo.dat",index=8,flags=0x01000000);embedded_cast=init_data[init_entry.offset:init_entry.offset+init_entry.size]
@@ -169,6 +185,29 @@ def execute(args)->dict:
    item_rows.append({**report,"source_name":item["source_name"],"translation_name":item["translation_name"],"translation_description":item.get("translation_description","")})
   patched_init=replace_file(patched_init,item_entry,patched_item);item_dir=args.work/"items";item_dir.mkdir(exist_ok=True);item_file=item_dir/"invinfo.dat";item_file.write_bytes(patched_item)
   extra_replacements.append(Replacement(item_path,item_file,len(standalone_item),sha256(standalone_item)))
+ option_workspace=getattr(args,"option_menu_workspace",None);option_source=getattr(args,"option_menu_source",None)
+ option_edited=option_workspace/"edited_buttons" if option_workspace else None
+ option_files=sorted(option_edited.glob("*.png")) if option_edited and option_edited.exists() else []
+ if option_files:
+  init_path="PSP_GAME/USRDIR/data/arc/init.bin";standalone_option_path="PSP_GAME/USRDIR/data/image/static_tex.dds.z"
+  if init_original is None:init_original,_=read_iso_file(iso,init_path);patched_init=init_original
+  option_entry=find_file(parse_archive(init_original),"static_tex.dds.z",index=29,flags=0x01000000)
+  embedded_container=init_original[option_entry.offset:option_entry.offset+option_entry.size]
+  valid,embedded_payload,error=verify_container_bytes(embedded_container)
+  if not valid or embedded_payload is None:raise IntegratedBuildError(f"option-menu embedded container invalid: {error or ''}")
+  source_payload=option_source.read_bytes()
+  if embedded_payload!=source_payload:raise IntegratedBuildError("option-menu source payload does not match init.bin")
+  option_dir=args.work/"option-menu";option_dir.mkdir(exist_ok=True)
+  option_payload_file=option_dir/"static_tex.dds";option_container_file=option_dir/"static_tex.dds.z"
+  try:option_menu_report=compose_option_menu(option_source,option_workspace,option_payload_file,option_container_file,option_entry.allocated_size)
+  except ValueError as exc:raise IntegratedBuildError(f"option-menu image patch failed: {exc}") from exc
+  option_container=option_container_file.read_bytes();patched_init=replace_file(patched_init,option_entry,option_container)
+  standalone_option,standalone_option_record=read_iso_file(iso,standalone_option_path)
+  valid,standalone_payload,error=verify_container_bytes(standalone_option)
+  if not valid or standalone_payload!=source_payload:raise IntegratedBuildError(f"option-menu standalone payload mismatch: {error or ''}")
+  standalone_allocated=((standalone_option_record.data_length+SECTOR_SIZE-1)//SECTOR_SIZE)*SECTOR_SIZE
+  if len(option_container)>standalone_allocated:raise IntegratedBuildError(f"option-menu standalone allocation overflow: {len(option_container)} > {standalone_allocated}")
+  extra_replacements.append(Replacement(standalone_option_path,option_container_file,len(standalone_option),sha256(standalone_option)))
  if init_original is not None:
   misc_dir=args.work/"misc";misc_dir.mkdir(exist_ok=True);init_file=misc_dir/"init.bin";init_file.write_bytes(patched_init)
   extra_replacements.append(Replacement("PSP_GAME/USRDIR/data/arc/init.bin",init_file,len(init_original),sha256(init_original)))
@@ -226,12 +265,13 @@ def execute(args)->dict:
  original_iso_eboot,eboot_record=read_iso_file(iso,EBOOT_PATH);iso_replacements.insert(0,Replacement(EBOOT_PATH,args.work/"EBOOT.BIN",len(original_iso_eboot),sha256(original_iso_eboot)))
  expected_replacement_count=1+len(archive_rows)+len(standalone_rows)+len(extra_replacements)
  if len(iso_replacements)!=expected_replacement_count:raise IntegratedBuildError(f"ISO replacement count mismatch: expected={expected_replacement_count}, actual={len(iso_replacements)}")
- preflight={"valid":True,"override_count":len(selected),"reviewed_count":len(selected),"xso_count":len(groups),"archive_count":len(archive_rows),"standalone_count":len(standalone_rows),"castinfo_count":len(castinfo_rows),"item_count":len(item_rows),"glyph_count":len(mapping),"overflow":[]};(args.work/"preflight-report.json").write_text(json.dumps(preflight,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+ preflight={"valid":True,"override_count":len(selected),"reviewed_count":len(selected),"xso_count":len(groups),"archive_count":len(archive_rows),"standalone_count":len(standalone_rows),"castinfo_count":len(castinfo_rows),"item_count":len(item_rows),"system_message_count":len(system_rows),"option_menu_image_count":len(option_files),"option_menu_changed_block_count":option_menu_report["changed_dxt1_block_count"] if option_menu_report else 0,"glyph_count":len(mapping),"overflow":[]};(args.work/"preflight-report.json").write_text(json.dumps(preflight,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
  write_csv(args.work/"translation-report.csv",translation_rows,["xso_sha256","runtime_key","string_index","source_text","translation","original_length","replacement_length","delta","origin_paths"]);write_csv(args.work/"xso-report.csv",xso_rows,["xso_sha256","runtime_key","entry_flags_hex","entry_kind","mapping_status","replacement_count","original_size","rebuilt_size","compressed_size","allocated_size","remaining_slack","original_sha256","rebuilt_sha256"]);write_csv(args.work/"archive-report.csv",archive_rows,["iso_path","size","modified_xso_count","original_sha256","output_sha256"])
  write_csv(args.work/"standalone-report.csv",standalone_rows,["iso_path","runtime_key","original_size","compressed_size","allocated_size","remaining_slack","original_sha256","output_sha256"])
  write_csv(args.work/"castinfo-report.csv",castinfo_rows,["identifier","source","name","encoded_name_hex","standalone_path","archive_path","entry_index","entry_flags_hex","size","changed_byte_count","original_sha256","output_sha256"])
  write_csv(args.work/"item-report.csv",item_rows,["index","resource_id","source_name","translation_name","translation_description","name_length","description_length"])
- manifest={"schema_version":1,"mode":args.mode,"inputs":{"iso":str(iso),"iso_sha256":EXPECTED_ISO_SHA256,"workspace":str(args.workspace),"workspace_sha256":file_sha256(args.workspace),"cast_name_workspace":str(args.cast_name_workspace) if args.cast_name_workspace else None,"cast_name_workspace_sha256":file_sha256(args.cast_name_workspace) if args.cast_name_workspace else None,"item_workspace":str(args.item_workspace) if getattr(args,"item_workspace",None) else None,"item_workspace_sha256":file_sha256(args.item_workspace) if getattr(args,"item_workspace",None) else None,"catalog_sha256":file_sha256(args.catalog),"runtime_map_sha256":file_sha256(args.runtime_map),"original_eboot_sha256":file_sha256(args.original_eboot),"seed_mapping_sha256":file_sha256(args.seed_mapping)},"font":{"visible_width":12,"horizontal_left_inset":args.horizontal_left_inset},"summary":preflight,"eboot":{"sha256":sha256(patched_eboot)},"xso":xso_rows,"archives":archive_rows,"castinfo":castinfo_rows,"items":item_rows,"iso":None,"valid":True}
+ write_csv(args.work/"system-message-report.csv",system_rows,["identifier","offset_hex","source","translation","allocated_size","encoded_length","encoded_hex"])
+ manifest={"schema_version":1,"mode":args.mode,"inputs":{"iso":str(iso),"iso_sha256":EXPECTED_ISO_SHA256,"workspace":str(args.workspace),"workspace_sha256":file_sha256(args.workspace),"cast_name_workspace":str(args.cast_name_workspace) if args.cast_name_workspace else None,"cast_name_workspace_sha256":file_sha256(args.cast_name_workspace) if args.cast_name_workspace else None,"item_workspace":str(args.item_workspace) if getattr(args,"item_workspace",None) else None,"item_workspace_sha256":file_sha256(args.item_workspace) if getattr(args,"item_workspace",None) else None,"system_message_workspace":str(args.system_message_workspace) if getattr(args,"system_message_workspace",None) else None,"system_message_workspace_sha256":file_sha256(args.system_message_workspace) if getattr(args,"system_message_workspace",None) else None,"catalog_sha256":file_sha256(args.catalog),"runtime_map_sha256":file_sha256(args.runtime_map),"original_eboot_sha256":file_sha256(args.original_eboot),"seed_mapping_sha256":file_sha256(args.seed_mapping)},"font":{"visible_width":12,"horizontal_left_inset":args.horizontal_left_inset},"summary":preflight,"eboot":{"sha256":sha256(patched_eboot)},"xso":xso_rows,"archives":archive_rows,"castinfo":castinfo_rows,"items":item_rows,"system_messages":system_rows,"option_menu":option_menu_report,"iso":None,"valid":True}
  if args.mode=="build":
   result=patch_atomic(iso,args.output_iso,iso_replacements,EXPECTED_ISO_SHA256,args.overwrite);manifest["iso"]={"path":str(args.output_iso),**result}
  (args.work/"build-manifest.json").write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return manifest
@@ -239,7 +279,7 @@ def execute(args)->dict:
 def main(argv=None):
  for s in (sys.stdout,sys.stderr):
   if hasattr(s,"reconfigure"):s.reconfigure(encoding="utf-8",errors="backslashreplace")
- p=argparse.ArgumentParser(description=__doc__);p.add_argument("mode",choices=("preflight","build"));p.add_argument("--iso",type=Path,required=True);p.add_argument("--workspace",type=Path,required=True);p.add_argument("--catalog",type=Path,required=True);p.add_argument("--runtime-map",type=Path,required=True);p.add_argument("--font-usage",type=Path,required=True);p.add_argument("--seed-mapping",type=Path,required=True);p.add_argument("--original-eboot",type=Path,required=True);p.add_argument("--font",type=Path,required=True);p.add_argument("--han-override",type=Path,required=True);p.add_argument("--horizontal-left-inset",type=int);p.add_argument("--cast-name-workspace",type=Path);p.add_argument("--item-workspace",type=Path);p.add_argument("--castinfo-name");p.add_argument("--castinfo-identifier",default="CAST_C240");p.add_argument("--castinfo-expected-name",default="イーシャ");p.add_argument("--work",type=Path,required=True);p.add_argument("--standalone-path",action="append",default=[]);p.add_argument("--output-iso",type=Path);p.add_argument("--overwrite",action="store_true");a=p.parse_args(argv)
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument("mode",choices=("preflight","build"));p.add_argument("--iso",type=Path,required=True);p.add_argument("--workspace",type=Path,required=True);p.add_argument("--catalog",type=Path,required=True);p.add_argument("--runtime-map",type=Path,required=True);p.add_argument("--font-usage",type=Path,required=True);p.add_argument("--seed-mapping",type=Path,required=True);p.add_argument("--original-eboot",type=Path,required=True);p.add_argument("--font",type=Path,required=True);p.add_argument("--han-override",type=Path,required=True);p.add_argument("--horizontal-left-inset",type=int);p.add_argument("--cast-name-workspace",type=Path);p.add_argument("--item-workspace",type=Path);p.add_argument("--system-message-workspace",type=Path);p.add_argument("--option-menu-workspace",type=Path);p.add_argument("--option-menu-source",type=Path);p.add_argument("--castinfo-name");p.add_argument("--castinfo-identifier",default="CAST_C240");p.add_argument("--castinfo-expected-name",default="イーシャ");p.add_argument("--work",type=Path,required=True);p.add_argument("--standalone-path",action="append",default=[]);p.add_argument("--output-iso",type=Path);p.add_argument("--overwrite",action="store_true");a=p.parse_args(argv)
  if a.mode=="build" and a.output_iso is None:p.error("build requires --output-iso")
  try:result=execute(a);print(json.dumps(result["summary"],ensure_ascii=False,indent=2));return 0
  except (OSError,KeyError,ValueError,json.JSONDecodeError,IntegratedBuildError) as exc:print(f"통합 빌드 실패: {exc}",file=sys.stderr);return 1
