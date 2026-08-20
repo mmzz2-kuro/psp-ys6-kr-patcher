@@ -16,7 +16,8 @@ try:
     from tools.scripts.ys6_mig_texture import inspect as inspect_mig
     from tools.scripts.ys6_mig_collection_extract import iter_pictures, render_picture
     from tools.scripts.ys6_option_menu_image import (
-        build_optimized_container, encode_dxt1_block_high_quality,
+        adjacent_565, build_optimized_container, dxt1_palette,
+        encode_dxt1_block_high_quality, rgb_to_565,
         pc_dxt1_to_psp, psp_dxt1_to_pc, sha256,
     )
     from tools.scripts.ys6_z import verify_container_bytes
@@ -24,7 +25,8 @@ except ModuleNotFoundError:
     from ys6_mig_texture import inspect as inspect_mig
     from ys6_mig_collection_extract import iter_pictures, render_picture
     from ys6_option_menu_image import (
-        build_optimized_container, encode_dxt1_block_high_quality,
+        adjacent_565, build_optimized_container, dxt1_palette,
+        encode_dxt1_block_high_quality, rgb_to_565,
         pc_dxt1_to_psp, psp_dxt1_to_pc, sha256,
     )
     from ys6_z import verify_container_bytes
@@ -43,6 +45,87 @@ def pc_dxt3_to_psp(blocks: bytes) -> bytes:
         block = blocks[offset:offset + 16]
         output[offset:offset + 16] = block[12:16] + block[8:12] + block[0:8]
     return bytes(output)
+
+
+def _fit_dxt3_color_block(
+    pixels: list[tuple[int, int, int, int]], color0: int, color1: int,
+) -> tuple[int, bytes]:
+    """Fit a four-color DXT block, weighting visible RGB by source alpha."""
+    if color0 <= color1:
+        color0, color1 = color1, color0
+    if color0 == color1:
+        color0 = min(0xFFFF, color0 + 1)
+        if color0 <= color1:
+            color1 = max(0, color1 - 1)
+    palette = dxt1_palette(color0, color1)
+    indices = 0
+    error = 0
+    for pixel_index, pixel in enumerate(pixels):
+        if pixel[3] == 0:
+            choice = 0
+        else:
+            choice = min(
+                range(4),
+                key=lambda candidate: sum(
+                    (pixel[channel] - palette[candidate][channel]) ** 2
+                    for channel in range(3)
+                ),
+            )
+            error += pixel[3] * sum(
+                (pixel[channel] - palette[choice][channel]) ** 2
+                for channel in range(3)
+            )
+        indices |= choice << (pixel_index * 2)
+    return error, struct.pack("<IHH", indices, color0, color1)
+
+
+def encode_dxt3_block_high_quality(
+    pixels: list[tuple[int, int, int, int]], baseline_rgb: bytes,
+    original_rgb: bytes,
+) -> bytes:
+    """Encode PSP DXT3 while excluding fully transparent RGB from color fitting."""
+    alpha = sum(
+        ((pixel[3] * 15 + 127) // 255) << (pixel_index * 4)
+        for pixel_index, pixel in enumerate(pixels)
+    )
+    alpha_block = struct.pack("<Q", alpha)
+    visible = [pixel for pixel in pixels if pixel[3] > 0]
+    if not visible:
+        return original_rgb + alpha_block
+
+    _, base0, base1 = struct.unpack("<IHH", baseline_rgb)
+    by_luma = sorted(
+        visible,
+        key=lambda pixel: (299 * pixel[0] + 587 * pixel[1] + 114 * pixel[2]) * pixel[3],
+    )
+    seeds = [
+        (base0, base1),
+        (rgb_to_565(by_luma[-1][:3]), rgb_to_565(by_luma[0][:3])),
+    ]
+    best_error, best_rgb = _fit_dxt3_color_block(pixels, *seeds[0])
+    for seed0, seed1 in seeds:
+        current_error, current = _fit_dxt3_color_block(pixels, seed0, seed1)
+        for _ in range(8):
+            improved = False
+            _, current0, current1 = struct.unpack("<IHH", current)
+            for candidate0 in adjacent_565(current0):
+                candidate_error, candidate = _fit_dxt3_color_block(
+                    pixels, candidate0, current1)
+                if candidate_error < current_error:
+                    current, current_error = candidate, candidate_error
+                    improved = True
+            _, current0, current1 = struct.unpack("<IHH", current)
+            for candidate1 in adjacent_565(current1):
+                candidate_error, candidate = _fit_dxt3_color_block(
+                    pixels, current0, candidate1)
+                if candidate_error < current_error:
+                    current, current_error = candidate, candidate_error
+                    improved = True
+            if not improved:
+                break
+        if current_error < best_error:
+            best_rgb, best_error = current, current_error
+    return best_rgb + alpha_block
 
 
 def rotate_blocks(image: Image.Image, offset: int) -> Image.Image:
@@ -94,6 +177,11 @@ def _regions(resource: dict) -> list[dict]:
     return result
 
 
+def _rgba_bbox(image: Image.Image) -> tuple[int, int, int, int] | None:
+    """Return changes from every RGBA channel, including RGB-only edits."""
+    return image.getbbox(alpha_only=False)
+
+
 def prepare(workspace: Path) -> dict:
     manifest_path = workspace / "manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8-sig"))
@@ -128,9 +216,9 @@ def normalize_sources(workspace: Path) -> dict:
     manifest = json.loads(manifest_path.read_text(encoding="utf-8-sig"))
     changed = []
     for resource in manifest["resources"]:
-        # The extracted PSP block stream starts one 4x4 block before the
-        # logical top-left used by the game renderer.
-        resource.setdefault("block_offset", 1)
+        # Block rotation is resource-specific. Known shifted resources record
+        # it explicitly in the manifest; an unspecified resource is unshifted.
+        resource.setdefault("block_offset", 0)
         offset = int(resource["block_offset"])
         if not offset or resource.get("source_block_offset_applied"):
             continue
@@ -173,7 +261,7 @@ def compose_payload(source_payload: bytes, resource: dict, workspace: Path) -> t
     if not applied:
         return source_payload, {"id": resource["id"], "applied_regions": [], "changed_block_count": 0}
     difference = ImageChops.difference(original, composed)
-    rgba_changed = difference.getbbox()
+    rgba_changed = _rgba_bbox(difference)
     if rgba_changed is None:
         return source_payload, {"id": resource["id"], "applied_regions": applied, "changed_block_count": 0}
 
@@ -195,7 +283,7 @@ def compose_payload(source_payload: bytes, resource: dict, workspace: Path) -> t
     for by in range(height // 4):
         for bx in range(width // 4):
             pixel_box = (bx * 4, by * 4, bx * 4 + 4, by * 4 + 4)
-            if difference.crop(pixel_box).getbbox() is None:
+            if _rgba_bbox(difference.crop(pixel_box)) is None:
                 continue
             index = by * blocks_per_row + bx
             offset = index * block_size
@@ -203,15 +291,12 @@ def compose_payload(source_payload: bytes, resource: dict, workspace: Path) -> t
             if fmt == 8:
                 replacement = encode_dxt1_block_high_quality(
                     list(composed.crop(pixel_box).getdata()), replacement)
-            else:
-                # DXT3 alpha is explicit. Quantize directly from the edited PNG
-                # so Pillow's RGB encoder cannot alter transparency.
-                alpha = 0
-                for i, pixel in enumerate(composed.crop(pixel_box).getdata()):
-                    alpha |= ((pixel[3] * 15 + 127) // 255) << (i * 4)
-                replacement = replacement[:8] + struct.pack("<Q", alpha)
             physical_index = (index + block_offset) % ((width // 4) * (height // 4))
             target = start + physical_index * block_size
+            if fmt == 9:
+                replacement = encode_dxt3_block_high_quality(
+                    list(composed.crop(pixel_box).getdata()),
+                    replacement[:8], bytes(patched[target:target + 8]))
             if patched[target:target + block_size] != replacement:
                 patched[target:target + block_size] = replacement
                 changed_blocks.append(index)

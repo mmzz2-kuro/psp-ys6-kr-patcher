@@ -102,6 +102,31 @@ def read_iso_file(iso:Path,internal_path:str)->tuple[bytes,object]:
  with iso.open("rb") as f:f.seek(record.extent_lba*SECTOR_SIZE);data=f.read(record.data_length)
  return data,record
 
+def sync_additional_runtime_copies(resource:dict,original_container:bytes,patched_container:bytes,archive_cache:dict,archive_original:dict,load_archive)->list[dict]:
+ copies=resource.get("runtime_copies",[]);seen=set();reports=[]
+ for meta in copies:
+  arc_path=meta["archive_path"];index=int(meta["entry_index"]);name=meta.get("entry_name",Path(resource["iso_path"]).name);flags=int(meta["flags_hex"],0);identity=(arc_path,index,name.casefold(),flags)
+  if identity in seen:raise IntegratedBuildError(f"duplicate additional-image runtime copy: {resource['id']}: {arc_path}#{index}")
+  seen.add(identity)
+  if arc_path not in archive_cache:
+   data=load_archive(arc_path);archive_cache[arc_path]=data;archive_original[arc_path]=data
+  try:
+   source_archive=archive_original[arc_path];source_entry=find_file(parse_archive(source_archive),name,index=index,flags=flags)
+  except Exception as exc:
+   raise IntegratedBuildError(f"additional-image runtime copy lookup failed: {resource['id']}: {arc_path}#{index}: {exc}") from exc
+  source_copy=source_archive[source_entry.offset:source_entry.offset+source_entry.size]
+  if source_copy!=original_container:raise IntegratedBuildError(f"additional-image runtime copy source mismatch: {resource['id']}: {arc_path}#{index}")
+  current=archive_cache[arc_path]
+  try:
+   entry=find_file(parse_archive(current),name,index=index,flags=flags)
+   if len(patched_container)>entry.allocated_size:raise IntegratedBuildError(f"additional-image runtime copy allocation overflow: {resource['id']}: {arc_path}#{index}: {len(patched_container)} > {entry.allocated_size}")
+   archive_cache[arc_path]=replace_file(current,entry,patched_container)
+  except IntegratedBuildError:raise
+  except Exception as exc:
+   raise IntegratedBuildError(f"additional-image runtime copy replacement failed: {resource['id']}: {arc_path}#{index}: {exc}") from exc
+  reports.append({"archive_path":arc_path,"entry_index":index,"entry_name":name,"entry_flags_hex":f"0x{flags:08X}","original_size":len(source_copy),"replacement_size":len(patched_container),"allocated_size":entry.allocated_size,"remaining_slack":entry.allocated_size-len(patched_container),"original_sha256":sha256(source_copy),"output_sha256":sha256(patched_container)})
+ return reports
+
 def build_mapping(groups:list[dict],usage:dict,seed:list[dict],extra_text:str="")->list[dict]:
  text="".join(r["translation"] for g in groups for r in g["records"])+extra_text
  additional="".join(dict.fromkeys(c for c in text if "가"<=c<="힣" or c in "「」"))
@@ -239,6 +264,8 @@ def execute(args)->dict:
    output=additional_dir/(resource["id"]+".dds.z");output.write_bytes(patched_container)
    report.update(container_report);report["iso_path"]=iso_path;additional_image_reports.append(report)
    extra_replacements.append(Replacement(iso_path,output,len(original_container),sha256(original_container)))
+   runtime_copy_reports=sync_additional_runtime_copies(resource,original_container,patched_container,archive_cache,archive_original,lambda path:read_iso_file(iso,path)[0])
+   report["runtime_copy_count"]=len(resource.get("runtime_copies",[]));report["runtime_copy_replaced_count"]=len(runtime_copy_reports);report["runtime_copies"]=runtime_copy_reports
    embedded=resource.get("embedded_runtime")
    picture_index=embedded.get("picture_index") if embedded else resource.get("embedded_picture_index")
    if picture_index is not None:
@@ -299,15 +326,15 @@ def execute(args)->dict:
   preflight={"valid":False,"reason":"allocation_overflow","overflow":overflow,"reviewed_count":len(selected),"xso_count":len(groups)};(args.work/"preflight-report.json").write_text(json.dumps(preflight,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");raise IntegratedBuildError("allocation overflow: "+json.dumps(overflow,ensure_ascii=False))
  archive_rows=[];iso_replacements=[]
  for arc_path,data in sorted(archive_cache.items()):
-  name=Path(arc_path).name;out=args.work/"archives"/name;out.write_bytes(data);original=archive_original[arc_path];archive_rows.append({"iso_path":arc_path,"original_sha256":sha256(original),"output_sha256":sha256(data),"size":len(data),"modified_xso_count":sum(str(x["runtime_key"]).startswith(arc_path+"#") for x in xso_rows)})
+  name=Path(arc_path).name;out=args.work/"archives"/name;out.write_bytes(data);original=archive_original[arc_path];archive_rows.append({"iso_path":arc_path,"original_sha256":sha256(original),"output_sha256":sha256(data),"size":len(data),"modified_xso_count":sum(str(x["runtime_key"]).startswith(arc_path+"#") for x in xso_rows),"modified_additional_image_count":sum(copy["archive_path"]==arc_path for report in additional_image_reports for copy in report.get("runtime_copies",[]))})
   iso_replacements.append(Replacement(arc_path,out,len(original),sha256(original)))
  iso_replacements.extend(standalone_replacements)
  iso_replacements.extend(extra_replacements)
  original_iso_eboot,eboot_record=read_iso_file(iso,EBOOT_PATH);iso_replacements.insert(0,Replacement(EBOOT_PATH,args.work/"EBOOT.BIN",len(original_iso_eboot),sha256(original_iso_eboot)))
  expected_replacement_count=1+len(archive_rows)+len(standalone_rows)+len(extra_replacements)
  if len(iso_replacements)!=expected_replacement_count:raise IntegratedBuildError(f"ISO replacement count mismatch: expected={expected_replacement_count}, actual={len(iso_replacements)}")
- preflight={"valid":True,"override_count":len(selected),"reviewed_count":len(selected),"xso_count":len(groups),"archive_count":len(archive_rows),"standalone_count":len(standalone_rows),"castinfo_count":len(castinfo_rows),"item_count":len(item_rows),"system_message_count":len(system_rows),"option_menu_image_count":len(option_files),"option_menu_changed_block_count":option_menu_report["changed_dxt1_block_count"] if option_menu_report else 0,"additional_image_count":additional_count,"additional_image_resource_count":len(additional_image_reports),"additional_image_changed_block_count":sum(x["changed_block_count"] for x in additional_image_reports),"glyph_count":len(mapping),"overflow":[]};(args.work/"preflight-report.json").write_text(json.dumps(preflight,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
- write_csv(args.work/"translation-report.csv",translation_rows,["xso_sha256","runtime_key","string_index","source_text","translation","original_length","replacement_length","delta","origin_paths"]);write_csv(args.work/"xso-report.csv",xso_rows,["xso_sha256","runtime_key","entry_flags_hex","entry_kind","mapping_status","replacement_count","original_size","rebuilt_size","compressed_size","allocated_size","remaining_slack","original_sha256","rebuilt_sha256"]);write_csv(args.work/"archive-report.csv",archive_rows,["iso_path","size","modified_xso_count","original_sha256","output_sha256"])
+ preflight={"valid":True,"override_count":len(selected),"reviewed_count":len(selected),"xso_count":len(groups),"archive_count":len(archive_rows),"standalone_count":len(standalone_rows),"castinfo_count":len(castinfo_rows),"item_count":len(item_rows),"system_message_count":len(system_rows),"option_menu_image_count":len(option_files),"option_menu_changed_block_count":option_menu_report["changed_dxt1_block_count"] if option_menu_report else 0,"additional_image_count":additional_count,"additional_image_resource_count":len(additional_image_reports),"additional_image_changed_block_count":sum(x["changed_block_count"] for x in additional_image_reports),"additional_image_runtime_copy_count":sum(x.get("runtime_copy_count",0) for x in additional_image_reports),"additional_image_runtime_copy_replaced_count":sum(x.get("runtime_copy_replaced_count",0) for x in additional_image_reports),"glyph_count":len(mapping),"overflow":[]};(args.work/"preflight-report.json").write_text(json.dumps(preflight,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+ write_csv(args.work/"translation-report.csv",translation_rows,["xso_sha256","runtime_key","string_index","source_text","translation","original_length","replacement_length","delta","origin_paths"]);write_csv(args.work/"xso-report.csv",xso_rows,["xso_sha256","runtime_key","entry_flags_hex","entry_kind","mapping_status","replacement_count","original_size","rebuilt_size","compressed_size","allocated_size","remaining_slack","original_sha256","rebuilt_sha256"]);write_csv(args.work/"archive-report.csv",archive_rows,["iso_path","size","modified_xso_count","modified_additional_image_count","original_sha256","output_sha256"])
  write_csv(args.work/"standalone-report.csv",standalone_rows,["iso_path","runtime_key","original_size","compressed_size","allocated_size","remaining_slack","original_sha256","output_sha256"])
  write_csv(args.work/"castinfo-report.csv",castinfo_rows,["identifier","source","name","encoded_name_hex","standalone_path","archive_path","entry_index","entry_flags_hex","size","changed_byte_count","original_sha256","output_sha256"])
  write_csv(args.work/"item-report.csv",item_rows,["index","resource_id","source_name","translation_name","translation_description","name_length","description_length"])
