@@ -735,8 +735,8 @@
       "source_name": "金のロケット",
       "source_description": "シンプルな金のロケット。\n幸せそうな家族を描いた\nカメオがはめこまれている。",
       "source_record_sha256": "D2E30D6162C19B0DD202F8C854F1504DDD41ADC5336915BC767A9BD07C04A294",
-      "translation_name": "골드 락켓",
-      "translation_description": "심플한 금빛 락켓. 행복해 보이는\n가족을 그린 그림이 들어 있다.",
+      "translation_name": "금 로켓",
+      "translation_description": "심플한 금빛 로켓[펜던트]. \n행복해 보이는\n가족을 그린 그림이 들어 있다.",
       "status": "override",
       "notes": "Windows 한글판 초깃값"
     },

@@ -68,6 +68,25 @@ def filter_records(records: list[dict], query: str = "", role: str = "") -> list
     return result
 
 
+def filter_records_by_workflow(
+    records: list[dict], workflow_status: str, empty_translation_only: bool = False
+) -> list[dict]:
+    """Apply the dialogue tab's role/status and empty-translation filters."""
+    if workflow_status == "dialogue":
+        result = [record for record in records if "dialogue" in record.get("roles", [])]
+    elif workflow_status != "전체":
+        result = [record for record in records if record.get("status") == workflow_status]
+    else:
+        result = records
+    if empty_translation_only:
+        result = [
+            record
+            for record in result
+            if not normalize_editor_translation(record.get("translation") or "").strip()
+        ]
+    return result
+
+
 def mark_records_override(records: list[dict]) -> dict[str, int]:
     """Mark translated records override without changing their text or notes."""
     result = {"selected": len(records), "changed": 0, "already_override": 0, "empty_translation": 0}
@@ -159,6 +178,13 @@ class DialogueViewer(tk.Tk):
                                     values=("전체", "dialogue", "draft", "override", "untranslated", "excluded", "conflict", "orphaned"))
         workflow_box.pack(side=tk.LEFT)
         workflow_box.bind("<<ComboboxSelected>>", lambda _event: self.refresh())
+        self.empty_translation_only = tk.BooleanVar(value=False)
+        ttk.Checkbutton(
+            top,
+            text="번역 비어 있음만",
+            variable=self.empty_translation_only,
+            command=self.refresh,
+        ).pack(side=tk.LEFT, padx=(8, 0))
         self.status = tk.StringVar(value="카탈로그를 열어 주세요.")
         ttk.Label(top, textvariable=self.status).pack(side=tk.RIGHT)
 
@@ -328,11 +354,9 @@ class DialogueViewer(tk.Tk):
 
     def refresh(self) -> None:
         self.filtered = filter_records(self.records, self.query.get(), self.role.get())
-        workflow_status = self.workflow_status.get()
-        if workflow_status == "dialogue":
-            self.filtered = [record for record in self.filtered if "dialogue" in record.get("roles", [])]
-        elif workflow_status != "전체":
-            self.filtered = [record for record in self.filtered if record.get("status") == workflow_status]
+        self.filtered = filter_records_by_workflow(
+            self.filtered, self.workflow_status.get(), self.empty_translation_only.get()
+        )
         self.tree.delete(*self.tree.get_children())
         for index, record in enumerate(self.filtered):
             text = record.get("text", record.get("source_text", "")).replace("\\n", " / ")

@@ -1217,7 +1217,7 @@
       "source_text": "<color:0xfff2ea8c>バスラムへの手紙<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E836F83588389838082D682CC8EE88E863C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "C7F96EEBE8E69A27742417F01E2EA6EDE1A2D5EB6B8E826E0A54A879188791C0",
-      "translation": "<color:0xfff2ea8c>바스람에게 보내는 편지<color:>를\\n얻었다.",
+      "translation": "<color:0xfff2ea8c>to_바스람 편지<color:>를\\n얻었다.",
       "status": "override",
       "notes": ""
     },
@@ -29398,8 +29398,8 @@
       "source_text": "　<color:0xfff2ea8c>リムリア茸<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E838A8380838A834191F93C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "C172C5368A0C7FB21C3500990FF19FAC5CB1CAFD25948C3EBCD745ED30DADECD",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>리므리아 버섯<color:>을 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -29414,8 +29414,8 @@
       "source_text": "<color:0xfff2ea8c>リムリア茸<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E838A8380838A834191F93C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "A19E79EFA878541E90AC5854221051BC6AF90A1FCA882E9648D689E4F2EA1FD5",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>리므리아 버섯<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -29702,8 +29702,8 @@
       "source_text": "<color:0xfff2ea8c>エメラスクラウン<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8347838183898358834E8389834583933C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "ED4E698CFBB5663BEADBF5500F4111AC20209AADCE4FBF0E493B9C24FE9D7B58",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>에멜라스 크라운<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -29862,8 +29862,8 @@
       "source_text": "<color:0xfff2ea8c>バスラムへの手紙<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E836F83588389838082D682CC8EE88E863C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "C7F96EEBE8E69A27742417F01E2EA6EDE1A2D5EB6B8E826E0A54A879188791C0",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>to_바스람 편지<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -32091,8 +32091,8 @@
       "source_text": "<color:0xfff2ea8c>金のロケット<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8BE082CC838D8350836283673C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "8A5D162C03569CE61A0365B90A259E2E32E98FDAE7B57D3C08F3C85A3A4FB915",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>금 로켓<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -45716,8 +45716,8 @@
       "source_text": "　<color:0xfff2ea8c>蒼の秘薬<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E919382CC94E996F23C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "CC752CA35415400DE5D82162AD68A1B0FBB73314DED324A5159312ADEE5822C7",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>푸른 비약<color:>을 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -45732,8 +45732,8 @@
       "source_text": "<color:0xfff2ea8c>蒼の秘薬<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E919382CC94E996F23C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "26150772CFE07FD0EDF0C688AFAA295B9DD38D3C58A77F1B6B51026C3620CE13",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>푸른 비약<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -45796,8 +45796,8 @@
       "source_text": "<color:0xfff2ea8c>白のタブラス<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E949282CC835E8375838983583C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "C0492C5249E30528B74BEA62708A2330A4965ECA548FD68AEBEF02327AE18F32",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>화이트 타블라스<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -46566,8 +46566,8 @@
       "source_text": "<color:0xfff2ea8c>８００００Ｅｍｅｌ<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8257824F824F824F824F8264828D8285828C3C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "EE492604C7D2CF0A3DEDAEEF28D160AEBA9F155E882F0CFAD1C47E87A508D91B",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>80000에멜<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -46598,8 +46598,8 @@
       "source_text": "<color:0xfff2ea8c>エメラスシールド<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E83478381838983588356815B838B83683C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "3D843B31CE9E0FCEDA7D5AED0DBCD35BC90150E6BC9E978BB4BC4513A56CEB73",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>에멜라스 실드<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -46790,8 +46790,8 @@
       "source_text": "<color:0xfff2ea8c>１００００Ｅｍｅｌ<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8250824F824F824F824F8264828D8285828C3C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "9F81C08F25E81939CBD4CCD972C58678165B3B4FB747E6EE4260DA7E5B75D186",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>10000에멜<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -47238,8 +47238,8 @@
       "source_text": "　<color:0xfff2ea8c>蒼の秘薬<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E919382CC94E996F23C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "CC752CA35415400DE5D82162AD68A1B0FBB73314DED324A5159312ADEE5822C7",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>푸른 비약<color:>을 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -47254,8 +47254,8 @@
       "source_text": "<color:0xfff2ea8c>蒼の秘薬<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E919382CC94E996F23C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "26150772CFE07FD0EDF0C688AFAA295B9DD38D3C58A77F1B6B51026C3620CE13",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>푸른 비약<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -47318,8 +47318,8 @@
       "source_text": "　<color:0xfff2ea8c>蒼の秘薬<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E919382CC94E996F23C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "CC752CA35415400DE5D82162AD68A1B0FBB73314DED324A5159312ADEE5822C7",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>푸른 비약<color:>을 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -47334,8 +47334,8 @@
       "source_text": "<color:0xfff2ea8c>蒼の秘薬<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E919382CC94E996F23C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "26150772CFE07FD0EDF0C688AFAA295B9DD38D3C58A77F1B6B51026C3620CE13",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>푸른 비약<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -49384,8 +49384,8 @@
       "source_text": "<color:0xfff2ea8c>ヘビーベルト<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E83778372815B8378838B83673C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "BEB2877A903C23226936EEEEC05131EAF1FBD4163EC641D59D00924C5D8FBE28",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>헤비 벨트<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -50104,8 +50104,8 @@
       "source_text": "<color:0xfff2ea8c>ガルヴァハンド<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E834B838B83948340836E839383683C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "81204E3BB0A423055FF0ED9C1A4A53783888FAEF9A82CB580C63056CD4F4D7EA",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>갈바 핸드<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -50296,8 +50296,8 @@
       "source_text": "<color:0xfff2ea8c>エルダオーブ<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8347838B835F8349815B83753C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "888B84729D0753A493038A3439162AA2CDC1695C26E7FB913AEFD19A3D13481C",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>엘더 오브<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -50488,8 +50488,8 @@
       "source_text": "<color:0xfff2ea8c>ブラッドネイル<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8375838983628368836C8343838B3C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "15C421FDF84EEB6301AC867848FE821FB2C9651B40420CF946C59EBDCAFF4F3F",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>블러드 네일<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -50584,8 +50584,8 @@
       "source_text": "<color:0xfff2ea8c>黒のタブラス<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8D9582CC835E8375838983583C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "A2F9CE6A51C0EBA98E8BA2C09C792EC3B2DC83ADC1FB84B975574A7D8C3F4D01",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>블랙 타블라스<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -51906,8 +51906,8 @@
       "source_text": "\\x3……",
       "source_raw_hex": "5C783381638163",
       "source_sha256": "7893468ED10A75EB215E838F13C806B95B75B9F9B4BA7A784960FA6AE10691D0",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "\\x3...",
+      "status": "override",
       "notes": ""
     },
     {
@@ -52760,8 +52760,8 @@
       "source_text": "<color:0xfff2ea8c>虹の欠片<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E93F882CC8C8795D03C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "E91365860B47B0FC44DE0635F28169740C5240E2CE8A1A5E53FCE94CBAA59E17",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>무지개 파편<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -52792,8 +52792,8 @@
       "source_text": "<color:0xfff2ea8c>赤のタブラス<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E90D482CC835E8375838983583C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "313E13D96D68675CC3649154712390126DDCEF4B7B74308036057FAA90464FA2",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>레드 타블라스<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -53160,8 +53160,8 @@
       "source_text": "<color:0xfff2ea8c>音無しの鈴<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E89B996B382B582CC97E93C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "0F4341F26B3215CC036BEFA89E307541703EB045D9253098E839D973A1A3D29F",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>소리 없는 방울<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -53192,8 +53192,8 @@
       "source_text": "<color:0xfff2ea8c>エメラスグローブ<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8347838183898358834F838D815B83753C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "B38512F7DD25402821BC467BC00775FEB4DA54244EC91A295B8E5FDEB19CFE79",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>에멜라스 글러브<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -55991,8 +55991,8 @@
       "source_text": "<color:0xfff2ea8c>エメルの小鎚<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E83478381838B82CC8FAC92C83C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "4BBC63B52BFDF06C0B78BD2C22E132CDF3E606FF9FA4B4F6300DC5620B2ADFFD",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>에멜의 망치<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -56087,8 +56087,8 @@
       "source_text": "<color:0xfff2ea8c>２５００Ｇｏｌｄ<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E82518254824F824F8266828F828C82843C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "8591E60BD9D8378D992E5BA1C0BFBF2C4B099D277E831F8D52B14466F5E50754",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>2500골드<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -56183,8 +56183,8 @@
       "source_text": "<color:0xfff2ea8c>幸運の銀貨<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8D4B895E82CC8BE289DD3C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "9BE09CCC96D8C8356F8F2F03EF4C1A9660214C380B32424C88F57DAEFFE2FCDB",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>행운의 은화<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -56605,8 +56605,8 @@
       "source_text": "<color:0xfff2ea8c>曙光の守護石<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8F8C8CF582CC8EE78CEC90CE3C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "6C437B54A42AAA6C38F86EA74A1DA61A1F127FCD4B5C35FB19E5D17A1FE16ACD",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>서광의 수호석<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -61946,8 +61946,8 @@
       "source_text": "<color:0xfff2ea8c>２５００Ｇｏｌｄ<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E82518254824F824F8266828F828C82843C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "8591E60BD9D8378D992E5BA1C0BFBF2C4B099D277E831F8D52B14466F5E50754",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>2500골드<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -62042,8 +62042,8 @@
       "source_text": "<color:0xfff2ea8c>幸運の銀貨<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8D4B895E82CC8BE289DD3C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "9BE09CCC96D8C8356F8F2F03EF4C1A9660214C380B32424C88F57DAEFFE2FCDB",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>행운의 은화<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -64226,8 +64226,8 @@
       "source_text": "<color:0xfff2ea8c>翼神の紋章<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E9783905F82CC96E48FCD3C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "215660C966F4CDED000905AF6D33A61B1E7FE6B4513B9DF9511CA43CFFDB72F9",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>익신의 문장<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -65925,8 +65925,8 @@
       "source_text": "<color:0xfff2ea8c>エメルの小鎚<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E83478381838B82CC8FAC92C83C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "4BBC63B52BFDF06C0B78BD2C22E132CDF3E606FF9FA4B4F6300DC5620B2ADFFD",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>에멜의 망치<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -66005,8 +66005,8 @@
       "source_text": "<color:0xfff2ea8c>２５００Ｇｏｌｄ<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E82518254824F824F8266828F828C82843C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "8591E60BD9D8378D992E5BA1C0BFBF2C4B099D277E831F8D52B14466F5E50754",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>2500골드<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -66101,8 +66101,8 @@
       "source_text": "<color:0xfff2ea8c>幸運の銀貨<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8D4B895E82CC8BE289DD3C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "9BE09CCC96D8C8356F8F2F03EF4C1A9660214C380B32424C88F57DAEFFE2FCDB",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>행운의 은화<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -70550,8 +70550,8 @@
       "source_text": "<color:0xfff2ea8c>盗賊の手袋<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E939091AF82CC8EE891DC3C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "BA03DB78B8207AE788BD69ED24F50D0448452FF603E31954CA4C6687B440FC99",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>도적의 장갑<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -72403,8 +72403,8 @@
       "source_text": "<color:0xfff2ea8c>３０Ｇｏｌｄ<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8252824F8266828F828C82843C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "949E31CD62F647335759CDCE7C68668C1B21738C93587B95C9FBA7F645D5FF80",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>30골드<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -76570,8 +76570,8 @@
       "source_text": "<color:0xfff2ea8c>エメラスアーマー<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E83478381838983588341815B837D815B3C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "F20B212C926EBF4ADAC30F5E8654E43E40DE0CF27BDAB5E959571D678D2FC8BA",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>에멜라스 아머<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -77410,8 +77410,8 @@
       "source_text": "<color:0xfff2ea8c>姉の威光<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8E6F82CC88D08CF53C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "C8A5F6DD6211FACF0C0007CA1319AADBE315B4F1D47C6CE9620B242B755F92E2",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>누나의 위광<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -86870,8 +86870,8 @@
       "source_text": "<color:0xfff2ea8c>海賊の火酒<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8A4391AF82CC89CE8EF03C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "97275A300AD2D8980B4A0539FAA31A4A643BBAB4987F221A5D8D9BC8B7F0CFF2",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>해적의 화주<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -87422,8 +87422,8 @@
       "source_text": "<color:0xfff2ea8c>海賊の火酒<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8A4391AF82CC89CE8EF03C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "97275A300AD2D8980B4A0539FAA31A4A643BBAB4987F221A5D8D9BC8B7F0CFF2",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>해적의 화주<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -88230,8 +88230,8 @@
       "source_text": "<color:0xfff2ea8c>１００００Ｇｏｌｄ<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8250824F824F824F824F8266828F828C82843C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "8DD2549B8E20B4E05C011109F2DF2304CD1B887F4D54CB7E60D744039C3AB53E",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>10000골드<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -88311,8 +88311,8 @@
       "source_text": "<color:0xfff2ea8c>１００００Ｇｏｌｄ<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8250824F824F824F824F8266828F828C82843C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "8DD2549B8E20B4E05C011109F2DF2304CD1B887F4D54CB7E60D744039C3AB53E",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>10000골드<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -89424,8 +89424,8 @@
       "source_text": "<color:0xfff2ea8c>提督の鍵<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E92F193C282CC8CAE3C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "4377E59144C2A7A5580E32154213A74D338D500ECCA043E16B6A83D29E2DD766",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>제독의 열쇠<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -90747,8 +90747,8 @@
       "source_text": "<color:0xfff2ea8c>提督の鍵<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E92F193C282CC8CAE3C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "4377E59144C2A7A5580E32154213A74D338D500ECCA043E16B6A83D29E2DD766",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>제독의 열쇠<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -91052,8 +91052,8 @@
       "source_text": "<color:0xfff2ea8c>帝国星光勲章<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E92E98D9190AF8CF58C4D8FCD3C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "2A0E0A99EC2169B60BE97F9370A77C716FC10A4C34B7D2F5B08967ED624082DA",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>제국 성광 훈장<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -91133,8 +91133,8 @@
       "source_text": "<color:0xfff2ea8c>１００００Ｇｏｌｄ<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8250824F824F824F824F8266828F828C82843C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "8DD2549B8E20B4E05C011109F2DF2304CD1B887F4D54CB7E60D744039C3AB53E",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>10000골드<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -91874,8 +91874,8 @@
       "source_text": "<color:0xfff2ea8c>ロムンの鍵<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E838D8380839382CC8CAE3C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "21F915D667AE9BD2C0CC1EC80B8EF7FDF41E8CC42A2B3C287DAD54212D3862EC",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>로문의 열쇠<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -94041,8 +94041,8 @@
       "source_text": "<color:0xfff2ea8c>ロムンの鍵<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E838D8380839382CC8CAE3C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "21F915D667AE9BD2C0CC1EC80B8EF7FDF41E8CC42A2B3C287DAD54212D3862EC",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>로문의 열쇠<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -94283,8 +94283,8 @@
       "source_text": "<color:0xfff2ea8c>帝国星光勲章<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E92E98D9190AF8CF58C4D8FCD3C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "2A0E0A99EC2169B60BE97F9370A77C716FC10A4C34B7D2F5B08967ED624082DA",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>제국 성광 훈장<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -94364,8 +94364,8 @@
       "source_text": "<color:0xfff2ea8c>１００００Ｇｏｌｄ<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8250824F824F824F824F8266828F828C82843C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "8DD2549B8E20B4E05C011109F2DF2304CD1B887F4D54CB7E60D744039C3AB53E",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>10000골드<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -96578,8 +96578,8 @@
       "source_text": "<color:0xfff2ea8c>ロムンの鍵<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E838D8380839382CC8CAE3C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "21F915D667AE9BD2C0CC1EC80B8EF7FDF41E8CC42A2B3C287DAD54212D3862EC",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>로문의 열쇠<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -97413,8 +97413,8 @@
       "source_text": "<color:0xfff2ea8c>バンデッドメイル<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E836F839383668362836883818343838B3C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "D4AD26B2478FCC437C5BB9263294F2D15FF73B0A6BAE4D4B093AC769F49A856D",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>밴디드 메일<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -97557,8 +97557,8 @@
       "source_text": "<color:0xfff2ea8c>アルマの羽根<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8341838B837D82CC89488DAA3C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "E64812154617D8CFA3E0A0FC6BCABE95BA4896A2A27785D9BC950C1743480BB5",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>아르마의 날개<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -97589,8 +97589,8 @@
       "source_text": "<color:0xfff2ea8c>青のタブラス<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E90C282CC835E8375838983583C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "642BAE06FBD19C0C7B28A450C583A46EA2758444EA4F24065271E743D7BAA368",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>블루 타블라스<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -98185,8 +98185,8 @@
       "source_text": "<color:0xfff2ea8c>レディアンシールド<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E838C83668342834183938356815B838B83683C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "F0F8F187DBD00601EE7405BAD0A390381E263B50F87C08B29EF296BAA9FA939A",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>레디안 실드<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -98411,8 +98411,8 @@
       "source_text": "<color:0xfff2ea8c>ブリランテ<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8375838A8389839383653C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "C85D53AEB6AA39B9600F5FDAE92A8631754F3EC08F9A35D673F81C54B3D380D0",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>브릴란테<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -99764,8 +99764,8 @@
       "source_text": "<color:0xfff2ea8c>ガルヴァシールド<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E834B838B839483408356815B838B83683C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "D880B22735D5D8F593EB4A892A1F6A64F866DD1CC243B359B6816BE3A0C3C74C",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>갈바 실드<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -99796,8 +99796,8 @@
       "source_text": "<color:0xfff2ea8c>金のタブラス<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8BE082CC835E8375838983583C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "34BF53290327BB276365C076BF1C1DC64656341D34CFA6AC9D2E4F10E23FC5E0",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>골드 타블라스<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -99860,8 +99860,8 @@
       "source_text": "　<color:0xfff2ea8c>蒼の秘薬<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E919382CC94E996F23C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "CC752CA35415400DE5D82162AD68A1B0FBB73314DED324A5159312ADEE5822C7",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>푸른 비약<color:>을 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -99876,8 +99876,8 @@
       "source_text": "<color:0xfff2ea8c>蒼の秘薬<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E919382CC94E996F23C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "26150772CFE07FD0EDF0C688AFAA295B9DD38D3C58A77F1B6B51026C3620CE13",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>푸른 비약<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -100036,8 +100036,8 @@
       "source_text": "<color:0xfff2ea8c>ガルヴァアーマー<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E834B838B839483408341815B837D815B3C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "8ACF8A82A7409FA0697183A38F9906DA96C49DF257BB2549A0AA20A2DC7D2146",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>갈바 아머<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -100580,8 +100580,8 @@
       "source_text": "　<color:0xfff2ea8c>蒼の秘薬<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E919382CC94E996F23C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "CC752CA35415400DE5D82162AD68A1B0FBB73314DED324A5159312ADEE5822C7",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>푸른 비약<color:>을 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -100596,8 +100596,8 @@
       "source_text": "<color:0xfff2ea8c>蒼の秘薬<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E919382CC94E996F23C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "26150772CFE07FD0EDF0C688AFAA295B9DD38D3C58A77F1B6B51026C3620CE13",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>푸른 비약<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -100756,8 +100756,8 @@
       "source_text": "<color:0xfff2ea8c>エメラスガード<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8347838183898358834B815B83683C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "D230065E3E07C2AC7224B21B0252C6B1F514739C83E4DD18E5D6A5961F71475F",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>에멜라스 가드<color:>를\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -101141,8 +101141,8 @@
       "source_text": "　<color:0xfff2ea8c>蒼の秘薬<color:>を見つけたが\\n　これ以上持てない。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E919382CC94E996F23C636F6C6F723A3E82F08CA982C282AF82BD82AA5C6E814082B182EA88C88FE38E9D82C482C882A28142",
       "source_sha256": "CC752CA35415400DE5D82162AD68A1B0FBB73314DED324A5159312ADEE5822C7",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>푸른 비약<color:>을 발견했지만\\n　더 이상 가질 수 없다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -101157,8 +101157,8 @@
       "source_text": "<color:0xfff2ea8c>蒼の秘薬<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E919382CC94E996F23C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "26150772CFE07FD0EDF0C688AFAA295B9DD38D3C58A77F1B6B51026C3620CE13",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>푸른 비약<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -107565,8 +107565,8 @@
       "source_text": "<color:0xfff2ea8c>エリクシル<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8347838A834E8356838B3C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "DE129B2CE635AD4DF5A9C881AAC915C0060C4105CB0D8E611E1EAC00EDCDE983",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>에릭실<color:>을\\n얻었다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -110007,8 +110007,8 @@
       "source_text": "\\x3……",
       "source_raw_hex": "5C783381638163",
       "source_sha256": "7893468ED10A75EB215E838F13C806B95B75B9F9B4BA7A784960FA6AE10691D0",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "\\x3...",
+      "status": "override",
       "notes": ""
     },
     {
