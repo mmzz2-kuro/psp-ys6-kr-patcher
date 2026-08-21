@@ -182,6 +182,42 @@ def _rgba_bbox(image: Image.Image) -> tuple[int, int, int, int] | None:
     return image.getbbox(alpha_only=False)
 
 
+def _region_boxes(region: dict) -> list[tuple[int, int, int, int]]:
+    """Return one or more texture boxes backing a single editable image."""
+    values = region.get("boxes")
+    if values is None:
+        values = [region["box"]]
+    boxes = [tuple(value) for value in values]
+    if not boxes:
+        raise ValueError(f"{region.get('id', 'region')}: boxes must not be empty")
+    heights = {box[3] - box[1] for box in boxes}
+    if any(box[2] <= box[0] or box[3] <= box[1] for box in boxes) or len(heights) != 1:
+        raise ValueError(f"{region.get('id', 'region')}: boxes must have positive, equal heights")
+    return boxes
+
+
+def extract_region(image: Image.Image, region: dict) -> Image.Image:
+    """Join texture fragments horizontally into one editable image."""
+    boxes = _region_boxes(region)
+    parts = [image.crop(box) for box in boxes]
+    output = Image.new("RGBA", (sum(part.width for part in parts), parts[0].height))
+    left = 0
+    for part in parts:
+        output.paste(part, (left, 0))
+        left += part.width
+    return output
+
+
+def paste_region(image: Image.Image, patch: Image.Image, region: dict) -> None:
+    """Split an editable image and paste its fragments back into the texture."""
+    left = 0
+    for box in _region_boxes(region):
+        width = box[2] - box[0]
+        part = patch.crop((left, 0, left + width, patch.height))
+        image.paste(part, (box[0], box[1]))
+        left += width
+
+
 def prepare(workspace: Path) -> dict:
     manifest_path = workspace / "manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8-sig"))
@@ -199,9 +235,9 @@ def prepare(workspace: Path) -> dict:
         (edited_parts / resource["id"]).mkdir(parents=True, exist_ok=True)
         regions = _regions(resource)
         for region in regions:
-            box = tuple(region["box"])
-            image.crop(box).save(target / region["file"])
-            region["width"], region["height"] = box[2] - box[0], box[3] - box[1]
+            part = extract_region(image, region)
+            part.save(target / region["file"])
+            region["width"], region["height"] = part.size
             count += 1
         resource["regions"] = regions
     manifest["schema_version"] = 2
@@ -255,8 +291,7 @@ def compose_payload(source_payload: bytes, resource: dict, workspace: Path) -> t
             if opened.size != expected or opened.mode not in {"RGB", "RGBA"}:
                 raise ValueError(f"{path}: expected RGB/RGBA {expected[0]}x{expected[1]}")
             patch = opened.convert("RGBA")
-        box = tuple(region["box"])
-        composed.paste(patch, (box[0], box[1]))
+        paste_region(composed, patch, region)
         applied.append(region["id"])
     if not applied:
         return source_payload, {"id": resource["id"], "applied_regions": [], "changed_block_count": 0}
