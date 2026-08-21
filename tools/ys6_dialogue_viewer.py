@@ -662,14 +662,31 @@ class SystemMessageEditor(ttk.Frame):
     def override_selected(self):
         selected = self.tree.selection()
         if not selected: messagebox.showwarning("override", "항목을 선택해 주세요."); return
-        self._commit_selected(); changed = 0; empty = 0; overflow = 0
-        for item in selected:
-            row = self.filtered[int(item)]; translation = row.get("translation", "")
+        self._commit_selected()
+        selected_rows = [self.filtered[int(item)] for item in selected]
+        selected_identifier = selected_rows[0]["identifier"]
+        changed = 0; empty = 0; overflow = 0
+        for row in selected_rows:
+            translation = row.get("translation", "")
             if not translation.strip(): empty += 1; continue
             if system_encoded_length(translation) + 1 > row["allocated_size"]:
                 row["status"] = "conflict"; overflow += 1; continue
             if row.get("status") != "override": row["status"] = "override"; changed += 1
-        self.dirty |= bool(changed or overflow); self.refresh(); self.message.set(f"override 변경 {changed:,}개 / 빈 번역 {empty:,}개 / 길이 초과 conflict {overflow:,}개")
+        self.dirty |= bool(changed or overflow)
+        # The editor widgets still contain the pre-override status. Do not let
+        # a later selection change commit those stale values back to this row.
+        self._selected_identifier = None
+        self.refresh(select=selected_identifier)
+        self.message.set(f"override 변경 {changed:,}개 / 빈 번역 {empty:,}개 / 길이 초과 conflict {overflow:,}개")
+
+    def _clear_detail(self):
+        self._selected_identifier = None
+        self.info.set("")
+        self.source.configure(state=tk.NORMAL); self.source.delete("1.0", tk.END); self.source.configure(state=tk.DISABLED)
+        self.translation.delete("1.0", tk.END)
+        self.edit_status.set("untranslated")
+        self.category.delete(0, tk.END)
+        self.notes.delete(0, tk.END)
 
     def refresh(self, select=None):
         rows = self.workspace.get("records", []); status = self.filter_status.get(); needle = self.query.get().casefold().strip()
@@ -682,7 +699,9 @@ class SystemMessageEditor(ttk.Frame):
         counts = {s: sum(x.get("status") == s for x in self.workspace.get("records", [])) for s in self.STATUSES}; self.message.set(f"{len(self.filtered):,}/{len(self.workspace.get('records', [])):,}개 · override {counts['override']} · draft {counts['draft']} · conflict {counts['conflict']}")
         if select is not None:
             for i, row in enumerate(self.filtered):
-                if row["identifier"] == select: self.tree.selection_set(str(i)); self.tree.see(str(i)); self.show(); break
+                if row["identifier"] == select:
+                    self.tree.selection_set(str(i)); self.tree.see(str(i)); self.show(); return
+            self._clear_detail()
 
     def show(self, _event=None):
         selected = self.tree.selection()
