@@ -21051,7 +21051,7 @@
       "source_text": "本当にありがとうございました。",
       "source_raw_hex": "967B939682C982A082E882AA82C682A482B282B482A282DC82B582BD8142",
       "source_sha256": "60EE0BCF806C58F57F5D3B211C2104B8EA8667884D0C1A21913CB1D40F9D8C7E",
-      "translation": "정말 고마워요.",
+      "translation": "정말 고맙습니다.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -42537,7 +42537,7 @@
       "source_text": "優しきアルマの祝福が\\n\\x1さんにありますように……",
       "source_raw_hex": "974482B582AB8341838B837D82CC8F6A959F82AA5C6E5C783182B382F182C982A082E882DC82B782E682A482C981638163",
       "source_sha256": "92801157B3F0CDA4B2D93CF6582C99BD761654594F71C31CCC431CE9AFCC6D47",
-      "translation": "아르마의 축복이\\n아돌 씨와 함께 하기를……",
+      "translation": "부디 아르마의 축복이\\n아돌 씨와 함께 하기를……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: player_name_expansion",
       "allow_player_name_expansion": true
@@ -47885,7 +47885,7 @@
       "source_text": "一度、《匣》に渡ってしまえば\\n簡単に戻ってくることは出来ません。",
       "source_raw_hex": "88EA93788141817399B8817482C9936E82C182C482B582DC82A682CE5C6E8AC8925082C996DF82C182C482AD82E982B182C682CD8F6F978882DC82B982F18142",
       "source_sha256": "2E5156F563FA5A7A7BA4CC7DEA41FB6C87020B27FEC5B47E9386AC57F7521E84",
-      "translation": "일단, '상자'로 건너가 버리면\\n그리 쉽게 돌아올 수 없어요.",
+      "translation": "한 번 '상자'로 건너가면\\n간단히 돌아올 수 없어요.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -47901,7 +47901,7 @@
       "source_text": "剣を鍛えることも不可能でしょう。",
       "source_raw_hex": "8C9582F0926282A682E982B182C682E0957389C2945C82C582B582E582A48142",
       "source_sha256": "A2C3BCA328B48DB33260EB2E8867763101134A77F4EBB5319B5781DE8C5477A6",
-      "translation": "검의 제련도 불가능하겠지요.",
+      "translation": "검을 제련하는 것도 불가능하겠지요.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -47917,7 +47917,7 @@
       "source_text": "\\x1さん……\\n準備はよろしいですか？",
       "source_raw_hex": "5C783182B382F1816381635C6E8F8094F582CD82E682EB82B582A282C582B782A98148",
       "source_sha256": "D9119020F268019B194F4C405AB9C2BD931ED99CDF78023A879A8DC0F347D1DF",
-      "translation": "아돌 씨……\\n준비는 되셨나요?",
+      "translation": "아돌 씨……\\n준비는 다 되셨나요?",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: player_name_expansion",
       "allow_player_name_expansion": true
@@ -102501,7 +102501,7 @@
       "source_text": "え゛。",
       "source_raw_hex": "82A6814A8142",
       "source_sha256": "4A9418E28E3C2C98DB1222B6823043E0BA79B44819A588FAB2E57FD5C54815C5",
-      "translation": "에.",
+      "translation": "예?",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
