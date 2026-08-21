@@ -19576,8 +19576,8 @@
       "source_text": "<color:0xfff2ea8c>龍のメダイユ<color:>を\\n受け取った。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E97B482CC8381835F834383863C636F6C6F723A3E82F05C6E8EF382AF8EE682C182BD8142",
       "source_sha256": "E5BE4A3622026169F9C7A8049ADB23E48B9423E8D9BB0682174AC0A2F6136710",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>용의 메다이유<color:>를\\n받았다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -27069,8 +27069,8 @@
       "source_text": "<color:0xfff2ea8c>木彫りの腕輪<color:>を\\n受け取った。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E96D892A482E882CC987297D63C636F6C6F723A3E82F05C6E8EF382AF8EE682C182BD8142",
       "source_sha256": "288B3290019F29DB170FAF381C7E54775FB1AF857B54C0258DF363C0EBA592E8",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>나무 조각 팔찌<color:>를\\n받았다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -27363,8 +27363,8 @@
       "source_text": "<color:0xfff2ea8c>木彫りの腕輪<color:>を\\n受け取った。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E96D892A482E882CC987297D63C636F6C6F723A3E82F05C6E8EF382AF8EE682C182BD8142",
       "source_sha256": "288B3290019F29DB170FAF381C7E54775FB1AF857B54C0258DF363C0EBA592E8",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>나무 조각 팔찌<color:>를\\n받았다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -43157,8 +43157,8 @@
       "source_text": "<color:0xfff2ea8c>ピッカード<color:>を\\nつかまえた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E83738362834A815B83683C636F6C6F723A3E82F05C6E82C282A982DC82A682BD8142",
       "source_sha256": "36A4D6914AA8193D3EB1E3B5360EBD631E6427799A1DB38BABF726C6B39D2600",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>피카드<color:>를\\n잡았다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -43335,8 +43335,8 @@
       "source_text": "<color:0xfff2ea8c>ピッカード<color:>を\\nつかまえた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E83738362834A815B83683C636F6C6F723A3E82F05C6E82C282A982DC82A682BD8142",
       "source_sha256": "36A4D6914AA8193D3EB1E3B5360EBD631E6427799A1DB38BABF726C6B39D2600",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>피카드<color:>를\\n잡았다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -46534,8 +46534,8 @@
       "source_text": "　<color:0xfff2ea8c>アクセサリホルダ<color:>が\\n　一つ増えた。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E8341834E835A8354838A837A838B835F3C636F6C6F723A3E82AA5C6E814088EA82C2919D82A682BD8142",
       "source_sha256": "0AAA251E0C4CE4C499FD89A45C3D32E94FDDDB0ADC3C066B8E6331923BA22044",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>악세서리 홀더<color:>가\\n　하나 증가했다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -48289,8 +48289,8 @@
       "source_text": "<color:0xfff2ea8c>ゼーメの神鏡<color:>を\\n受け取った。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E835B815B838182CC905F8BBE3C636F6C6F723A3E82F05C6E8EF382AF8EE682C182BD8142",
       "source_sha256": "DA9C525A3DF01371D322E8D8E9E694A964068BF114DD87110A5F132D06C64A67",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>제메의 신경<color:>을\\n받았다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -50008,8 +50008,8 @@
       "source_text": "　<color:0xfff2ea8c>アクセサリホルダ<color:>が\\n　一つ増えた。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E8341834E835A8354838A837A838B835F3C636F6C6F723A3E82AA5C6E814088EA82C2919D82A682BD8142",
       "source_sha256": "0AAA251E0C4CE4C499FD89A45C3D32E94FDDDB0ADC3C066B8E6331923BA22044",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>악세서리 홀더<color:>가\\n　하나 증가했다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -50664,8 +50664,8 @@
       "source_text": "<color:0xfff2ea8c>ピッカード<color:>を\\nつかまえた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E83738362834A815B83683C636F6C6F723A3E82F05C6E82C282A982DC82A682BD8142",
       "source_sha256": "36A4D6914AA8193D3EB1E3B5360EBD631E6427799A1DB38BABF726C6B39D2600",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>피카드<color:>를\\n잡았다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -50761,8 +50761,8 @@
       "source_text": "<color:0xfff2ea8c>ピッカード<color:>を\\nつかまえた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E83738362834A815B83683C636F6C6F723A3E82F05C6E82C282A982DC82A682BD8142",
       "source_sha256": "36A4D6914AA8193D3EB1E3B5360EBD631E6427799A1DB38BABF726C6B39D2600",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>피카드<color:>를\\n잡았다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -72644,8 +72644,8 @@
       "source_text": "<color:0xfff2ea8c>海神の護符<color:>を\\n受け取った。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8A43905F82CC8CEC95843C636F6C6F723A3E82F05C6E8EF382AF8EE682C182BD8142",
       "source_sha256": "96718F2B9C4EA09FD1ADE0BAB1B943CA7ED5DAE3F999229178A159104F0CBB44",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>해신의 부적<color:>을\\n받았다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -97285,8 +97285,8 @@
       "source_text": "　<color:0xfff2ea8c>アクセサリホルダ<color:>が\\n　一つ増えた。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E8341834E835A8354838A837A838B835F3C636F6C6F723A3E82AA5C6E814088EA82C2919D82A682BD8142",
       "source_sha256": "0AAA251E0C4CE4C499FD89A45C3D32E94FDDDB0ADC3C066B8E6331923BA22044",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>악세서리 홀더<color:>가\\n　하나 증가했다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -98881,8 +98881,8 @@
       "source_text": "<color:0xfff2ea8c>ピッカード<color:>を\\nつかまえた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E83738362834A815B83683C636F6C6F723A3E82F05C6E82C282A982DC82A682BD8142",
       "source_sha256": "36A4D6914AA8193D3EB1E3B5360EBD631E6427799A1DB38BABF726C6B39D2600",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>피카드<color:>를\\n잡았다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -99010,8 +99010,8 @@
       "source_text": "<color:0xfff2ea8c>ピッカード<color:>を\\nつかまえた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E83738362834A815B83683C636F6C6F723A3E82F05C6E82C282A982DC82A682BD8142",
       "source_sha256": "36A4D6914AA8193D3EB1E3B5360EBD631E6427799A1DB38BABF726C6B39D2600",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>피카드<color:>를\\n잡았다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -99828,8 +99828,8 @@
       "source_text": "　<color:0xfff2ea8c>アクセサリホルダ<color:>が\\n　一つ増えた。",
       "source_raw_hex": "81403C636F6C6F723A307866666632656138633E8341834E835A8354838A837A838B835F3C636F6C6F723A3E82AA5C6E814088EA82C2919D82A682BD8142",
       "source_sha256": "0AAA251E0C4CE4C499FD89A45C3D32E94FDDDB0ADC3C066B8E6331923BA22044",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "　<color:0xfff2ea8c>악세서리 홀더<color:>가\\n　하나 증가했다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -103761,8 +103761,8 @@
       "source_text": "<color:0xfff2ea8c>ピッカード<color:>を\\nつかまえた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E83738362834A815B83683C636F6C6F723A3E82F05C6E82C282A982DC82A682BD8142",
       "source_sha256": "36A4D6914AA8193D3EB1E3B5360EBD631E6427799A1DB38BABF726C6B39D2600",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xfff2ea8c>피카드<color:>를\\n잡았다.",
+      "status": "override",
       "notes": ""
     },
     {
