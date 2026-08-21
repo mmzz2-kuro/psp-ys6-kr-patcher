@@ -676,6 +676,8 @@ class PatchBuildEditor(ttk.Frame):
     def __init__(self, parent, app: DialogueViewer) -> None:
         super().__init__(parent, padding=12); self.app = app; self.events = queue.Queue(); self.running = False
         self.iso = tk.StringVar(); self.output = tk.StringVar(); self.font = tk.StringVar(value=str(find_default_font() or ""))
+        self.apply_option_images = tk.BooleanVar(value=True)
+        self.apply_additional_images = tk.BooleanVar(value=True)
         self.counts = tk.StringVar(value="패치 데이터를 확인하지 않았습니다."); self.result = tk.StringVar()
         self._build_ui(); self.after(100, self._poll); self.refresh_data(silent=True)
 
@@ -686,6 +688,15 @@ class PatchBuildEditor(ttk.Frame):
             ttk.Entry(form, textvariable=variable).grid(row=row, column=1, sticky="ew", pady=4)
             ttk.Button(form, text="찾아보기", command=command).grid(row=row, column=2, padx=(6, 0), pady=4)
         form.columnconfigure(1, weight=1)
+        image_options = ttk.Frame(self); image_options.pack(fill=tk.X, pady=(8, 0))
+        self.option_images_check = ttk.Checkbutton(
+            image_options, text="옵션 메뉴 이미지 적용", variable=self.apply_option_images,
+            command=lambda: self.refresh_data(silent=True))
+        self.option_images_check.pack(side=tk.LEFT)
+        self.additional_images_check = ttk.Checkbutton(
+            image_options, text="추가 이미지 적용", variable=self.apply_additional_images,
+            command=lambda: self.refresh_data(silent=True))
+        self.additional_images_check.pack(side=tk.LEFT, padx=(12, 0))
         ttk.Label(self, textvariable=self.counts).pack(anchor="w", pady=(10, 4))
         buttons = ttk.Frame(self); buttons.pack(fill=tk.X)
         self.refresh_button = ttk.Button(buttons, text="데이터 다시 읽기", command=self.refresh_data); self.refresh_button.pack(side=tk.LEFT)
@@ -731,7 +742,13 @@ class PatchBuildEditor(ttk.Frame):
 
     def refresh_data(self, silent: bool = False) -> None:
         try:
-            info = inspect_inputs(); self.counts.set(f"대사 override {info['override_count']:,} / 시스템 override {info['system_override_count']:,}·draft {info['system_draft_count']:,} / 아이템 override {info['item_override_count']:,}·draft {info['item_draft_count']:,} / 인물 reviewed {info['cast_person_reviewed_count']:,} / 몬스터 reviewed {info['monster_reviewed_count']:,} / 메뉴 이미지 {info['option_menu_image_count']:,} / 추가 이미지 {info['additional_image_count']:,}")
+            info = inspect_inputs(
+                include_option_menu_images=self.apply_option_images.get(),
+                include_additional_images=self.apply_additional_images.get(),
+            )
+            option_status = f"적용 {info['option_menu_image_count']:,}" if info["option_menu_images_enabled"] else "제외"
+            additional_status = f"적용 {info['additional_image_count']:,}" if info["additional_images_enabled"] else "제외"
+            self.counts.set(f"대사 override {info['override_count']:,} / 시스템 override {info['system_override_count']:,}·draft {info['system_draft_count']:,} / 아이템 override {info['item_override_count']:,}·draft {info['item_draft_count']:,} / 인물 reviewed {info['cast_person_reviewed_count']:,} / 몬스터 reviewed {info['monster_reviewed_count']:,} / 메뉴 이미지 {option_status} / 추가 이미지 {additional_status}")
             if not self.font.get(): self.font.set(info["font"])
         except Exception as exc:
             self.counts.set(f"패치 데이터 오류: {exc}")
@@ -761,11 +778,22 @@ class PatchBuildEditor(ttk.Frame):
                 if not messagebox.askyesno("출력 파일", f"기존 파일을 덮어쓰시겠습니까?\n{output}"): return
                 overwrite = True
         self.running = True; self.result.set(""); self._set_buttons(False); self.progress.start(10); self._append(f"{mode} 시작: {iso}\n")
-        threading.Thread(target=self._worker, args=(mode, iso, output, font, overwrite), daemon=True).start()
+        include_option_images = self.apply_option_images.get()
+        include_additional_images = self.apply_additional_images.get()
+        threading.Thread(
+            target=self._worker,
+            args=(mode, iso, output, font, overwrite, include_option_images, include_additional_images),
+            daemon=True,
+        ).start()
 
-    def _worker(self, mode, iso, output, font, overwrite) -> None:
+    def _worker(self, mode, iso, output, font, overwrite,
+                include_option_images, include_additional_images) -> None:
         try:
-            result = run_build(mode, iso, output, font, overwrite=overwrite)
+            result = run_build(
+                mode, iso, output, font, overwrite=overwrite,
+                include_option_menu_images=include_option_images,
+                include_additional_images=include_additional_images,
+            )
             self.events.put(("success", mode, result))
         except Exception as exc: self.events.put(("error", str(exc)))
 
@@ -790,6 +818,7 @@ class PatchBuildEditor(ttk.Frame):
     def _set_buttons(self, enabled: bool) -> None:
         state = tk.NORMAL if enabled else tk.DISABLED
         for button in (self.refresh_button, self.option_images_button, self.additional_images_button, self.preflight_button, self.build_button): button.configure(state=state)
+        for check in (self.option_images_check, self.additional_images_check): check.configure(state=state)
 
     def _append(self, text: str) -> None:
         self.log.configure(state=tk.NORMAL); self.log.insert(tk.END, text); self.log.see(tk.END); self.log.configure(state=tk.DISABLED)

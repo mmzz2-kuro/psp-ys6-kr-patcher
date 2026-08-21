@@ -14,6 +14,7 @@ from pathlib import Path
 VALID_STATUSES = {"untranslated", "draft", "override", "excluded", "conflict", "orphaned"}
 TOKEN_PATTERN = re.compile(r"\\(?:x[0-9A-Fa-f]+|[A-Za-z]+|[0-9]+)")
 MARKUP_PATTERN = re.compile(r"<[^<>]+>")
+RUBY_MARKUP_PATTERN = re.compile(r"<(?:ruby(?::[^<>]*)?|endruby)>", re.IGNORECASE)
 FIELDS = ("iso_path", "map_group", "map_id", "xso_name", "string_index", "roles", "source_text", "source_raw_hex", "source_sha256", "translation", "status", "notes")
 OPTIONAL_FIELDS = ("allow_markup_change", "allow_player_name_expansion")
 
@@ -25,6 +26,18 @@ def source_hash(raw_hex: str) -> str:
 def normalize_editor_translation(text: str) -> str:
     """Store editor line breaks as the game's literal backslash-n control token."""
     return text.rstrip("\r\n").replace("\r\n", "\\n").replace("\r", "\\n").replace("\n", "\\n")
+
+
+def required_markup(text: str) -> list[str]:
+    """Return markup that a Korean translation must preserve.
+
+    Japanese ruby annotations only provide a pronunciation guide, so their
+    opening and closing tags are intentionally optional in Korean text.
+    """
+    return sorted(
+        tag for tag in MARKUP_PATTERN.findall(text)
+        if RUBY_MARKUP_PATTERN.fullmatch(tag) is None
+    )
 
 
 def catalog_record(record: dict) -> dict:
@@ -105,8 +118,8 @@ def validate(workspace: dict) -> dict:
                     errors.append(f"{label}: invalid player-name expansion")
             elif source_tokens != target_tokens:
                 errors.append(f"{label}: control token mismatch")
-            source_markup = sorted(MARKUP_PATTERN.findall(record["source_text"]))
-            target_markup = sorted(MARKUP_PATTERN.findall(record["translation"]))
+            source_markup = required_markup(record["source_text"])
+            target_markup = required_markup(record["translation"])
             if source_markup != target_markup and not record.get("allow_markup_change", False): errors.append(f"{label}: markup mismatch")
         elif record["translation"]:
             warnings.append(f"{label}: translation exists but status is {record['status']}")
@@ -275,7 +288,7 @@ def apply_drafts(workspace: dict, drafts: dict) -> dict:
         if source_tokens != target_tokens and not allow_player_name_expansion:
             raise ValueError(f"draft control token mismatch: {identity}")
         allow_markup_change = bool(draft.get("allow_markup_change", False))
-        if sorted(MARKUP_PATTERN.findall(target["source_text"])) != sorted(MARKUP_PATTERN.findall(translation)) and not allow_markup_change:
+        if required_markup(target["source_text"]) != required_markup(translation) and not allow_markup_change:
             raise ValueError(f"draft markup mismatch: {identity}")
         target["translation"] = translation
         target["status"] = "draft"

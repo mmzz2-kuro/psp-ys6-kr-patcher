@@ -68,9 +68,15 @@ def find_default_font() -> Path | None:
     return next((path for path in candidates if path.exists()), None)
 
 
-def inspect_inputs(tools_dir: Path | None = None) -> dict:
+def inspect_inputs(tools_dir: Path | None = None, *, include_option_menu_images: bool = True,
+                   include_additional_images: bool = True) -> dict:
     paths = layout(tools_dir)
-    required = [value for key, value in paths.items() if key not in {"tools", "work", "option_menu_edited", "additional_images_edited"}]
+    excluded = {"tools", "work", "option_menu_edited", "additional_images_edited"}
+    if not include_option_menu_images:
+        excluded.update({"option_menu", "option_menu_source", "option_menu_manifest"})
+    if not include_additional_images:
+        excluded.add("additional_images")
+    required = [value for key, value in paths.items() if key not in excluded]
     missing = [str(path) for path in required if not path.exists()]
     if missing: raise PatchBuilderError("필수 파일 없음: " + ", ".join(missing))
     config = json.loads(paths["build_config"].read_text(encoding="utf-8-sig"))
@@ -90,8 +96,10 @@ def inspect_inputs(tools_dir: Path | None = None) -> dict:
     if cast_errors: raise PatchBuilderError("인물명 작업공간 오류: " + "; ".join(cast_errors))
     if item_errors: raise PatchBuilderError("아이템 작업공간 오류: " + "; ".join(item_errors))
     if system_errors: raise PatchBuilderError("시스템 메시지 작업공간 오류: " + "; ".join(system_errors))
-    option_files = sorted(paths["option_menu_edited"].glob("*.png")) if paths["option_menu_edited"].exists() else []
-    additional_files = sorted(paths["additional_images_edited"].rglob("*.png")) if paths["additional_images_edited"].exists() else []
+    option_files = (sorted(paths["option_menu_edited"].glob("*.png"))
+                    if include_option_menu_images and paths["option_menu_edited"].exists() else [])
+    additional_files = (sorted(paths["additional_images_edited"].rglob("*.png"))
+                        if include_additional_images and paths["additional_images_edited"].exists() else [])
     return {
         "dialogue_records": len(dialogue["records"]),
         "override_count": sum(row.get("status") == "override" for row in dialogue["records"]),
@@ -106,15 +114,23 @@ def inspect_inputs(tools_dir: Path | None = None) -> dict:
         "system_draft_count": sum(row.get("status") == "draft" for row in system_messages["records"]),
         "option_menu_image_count": len(option_files),
         "option_menu_image_files": [path.name for path in option_files],
+        "option_menu_images_enabled": include_option_menu_images,
         "additional_image_count": len(additional_files),
         "additional_image_files": [str(path.relative_to(paths["additional_images_edited"])).replace("\\", "/") for path in additional_files],
+        "additional_images_enabled": include_additional_images,
         "font": str(find_default_font() or ""), "paths": paths, "config": config,
     }
 
 
 def run_build(mode: str, iso: Path, output: Path | None = None, font: Path | None = None,
-              tools_dir: Path | None = None, overwrite: bool = False) -> dict:
-    info = inspect_inputs(tools_dir); paths, config = info["paths"], info["config"]
+              tools_dir: Path | None = None, overwrite: bool = False,
+              include_option_menu_images: bool = True,
+              include_additional_images: bool = True) -> dict:
+    info = inspect_inputs(
+        tools_dir,
+        include_option_menu_images=include_option_menu_images,
+        include_additional_images=include_additional_images,
+    ); paths, config = info["paths"], info["config"]
     font = font or find_default_font()
     if font is None or not font.exists(): raise PatchBuilderError("굴림 TTC/TTF 폰트를 찾을 수 없습니다")
     if not iso.exists(): raise PatchBuilderError(f"원본 ISO를 찾을 수 없습니다: {iso}")
@@ -133,8 +149,9 @@ def run_build(mode: str, iso: Path, output: Path | None = None, font: Path | Non
         han_override=paths["han_override"], horizontal_left_inset=int(config["horizontal_left_inset"]),
         castinfo_name=None, castinfo_identifier="CAST_C240", castinfo_expected_name="イーシャ",
         work=paths["work"], standalone_path=json.loads(paths["standalone_paths"].read_text(encoding="utf-8-sig")),
-        option_menu_workspace=paths["option_menu"], option_menu_source=paths["option_menu_source"],
-        additional_image_workspace=paths["additional_images"],
+        option_menu_workspace=paths["option_menu"] if include_option_menu_images else None,
+        option_menu_source=paths["option_menu_source"] if include_option_menu_images else None,
+        additional_image_workspace=paths["additional_images"] if include_additional_images else None,
         output_iso=output, overwrite=overwrite,
     )
     return execute(args)
@@ -146,13 +163,22 @@ def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("mode", choices=("inspect", "preflight", "build")); parser.add_argument("--iso", type=Path)
     parser.add_argument("--output", type=Path); parser.add_argument("--font", type=Path); parser.add_argument("--overwrite", action="store_true")
+    parser.add_argument("--no-option-menu-images", action="store_true")
+    parser.add_argument("--no-additional-images", action="store_true")
     args = parser.parse_args(argv)
     try:
         if args.mode == "inspect":
-            result = inspect_inputs(); result = {key:value for key,value in result.items() if key not in {"paths", "config"}}
+            result = inspect_inputs(
+                include_option_menu_images=not args.no_option_menu_images,
+                include_additional_images=not args.no_additional_images,
+            ); result = {key:value for key,value in result.items() if key not in {"paths", "config"}}
         else:
             if args.iso is None: parser.error(f"{args.mode} requires --iso")
-            result = run_build(args.mode, args.iso, args.output, args.font, overwrite=args.overwrite)
+            result = run_build(
+                args.mode, args.iso, args.output, args.font, overwrite=args.overwrite,
+                include_option_menu_images=not args.no_option_menu_images,
+                include_additional_images=not args.no_additional_images,
+            )
         print(json.dumps(result.get("summary", result), ensure_ascii=False, indent=2)); return 0
     except (OSError, ValueError, KeyError, json.JSONDecodeError, PatchBuilderError) as exc:
         print(f"패치 빌드 실패: {exc}", file=sys.stderr); return 1

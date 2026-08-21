@@ -27532,8 +27532,8 @@
       "source_text": "レダの集落",
       "source_raw_hex": "838C835F82CC8F57978E",
       "source_sha256": "7B492277E7AFAB099F93A250E61FCDAED16C431D9E37C33CEB545A51F58A5474",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "레다마을",
+      "status": "override",
       "notes": ""
     },
     {
@@ -43682,8 +43682,8 @@
       "source_text": "祈りの泉",
       "source_raw_hex": "8B4682E882CC90F2",
       "source_sha256": "B2313DF75DA89E2172A8537CA9E273278D27F30C8AF563B58828876876EF05A8",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "기도의샘",
+      "status": "override",
       "notes": ""
     },
     {
@@ -44770,8 +44770,8 @@
       "source_text": "祈りの泉",
       "source_raw_hex": "8B4682E882CC90F2",
       "source_sha256": "B2313DF75DA89E2172A8537CA9E273278D27F30C8AF563B58828876876EF05A8",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "기도의샘",
+      "status": "override",
       "notes": ""
     },
     {
@@ -44802,8 +44802,8 @@
       "source_text": "<color:0xffacdae8>　巨大な魔物との戦いで\\n　\\x1の剣は折れてしまった。",
       "source_raw_hex": "3C636F6C6F723A307866666163646165383E81408B9091E582C8968295A882C682CC90ED82A282C55C6E81405C783182CC8C9582CD90DC82EA82C482B582DC82C182BD8142",
       "source_sha256": "549B645FF4BE8AE0BA8654C1C2578CCB95C29695E153C3954F01707D7EEEFAD3",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xffacdae8>　거대한 마물과의 전투에서\\n　\\x1의 검이 부러졌다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -44818,8 +44818,8 @@
       "source_text": "あ……あの……",
       "source_raw_hex": "82A08163816382A082CC81638163",
       "source_sha256": "DACE83F1713042E2867204709158AA568AD141F0A0A0AF380ECE7A03A9E6C4DB",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "저... 저기...",
+      "status": "override",
       "notes": ""
     },
     {
@@ -44834,8 +44834,8 @@
       "source_text": "……だいじょうぶ……？",
       "source_raw_hex": "8163816382BE82A282B682E582A482D4816381638148",
       "source_sha256": "9C71948744AA3B0F8FEE51EC4E1E69A6EF5446091B0821D735F9595E27FBD9AF",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "...괜찮아요...?",
+      "status": "override",
       "notes": ""
     },
     {
@@ -44850,8 +44850,8 @@
       "source_text": "<color:0xffacdae8>　\\x1は頷<ruby:-2,2>うなず<endruby>いて\\n　大きなケガは無いことを伝えた。",
       "source_raw_hex": "3C636F6C6F723A307866666163646165383E81405C783182CDE8F53C727562793A2D322C323E82A482C882B83C656E64727562793E82A282C45C6E814091E582AB82C88350834B82CD96B382A282B182C682F0936082A682BD8142",
       "source_sha256": "2242CAFA03E59A4E71784223D8CC06A835486993963C492808AE4B57219E4093",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "<color:0xffacdae8>　\\x1은 고개를 끄덕이고\\n　다치지 않은 것을 전했다.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -44866,8 +44866,8 @@
       "source_text": "……よかった……",
       "source_raw_hex": "8163816382E682A982C182BD81638163",
       "source_sha256": "0FA92A2CB3C072EB1B53CB817B7D9360896CEE0C21E3B590E6349168B2B0FB57",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "... 다행이다...",
+      "status": "override",
       "notes": ""
     },
     {
@@ -44882,8 +44882,8 @@
       "source_text": "あの……ごめんなさい……",
       "source_raw_hex": "82A082CC8163816382B282DF82F182C882B382A281638163",
       "source_sha256": "A957EFB43C93410105586FFCDD2E88F44DB92AD143B25B431449DFEF48A66D69",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "저기... 죄송해요...",
+      "status": "override",
       "notes": ""
     },
     {
@@ -44898,8 +44898,8 @@
       "source_text": "わたし……勘違いしてたみたい……",
       "source_raw_hex": "82ED82BD82B5816381638AA888E182A282B582C482BD82DD82BD82A281638163",
       "source_sha256": "DB03B9A139C6AF7FD16CB6ADA1EB17DE7448914DBD050A4B6A4FA7604C97DD07",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "나... 착각한 것 같아요...",
+      "status": "override",
       "notes": ""
     },
     {
@@ -44914,8 +44914,8 @@
       "source_text": "あのね……",
       "source_raw_hex": "82A082CC82CB81638163",
       "source_sha256": "825DA28D2CD5D4B014C09A2593225D59A2299A71D4AD8B6DD0DEF43B6B0FB518",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "그러니까...",
+      "status": "override",
       "notes": ""
     },
     {
@@ -44930,8 +44930,8 @@
       "source_text": "だめぇ……！",
       "source_raw_hex": "82BE82DF82A5816381638149",
       "source_sha256": "D631DA7329CAD8E0C8D8FC36DE4EBB6683585D8000AACD2FFC2DE29053132E0E",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "안돼... !",
+      "status": "override",
       "notes": ""
     },
     {
@@ -44946,8 +44946,8 @@
       "source_text": "娘の声",
       "source_raw_hex": "96BA82CC90BA",
       "source_sha256": "C03ACC8834EA00922E2756BFB5142397E8B3C84981CE629F01D05C0125C411F2",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "여자 목소리",
+      "status": "override",
       "notes": ""
     },
     {
@@ -44962,8 +44962,8 @@
       "source_text": "……せいっ！",
       "source_raw_hex": "8163816382B982A282C18149",
       "source_sha256": "73259E4112AD7435808269643773AC16EC4C73AB17652D040B633189D446E293",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "... 이얏!",
+      "status": "override",
       "notes": ""
     },
     {
@@ -45042,8 +45042,8 @@
       "source_text": "忌まわしき咆哮<ruby:-18,2>ほうこう<endruby>を聞いたので\\n覚悟を決めて皆を集めたのだが……",
       "source_raw_hex": "8AF582DC82ED82B582AB99F49A4B3C727562793A2D31382C323E82D982A482B182A43C656E64727562793E82F095B782A282BD82CC82C55C6E8A6F8CE582F08C8882DF82C48A4682F08F5782DF82BD82CC82BE82AA81638163",
       "source_sha256": "E05C7F1007789A500786D41819C01995E96AC30015D4C4C64AE372F6DB44B5B2",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "불길한 포효를 듣고\\n각오를 다지고 모두를 불렀는데...",
+      "status": "override",
       "notes": ""
     },
     {
@@ -45058,8 +45058,8 @@
       "source_text": "まさか十年ぶりの《龍狩り》が\\nこれほど呆気なく片がつくとはな。",
       "source_raw_hex": "82DC82B382A98F5C944E82D482E882CC817397B48EEB82E8817482AA5C6E82B182EA82D982C795F08B4382C882AD95D082AA82C282AD82C682CD82C88142",
       "source_sha256": "6D26A489EC0865C6FEF3313050010A51BC09584694CD2B5808D1EDEA32FF5375",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "설마 10년만의 [용사냥]이\\n이렇게 허무하게 끝날줄이야.",
+      "status": "override",
       "notes": ""
     },
     {
@@ -45482,8 +45482,8 @@
       "source_text": "廃都キシュガル・入り口",
       "source_raw_hex": "94709373834C83568385834B838B814593FC82E88CFB",
       "source_sha256": "08E4481EE1D8801C572EF05D3438711E44147D14BE44A103F9F64B34BDCE9947",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "폐도키슈갈-입구",
+      "status": "override",
       "notes": ""
     },
     {
@@ -46380,8 +46380,8 @@
       "source_text": "廃都キシュガル・中央部",
       "source_raw_hex": "94709373834C83568385834B838B81459286899B9594",
       "source_sha256": "A5B1C0CDE70B4CE138F09D48DAC70C8EEA37D582C85EA8DB7BA5583F23F0DF82",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "폐도키슈갈-중앙부",
+      "status": "override",
       "notes": ""
     },
     {
@@ -48098,8 +48098,8 @@
       "source_text": "廃都キシュガル・龍の回廊",
       "source_raw_hex": "94709373834C83568385834B838B814597B482CC89F1984C",
       "source_sha256": "89C8FB10CABD8DF968EF7A796FC6F530B4205FD91CDC0A9BBEB911CFFDB6746A",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "폐도키슈갈-용의회랑",
+      "status": "override",
       "notes": ""
     },
     {
