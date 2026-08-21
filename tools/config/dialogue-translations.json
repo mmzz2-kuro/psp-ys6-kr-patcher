@@ -27532,7 +27532,7 @@
       "source_text": "レダの集落",
       "source_raw_hex": "838C835F82CC8F57978E",
       "source_sha256": "7B492277E7AFAB099F93A250E61FCDAED16C431D9E37C33CEB545A51F58A5474",
-      "translation": "레다마을",
+      "translation": "레다 마을",
       "status": "override",
       "notes": ""
     },
@@ -43682,7 +43682,7 @@
       "source_text": "祈りの泉",
       "source_raw_hex": "8B4682E882CC90F2",
       "source_sha256": "B2313DF75DA89E2172A8537CA9E273278D27F30C8AF563B58828876876EF05A8",
-      "translation": "기도의샘",
+      "translation": "기도의 샘",
       "status": "override",
       "notes": ""
     },
@@ -44770,7 +44770,7 @@
       "source_text": "祈りの泉",
       "source_raw_hex": "8B4682E882CC90F2",
       "source_sha256": "B2313DF75DA89E2172A8537CA9E273278D27F30C8AF563B58828876876EF05A8",
-      "translation": "기도의샘",
+      "translation": "기도의 샘",
       "status": "override",
       "notes": ""
     },
@@ -49212,8 +49212,8 @@
       "source_text": "忘却の遺跡・入り口",
       "source_raw_hex": "96598B7082CC88E290D5814593FC82E88CFB",
       "source_sha256": "0206A803E69CA2F7A387B0180FA9E096D674E1F5F8507CEE78492EA22E196B4C",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "망각의 유적-입구",
+      "status": "override",
       "notes": ""
     },
     {
@@ -50733,8 +50733,8 @@
       "source_text": "忘却の遺跡・最深部",
       "source_raw_hex": "96598B7082CC88E290D581458DC5905B9594",
       "source_sha256": "9C0C6B4E101D7E1151A1F6B0A71DBE41A813ED95F612A415032FA7D4ED8E3589",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "망각의 유적-최심부",
+      "status": "override",
       "notes": ""
     },
     {
@@ -50814,8 +50814,8 @@
       "source_text": "忘却の遺跡・最深部",
       "source_raw_hex": "96598B7082CC88E290D581458DC5905B9594",
       "source_sha256": "9C0C6B4E101D7E1151A1F6B0A71DBE41A813ED95F612A415032FA7D4ED8E3589",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "망각의 유적-최심부",
+      "status": "override",
       "notes": ""
     },
     {
@@ -52956,8 +52956,8 @@
       "source_text": "港町リモージュ・平原",
       "source_raw_hex": "8D6092AC838A8382815B83578385814595BD8CB4",
       "source_sha256": "4781666FA725C412F2A2A364B433498AF4D63E03CC201B064AC3ABDE7BF841F6",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "항구마을 리모쥬-평원",
+      "status": "override",
       "notes": ""
     },
     {
@@ -53840,8 +53840,8 @@
       "source_text": "港町リモージュ・海岸道",
       "source_raw_hex": "8D6092AC838A8382815B8357838581458A438ADD93B9",
       "source_sha256": "00980669F9F97FB1E6990D0C143946E323A00A3B950A324330048E6CBB76E469",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "항구마을 리모쥬-해안길",
+      "status": "override",
       "notes": ""
     },
     {
@@ -91183,8 +91183,8 @@
       "source_text": "ロムン艦隊旗艦・船倉",
       "source_raw_hex": "838D838083938ACD91E08AF88ACD814591449171",
       "source_sha256": "94A4455E029AD1A44A93E3E096E81DEBF5506309774733B8C0CBEAF5D1FB0182",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "로문 함대 기함-선창",
+      "status": "override",
       "notes": ""
     },
     {
@@ -93340,8 +93340,8 @@
       "source_text": "ロムン艦隊旗艦・船倉",
       "source_raw_hex": "838D838083938ACD91E08AF88ACD814591449171",
       "source_sha256": "94A4455E029AD1A44A93E3E096E81DEBF5506309774733B8C0CBEAF5D1FB0182",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "로문 함대 기함-선창",
+      "status": "override",
       "notes": ""
     },
     {
@@ -95685,8 +95685,8 @@
       "source_text": "ロムン艦隊旗艦・船倉",
       "source_raw_hex": "838D838083938ACD91E08AF88ACD814591449171",
       "source_sha256": "94A4455E029AD1A44A93E3E096E81DEBF5506309774733B8C0CBEAF5D1FB0182",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "로문 함대 기함-선창",
+      "status": "override",
       "notes": ""
     },
     {
@@ -97068,8 +97068,8 @@
       "source_text": "グラナヴァリス・入り口",
       "source_raw_hex": "834F8389836983948340838A8358814593FC82E88CFB",
       "source_sha256": "E8AD7EF88AAA97170A4D63EB38A8FC81820CE03CBB7720E7062E58784F875C80",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "그라나바리스-입구",
+      "status": "override",
       "notes": ""
     },
     {
@@ -97308,8 +97308,8 @@
       "source_text": "グラナヴァリス・中腹",
       "source_raw_hex": "834F8389836983948340838A83588145928695A0",
       "source_sha256": "AFDE517DD762F35093DA4C555F7E368DAB0BC24375F8B0F4724EDBB316FCD3DB",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "그라나바리스-중턱",
+      "status": "override",
       "notes": ""
     },
     {
@@ -98240,8 +98240,8 @@
       "source_text": "グラナヴァリス・山頂",
       "source_raw_hex": "834F8389836983948340838A835881458E5292B8",
       "source_sha256": "332D871A5B6D97B750CB8D4E7D9857C9FA5331B707FC0E3D11FA72475FFE26F0",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "그라나바리스-산정상",
+      "status": "override",
       "notes": ""
     },
     {
@@ -99322,8 +99322,8 @@
       "source_text": "緑水洞・入り口",
       "source_raw_hex": "97CE908593B4814593FC82E88CFB",
       "source_sha256": "0E9D3CCFF103266455E599C7D11654704CB10991333D99587558ADF261B6852F",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "녹수동-입구",
+      "status": "override",
       "notes": ""
     },
     {
@@ -100219,8 +100219,8 @@
       "source_text": "緑水洞・峡谷中央",
       "source_raw_hex": "97CE908593B481458BAC924A9286899B",
       "source_sha256": "260AEDC86CAD380EA95EF9CDD5E1CB4732756F5601235FDD9C1010198367C752",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "녹수동-협곡 중앙",
+      "status": "override",
       "notes": ""
     },
     {
@@ -101293,8 +101293,8 @@
       "source_text": "緑水洞・洞窟湖",
       "source_raw_hex": "97CE908593B4814593B48C418CCE",
       "source_sha256": "000D5AC8C52EB76A64AAB3B655DFF5C5AC358F7E768566D0123BED5754D81639",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "녹수동-동굴호수",
+      "status": "override",
       "notes": ""
     },
     {
@@ -102266,8 +102266,8 @@
       "source_text": "緑水洞・洞窟湖",
       "source_raw_hex": "97CE908593B4814593B48C418CCE",
       "source_sha256": "000D5AC8C52EB76A64AAB3B655DFF5C5AC358F7E768566D0123BED5754D81639",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "녹수동-동굴호수",
+      "status": "override",
       "notes": ""
     },
     {
@@ -107829,8 +107829,8 @@
       "source_text": "ナピシュテムの匣・基部",
       "source_raw_hex": "83698373835683858365838082CC99B881458AEE9594",
       "source_sha256": "456C02DF19A52ACCBF0F3904B1F8FB481EEBF5A2E7342ECE89B5897E318BAC7B",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "나피쉬팀의 상자-기반부",
+      "status": "override",
       "notes": ""
     },
     {
@@ -109098,8 +109098,8 @@
       "source_text": "ナピシュテムの匣・中枢",
       "source_raw_hex": "83698373835683858365838082CC99B8814592869095",
       "source_sha256": "03AE914DDBCB0795D8E1A301ABCA9D9B537F20649F628FFF5B7FD8AE7CA503DF",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "나피쉬팀의 상자-중추",
+      "status": "override",
       "notes": ""
     },
     {
@@ -109483,8 +109483,8 @@
       "source_text": "ナピシュテムの匣・中枢",
       "source_raw_hex": "83698373835683858365838082CC99B8814592869095",
       "source_sha256": "03AE914DDBCB0795D8E1A301ABCA9D9B537F20649F628FFF5B7FD8AE7CA503DF",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "나피쉬팀의 상자-중추",
+      "status": "override",
       "notes": ""
     },
     {
@@ -118124,8 +118124,8 @@
       "source_text": "隠れ0のセーブポイント",
       "source_raw_hex": "894282EA3082CC835A815B8375837C834383938367",
       "source_sha256": "6C4E25E8CE2661EC41C86FBBC48222EEAD330FCFD4E962203A7FFC0572DBC0B4",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "숨겨진 세이브 포인트",
+      "status": "override",
       "notes": ""
     },
     {
