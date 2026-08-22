@@ -783,7 +783,7 @@
       "source_raw_hex": "8347838B83938358836700000000000000000000000000000000000000000000",
       "source_sha256": "FABCC31D946E7CCE953C3272C0B94AAC227217BBC4FCD7200CF84E928BD2E5B4",
       "translation": "에른스트",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
@@ -1762,7 +1762,7 @@
       "source_raw_hex": "83738362834A815B836800000000000000000000000000000000000000000000",
       "source_sha256": "84E5BE0E432C36296747564299B2E286CBFBD77B58F0465988E10311DA8A291A",
       "translation": "피카드",
-      "status": "untranslated",
+      "status": "reviewed",
       "notes": ""
     },
     {
