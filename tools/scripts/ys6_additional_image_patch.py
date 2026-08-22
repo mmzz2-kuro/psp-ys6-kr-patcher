@@ -364,6 +364,81 @@ def compose_collection_picture(collection: bytes, picture_index: int, resource: 
     return bytes(patched), report
 
 
+def compose_collection_surface(collection: bytes, resource: dict,
+                               workspace: Path) -> tuple[bytes, dict]:
+    """Edit one logical surface split across several DXT MIG pictures."""
+    layout = resource.get("collection_pictures") or []
+    pictures = {row[0]: row for row in iter_pictures(collection)}
+    original = Image.new("RGBA", tuple(resource["size"]))
+    resolved = []
+    for item in layout:
+        index = int(item["picture_index"])
+        match = pictures.get(index)
+        if match is None:
+            raise ValueError(f"{resource['id']}: collection picture {index} not found")
+        _index, _picture_offset, _picture, palette, image_section = match
+        info = image_section["payload"]
+        if palette is not None or info["pixel_format"] != 8:
+            raise ValueError(f"{resource['id']}: collection picture {index} is not DXT1")
+        corrected = {**image_section, "payload": {**info, "data_offset": info["data_offset"] + 16}}
+        rendered = render_picture(collection, palette, corrected).convert("RGBA")
+        box = tuple(item["box"])
+        if rendered.size != (box[2] - box[0], box[3] - box[1]):
+            raise ValueError(f"{resource['id']}: collection picture {index} size mismatch")
+        original.paste(rendered, (box[0], box[1]))
+        resolved.append((index, image_section, box))
+
+    composed = original.copy()
+    applied = []
+    for region in resource["regions"]:
+        path = workspace / "edited_parts" / resource["id"] / region["file"]
+        if not path.exists():
+            continue
+        with Image.open(path) as opened:
+            opened.load()
+            expected = (region["width"], region["height"])
+            if opened.size != expected or opened.mode not in {"RGB", "RGBA"}:
+                raise ValueError(f"{path}: expected RGB/RGBA {expected[0]}x{expected[1]}")
+            patch = opened.convert("RGBA")
+        paste_region(composed, patch, region)
+        applied.append(region["id"])
+    if not applied:
+        return collection, {"id": resource["id"], "applied_regions": [], "changed_block_count": 0}
+
+    patched = bytearray(collection)
+    changed_blocks = 0
+    picture_reports = []
+    for index, image_section, box in resolved:
+        source_part = original.crop(box)
+        edited_part = composed.crop(box)
+        difference = ImageChops.difference(source_part, edited_part)
+        encoded = pc_dxt1_to_psp(_pillow_blocks(edited_part, "DXT1"))
+        info = image_section["payload"]
+        data_start = image_section["offset"] + 16 + info["data_offset"] + 16
+        local_changed = 0
+        blocks_per_row = edited_part.width // 4
+        for by in range(edited_part.height // 4):
+            for bx in range(blocks_per_row):
+                pixel_box = (bx * 4, by * 4, bx * 4 + 4, by * 4 + 4)
+                if _rgba_bbox(difference.crop(pixel_box)) is None:
+                    continue
+                block_index = by * blocks_per_row + bx
+                offset = block_index * 8
+                replacement = encode_dxt1_block_high_quality(
+                    list(edited_part.crop(pixel_box).getdata()), encoded[offset:offset + 8])
+                target = data_start + offset
+                if patched[target:target + 8] != replacement:
+                    patched[target:target + 8] = replacement
+                    local_changed += 1
+        changed_blocks += local_changed
+        picture_reports.append({"picture_index": index, "changed_block_count": local_changed})
+    return bytes(patched), {
+        "id": resource["id"], "applied_regions": applied,
+        "changed_block_count": changed_blocks, "pictures": picture_reports,
+        "source_sha256": sha256(collection), "output_sha256": sha256(bytes(patched)),
+    }
+
+
 def build_container(payload: bytes, allocation: int | None = None) -> tuple[bytes, dict]:
     container, memory_level = build_optimized_container(payload)
     valid, decoded, error = verify_container_bytes(container)

@@ -17,7 +17,7 @@ try:
     from tools.scripts.ys6_system_message_workspace import load_workspace as load_system_workspace,patch_overrides as patch_system_messages,validate_workspace as validate_system_workspace
     from tools.scripts.ys6_iso_multi_patch import Replacement,patch_atomic
     from tools.scripts.ys6_option_menu_image import compose as compose_option_menu
-    from tools.scripts.ys6_additional_image_patch import build_container as build_image_container,compose_collection_picture,compose_payload,edited_count
+    from tools.scripts.ys6_additional_image_patch import build_container as build_image_container,compose_collection_picture,compose_collection_surface,compose_payload,edited_count
     from tools.scripts.ys6_translation_workspace import validate
     from tools.scripts.ys6_xso import parse_xso,rebuild_xso
     from tools.scripts.ys6_z import build_container,verify_container_bytes
@@ -34,7 +34,7 @@ except ModuleNotFoundError:
         from .ys6_system_message_workspace import load_workspace as load_system_workspace,patch_overrides as patch_system_messages,validate_workspace as validate_system_workspace
         from .ys6_iso_multi_patch import Replacement,patch_atomic
         from .ys6_option_menu_image import compose as compose_option_menu
-        from .ys6_additional_image_patch import build_container as build_image_container,compose_collection_picture,compose_payload,edited_count
+        from .ys6_additional_image_patch import build_container as build_image_container,compose_collection_picture,compose_collection_surface,compose_payload,edited_count
         from .ys6_translation_workspace import validate
         from .ys6_xso import parse_xso,rebuild_xso
         from .ys6_z import build_container,verify_container_bytes
@@ -50,7 +50,7 @@ except ModuleNotFoundError:
         from ys6_system_message_workspace import load_workspace as load_system_workspace,patch_overrides as patch_system_messages,validate_workspace as validate_system_workspace
         from ys6_iso_multi_patch import Replacement,patch_atomic
         from ys6_option_menu_image import compose as compose_option_menu
-        from ys6_additional_image_patch import build_container as build_image_container,compose_collection_picture,compose_payload,edited_count
+        from ys6_additional_image_patch import build_container as build_image_container,compose_collection_picture,compose_collection_surface,compose_payload,edited_count
         from ys6_translation_workspace import validate
         from ys6_xso import parse_xso,rebuild_xso
         from ys6_z import build_container,verify_container_bytes
@@ -257,7 +257,9 @@ def execute(args)->dict:
    valid,source_payload,error=verify_container_bytes(original_container)
    if not valid or source_payload is None:raise IntegratedBuildError(f"additional image container invalid: {iso_path}: {error or ''}")
    try:
-    patched_payload,report=compose_payload(source_payload,resource,additional_workspace)
+    patched_payload,report=(compose_collection_surface(source_payload,resource,additional_workspace)
+                            if resource.get("collection_pictures") else
+                            compose_payload(source_payload,resource,additional_workspace))
     allocated=((record.data_length+SECTOR_SIZE-1)//SECTOR_SIZE)*SECTOR_SIZE
     patched_container,container_report=build_image_container(patched_payload,allocated)
    except ValueError as exc:raise IntegratedBuildError(f"additional image patch failed: {resource['id']}: {exc}") from exc

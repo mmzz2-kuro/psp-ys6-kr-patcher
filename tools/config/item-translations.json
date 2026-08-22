@@ -647,7 +647,7 @@
       "source_name": "バスラムへの手紙",
       "source_description": "レダ族のクヴァルから預かったもの。\nカナン島の町に住んでいる\nバスラムという商人に届ける。",
       "source_record_sha256": "57B6D939742DA5379A0A6E774A79DEA09F160909C95EF115412F98EE99F35B6F",
-      "translation_name": "to_바스람 편지",
+      "translation_name": "바스람에게의 편지",
       "translation_description": "레다 족의 크발이 맡긴 편지.\n카난 섬 마을에 살고 있는 바스람\n이라는 상인에게 보내는 것이다.",
       "status": "override",
       "notes": "Windows 한글판 초깃값"

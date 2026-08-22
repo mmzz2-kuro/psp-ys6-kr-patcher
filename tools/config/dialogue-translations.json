@@ -1217,7 +1217,7 @@
       "source_text": "<color:0xfff2ea8c>バスラムへの手紙<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E836F83588389838082D682CC8EE88E863C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "C7F96EEBE8E69A27742417F01E2EA6EDE1A2D5EB6B8E826E0A54A879188791C0",
-      "translation": "<color:0xfff2ea8c>to_바스람 편지<color:>를\\n얻었다.",
+      "translation": "<color:0xfff2ea8c>바스람에게의 편지<color:>를\\n얻었다.",
       "status": "override",
       "notes": ""
     },
@@ -3280,7 +3280,7 @@
       "source_text": "ボクの父さまは\\nこわ～い《はぐれりゅう》と\\n戦ったこともあるんだって。",
       "source_raw_hex": "837B834E82CC958382B382DC82CD5C6E82B182ED816082A2817382CD82AE82EA82E882E382A4817482C65C6E90ED82C182BD82B182C682E082A082E982F182BE82C182C48142",
       "source_sha256": "BB9FAC5E27973FF74C84D9BE8D095BD71304BB821006B1CC121730C7A36955EF",
-      "translation": "우리 아빠는\\n무서~운 '하구레류'와\\n싸운 적도 있어.",
+      "translation": "우리 아빠는\\n무서-운 '하구레류'와\\n싸운 적도 있어.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: unsupported_character_candidate"
     },
@@ -3328,7 +3328,7 @@
       "source_text": "こわ～い《はぐれりゅう》と\\n戦ったこともあるんだって！",
       "source_raw_hex": "82B182ED816082A2817382CD82AE82EA82E882E382A4817482C65C6E90ED82C182BD82B182C682E082A082E982F182BE82C182C48149",
       "source_sha256": "A7AF6DCD9A8C8E808669CDD03CF6DAC9E7A7EF30934AFBA4ABA6AF0DB0CA711F",
-      "translation": "무서~운 '하구레류'와\\n싸운 적도 있어!",
+      "translation": "무서-운 '하구레류'와\\n싸운 적도 있어!",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: unsupported_character_candidate"
     },
@@ -4763,7 +4763,7 @@
       "source_text": "おーい、酒ー！",
       "source_raw_hex": "82A8815B82A281418EF0815B8149",
       "source_sha256": "3359F921B33F05AD8E4F9B9C83FA5D4822867D5257869145529478209B2D2312",
-      "translation": "어~이, 술~!",
+      "translation": "어-이, 술-!",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -26891,8 +26891,8 @@
       "source_text": "少女の声",
       "source_raw_hex": "8FAD8F9782CC90BA",
       "source_sha256": "C2F54E5DE9659B2A219EB8EFCA6138C491A0DA565761A6CEF40DB5CEEDC41650",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "소녀의 목소리",
+      "status": "override",
       "notes": ""
     },
     {
@@ -29862,7 +29862,7 @@
       "source_text": "<color:0xfff2ea8c>バスラムへの手紙<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E836F83588389838082D682CC8EE88E863C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "C7F96EEBE8E69A27742417F01E2EA6EDE1A2D5EB6B8E826E0A54A879188791C0",
-      "translation": "<color:0xfff2ea8c>to_바스람 편지<color:>를\\n얻었다.",
+      "translation": "<color:0xfff2ea8c>바스람에게의 편지<color:>를\\n얻었다.",
       "status": "override",
       "notes": ""
     },
@@ -31417,8 +31417,8 @@
       "source_text": "男の声",
       "source_raw_hex": "926A82CC90BA",
       "source_sha256": "1CA19DD8BEABC58B6668B8E9273623F918C93E6382BD6FC150FBA588A2E47881",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "남자 목소리",
+      "status": "override",
       "notes": ""
     },
     {
@@ -31449,8 +31449,8 @@
       "source_text": "娘の声",
       "source_raw_hex": "96BA82CC90BA",
       "source_sha256": "C03ACC8834EA00922E2756BFB5142397E8B3C84981CE629F01D05C0125C411F2",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "여자 목소리",
+      "status": "override",
       "notes": ""
     },
     {
@@ -31497,8 +31497,8 @@
       "source_text": "少女の声",
       "source_raw_hex": "8FAD8F9782CC90BA",
       "source_sha256": "C2F54E5DE9659B2A219EB8EFCA6138C491A0DA565761A6CEF40DB5CEEDC41650",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "소녀의 목소리",
+      "status": "override",
       "notes": ""
     },
     {
@@ -44422,8 +44422,8 @@
       "source_text": "娘の声",
       "source_raw_hex": "96BA82CC90BA",
       "source_sha256": "C03ACC8834EA00922E2756BFB5142397E8B3C84981CE629F01D05C0125C411F2",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "여자 목소리",
+      "status": "override",
       "notes": ""
     },
     {
@@ -47384,8 +47384,8 @@
       "source_text": "娘の声",
       "source_raw_hex": "96BA82CC90BA",
       "source_sha256": "C03ACC8834EA00922E2756BFB5142397E8B3C84981CE629F01D05C0125C411F2",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "여자 목소리",
+      "status": "override",
       "notes": ""
     },
     {
@@ -47724,7 +47724,7 @@
       "source_text": "娘の声",
       "source_raw_hex": "96BA82CC90BA",
       "source_sha256": "C03ACC8834EA00922E2756BFB5142397E8B3C84981CE629F01D05C0125C411F2",
-      "translation": "소녀의 목소리",
+      "translation": "여자 목소리",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -68256,7 +68256,7 @@
       "source_text": "おかしな尻尾の生えた連中と\\nよりにもよってアルタゴ商人が\\n牛耳っている島とは……",
       "source_raw_hex": "82A882A982B582C8904B94F682CC90B682A682BD9841928682C65C6E82E682E882C982E082E682C182C48341838B835E83538FA4906C82AA5C6E8B8D8EA882C182C482A282E9938782C682CD81638163",
       "source_sha256": "BD949AB1C62BA9B09C0B3917A5BEDD5EAB9AF8B7A3138FF7FE2132914D1A592C",
-      "translation": "이상한 꼬리가 난 무리와\\n어느 샌가 아루타고상인이\\n좌지우지 하고 있는 섬이라니……",
+      "translation": "이상한 꼬리가 난 무리와\\n어느 샌가 알타고상인이\\n좌지우지 하고 있는 섬이라니……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -68777,7 +68777,7 @@
       "source_text": "あのアルタゴ商人は\\n何かを知っているようだったな。",
       "source_raw_hex": "82A082CC8341838B835E83538FA4906C82CD5C6E89BD82A982F0926D82C182C482A282E982E682A482BE82C182BD82C88142",
       "source_sha256": "A422755BE4CC7F5EF06A950C66EF1EFA4F63D8F75C54CFA0BE688C31A1928DE8",
-      "translation": "그 아루타고 상인은\\n뭔가를 알고 있는것 같았다.",
+      "translation": "그 알타고 상인은\\n뭔가를 알고 있는것 같았다.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -72000,7 +72000,7 @@
       "source_text": "ワシの名はバスラム。\\nアルタゴ出身の交易商人じゃ。",
       "source_raw_hex": "838F835682CC96BC82CD836F83588389838081425C6E8341838B835E83538F6F906782CC8CF088D58FA4906C82B682E18142",
       "source_sha256": "04875C889DC5BBBE98D29AFCEE9895CFB4537B2C369A8BE16C8BD0E3E49575AE",
-      "translation": "나의 이름은 바스람.\\n아루타고 출신의 교역상이다.",
+      "translation": "나의 이름은 바스람.\\n알타고 출신의 교역상이다.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -72660,7 +72660,7 @@
       "source_text": "ワシの故郷、アルタゴに伝わる\\n《海神グラッテオス》の護符でな。",
       "source_raw_hex": "838F835682CC8CCC8BBD81418341838B835E835382C9936082ED82E95C6E81738A43905F834F83898362836583498358817482CC8CEC958482C582C88142",
       "source_sha256": "57D7E60A39E7020D904DAFC62ACC1112FA869CD479397EDABECE69D2B253FC27",
-      "translation": "나의 고향, 아루타고에서 전해지는\\n'해신 그라테오스'의 부적이다.",
+      "translation": "나의 고향, 알타고에서 전해지는\\n'해신 그라테오스'의 부적이다.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -73015,7 +73015,7 @@
       "source_text": "それがアルタゴ商人の心意気じゃよ。",
       "source_raw_hex": "82BB82EA82AA8341838B835E83538FA4906C82CC905388D38B4382B682E182E68142",
       "source_sha256": "A8897DD6B4773A731D6A6F63F2BDB03EA862C00187675A2448B7D3EFABADD665",
-      "translation": "그게 아루타고 상인의 마음가짐이야.",
+      "translation": "그게 알타고 상인의 마음가짐이야.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -73129,7 +73129,7 @@
       "source_text": "ワシの故郷であるアルタゴは\\n北アフロカにあるのであって\\nエレシア大陸にあるわけじゃない。",
       "source_raw_hex": "838F835682CC8CCC8BBD82C582A082E98341838B835E835382CD5C6E966B83418374838D834A82C982A082E982CC82C582A082C182C45C6E8347838C8356834191E597A482C982A082E982ED82AF82B682E182C882A28142",
       "source_sha256": "189B70A26D59C4F9438D1711438417644FD779887BC8F7CE7DCB553B6CA4EC99",
-      "translation": "내 고향인 아루타고는\\n북아후로카에 있는 거지\\n에레시아 대륙에 있는게 아냐.",
+      "translation": "내 고향인 알타고는\\n북아후로카에 있는 거지\\n에레시아 대륙에 있는게 아냐.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -73161,7 +73161,7 @@
       "source_text": "……まあ、アルタゴの宿敵、\\nロムン帝国の貴族どもよりは\\nはるかにマシと言えるがのう。",
       "source_raw_hex": "8163816382DC82A081418341838B835E835382CC8F68934781415C6E838D8380839392E98D9182CC8B4D91B082C782E082E682E882CD5C6E82CD82E982A982C9837D835682C68CBE82A682E982AA82CC82A48142",
       "source_sha256": "63B6AF0212BE03E1A83EA77CF67714B70AE584069FF4D509356EDE7BDC22CA7E",
-      "translation": "……뭐, 아루타고의 숙적, \\n로문 제국의 귀족들 보다는\\n멀었다고 말할 수 있지만.",
+      "translation": "……뭐, 알타고의 숙적, \\n로문 제국의 귀족들 보다는\\n멀었다고 말할 수 있지만.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -73803,7 +73803,7 @@
       "source_text": "よし、わかった！\\nワシも誇り高きアルタゴ商人じゃ！",
       "source_raw_hex": "82E682B5814182ED82A982C182BD81495C6E838F835682E08CD682E88D8282AB8341838B835E83538FA4906C82B682E18149",
       "source_sha256": "37E221869E6C197811517A9A3D429FE2E9276D0A41B7E469F2340909707C245C",
-      "translation": "좋아, 알겠다!\\n나도 자랑스러운 아루타고의 상인이다!",
+      "translation": "좋아, 알겠다!\\n나도 자랑스러운 알타고의 상인이다!",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -80144,7 +80144,7 @@
       "source_text": "へへへ～。\\nとか何とか言っちゃって～。",
       "source_raw_hex": "82D682D682D6816081425C6E82C682A989BD82C682A98CBE82C182BF82E182C182C481608142",
       "source_sha256": "0091F1E290151FF49130AA50CCB05CFB87D63D5CA2C6C9FEBD3A3B0CCD4442D2",
-      "translation": "헤헤헤~.\\n어서 뭔가 말해보라구~.",
+      "translation": "헤헤헤-.\\n어서 뭔가 말해보라구-.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: unsupported_character_candidate"
     },
@@ -80161,7 +80161,7 @@
       "source_text": "ホントはオマエ、\\n兄ちゃんに会いに来たんだろ～？",
       "source_raw_hex": "837A8393836782CD8349837D834781415C6E8C5A82BF82E182F182C989EF82A282C9978882BD82F182BE82EB81608148",
       "source_sha256": "217E834FA75C384195DDF503D6BF66096375BF9D9A9A5ECBAA5EA3ADB1B2C059",
-      "translation": "사실은 너, \\n아돌 형을 만나러 왔지~?",
+      "translation": "사실은 너, \\n아돌 형을 만나러 왔지-?",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: unsupported_character_candidate"
     },
@@ -80209,7 +80209,7 @@
       "source_text": "小さい頃は、オルハ姉の後を\\n追いかけてばかりだったのにさ～。",
       "source_raw_hex": "8FAC82B382A28DA082CD81418349838B836E8E6F82CC8CE382F05C6E92C782A282A982AF82C482CE82A982E882BE82C182BD82CC82C982B381608142",
       "source_sha256": "A0E8C161C189CBA32C26D572AAE40734DDCFA780E8FF00FE0202D39051A241E9",
-      "translation": "어렸을때는, 오르하 누나의\\n뒤만 쫓아다녔었는데~.",
+      "translation": "어렸을때는, 오르하 누나의\\n뒤만 쫓아다녔었는데-.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: unsupported_character_candidate"
     },
@@ -80806,7 +80806,7 @@
       "source_text": "そ、そんな～……",
       "source_raw_hex": "82BB814182BB82F182C8816081638163",
       "source_sha256": "3C2B840ABF30F3884D1C1D05E62CC4D74757C45DC7FEBE57337B5418523A8375",
-      "translation": "그, 그런~……",
+      "translation": "그, 그런-……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: unsupported_character_candidate"
     },
@@ -82010,7 +82010,7 @@
       "source_text": "元は、北アフロカ沿岸にある\\nアルタゴ出身の商人だったらしい。",
       "source_raw_hex": "8CB382CD8141966B83418374838D834A89888ADD82C982A082E95C6E8341838B835E83538F6F906782CC8FA4906C82BE82C182BD82E782B582A28142",
       "source_sha256": "A8952D0D7F33B695D6E0F228BC007F4011CFC7E73424F1B8AB376568BAC867BE",
-      "translation": "원래는, 북아후로카 연안에 있는\\n아루타고출신의 상인이었던 것 같다.",
+      "translation": "원래는, 북아후로카 연안에 있는\\n알타고출신의 상인이었던 것 같다.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -83084,7 +83084,7 @@
       "source_text": "バスラムという、アルタゴ商人が\\n皆を精力的に引っ張っていくことで\\nここまで生まれ変わらせたらしい。",
       "source_raw_hex": "836F83588389838082C682A282A481418341838B835E83538FA4906C82AA5C6E8A4682F090B897CD934982C988F882C192A382C182C482A282AD82B182C682C55C6E82B182B182DC82C590B682DC82EA95CF82ED82E782B982BD82E782B582A28142",
       "source_sha256": "C62AAB0895E4E8A14D93EFB50D084B52738A8230ACA26C209C5CC1DC5D7C864B",
-      "translation": "바스람이라고 하는, 아루타고상인이\\n모두를 적극적으로 이끌어\\n이렇게까지 다시 태어난 것이다.",
+      "translation": "바스람이라고 하는, 알타고상인이\\n모두를 적극적으로 이끌어\\n이렇게까지 다시 태어난 것이다.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -86516,7 +86516,7 @@
       "source_text": "町の顔役をしているという\\nアルタゴ商人を紹介してほしい。",
       "source_raw_hex": "92AC82CC8AE796F082F082B582C482A282E982C682A282A45C6E8341838B835E83538FA4906C82F08FD089EE82B582C482D982B582A28142",
       "source_sha256": "B9C3495BADC0F8E064A75FC1941A6035DC7506011FFC4FEBADBE43FFB696613D",
-      "translation": "마을의 유지를 맡고 있다고 하는\\n아루타고 상인을 소개해줬으면 하네.",
+      "translation": "마을의 유지를 맡고 있다고 하는\\n알타고 상인을 소개해줬으면 하네.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -86694,7 +86694,7 @@
       "source_text": "あのアルタゴ商人は\\nゼメス島へ向かったそうだな。",
       "source_raw_hex": "82A082CC8341838B835E83538FA4906C82CD5C6E835B83818358938782D68CFC82A982C182BD82BB82A482BE82C88142",
       "source_sha256": "D03219BC605CCE996FCF5347883FFD02451BC6B752FD6510326843563123796F",
-      "translation": "그 아루타고 상인은\\n제메스로 향한것 같군.",
+      "translation": "그 알타고 상인은\\n제메스로 향한것 같군.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -88409,8 +88409,8 @@
       "source_text": "ロムン兵",
       "source_raw_hex": "838D8380839395BA",
       "source_sha256": "48C90757849B12B3461DCA6CE4FEB353BB6D580C2A0F63895E350F72C36B51DE",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "로문 병사",
+      "status": "override",
       "notes": ""
     },
     {
@@ -88540,7 +88540,7 @@
       "source_text": "うわ～！\\nノイたちを助けにきてくれたの？",
       "source_raw_hex": "82A482ED816081495C6E836D834382BD82BF82F08F9582AF82C982AB82C482AD82EA82BD82CC8148",
       "source_sha256": "CAF839325BCE47184F9F121B238E20DDAAC297053EA21DF928E4019C5ADBAB6C",
-      "translation": "우와~!\\n우리를 구하러 와준거야?",
+      "translation": "우와-!\\n우리를 구하러 와준거야?",
       "status": "override",
       "notes": "069 미번역 dialogue 초벌 번역 (propagated)"
     },
@@ -88604,8 +88604,8 @@
       "source_text": "娘の声",
       "source_raw_hex": "96BA82CC90BA",
       "source_sha256": "C03ACC8834EA00922E2756BFB5142397E8B3C84981CE629F01D05C0125C411F2",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "여자 목소리",
+      "status": "override",
       "notes": ""
     },
     {
@@ -89734,7 +89734,7 @@
       "source_text": "うわ～！\\nノイたちを助けにきてくれたの？",
       "source_raw_hex": "82A482ED816081495C6E836D834382BD82BF82F08F9582AF82C982AB82C482AD82EA82BD82CC8148",
       "source_sha256": "CAF839325BCE47184F9F121B238E20DDAAC297053EA21DF928E4019C5ADBAB6C",
-      "translation": "우와~!\\n우리를 구하러 와준거야?",
+      "translation": "우와-!\\n우리를 구하러 와준거야?",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -89926,7 +89926,7 @@
       "source_text": "娘の声",
       "source_raw_hex": "96BA82CC90BA",
       "source_sha256": "C03ACC8834EA00922E2756BFB5142397E8B3C84981CE629F01D05C0125C411F2",
-      "translation": "소녀의 목소리",
+      "translation": "여자 목소리",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -92247,8 +92247,8 @@
       "source_text": "娘の声",
       "source_raw_hex": "96BA82CC90BA",
       "source_sha256": "C03ACC8834EA00922E2756BFB5142397E8B3C84981CE629F01D05C0125C411F2",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "여자 목소리",
+      "status": "override",
       "notes": ""
     },
     {
@@ -92525,8 +92525,8 @@
       "source_text": "男の声",
       "source_raw_hex": "926A82CC90BA",
       "source_sha256": "1CA19DD8BEABC58B6668B8E9273623F918C93E6382BD6FC150FBA588A2E47881",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "남자 목소리",
+      "status": "override",
       "notes": ""
     },
     {
@@ -92767,8 +92767,8 @@
       "source_text": "青年の声",
       "source_raw_hex": "90C2944E82CC90BA",
       "source_sha256": "2A7C8EF7849540AAEA7C88409A78843A1E4C780D01399B7B37D99B7F1A04DA6E",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "청년의 목소리",
+      "status": "override",
       "notes": ""
     },
     {
@@ -93041,7 +93041,7 @@
       "source_text": "う、う～ん……",
       "source_raw_hex": "82A4814182A4816082F181638163",
       "source_sha256": "3373C9D929A1D874DEDA65BF771BB0AD8F3888457F2F88DBBA7C044AFCF84CEE",
-      "translation": "으, 으~음……",
+      "translation": "으, 으-음……",
       "status": "override",
       "notes": "069 미번역 dialogue 초벌 번역 (propagated)"
     },
@@ -93462,8 +93462,8 @@
       "source_text": "ロムン兵",
       "source_raw_hex": "838D8380839395BA",
       "source_sha256": "48C90757849B12B3461DCA6CE4FEB353BB6D580C2A0F63895E350F72C36B51DE",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "로문 병사",
+      "status": "override",
       "notes": ""
     },
     {
@@ -93654,8 +93654,8 @@
       "source_text": "男の声",
       "source_raw_hex": "926A82CC90BA",
       "source_sha256": "1CA19DD8BEABC58B6668B8E9273623F918C93E6382BD6FC150FBA588A2E47881",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "남자 목소리",
+      "status": "override",
       "notes": ""
     },
     {
@@ -94592,7 +94592,7 @@
       "source_text": "娘の声",
       "source_raw_hex": "96BA82CC90BA",
       "source_sha256": "C03ACC8834EA00922E2756BFB5142397E8B3C84981CE629F01D05C0125C411F2",
-      "translation": "여자아이의 목소리",
+      "translation": "여자 목소리",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -95386,7 +95386,7 @@
       "source_text": "う、う～ん……",
       "source_raw_hex": "82A4814182A4816082F181638163",
       "source_sha256": "3373C9D929A1D874DEDA65BF771BB0AD8F3888457F2F88DBBA7C044AFCF84CEE",
-      "translation": "으, 으~음……",
+      "translation": "으, 으-음……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -96819,7 +96819,7 @@
       "source_text": "娘の声",
       "source_raw_hex": "96BA82CC90BA",
       "source_sha256": "C03ACC8834EA00922E2756BFB5142397E8B3C84981CE629F01D05C0125C411F2",
-      "translation": "여자아이의 목소리",
+      "translation": "여자 목소리",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -97606,8 +97606,8 @@
       "source_text": "レダ族の少年",
       "source_raw_hex": "838C835F91B082CC8FAD944E",
       "source_sha256": "1C67E70B67BB846D1F97627D7428A6806A4F7A3AAA3D5811F77186C3E38FA50B",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "레다족의 소년",
+      "status": "override",
       "notes": ""
     },
     {
@@ -98314,7 +98314,7 @@
       "source_text": "<scale:1.2>ああああ～っ！！",
       "source_raw_hex": "3C7363616C653A312E323E82A082A082A082A0816082C181498149",
       "source_sha256": "8044A24F6D70C5702A0E16C5EC7F6D24EB17B6989DA0C7E168E5B989733529CF",
-      "translation": "<scale:1.2>아아아~앗!!",
+      "translation": "<scale:1.2>아아아-앗!!",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -98346,7 +98346,7 @@
       "source_text": "な、なんてことすんだよ～っ！",
       "source_raw_hex": "82C8814182C882F182C482B182C682B782F182BE82E6816082C18149",
       "source_sha256": "45F412128C444FB6253DD338AF71B6EE04D9146E2D66B2291005696EA33FF90C",
-      "translation": "무, 무슨짓을 한거얏~!",
+      "translation": "무, 무슨짓을 한거얏-!",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -98508,8 +98508,8 @@
       "source_text": "声",
       "source_raw_hex": "90BA",
       "source_sha256": "49A96A0D5DF33021B4ED690D316C80FAC89C5D1DA28DD77D42F4696F36821466",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "목소리",
+      "status": "override",
       "notes": ""
     },
     {
@@ -98687,8 +98687,8 @@
       "source_text": "声",
       "source_raw_hex": "90BA",
       "source_sha256": "49A96A0D5DF33021B4ED690D316C80FAC89C5D1DA28DD77D42F4696F36821466",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "목소리",
+      "status": "override",
       "notes": ""
     },
     {
@@ -101367,7 +101367,7 @@
       "source_text": "男の声",
       "source_raw_hex": "926A82CC90BA",
       "source_sha256": "1CA19DD8BEABC58B6668B8E9273623F918C93E6382BD6FC150FBA588A2E47881",
-      "translation": "남자목소리",
+      "translation": "남자 목소리",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -102582,7 +102582,7 @@
       "source_text": "………～～～っ…………",
       "source_raw_hex": "81638163816381608160816082C18163816381638163",
       "source_sha256": "2932D5EEB93F774E13A0ADF240CF9D288A0823E3D63D5E511B7BFA8CCEAAA15B",
-      "translation": "………~~~으…………",
+      "translation": "………---으…………",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: unsupported_character_candidate"
     },
@@ -102694,7 +102694,7 @@
       "source_text": "男の声",
       "source_raw_hex": "926A82CC90BA",
       "source_sha256": "1CA19DD8BEABC58B6668B8E9273623F918C93E6382BD6FC150FBA588A2E47881",
-      "translation": "남자목소리",
+      "translation": "남자 목소리",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -105029,7 +105029,7 @@
       "source_text": "し、死ぬかと思ったぁ～……",
       "source_raw_hex": "82B581418E8082CA82A982C68E7682C182BD829F816081638163",
       "source_sha256": "7588EA416CD23B0B05D681115DEC63E60106FB4505CA7B4E58E4D02F2F446F9F",
-      "translation": "주, 죽는 줄 알았어~……",
+      "translation": "주, 죽는 줄 알았어-……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: unsupported_character_candidate"
     },
@@ -105562,7 +105562,7 @@
       "source_text": "はあ、あいつら元気かなぁ～。",
       "source_raw_hex": "82CD82A0814182A082A282C282E78CB38B4382A982C8829F81608142",
       "source_sha256": "9F15B93A1EEC8F37539781596D0458504E43A3EABFD78CC25E38CC8D25541D40",
-      "translation": "하아, 녀석들은 건강할까나~.",
+      "translation": "하아, 녀석들은 건강할까나-.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: unsupported_character_candidate"
     },
@@ -105999,7 +105999,7 @@
       "source_text": "エルンストさま！\\n久しぶりだね～っ！",
       "source_raw_hex": "8347838B83938358836782B382DC81495C6E8B7682B582D482E882BE82CB816082C18149",
       "source_sha256": "175C253FEB6E7C99A794D7C643A5D1399058A901F489D5912FAA6AD10C3AE05E",
-      "translation": "에른스트 님!\\n오랜만이야~!",
+      "translation": "에른스트 님!\\n오랜만이야-!",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -106015,7 +106015,7 @@
       "source_text": "ユエ、寂しかったんだから～！",
       "source_raw_hex": "8386834781418EE282B582A982C182BD82F182BE82A982E781608149",
       "source_sha256": "BE69855B54D6FEC6AA2229357DE186D29C25F3D0FC0821966BD422CF94B9ADFA",
-      "translation": "유에, 외로웠다구~!",
+      "translation": "유에, 외로웠다구-!",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -106694,7 +106694,7 @@
       "source_text": "なにコイツら、ナマイキー！",
       "source_raw_hex": "82C882C983528343836382E781418369837D8343834C815B8149",
       "source_sha256": "297530A19A2BBF70B0FB130ADDEA57D9333019DAE1F10CE3BDCAFAC5C5E27D61",
-      "translation": "뭐야 이 녀석들, 건방지게~!",
+      "translation": "뭐야 이 녀석들, 건방지게-!",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -110313,7 +110313,7 @@
       "source_text": "おにいちゃん……\\n\\x1おにいちゃあああん……！",
       "source_raw_hex": "82A882C982A282BF82E182F1816381635C6E5C783182A882C982A282BF82E182A082A082A082F1816381638149",
       "source_sha256": "85FADC72344ED2C2FDCD04D32AB2E9385D9DFA550EE726B3DACBFF298D7AE598",
-      "translation": "오빠……\\n아돌 오빠~~……!",
+      "translation": "오빠……\\n아돌 오빠--……!",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: player_name_expansion",
       "allow_player_name_expansion": true
@@ -110458,7 +110458,7 @@
       "source_text": "もう、ヘロヘロだよ～……",
       "source_raw_hex": "82E082A481418377838D8377838D82BE82E6816081638163",
       "source_sha256": "D30DC338E8A582462D89813D202DEE0EAC9F5CF9AC2073782B65F93581DA273B",
-      "translation": "이제, 완전 지쳤어~…….",
+      "translation": "이제, 완전 지쳤어-…….",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -117525,7 +117525,7 @@
       "source_text": "……あーれー……",
       "source_raw_hex": "8163816382A0815B82EA815B81638163",
       "source_sha256": "526C76C6667C7885A8A67C30161876A352D521CF3BA3BBD7A53A451D9F1DF786",
-      "translation": "……저~거~……",
+      "translation": "……저-거-……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -117541,7 +117541,7 @@
       "source_text": "ホワン、ホワン、ホワン、ホワワ～ン",
       "source_raw_hex": "837A838F83938141837A838F83938141837A838F83938141837A838F838F81608393",
       "source_sha256": "F667A0521140BECB897EA09643B18D37CAE49471E702ED940934377D809AF44A",
-      "translation": "호왕, 호왕, 호왕, 호와~왕",
+      "translation": "호왕, 호왕, 호왕, 호와-왕",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
