@@ -9863,7 +9863,7 @@
       "source_text": "それよりも……\\n伯父様の包帯を代えるから\\nあなたも一緒に手伝って。",
       "source_raw_hex": "82BB82EA82E682E882E0816381635C6E948C9583976C82CC95EF91D182F091E382A682E982A982E75C6E82A082C882BD82E088EA8F8F82C98EE8936082C182C48142",
       "source_sha256": "E235E1EFBC4782944378BE964E593BDFEF7892CEEB1F0AFFD8634105951DB26A",
-      "translation": "그보다……\\n큰아버지의 붕대를 갈아 드릴 테니\\n너도 같이 도와줘.",
+      "translation": "그보다……\\n삼촌의 붕대를 갈아 드릴 테니\\n너도 같이 도와줘.",
       "status": "override",
       "notes": "Codex 초벌 번역 030"
     },
@@ -9959,7 +9959,7 @@
       "source_text": "私……\\n伯父様の手当てをしてきますね。",
       "source_raw_hex": "8E84816381635C6E948C9583976C82CC8EE8939682C482F082B582C482AB82DC82B782CB8142",
       "source_sha256": "CD6A0BE9BF4A1F9FF33E243156C1522DE18FF2EC19C6120EF5DDDBB26B2F35F2",
-      "translation": "저……\\n큰아버지를 치료해 드리고 올게요.",
+      "translation": "저……\\n삼촌을 치료해 드리고 올게요.",
       "status": "override",
       "notes": "Codex 초벌 번역 030"
     },
@@ -17435,7 +17435,7 @@
       "source_text": "伯父様の息子で\\n私とイーシャの従兄弟にあたります。",
       "source_raw_hex": "948C9583976C82CC91A78E7182C55C6E8E8482C68343815B8356838382CC8F5D8C5A92ED82C982A082BD82E882DC82B78142",
       "source_sha256": "5B8774E34825299222920D548C60B77049689672A2973A3288DDBEEE3DCFDB4C",
-      "translation": "큰아버지의 아들로\\n저와 이샤의 사촌이에요.",
+      "translation": "삼촌의 아들로\\n저와 이샤의 사촌이에요.",
       "status": "override",
       "notes": "069 미번역 dialogue 초벌 번역 (manual)"
     },
@@ -17467,7 +17467,7 @@
       "source_text": "伯父様も口には出しませんが\\nずいぶん心配しているみたいです。",
       "source_raw_hex": "948C9583976C82E08CFB82C982CD8F6F82B582DC82B982F182AA5C6E82B882A282D482F19053947A82B582C482A282E982DD82BD82A282C582B78142",
       "source_sha256": "47F38ACF94BCF0587FD325383647ACACE8AF19522C534A7D9F88B594EA6D6B3D",
-      "translation": "큰아버지도 내색은 안 하시지만\\n무척 걱정하시는 것 같아요.",
+      "translation": "삼촌도 내색은 안 하시지만\\n무척 걱정하시는 것 같아요.",
       "status": "override",
       "notes": "069 미번역 dialogue 초벌 번역 (manual)"
     },
@@ -19073,7 +19073,7 @@
       "source_text": "お前たち、少々席を外してくれ。",
       "source_raw_hex": "82A8914F82BD82BF81418FAD815890C882F08A4F82B582C482AD82EA8142",
       "source_sha256": "FBB50C46E25EF4CBB9DCC14251015658D6495EAC349FFD155CDC92FC5D51C04D",
-      "translation": "너희들은 잠시 자리를 비워다오.",
+      "translation": "너희들은 잠시 자리를 비켜다오.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -19202,7 +19202,7 @@
       "source_text": "あの悪鬼のような兵士から\\nよくぞウルたちを救ってくれた。",
       "source_raw_hex": "82A082CC88AB8B5382CC82E682A482C895BA8E6D82A982E75C6E82E682AD82BC8345838B82BD82BF82F08B7E82C182C482AD82EA82BD8142",
       "source_sha256": "0114D02B9700C10E2E1729F889380EA7B92048BC58F3F6031572B51E339C5555",
-      "translation": "그 악귀같은 병사들한테서\\n우루들을 잘 구해주었네.",
+      "translation": "그 악귀같은 병사들한테서\\n울과 모두를 잘 구해주었네.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -58867,7 +58867,7 @@
       "source_text": "俺たちはアフロカ西岸へ\\n遠征するって聞いてたんだが……",
       "source_raw_hex": "89B482BD82BF82CD83418374838D834A90BC8ADD82D65C6E899390AA82B782E982C182C495B782A282C482BD82F182BE82AA81638163",
       "source_sha256": "07A297C14907F76C5B3BFA6DEBBE3D91EA45F2576B6A50EA7E6C237B27C6F4DD",
-      "translation": "우리들은 아후로카 서안으로\\n원장간다고 들었는데……",
+      "translation": "우리들은 아프로카 서쪽 해안으로\\n원정간다고 들었는데……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -62394,7 +62394,7 @@
       "source_text": "うっしっし……\\n狙い通り手薄になったみたいだね。",
       "source_raw_hex": "82A482C182B582C182B5816381635C6E915F82A292CA82E88EE8949682C982C882C182BD82DD82BD82A282BE82CB8142",
       "source_sha256": "A9B401B532C9E0EAF3BB651B38B1AC67608EA575E0ADDF63BB6CABA815EE6E7C",
-      "translation": "우히히……\\n목적대로 경계가 허술해졌군.",
+      "translation": "으히히……\\n목적대로 경계가 허술해졌군.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -67952,7 +67952,7 @@
       "source_text": "あのアルタゴ商人は\\n考えてみれば立派ではないか。",
       "source_raw_hex": "82A082CC8341838B835E83538FA4906C82CD5C6E8D6C82A682C482DD82EA82CE97A7946882C582CD82C882A282A98142",
       "source_sha256": "1B5B552323B5CE84446387D42A21EA9A6D8BB57B019AF0BCB0324A146AF35A3F",
-      "translation": "저 아르타고 상인은\\n생각해보면 훌륭하지 않은가.",
+      "translation": "저 알타고 상인은\\n생각해보면 훌륭하지 않은가.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -73129,7 +73129,7 @@
       "source_text": "ワシの故郷であるアルタゴは\\n北アフロカにあるのであって\\nエレシア大陸にあるわけじゃない。",
       "source_raw_hex": "838F835682CC8CCC8BBD82C582A082E98341838B835E835382CD5C6E966B83418374838D834A82C982A082E982CC82C582A082C182C45C6E8347838C8356834191E597A482C982A082E982ED82AF82B682E182C882A28142",
       "source_sha256": "189B70A26D59C4F9438D1711438417644FD779887BC8F7CE7DCB553B6CA4EC99",
-      "translation": "내 고향인 알타고는\\n북아후로카에 있는 거지\\n에레시아 대륙에 있는게 아냐.",
+      "translation": "내 고향인 알타고는\\n북 아프로카에 있는 거지\\n에레시아 대륙에 있는게 아냐.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -73242,7 +73242,7 @@
       "source_text": "はあはあはあはあはあ……",
       "source_raw_hex": "82CD82A082CD82A082CD82A082CD82A082CD82A081638163",
       "source_sha256": "6BDA9731BBDB55232ED7AE7218E37E49A77F5CA96F3735A9EA853D81463F572E",
-      "translation": "하아하아하아하아하아……",
+      "translation": "하아, 하아, 하아, 하아, 하아……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -73322,7 +73322,7 @@
       "source_text": "別にレダ族の肩を持つとか\\nそういうわけじゃないからなっ？",
       "source_raw_hex": "95CA82C9838C835F91B082CC8CA882F08E9D82C282C682A95C6E82BB82A482A282A482ED82AF82B682E182C882A282A982E782C882C18148",
       "source_sha256": "88A50C0F48BC63DBED6E87330366587DE644D1D4B06DD1DA58BAEB0962486853",
-      "translation": "별록 레다놈들의 편을 든다거나\\n그런게 아니라니까?",
+      "translation": "별로 레다놈들의 편을 든다거나\\n그런게 아니라니까?",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -82010,7 +82010,7 @@
       "source_text": "元は、北アフロカ沿岸にある\\nアルタゴ出身の商人だったらしい。",
       "source_raw_hex": "8CB382CD8141966B83418374838D834A89888ADD82C982A082E95C6E8341838B835E83538F6F906782CC8FA4906C82BE82C182BD82E782B582A28142",
       "source_sha256": "A8952D0D7F33B695D6E0F228BC007F4011CFC7E73424F1B8AB376568BAC867BE",
-      "translation": "원래는, 북아후로카 연안에 있는\\n알타고출신의 상인이었던 것 같다.",
+      "translation": "원래는, 북 아프로카 연안에 있는\\n알타고출신의 상인이었던 것 같다.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -91263,7 +91263,7 @@
       "source_text": "強欲で生意気なアルタゴ商人にしては\\nなかなか殊勝な心がけではないか。",
       "source_raw_hex": "8BAD977E82C590B688D38B4382C88341838B835E83538FA4906C82C982B582C482CD5C6E82C882A982C882A98EEA8F9F82C8905382AA82AF82C582CD82C882A282A98142",
       "source_sha256": "827FE5F5D3F1C124F318115FE704F9B4538E03F3F5B62A3E5B3A200B0B32A848",
-      "translation": "욕심 많고 건방진 아르타고 상인 치고는\\n꽤나 갸륵한 마음 씀씀이가 아닌가.",
+      "translation": "욕심 많고 건방진 알타고 상인 치고는\\n꽤나 갸륵한 마음 씀씀이가 아닌가.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | shared-payload review 043 C30F352E4438#3"
     },
@@ -91439,7 +91439,7 @@
       "source_text": "まあ、ワシが宴から戻ってきたら\\nピッカードでもご馳走してやろう。",
       "source_raw_hex": "82DC82A08141838F835682AA898382A982E796DF82C182C482AB82BD82E75C6E83738362834A815B836882C582E082B29279919682B582C482E282EB82A48142",
       "source_sha256": "7A483CFE8CADB5D7BCA3393FEAF14FB299CE446D1D539AA28D7EC8F0BF517A51",
-      "translation": "뭐, 내가 연회에서 돌아오면\\n피카드라도 먹이로 줘라.",
+      "translation": "뭐, 내가 연회에서 돌아오면\\n피카드라도 대접해 주마.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | shared-payload review 043 C30F352E4438#14"
     },
@@ -92703,7 +92703,7 @@
       "source_text": "アフロカの奥地で出会ってから\\nどんな時も一緒だったのに……",
       "source_raw_hex": "83418374838D834A82CC899C926E82C58F6F89EF82C182C482A982E75C6E82C782F182C88E9E82E088EA8F8F82BE82C182BD82CC82C981638163",
       "source_sha256": "5ABF514C27737B79496393172349D8C7B0F5BC4616BC6D2936C0C2FDB7A6FEB6",
-      "translation": "아후로카의 오지에서 만난 이후\\n어떤 때에도 함께였었는데……",
+      "translation": "아프로카의 오지에서 만난 이후\\n어떤 때에도 함께였었는데……",
       "status": "override",
       "notes": "069 미번역 dialogue 초벌 번역 (propagated)"
     },
@@ -93430,7 +93430,7 @@
       "source_text": "強欲で生意気なアルタゴ商人にしては\\nなかなか殊勝な心がけではないか。",
       "source_raw_hex": "8BAD977E82C590B688D38B4382C88341838B835E83538FA4906C82C982B582C482CD5C6E82C882A982C882A98EEA8F9F82C8905382AA82AF82C582CD82C882A282A98142",
       "source_sha256": "827FE5F5D3F1C124F318115FE704F9B4538E03F3F5B62A3E5B3A200B0B32A848",
-      "translation": "욕심 많고 건방진 아르타고 상인 치고는\\n꽤나 갸륵한 마음 씀씀이가 아닌가.",
+      "translation": "욕심 많고 건방진 알타고 상인 치고는\\n꽤나 갸륵한 마음 씀씀이가 아닌가.",
       "status": "override",
       "notes": "069 미번역 dialogue 초벌 번역 (propagated)"
     },
@@ -93606,7 +93606,7 @@
       "source_text": "まあ、ワシが宴から戻ってきたら\\nピッカードでもご馳走してやろう。",
       "source_raw_hex": "82DC82A08141838F835682AA898382A982E796DF82C182C482AB82BD82E75C6E83738362834A815B836882C582E082B29279919682B582C482E282EB82A48142",
       "source_sha256": "7A483CFE8CADB5D7BCA3393FEAF14FB299CE446D1D539AA28D7EC8F0BF517A51",
-      "translation": "뭐, 내가 연회에서 돌아오면\\n피카드라도 먹이로 줘라.",
+      "translation": "뭐, 내가 연회에서 돌아오면\\n피카드라도 대접해 주마.",
       "status": "override",
       "notes": "069 미번역 dialogue 초벌 번역 (propagated)"
     },
@@ -95048,7 +95048,7 @@
       "source_text": "アフロカの奥地で出会ってから\\nどんな時も一緒だったのに……",
       "source_raw_hex": "83418374838D834A82CC899C926E82C58F6F89EF82C182C482A982E75C6E82C782F182C88E9E82E088EA8F8F82BE82C182BD82CC82C981638163",
       "source_sha256": "5ABF514C27737B79496393172349D8C7B0F5BC4616BC6D2936C0C2FDB7A6FEB6",
-      "translation": "아후로카의 오지에서 만난 이후\\n어떤 때에도 함께였었는데……",
+      "translation": "아프로카의 오지에서 만난 이후\\n어떤 때에도 함께였었는데……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -95775,7 +95775,7 @@
       "source_text": "強欲で生意気なアルタゴ商人にしては\\nなかなか殊勝な心がけではないか。",
       "source_raw_hex": "8BAD977E82C590B688D38B4382C88341838B835E83538FA4906C82C982B582C482CD5C6E82C882A982C882A98EEA8F9F82C8905382AA82AF82C582CD82C882A282A98142",
       "source_sha256": "827FE5F5D3F1C124F318115FE704F9B4538E03F3F5B62A3E5B3A200B0B32A848",
-      "translation": "욕심 많고 건방진 아르타고 상인 치고는\\n꽤나 갸륵한 마음 씀씀이가 아닌가.",
+      "translation": "욕심 많고 건방진 알타고 상인 치고는\\n꽤나 갸륵한 마음 씀씀이가 아닌가.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | shared-payload review 043 C30F352E4438#3"
     },
@@ -95951,7 +95951,7 @@
       "source_text": "まあ、ワシが宴から戻ってきたら\\nピッカードでもご馳走してやろう。",
       "source_raw_hex": "82DC82A08141838F835682AA898382A982E796DF82C182C482AB82BD82E75C6E83738362834A815B836882C582E082B29279919682B582C482E282EB82A48142",
       "source_sha256": "7A483CFE8CADB5D7BCA3393FEAF14FB299CE446D1D539AA28D7EC8F0BF517A51",
-      "translation": "뭐, 내가 연회에서 돌아오면\\n피카드라도 먹이로 줘라.",
+      "translation": "뭐, 내가 연회에서 돌아오면\\n피카드라도 대접해 주마.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | shared-payload review 043 C30F352E4438#14"
     },
@@ -106306,7 +106306,7 @@
       "source_text": "しかしそうか……\\nこの地に流れ着いていたとは……",
       "source_raw_hex": "82B582A982B582BB82A482A9816381635C6E82B182CC926E82C997AC82EA928582A282C482A282BD82C682CD81638163",
       "source_sha256": "C0F90FBB4D883ACFD34B5E66706DBF4EE2405D0A934685A0EDAFD4247EAFB13F",
-      "translation": "하지만, 그런가…….\\n설마 살아남아 3개의 열쇠까지 손에 넣을 줄이야……",
+      "translation": "하지만, 그런가……. 설마, \\n살아남아 3개의 열쇠를 손에 넣을 줄이야……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },

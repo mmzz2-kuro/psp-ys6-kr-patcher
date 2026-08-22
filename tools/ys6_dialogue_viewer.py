@@ -437,7 +437,11 @@ class CastNameEditor(ttk.Frame):
     def open(self, path: Path) -> None:
         try: self.workspace = load_cast_workspace(path)
         except Exception as exc: messagebox.showerror("열기 실패", str(exc)); return
-        self.path = path; self.dirty = False; self.refresh(); self.message.set(f"{path.name}: {len(self.workspace['records']):,}개")
+        self.path = path
+        self.dirty = False
+        self._selected_identifier = None
+        self.refresh(commit_current=False)
+        self.message.set(f"{path.name}: {len(self.workspace['records']):,}개")
 
     def _commit_selected(self) -> None:
         if not self._selected_identifier: return
@@ -449,17 +453,22 @@ class CastNameEditor(ttk.Frame):
 
     def apply_edit(self) -> None:
         if not self._selected_identifier: messagebox.showwarning("편집", "항목을 선택해 주세요."); return
-        self._commit_selected(); self.refresh(select=self._selected_identifier)
+        identifier = self._selected_identifier
+        self._commit_selected()
+        self.refresh(select=identifier, commit_current=False)
 
     def review_selected(self) -> None:
         selected=self.tree.selection()
         if not selected:messagebox.showwarning("reviewed","항목을 선택해 주세요.");return
         self._commit_selected();changed=0;empty=0
+        selected_identifiers = [self.filtered[int(item)]["identifier"] for item in selected]
         for item in selected:
             row=self.filtered[int(item)]
             if not row.get("translation","").strip():empty+=1;continue
             if row.get("status")!="reviewed":row["status"]="reviewed";changed+=1
-        self.dirty|=bool(changed);self.refresh();self.message.set(f"reviewed 변경 {changed:,}개 / 빈 번역 제외 {empty:,}개")
+        self.dirty|=bool(changed)
+        self.refresh(selections=selected_identifiers, commit_current=False)
+        self.message.set(f"reviewed 변경 {changed:,}개 / 빈 번역 제외 {empty:,}개")
 
     def save(self) -> None:
         if self.path is None: messagebox.showwarning("저장", "작업공간을 먼저 열어 주세요."); return
@@ -477,7 +486,21 @@ class CastNameEditor(ttk.Frame):
         selected = filedialog.asksaveasfilename(title="인물명 CSV 내보내기", defaultextension=".csv", filetypes=[("CSV", "*.csv")])
         if selected: self._commit_selected(); write_cast_csv(Path(selected), self.workspace); self.message.set(f"CSV 내보내기 완료: {Path(selected).name}")
 
-    def refresh(self, select: str | None = None) -> None:
+    def _clear_editor(self) -> None:
+        self._selected_identifier = None
+        self.info.set("")
+        self.translation.delete(0, tk.END)
+        self.edit_status.set("untranslated")
+        self.notes.delete("1.0", tk.END)
+
+    def refresh(self, select: str | None = None, selections: list[str] | None = None,
+                commit_current: bool = True) -> None:
+        if commit_current:
+            self._commit_selected()
+        requested = list(selections or ([] if select is None else [select]))
+        # Tree recreation can emit a delayed selection event. Detach the old
+        # identifier first so stale editor fields can never be committed.
+        self._selected_identifier = None
         needle = self.query.get().casefold().strip(); status = self.filter_status.get()
         rows = self.workspace.get("records", [])
         category=self.category.get()
@@ -490,9 +513,15 @@ class CastNameEditor(ttk.Frame):
         self.tree.delete(*self.tree.get_children())
         for i, row in enumerate(self.filtered): self.tree.insert("", tk.END, iid=str(i), values=(row["identifier"], row["source"], row.get("translation", ""), row.get("status", "")))
         monsters=sum(r.get("identifier","").startswith("CAST_M") for r in self.workspace.get("records",[]));reviewed_monsters=sum(r.get("identifier","").startswith("CAST_M") and r.get("status")=="reviewed" for r in self.workspace.get("records",[]));self.message.set(f"{len(self.filtered):,}/{len(self.workspace.get('records', [])):,}개 · 몬스터 {monsters} (reviewed {reviewed_monsters})")
-        if select:
-            for i, row in enumerate(self.filtered):
-                if row["identifier"] == select: self.tree.selection_set(str(i)); self.tree.see(str(i)); self.show(); break
+        by_identifier = {row["identifier"]: str(i) for i, row in enumerate(self.filtered)}
+        visible = [by_identifier[identifier] for identifier in requested if identifier in by_identifier]
+        if visible:
+            self.tree.selection_set(visible)
+            self.tree.focus(visible[0])
+            self.tree.see(visible[0])
+            self.show()
+        else:
+            self._clear_editor()
 
     def show(self, _event=None) -> None:
         selected = self.tree.selection()
