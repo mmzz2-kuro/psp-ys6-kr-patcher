@@ -17,7 +17,7 @@ try:
     from tools.scripts.ys6_system_message_workspace import load_workspace as load_system_workspace,patch_overrides as patch_system_messages,validate_workspace as validate_system_workspace
     from tools.scripts.ys6_iso_multi_patch import Replacement,patch_atomic
     from tools.scripts.ys6_option_menu_image import compose as compose_option_menu
-    from tools.scripts.ys6_additional_image_patch import build_container as build_image_container,compose_collection_picture,compose_collection_surface,compose_payload,edited_count
+    from tools.scripts.ys6_additional_image_patch import build_container as build_image_container,cache_identity,compose_collection_picture,compose_collection_surface,compose_payload,edited_count
     from tools.scripts.ys6_translation_workspace import validate
     from tools.scripts.ys6_xso import parse_xso,rebuild_xso
     from tools.scripts.ys6_z import build_container,verify_container_bytes
@@ -34,7 +34,7 @@ except ModuleNotFoundError:
         from .ys6_system_message_workspace import load_workspace as load_system_workspace,patch_overrides as patch_system_messages,validate_workspace as validate_system_workspace
         from .ys6_iso_multi_patch import Replacement,patch_atomic
         from .ys6_option_menu_image import compose as compose_option_menu
-        from .ys6_additional_image_patch import build_container as build_image_container,compose_collection_picture,compose_collection_surface,compose_payload,edited_count
+        from .ys6_additional_image_patch import build_container as build_image_container,cache_identity,compose_collection_picture,compose_collection_surface,compose_payload,edited_count
         from .ys6_translation_workspace import validate
         from .ys6_xso import parse_xso,rebuild_xso
         from .ys6_z import build_container,verify_container_bytes
@@ -50,7 +50,7 @@ except ModuleNotFoundError:
         from ys6_system_message_workspace import load_workspace as load_system_workspace,patch_overrides as patch_system_messages,validate_workspace as validate_system_workspace
         from ys6_iso_multi_patch import Replacement,patch_atomic
         from ys6_option_menu_image import compose as compose_option_menu
-        from ys6_additional_image_patch import build_container as build_image_container,compose_collection_picture,compose_collection_surface,compose_payload,edited_count
+        from ys6_additional_image_patch import build_container as build_image_container,cache_identity,compose_collection_picture,compose_collection_surface,compose_payload,edited_count
         from ys6_translation_workspace import validate
         from ys6_xso import parse_xso,rebuild_xso
         from ys6_z import build_container,verify_container_bytes
@@ -240,6 +240,9 @@ def execute(args)->dict:
  additional_count,_additional_files=edited_count(additional_workspace) if additional_workspace else (0,[])
  if additional_count:
   additional_manifest=json.loads((additional_workspace/"manifest.json").read_text(encoding="utf-8-sig"))
+  precompiled_path=additional_workspace/"precompiled"/"manifest.json"
+  precompiled_manifest=(json.loads(precompiled_path.read_text(encoding="utf-8-sig")) if precompiled_path.exists() else None)
+  precompiled_by_id=({row["resource_id"]:row for row in precompiled_manifest["resources"]} if precompiled_manifest else {})
   additional_dir=args.work/"additional-images";additional_dir.mkdir(exist_ok=True)
   embedded_resources=[r for r in additional_manifest["resources"] if r.get("embedded_runtime") or r.get("embedded_picture_index")]
   static_payload=None;static_entry=None;static_original_container=None
@@ -257,11 +260,29 @@ def execute(args)->dict:
    valid,source_payload,error=verify_container_bytes(original_container)
    if not valid or source_payload is None:raise IntegratedBuildError(f"additional image container invalid: {iso_path}: {error or ''}")
    try:
-    patched_payload,report=(compose_collection_surface(source_payload,resource,additional_workspace)
-                            if resource.get("collection_pictures") else
-                            compose_payload(source_payload,resource,additional_workspace))
     allocated=((record.data_length+SECTOR_SIZE-1)//SECTOR_SIZE)*SECTOR_SIZE
-    patched_container,container_report=build_image_container(patched_payload,allocated)
+    cached=precompiled_by_id.get(resource["id"])
+    if precompiled_manifest is not None:
+     identity=cache_identity(resource,additional_workspace,original_container)
+     if cached is None or any(cached.get(key)!=value for key,value in identity.items()):
+      raise IntegratedBuildError(f"additional image precompiled cache is stale: {resource['id']}; regenerate cache")
+     cache_file=additional_workspace/"precompiled"/cached["file"]
+     patched_container=cache_file.read_bytes()
+     if sha256(patched_container)!=cached["output_container_sha256"]:
+      raise IntegratedBuildError(f"additional image precompiled cache hash mismatch: {resource['id']}")
+     valid_cached,patched_payload,cached_error=verify_container_bytes(patched_container)
+     if not valid_cached or patched_payload is None or sha256(patched_payload)!=cached["output_payload_sha256"]:
+      raise IntegratedBuildError(f"additional image precompiled cache payload invalid: {resource['id']}: {cached_error or ''}")
+     if len(patched_container)>allocated:
+      raise IntegratedBuildError(f"additional image precompiled cache allocation overflow: {resource['id']}: {len(patched_container)} > {allocated}")
+     report=dict(cached["report"]);report["precompiled_cache_used"]=True
+     container_report={"container_size":len(patched_container),"allocation":allocated,"remaining_slack":allocated-len(patched_container),"compression_memory_level":cached["report"].get("compression_memory_level")}
+    else:
+     patched_payload,report=(compose_collection_surface(source_payload,resource,additional_workspace)
+                             if resource.get("collection_pictures") else
+                             compose_payload(source_payload,resource,additional_workspace))
+     patched_container,container_report=build_image_container(patched_payload,allocated)
+     report["precompiled_cache_used"]=False
    except ValueError as exc:raise IntegratedBuildError(f"additional image patch failed: {resource['id']}: {exc}") from exc
    output=additional_dir/(resource["id"]+".dds.z");output.write_bytes(patched_container)
    report.update(container_report);report["iso_path"]=iso_path;additional_image_reports.append(report)

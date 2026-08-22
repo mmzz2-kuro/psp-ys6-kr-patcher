@@ -182,6 +182,25 @@ def _rgba_bbox(image: Image.Image) -> tuple[int, int, int, int] | None:
     return image.getbbox(alpha_only=False)
 
 
+def cache_identity(resource: dict, workspace: Path, original_container: bytes) -> dict:
+    """Return deterministic hashes for one precompiled additional-image asset."""
+    edited = []
+    for region in resource.get("regions", []):
+        path = workspace / "edited_parts" / resource["id"] / region["file"]
+        if path.exists():
+            edited.append({
+                "path": str(path.relative_to(workspace)).replace("\\", "/"),
+                "sha256": hashlib.sha256(path.read_bytes()).hexdigest().upper(),
+            })
+    canonical = json.dumps(resource, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return {
+        "resource_id": resource["id"],
+        "original_container_sha256": hashlib.sha256(original_container).hexdigest().upper(),
+        "resource_definition_sha256": hashlib.sha256(canonical).hexdigest().upper(),
+        "edited_files": edited,
+    }
+
+
 def _region_boxes(region: dict) -> list[tuple[int, int, int, int]]:
     """Return one or more texture boxes backing a single editable image."""
     values = region.get("boxes")

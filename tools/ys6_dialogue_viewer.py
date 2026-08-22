@@ -36,11 +36,13 @@ except ModuleNotFoundError:
 try:
     from tools.scripts.ys6_translation_workspace import normalize_editor_translation
     from tools.scripts.ys6_patch_builder import find_default_font, inspect_inputs, run_build
+    from tools.scripts.ys6_additional_image_precompile import cache_status, precompile as precompile_additional_images
     from tools.scripts.ys6_item_workspace import encoded_length as item_encoded_length, load_workspace as load_item_workspace, validate_workspace as validate_item_workspace
     from tools.scripts.ys6_system_message_workspace import encoded_length as system_encoded_length, load_workspace as load_system_workspace, validate_workspace as validate_system_workspace
 except ModuleNotFoundError:
     from scripts.ys6_translation_workspace import normalize_editor_translation
     from scripts.ys6_patch_builder import find_default_font, inspect_inputs, run_build
+    from scripts.ys6_additional_image_precompile import cache_status, precompile as precompile_additional_images
     from scripts.ys6_item_workspace import encoded_length as item_encoded_length, load_workspace as load_item_workspace, validate_workspace as validate_item_workspace
     from scripts.ys6_system_message_workspace import encoded_length as system_encoded_length, load_workspace as load_system_workspace, validate_workspace as validate_system_workspace
 
@@ -117,7 +119,7 @@ class DialogueViewer(tk.Tk):
     def __init__(self, initial_path: Path | None = None, cast_path: Path | None = None, item_path: Path | None = None, system_path: Path | None = None) -> None:
         super().__init__()
         self.title("Ys VI 대사 뷰어")
-        self.geometry("1280x760")
+        self.geometry("1680x920")
         self.records: list[dict] = []
         self.filtered: list[dict] = []
         self.workspace_path: Path | None = None
@@ -721,6 +723,7 @@ class PatchBuildEditor(ttk.Frame):
         self.iso = tk.StringVar(); self.output = tk.StringVar(); self.font = tk.StringVar(value=str(find_default_font() or ""))
         self.apply_option_images = tk.BooleanVar(value=True)
         self.apply_additional_images = tk.BooleanVar(value=True)
+        self.cache_state = tk.StringVar(value="이미지 캐시: 원본 ISO 선택 필요")
         self.counts = tk.StringVar(value="패치 데이터를 확인하지 않았습니다."); self.result = tk.StringVar()
         self._build_ui(); self.after(100, self._poll); self.refresh_data(silent=True)
 
@@ -740,11 +743,13 @@ class PatchBuildEditor(ttk.Frame):
             image_options, text="추가 이미지 적용", variable=self.apply_additional_images,
             command=lambda: self.refresh_data(silent=True))
         self.additional_images_check.pack(side=tk.LEFT, padx=(12, 0))
+        ttk.Label(image_options, textvariable=self.cache_state).pack(side=tk.LEFT, padx=(12, 0))
         ttk.Label(self, textvariable=self.counts).pack(anchor="w", pady=(10, 4))
         buttons = ttk.Frame(self); buttons.pack(fill=tk.X)
         self.refresh_button = ttk.Button(buttons, text="데이터 다시 읽기", command=self.refresh_data); self.refresh_button.pack(side=tk.LEFT)
         self.option_images_button = ttk.Button(buttons, text="메뉴 이미지 폴더", command=self.open_option_images); self.option_images_button.pack(side=tk.LEFT, padx=(6, 0))
         self.additional_images_button = ttk.Button(buttons, text="추가 이미지 폴더", command=self.open_additional_images); self.additional_images_button.pack(side=tk.LEFT, padx=(6, 0))
+        self.cache_refresh_button = ttk.Button(buttons, text="이미지 캐시 갱신", command=self.start_cache_refresh); self.cache_refresh_button.pack(side=tk.LEFT, padx=(6, 0))
         self.preflight_button = ttk.Button(buttons, text="사전 검증", command=lambda: self.start("preflight")); self.preflight_button.pack(side=tk.LEFT, padx=(6, 0))
         self.build_button = ttk.Button(buttons, text="패치 ISO 만들기", command=lambda: self.start("build")); self.build_button.pack(side=tk.LEFT, padx=(6, 0))
         self.progress = ttk.Progressbar(buttons, mode="indeterminate", length=180); self.progress.pack(side=tk.RIGHT)
@@ -756,6 +761,7 @@ class PatchBuildEditor(ttk.Frame):
         if selected:
             self.iso.set(selected)
             if not self.output.get(): self.output.set(str(Path(selected).with_name("Ys VI - Korean Patched.iso")))
+            self.refresh_cache_status(silent=True)
 
     def choose_output(self) -> None:
         selected = filedialog.asksaveasfilename(title="패치 ISO 저장", defaultextension=".iso", initialfile="Ys VI - Korean Patched.iso", filetypes=[("ISO", "*.iso")])
@@ -793,9 +799,65 @@ class PatchBuildEditor(ttk.Frame):
             additional_status = f"적용 {info['additional_image_count']:,}" if info["additional_images_enabled"] else "제외"
             self.counts.set(f"대사 override {info['override_count']:,} / 시스템 override {info['system_override_count']:,}·draft {info['system_draft_count']:,} / 아이템 override {info['item_override_count']:,}·draft {info['item_draft_count']:,} / 인물 reviewed {info['cast_person_reviewed_count']:,} / 몬스터 reviewed {info['monster_reviewed_count']:,} / 메뉴 이미지 {option_status} / 추가 이미지 {additional_status}")
             if not self.font.get(): self.font.set(info["font"])
+            self.refresh_cache_status(silent=True)
         except Exception as exc:
             self.counts.set(f"패치 데이터 오류: {exc}")
             if not silent: messagebox.showerror("패치 데이터", str(exc))
+
+    def refresh_cache_status(self, silent: bool = False) -> None:
+        if not self.apply_additional_images.get():
+            self.cache_state.set("이미지 캐시: 사용 안 함")
+            return
+        raw_iso = self.iso.get().strip()
+        if not raw_iso:
+            self.cache_state.set("이미지 캐시: 원본 ISO 선택 필요")
+            return
+        try:
+            info = inspect_inputs(include_option_menu_images=False, include_additional_images=True)
+            status = cache_status(Path(raw_iso), info["paths"]["additional_images"])
+            self.cache_state.set(f"이미지 캐시: {status['message']}")
+        except Exception as exc:
+            self.cache_state.set(f"이미지 캐시: 확인 오류 ({exc})")
+            if not silent:
+                messagebox.showerror("이미지 캐시", str(exc))
+
+    def start_cache_refresh(self) -> None:
+        if self.running:
+            return
+        if not self.apply_additional_images.get():
+            messagebox.showwarning("이미지 캐시", "추가 이미지 적용을 먼저 선택해 주세요.")
+            return
+        raw_iso = self.iso.get().strip()
+        if not raw_iso:
+            messagebox.showwarning("이미지 캐시", "원본 ISO를 선택해 주세요.")
+            return
+        try:
+            info = inspect_inputs(include_option_menu_images=False, include_additional_images=True)
+            workspace = info["paths"]["additional_images"]
+        except Exception as exc:
+            messagebox.showerror("이미지 캐시", str(exc))
+            return
+        self.running = True
+        self.result.set("")
+        self.cache_state.set("이미지 캐시: 갱신 중")
+        self._set_buttons(False)
+        self.progress.configure(mode="determinate", maximum=1, value=0)
+        self._append(f"이미지 캐시 갱신 시작: {raw_iso}\n")
+        threading.Thread(
+            target=self._cache_worker,
+            args=(Path(raw_iso), workspace),
+            daemon=True,
+        ).start()
+
+    def _cache_worker(self, iso: Path, workspace: Path) -> None:
+        try:
+            def report(resource_id: str, position: int, total: int) -> None:
+                self.events.put(("cache_progress", resource_id, position, total))
+
+            result = precompile_additional_images(iso, workspace, progress=report)
+            self.events.put(("cache_success", result))
+        except Exception as exc:
+            self.events.put(("cache_error", str(exc)))
 
     def _save_pending(self) -> bool:
         self.app.apply_edit(silent=True)
@@ -851,16 +913,41 @@ class PatchBuildEditor(ttk.Frame):
                         iso = data["iso"]; self.result.set(f"완료: SHA-256 {iso['output_iso_sha256']}"); self._append(f"출력: {iso['path']}\n")
                     else: self.result.set("사전 검증 완료")
                     self._finish()
+                elif event[0] == "cache_progress":
+                    _, resource_id, position, total = event
+                    self.progress.configure(maximum=max(total, 1), value=position - 1)
+                    self.cache_state.set(f"이미지 캐시: 갱신 중 ({position}/{total}) {resource_id}")
+                    self._append(f"[{position}/{total}] {resource_id}\n")
+                elif event[0] == "cache_success":
+                    data = event[1]
+                    self.progress.configure(value=self.progress.cget("maximum"))
+                    self._append(json.dumps({
+                        "resource_count": data["resource_count"],
+                        "cache_bytes": data["cache_bytes"],
+                        "elapsed_seconds": data["elapsed_seconds"],
+                    }, ensure_ascii=False, indent=2) + "\n")
+                    self.result.set(f"이미지 캐시 갱신 완료: {data['resource_count']}개")
+                    self._finish()
+                    messagebox.showinfo("이미지 캐시", "추가 이미지 캐시 갱신이 완료되었습니다.")
+                elif event[0] == "cache_error":
+                    self._append("이미지 캐시 갱신 오류: " + event[1] + "\n")
+                    self.result.set("이미지 캐시 갱신 실패")
+                    self._finish()
+                    messagebox.showerror("이미지 캐시 갱신 실패", event[1])
                 else: self._append("오류: " + event[1] + "\n"); self.result.set("실패"); self._finish(); messagebox.showerror("패치 빌드 실패", event[1])
         except queue.Empty: pass
         self.after(100, self._poll)
 
     def _finish(self) -> None:
-        self.running = False; self.progress.stop(); self._set_buttons(True); self.refresh_data(silent=True)
+        self.running = False
+        self.progress.stop()
+        self.progress.configure(mode="indeterminate", value=0)
+        self._set_buttons(True)
+        self.refresh_data(silent=True)
 
     def _set_buttons(self, enabled: bool) -> None:
         state = tk.NORMAL if enabled else tk.DISABLED
-        for button in (self.refresh_button, self.option_images_button, self.additional_images_button, self.preflight_button, self.build_button): button.configure(state=state)
+        for button in (self.refresh_button, self.option_images_button, self.additional_images_button, self.cache_refresh_button, self.preflight_button, self.build_button): button.configure(state=state)
         for check in (self.option_images_check, self.additional_images_check): check.configure(state=state)
 
     def _append(self, text: str) -> None:
