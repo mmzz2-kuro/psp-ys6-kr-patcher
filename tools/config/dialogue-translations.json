@@ -101529,7 +101529,7 @@
       "source_text": "お前、本物の\\x1か！？",
       "source_raw_hex": "82A8914F8141967B95A882CC5C783182A981498148",
       "source_sha256": "8AFA7E0D7552E88B3B2E72CA70E1ADB1D241B9C1BE0BB5F39FB7F681C5F3A721",
-      "translation": "자네, 정말로아돌인가!?",
+      "translation": "자네, 정말로 아돌인가!?",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: player_name_expansion",
       "allow_player_name_expansion": true
@@ -101579,7 +101579,7 @@
       "source_text": "ハッハッハッ！\\nちくしょう、さすが\\x1だぜ！",
       "source_raw_hex": "836E8362836E8362836E836281495C6E82BF82AD82B582E582A4814182B382B782AA5C783182BE82BA8149",
       "source_sha256": "551EEB18CD5F81FAA10CD4759015E19EEBBEA503E0B82B4E01101FAA13D415D3",
-      "translation": "핫핫핫!\\n젠장, 정말로아돌이군!",
+      "translation": "핫핫핫!\\n젠장, 정말로 아돌이군!",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: player_name_expansion",
       "allow_player_name_expansion": true
