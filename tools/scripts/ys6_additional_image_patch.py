@@ -397,8 +397,8 @@ def compose_collection_surface(collection: bytes, resource: dict,
             raise ValueError(f"{resource['id']}: collection picture {index} not found")
         _index, _picture_offset, _picture, palette, image_section = match
         info = image_section["payload"]
-        if palette is not None or info["pixel_format"] != 8:
-            raise ValueError(f"{resource['id']}: collection picture {index} is not DXT1")
+        if palette is not None or info["pixel_format"] not in (3, 8):
+            raise ValueError(f"{resource['id']}: collection picture {index} is not RGBA8888/DXT1")
         corrected = {**image_section, "payload": {**info, "data_offset": info["data_offset"] + 16}}
         rendered = render_picture(collection, palette, corrected).convert("RGBA")
         box = tuple(item["box"])
@@ -431,10 +431,26 @@ def compose_collection_surface(collection: bytes, resource: dict,
         source_part = original.crop(box)
         edited_part = composed.crop(box)
         difference = ImageChops.difference(source_part, edited_part)
-        encoded = pc_dxt1_to_psp(_pillow_blocks(edited_part, "DXT1"))
         info = image_section["payload"]
         data_start = image_section["offset"] + 16 + info["data_offset"] + 16
         local_changed = 0
+        if info["pixel_format"] == 3:
+            raw = edited_part.tobytes("raw", "RGBA")
+            for y in range(edited_part.height):
+                for x in range(edited_part.width):
+                    if difference.getpixel((x, y)) == (0, 0, 0, 0):
+                        continue
+                    offset = (y * edited_part.width + x) * 4
+                    replacement = raw[offset:offset + 4]
+                    target = data_start + offset
+                    if patched[target:target + 4] != replacement:
+                        patched[target:target + 4] = replacement
+                        local_changed += 1
+            changed_blocks += local_changed
+            picture_reports.append({"picture_index": index, "pixel_format": "RGBA8888",
+                                    "changed_pixel_count": local_changed})
+            continue
+        encoded = pc_dxt1_to_psp(_pillow_blocks(edited_part, "DXT1"))
         blocks_per_row = edited_part.width // 4
         for by in range(edited_part.height // 4):
             for bx in range(blocks_per_row):
@@ -450,7 +466,8 @@ def compose_collection_surface(collection: bytes, resource: dict,
                     patched[target:target + 8] = replacement
                     local_changed += 1
         changed_blocks += local_changed
-        picture_reports.append({"picture_index": index, "changed_block_count": local_changed})
+        picture_reports.append({"picture_index": index, "pixel_format": "DXT1",
+                                "changed_block_count": local_changed})
     return bytes(patched), {
         "id": resource["id"], "applied_regions": applied,
         "changed_block_count": changed_blocks, "pictures": picture_reports,

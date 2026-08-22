@@ -43076,7 +43076,7 @@
       "source_text": "<color:0xffacdae8>　石碑のくぼみに龍のメダイユをはめた。",
       "source_raw_hex": "3C636F6C6F723A307866666163646165383E814090CE94E882CC82AD82DA82DD82C997B482CC8381835F8343838682F082CD82DF82BD8142",
       "source_sha256": "018193A2BF2A4D9F6367B1713D8B019B2F785AE073A894A89CC08FC829683362",
-      "translation": "<color:0xffacdae8>비석의 움푹한 곳에 용의메다이유를 끼웠다.",
+      "translation": "<color:0xffacdae8>비석의 움푹한 곳에 용의 메다이유를 끼웠다.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -45957,8 +45957,8 @@
       "source_text": "装置を動かす？",
       "source_raw_hex": "9195927582F093AE82A982B78148",
       "source_sha256": "22F9EF55DC88D580961ADA2880DE7DB1AE7B5E52E86F302F7CB5C4EC68071E7B",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "장치를 작동할까요?",
+      "status": "override",
       "notes": ""
     },
     {
@@ -46230,8 +46230,8 @@
       "source_text": "装置を動かす？",
       "source_raw_hex": "9195927582F093AE82A982B78148",
       "source_sha256": "22F9EF55DC88D580961ADA2880DE7DB1AE7B5E52E86F302F7CB5C4EC68071E7B",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "장치를 작동할까요?",
+      "status": "override",
       "notes": ""
     },
     {
@@ -108562,8 +108562,8 @@
       "source_text": "装置を動かす？",
       "source_raw_hex": "9195927582F093AE82A982B78148",
       "source_sha256": "22F9EF55DC88D580961ADA2880DE7DB1AE7B5E52E86F302F7CB5C4EC68071E7B",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "장치를 작동할까요?",
+      "status": "override",
       "notes": ""
     },
     {

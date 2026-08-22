@@ -66,6 +66,9 @@ def render_picture(data: bytes, palette: dict | None, image: dict) -> Image.Imag
     info = image["payload"]
     width, height = info["width"], info["height"]
     start = image["offset"] + 16 + info["data_offset"]
+    if info["pixel_format"] == 3 and info["pixel_order"] == 0:
+        size = width * height * 4
+        return Image.frombytes("RGBA", (width, height), data[start:start + size])
     if info["pixel_format"] == 5 and palette is not None:
         raw = data[start:start + width * height]
         if info["pixel_order"] == 1:
