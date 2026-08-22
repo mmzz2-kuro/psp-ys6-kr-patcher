@@ -854,7 +854,11 @@ class PatchBuildEditor(ttk.Frame):
             def report(resource_id: str, position: int, total: int) -> None:
                 self.events.put(("cache_progress", resource_id, position, total))
 
-            result = precompile_additional_images(iso, workspace, progress=report)
+            def report_plan(plan: dict) -> None:
+                self.events.put(("cache_plan", plan))
+
+            result = precompile_additional_images(
+                iso, workspace, progress=report, planned=report_plan)
             self.events.put(("cache_success", result))
         except Exception as exc:
             self.events.put(("cache_error", str(exc)))
@@ -918,17 +922,40 @@ class PatchBuildEditor(ttk.Frame):
                     self.progress.configure(maximum=max(total, 1), value=position - 1)
                     self.cache_state.set(f"이미지 캐시: 갱신 중 ({position}/{total}) {resource_id}")
                     self._append(f"[{position}/{total}] {resource_id}\n")
+                elif event[0] == "cache_plan":
+                    plan = event[1]
+                    actual = plan["rebuild_count"] + plan["new_count"]
+                    self.progress.configure(maximum=max(actual, 1), value=0)
+                    self._append(
+                        "캐시 갱신 계획: "
+                        f"재사용 {plan['reuse_count']} / 재압축 {plan['rebuild_count']} / "
+                        f"신규 {plan['new_count']} / 제거 {plan['remove_count']}\n")
+                    if plan["rebuild_resources"]:
+                        self._append("재압축 대상: " + ", ".join(plan["rebuild_resources"]) + "\n")
+                    if plan["new_resources"]:
+                        self._append("신규 대상: " + ", ".join(plan["new_resources"]) + "\n")
                 elif event[0] == "cache_success":
                     data = event[1]
                     self.progress.configure(value=self.progress.cget("maximum"))
                     self._append(json.dumps({
                         "resource_count": data["resource_count"],
+                        "reuse_count": data["reuse_count"],
+                        "rebuild_count": data["rebuild_count"],
+                        "new_count": data["new_count"],
+                        "remove_count": data["remove_count"],
                         "cache_bytes": data["cache_bytes"],
                         "elapsed_seconds": data["elapsed_seconds"],
                     }, ensure_ascii=False, indent=2) + "\n")
-                    self.result.set(f"이미지 캐시 갱신 완료: {data['resource_count']}개")
+                    if data["changed"]:
+                        self.result.set(
+                            f"이미지 캐시 갱신 완료: 재사용 {data['reuse_count']} / "
+                            f"재압축 {data['rebuild_count'] + data['new_count']}")
+                    else:
+                        self.result.set("이미지 캐시가 이미 최신입니다")
                     self._finish()
-                    messagebox.showinfo("이미지 캐시", "추가 이미지 캐시 갱신이 완료되었습니다.")
+                    message = ("추가 이미지 캐시 갱신이 완료되었습니다."
+                               if data["changed"] else "이미지 캐시가 이미 최신입니다.")
+                    messagebox.showinfo("이미지 캐시", message)
                 elif event[0] == "cache_error":
                     self._append("이미지 캐시 갱신 오류: " + event[1] + "\n")
                     self.result.set("이미지 캐시 갱신 실패")
