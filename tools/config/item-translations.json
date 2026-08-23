@@ -636,8 +636,8 @@
       "source_name": "アルマの羽根",
       "source_description": "精霊神の羽根飾り。\n魔物のいるダンジョンから脱出できる。\n何度使用しても無くならない。",
       "source_record_sha256": "32ADF84B5EF659B093F4FFE436ECF9739C1D5130F1D9F21A5AD537CF1B5282F9",
-      "translation_name": "아르마의 날개",
-      "translation_description": "정령신의 깃털 장식.\n접촉한 모든 아르마 동상으로\n비행하여 이동할 수 있습니다.",
+      "translation_name": "알마의 날개",
+      "translation_description": "정령신의 깃털 장식.\n접촉한 모든 알마 동상으로\n비행하여 이동할 수 있습니다.",
       "status": "override",
       "notes": "Windows 한글판 초깃값"
     },

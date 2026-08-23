@@ -2745,7 +2745,7 @@
       "source_text": "アルマの祝祭では精霊たちへの\\n感謝を込めて様々な催しを行う。",
       "source_raw_hex": "8341838B837D82CC8F6A8DD582C582CD90B897EC82BD82BF82D682CC5C6E8AB48ED382F08D9E82DF82C4976C815882C88DC382B582F08D7382A48142",
       "source_sha256": "AA437EB0653FAC0B41F3BCB1F4B61A9018778F559D5101A52855F9495E9BF943",
-      "translation": "아르마의 축제에서는 정령들에의\\n감사의 마음을 담아 여러가지 행사를 한다.",
+      "translation": "알마의 축제에서는 정령들에의\\n감사의 마음을 담아 여러가지 행사를 한다.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: lone_backslash_to_newline"
     },
@@ -6101,7 +6101,7 @@
       "source_text": "アルマの祝祭は\\nどうなってしまうんでしょうか……",
       "source_raw_hex": "8341838B837D82CC8F6A8DD582CD5C6E82C782A482C882C182C482B582DC82A482F182C582B582E582A482A981638163",
       "source_sha256": "25EE16EA5D5998D60270247A3642205087F364368763465BE348B046B74C8637",
-      "translation": "아르마의 축제는\\n어떻게 되 버리는 걸까……",
+      "translation": "알마의 축제는\\n어떻게 되 버리는 걸까……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -9749,7 +9749,7 @@
       "source_text": "アルマを奉<ruby:0,2>まつ<endruby>るため、レダ族の祖先が\\n築いたものだと言われているのだが……",
       "source_raw_hex": "8341838B837D82F095F23C727562793A302C323E82DC82C23C656E64727562793E82E982BD82DF8141838C835F91B082CC916390E682AA5C6E927A82A282BD82E082CC82BE82C68CBE82ED82EA82C482A282E982CC82BE82AA81638163",
       "source_sha256": "AA61A76FBC42401B184616F01DA01C6605BB1D99689CBAB26F5281CF1A49AF7A",
-      "translation": "아르마를 모시기 위해 레다 족의 선조가\\n쌓은 것이라고 전해지고 있지만……",
+      "translation": "알마를 모시기 위해 레다 족의 선조가\\n쌓은 것이라고 전해지고 있지만……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: japanese_ruby_removed",
       "allow_markup_change": true
@@ -10543,7 +10543,7 @@
       "source_text": "どちらも、母なる精霊神<ruby:-33,2>ア   ル   マ<endruby>に\\n授かったものだと言われています。",
       "source_raw_hex": "82C782BF82E782E0814195EA82C882E990B897EC905F3C727562793A2D33332C323E8341202020838B202020837D3C656E64727562793E82C95C6E8EF682A982C182BD82E082CC82BE82C68CBE82ED82EA82C482A282DC82B78142",
       "source_sha256": "B1D39874C666D57AF3FACAAA289F410C03783F3135ABFC1DB537E8ADECD3F62F",
-      "translation": "모두 정령신(아르마)에게\\n물려받은 것이라고 해요.",
+      "translation": "모두 정령신(알마)에게\\n물려받은 것이라고 해요.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: japanese_ruby_removed | shared-payload review 043 C5E4333B710F#6",
       "allow_markup_change": true
@@ -10917,7 +10917,7 @@
       "source_text": "もうすぐ<color:0xffBBFDC2>アルマの祝祭<color:>という\\n年に一度の収穫祭があるので\\nそれまでには間に合わせたくて……",
       "source_raw_hex": "82E082A482B782AE3C636F6C6F723A307866664242464443323E8341838B837D82CC8F6A8DD53C636F6C6F723A3E82C682A282A45C6E944E82C988EA937882CC8EFB8A6E8DD582AA82A082E982CC82C55C6E82BB82EA82DC82C582C982CD8AD482C98D8782ED82B982BD82AD82C481638163",
       "source_sha256": "8B9A245049182CC806F71254F6BFA8B56A7C7214707333CE92B9146E19DA8B48",
-      "translation": "얼마 있으면 <color:0xffBBFDC2>아르마의 축제<color:>라고 하는\\n1년에 한번있는 수확제를 하니까\\n그때까지 해두고 싶어서……",
+      "translation": "얼마 있으면 <color:0xffBBFDC2>알마의 축제<color:>라고 하는\\n1년에 한번있는 수확제를 하니까\\n그때까지 해두고 싶어서……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -10966,7 +10966,7 @@
       "source_text": "もうすぐ<color:0xffBBFDC2>アルマの祝祭<color:>という\\n年に一度の収穫祭があるんです。",
       "source_raw_hex": "82E082A482B782AE3C636F6C6F723A307866664242464443323E8341838B837D82CC8F6A8DD53C636F6C6F723A3E82C682A282A45C6E944E82C988EA937882CC8EFB8A6E8DD582AA82A082E982F182C582B78142",
       "source_sha256": "40219A6D8F0A551BBECC11BA3509A2DB9C59956AFA90A37BC789914C941EB102",
-      "translation": "조금 있으면 <color:0xffBBFDC2>아르마의 축제<color:>라고 하는\\n1년에 한번있는 수확제가 열려요.",
+      "translation": "조금 있으면 <color:0xffBBFDC2>알마의 축제<color:>라고 하는\\n1년에 한번있는 수확제가 열려요.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -11193,7 +11193,7 @@
       "source_text": "この鏡は、\\n代々の巫女に受け継がれたもので\\nアルマの魂が宿ると言われています。",
       "source_raw_hex": "82B182CC8BBE82CD81415C6E91E3815882CC9BDE8F9782C98EF382AF8C7082AA82EA82BD82E082CC82C55C6E8341838B837D82CC8DB082AA8F6882E982C68CBE82ED82EA82C482A282DC82B78142",
       "source_sha256": "3696921E88C1258227F8D0BE5C72E5D60DADE5651D0FDD7AB442C96CF41E8BD3",
-      "translation": "이 거울은\\n무녀 대대로 전해져 내려온것이고\\n아르마의 영혼이 담겨 있다고 해요.",
+      "translation": "이 거울은\\n무녀 대대로 전해져 내려온것이고\\n알마의 영혼이 담겨 있다고 해요.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -13485,7 +13485,7 @@
       "source_text": "この鏡は、\\n代々の巫女に受け継がれたもので\\nアルマの魂が宿ると言われています。",
       "source_raw_hex": "82B182CC8BBE82CD81415C6E91E3815882CC9BDE8F9782C98EF382AF8C7082AA82EA82BD82E082CC82C55C6E8341838B837D82CC8DB082AA8F6882E982C68CBE82ED82EA82C482A282DC82B78142",
       "source_sha256": "3696921E88C1258227F8D0BE5C72E5D60DADE5651D0FDD7AB442C96CF41E8BD3",
-      "translation": "이 거울은\\n무녀 대대로 전해져 내려온것이고\\n아르마의 영혼이 담겨 있다고 해요.",
+      "translation": "이 거울은\\n무녀 대대로 전해져 내려온것이고\\n알마의 영혼이 담겨 있다고 해요.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -14671,7 +14671,7 @@
       "source_text": "どちらも、母なる精霊神<ruby:-33,2>ア   ル   マ<endruby>に\\n授かったものだと言われています。",
       "source_raw_hex": "82C782BF82E782E0814195EA82C882E990B897EC905F3C727562793A2D33332C323E8341202020838B202020837D3C656E64727562793E82C95C6E8EF682A982C182BD82E082CC82BE82C68CBE82ED82EA82C482A282DC82B78142",
       "source_sha256": "B1D39874C666D57AF3FACAAA289F410C03783F3135ABFC1DB537E8ADECD3F62F",
-      "translation": "모두 정령신(아르마)에게\\n물려받은 것이라고 해요.",
+      "translation": "모두 정령신(알마)에게\\n물려받은 것이라고 해요.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: japanese_ruby_removed | shared-payload review 043 C5E4333B710F#6",
       "allow_markup_change": true
@@ -14720,7 +14720,7 @@
       "source_text": "アルマの神像があるということは\\nひょっとして《ゼメスの聖地》……",
       "source_raw_hex": "8341838B837D82CC905F919C82AA82A082E982C682A282A482B182C682CD5C6E82D082E582C182C682B582C48173835B8381835882CC90B9926E817481638163",
       "source_sha256": "57026085AA4DBDC5801AB920CA9C5A096A3BE4B720C21C9F47E049AC964E6A20",
-      "translation": "아르마의 신상이 있다는건\\n혹시 '제메스의 성지'……",
+      "translation": "알마의 신상이 있다는건\\n혹시 '제메스의 성지'……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -15776,7 +15776,7 @@
       "source_text": "大いなるアルマの御魂よ……",
       "source_raw_hex": "91E582A282C882E98341838B837D82CC8CE48DB082E681638163",
       "source_sha256": "C2CEED4B0A94B4379BD4EE57C2DFE85E73E56211CF713F8414484E307F35DFD9",
-      "translation": "거대한 아르마의 혼이여……",
+      "translation": "거대한 알마의 혼이여……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -16678,7 +16678,7 @@
       "source_text": "この鏡は、\\n代々の巫女に受け継がれたもので\\nアルマの魂が宿ると言われています。",
       "source_raw_hex": "82B182CC8BBE82CD81415C6E91E3815882CC9BDE8F9782C98EF382AF8C7082AA82EA82BD82E082CC82C55C6E8341838B837D82CC8DB082AA8F6882E982C68CBE82ED82EA82C482A282DC82B78142",
       "source_sha256": "3696921E88C1258227F8D0BE5C72E5D60DADE5651D0FDD7AB442C96CF41E8BD3",
-      "translation": "이 거울은\\n대대로 무녀에게 전해져 온 것으로\\n아르마의 영혼이 깃든다고 해요.",
+      "translation": "이 거울은\\n대대로 무녀에게 전해져 온 것으로\\n알마의 영혼이 깃든다고 해요.",
       "status": "override",
       "notes": "exact-source draft propagation 033"
     },
@@ -16774,7 +16774,7 @@
       "source_text": "優しきアルマの祝福が\\n\\x1さんにありますように……",
       "source_raw_hex": "974482B582AB8341838B837D82CC8F6A959F82AA5C6E5C783182B382F182C982A082E882DC82B782E682A482C981638163",
       "source_sha256": "92801157B3F0CDA4B2D93CF6582C99BD761654594F71C31CCC431CE9AFCC6D47",
-      "translation": "부디 아르마의 축복이\\n아돌 씨와 함께 하기를……",
+      "translation": "부디 알마의 축복이\\n아돌 씨와 함께 하기를……",
       "status": "override",
       "notes": "069 미번역 dialogue 초벌 번역 (ambiguous_selected)",
       "allow_player_name_expansion": true
@@ -16936,7 +16936,7 @@
       "source_text": "優しきアルマの祝福が\\n\\x1さんにありますように……",
       "source_raw_hex": "974482B582AB8341838B837D82CC8F6A959F82AA5C6E5C783182B382F182C982A082E882DC82B782E682A482C981638163",
       "source_sha256": "92801157B3F0CDA4B2D93CF6582C99BD761654594F71C31CCC431CE9AFCC6D47",
-      "translation": "부디 아르마의 축복이\\n아돌 씨와 함께 하기를……",
+      "translation": "부디 알마의 축복이\\n아돌 씨와 함께 하기를……",
       "status": "override",
       "notes": "069 미번역 dialogue 초벌 번역 (ambiguous_selected)",
       "allow_player_name_expansion": true
@@ -17065,7 +17065,7 @@
       "source_text": "白き肌の娘にのみ現れる\\nアルマに連なる神秘の力……",
       "source_raw_hex": "949282AB94A782CC96BA82C982CC82DD8CBB82EA82E95C6E8341838B837D82C9984182C882E9905F94E982CC97CD81638163",
       "source_sha256": "BC74D7A8B9249416C34737F3CF6A8B1CA6DB478C160773A9BF4384F304A9F2BE",
-      "translation": "흰 피부의 소녀에게만 나타나는\\n아르마와 이어진 신비한 힘……",
+      "translation": "흰 피부의 소녀에게만 나타나는\\n알마와 이어진 신비한 힘……",
       "status": "override",
       "notes": "069 미번역 dialogue 초벌 번역 (manual)"
     },
@@ -17386,7 +17386,7 @@
       "source_text": "優しきアルマの祝福が\\n\\x1さんにありますように……",
       "source_raw_hex": "974482B582AB8341838B837D82CC8F6A959F82AA5C6E5C783182B382F182C982A082E882DC82B782E682A482C981638163",
       "source_sha256": "92801157B3F0CDA4B2D93CF6582C99BD761654594F71C31CCC431CE9AFCC6D47",
-      "translation": "부디 아르마의 축복이\\n아돌 씨와 함께 하기를……",
+      "translation": "부디 알마의 축복이\\n아돌 씨와 함께 하기를……",
       "status": "override",
       "notes": "069 미번역 dialogue 초벌 번역 (ambiguous_selected)",
       "allow_player_name_expansion": true
@@ -17580,7 +17580,7 @@
       "source_text": "アルマが眠るゼメス島に\\n参詣<ruby:-20,2>さんけい<endruby>するための道だったそうです。",
       "source_raw_hex": "8341838B837D82AA96B082E9835B83818358938782C95C6E8E518C773C727562793A2D32302C323E82B382F182AF82A23C656E64727562793E82B782E982BD82DF82CC93B982BE82C182BD82BB82A482C582B78142",
       "source_sha256": "C2387533D7204EB4DF9FADFDFC61D1B6FA0C8AF597DC1B944A679DCF139EE251",
-      "translation": "아르마가 잠든 제메스섬에\\n참배하러 가는 길이었다고 해요.",
+      "translation": "알마가 잠든 제메스섬에\\n참배하러 가는 길이었다고 해요.",
       "status": "override",
       "notes": "069 미번역 dialogue 초벌 번역 (manual)"
     },
@@ -17708,7 +17708,7 @@
       "source_text": "優しきアルマの祝福が\\n\\x1さんにありますように……",
       "source_raw_hex": "974482B582AB8341838B837D82CC8F6A959F82AA5C6E5C783182B382F182C982A082E882DC82B782E682A482C981638163",
       "source_sha256": "92801157B3F0CDA4B2D93CF6582C99BD761654594F71C31CCC431CE9AFCC6D47",
-      "translation": "부디 아르마의 축복이\\n아돌 씨와 함께 하기를……",
+      "translation": "부디 알마의 축복이\\n아돌 씨와 함께 하기를……",
       "status": "override",
       "notes": "069 미번역 dialogue 초벌 번역 (ambiguous_selected)",
       "allow_player_name_expansion": true
@@ -18247,7 +18247,7 @@
       "source_text": "精霊神<ruby:-33,2>ア   ル   マ<endruby>の末裔<ruby:-15,2>す   え<endruby>たる巫女としての立場を。",
       "source_raw_hex": "90B897EC905F3C727562793A2D33332C323E8341202020838B202020837D3C656E64727562793E82CC9696E5E13C727562793A2D31352C323E82B720202082A63C656E64727562793E82BD82E99BDE8F9782C682B582C482CC97A78FEA82F08142",
       "source_sha256": "11F57518B0D8136486F257FD382D7FCE0F6055526A5064BD974F19BD8F947B64",
-      "translation": "정령신(아르마)의 후예인 무녀의 입장을.",
+      "translation": "정령신(알마)의 후예인 무녀의 입장을.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: japanese_ruby_removed",
       "allow_markup_change": true
@@ -19234,7 +19234,7 @@
       "source_text": "どうか聞いて欲しい。\\nアルマと、匣と、鍵の話を……",
       "source_raw_hex": "82C782A482A995B782A282C4977E82B582A281425C6E8341838B837D82C6814199B882C681418CAE82CC986282F081638163",
       "source_sha256": "D1C266BDB79170FCC163187E45B8BC2FBE25F88EAC2ED47D0BC176B3D8F0758B",
-      "translation": "부디 들어주면 좋겠네.\\n아르마와, 상자와, 열쇠의 이야기를……",
+      "translation": "부디 들어주면 좋겠네.\\n알마와, 상자와, 열쇠의 이야기를……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -19282,7 +19282,7 @@
       "source_text": "我らが崇<ruby:0,2>あが<endruby>めるアルマは\\nそこから、このカナンの地へと降臨した。",
       "source_raw_hex": "89E482E782AA90923C727562793A302C323E82A082AA3C656E64727562793E82DF82E98341838B837D82CD5C6E82BB82B182A982E7814182B182CC834A8369839382CC926E82D682C68D7E97D582B582BD8142",
       "source_sha256": "28732A91DDE300DB0F3499ADC20071E1F55121621BB048281560672EF96C509D",
-      "translation": "우리가 모시고 있는 아르마는\\n그곳에서 이 카난의 땅에 강림했다네.",
+      "translation": "우리가 모시고 있는 알마는\\n그곳에서 이 카난의 땅에 강림했다네.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: japanese_ruby_removed",
       "allow_markup_change": true
@@ -19316,7 +19316,7 @@
       "source_text": "そして、我らレダの祖先もまた\\nアルマの忠実なる民として\\n《匣》の守護に携<ruby:-4,2>たずさ<endruby>わっていた……",
       "source_raw_hex": "82BB82B582C4814189E482E7838C835F82CC916390E682E082DC82BD5C6E8341838B837D82CC92898EC082C882E996AF82C682B582C45C6E817399B8817482CC8EE78CEC82C98C673C727562793A2D342C323E82BD82B882B33C656E64727562793E82ED82C182C482A282BD81638163",
       "source_sha256": "CBE711B59FA1EFB644EA5C9F22D86FC7F47324134D737513CAE88C411A6596E0",
-      "translation": "그리고 우리들 레다의 선조도 역시\\n아르마의 충실한 백성으로서\\n'상자'의 수호를 맡고 있었다....",
+      "translation": "그리고 우리들 레다의 선조도 역시\\n알마의 충실한 백성으로서\\n'상자'의 수호를 맡고 있었다....",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: japanese_ruby_removed",
       "allow_markup_change": true
@@ -19349,7 +19349,7 @@
       "source_text": "我らと同じくアルマの民であった\\n尾のない者たちの一派が\\n彼女から大切なものを盗んだのだ。",
       "source_raw_hex": "89E482E782C693AF82B682AD8341838B837D82CC96AF82C582A082C182BD5C6E94F682CC82C882A28ED282BD82BF82CC88EA946882AA5C6E94DE8F9782A982E791E590D882C882E082CC82F0939082F182BE82CC82BE8142",
       "source_sha256": "064E17FBBD97C945377D7A0A2BF997AC8DD3FFE51D11718ED60B06168E61DA93",
-      "translation": "우리들과 같은 아르마의 백성이었던\\n꼬리 없는 자들의 일파가\\n그녀에게서 소중한 것을 훔쳤다네.",
+      "translation": "우리들과 같은 알마의 백성이었던\\n꼬리 없는 자들의 일파가\\n그녀에게서 소중한 것을 훔쳤다네.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -19429,7 +19429,7 @@
       "source_text": "民に裏切られたアルマは嘆きながら\\n《黒の鍵》に代わる三本の鍵を造り……",
       "source_raw_hex": "96AF82C997A090D882E782EA82BD8341838B837D82CD925182AB82C882AA82E75C6E81738D9582CC8CAE817482C991E382ED82E98E4F967B82CC8CAE82F091A282E881638163",
       "source_sha256": "87C936EB4A6B7A6DE678D00EFB76A569A4E984B152B0C60CC35E731619D6639E",
-      "translation": "백성에게 배신당한 아르마는 한탄하면서\\n'검은 열쇠'를 대신하는 세 개의 열쇠를 만들어……",
+      "translation": "백성에게 배신당한 알마는 한탄하면서\\n'검은 열쇠'를 대신하는 세 개의 열쇠를 만들어……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -19478,7 +19478,7 @@
       "source_text": "力を使い果たしたアルマは昇華し、\\nその亡骸は封印のための要石<ruby:-24,2>かなめいし<endruby>となった。",
       "source_raw_hex": "97CD82F08E6782A289CA82BD82B582BD8341838B837D82CD8FB889D882B581415C6E82BB82CC96538A5B82CD959588F382CC82BD82DF82CC977690CE3C727562793A2D32342C323E82A982C882DF82A282B53C656E64727562793E82C682C882C182BD8142",
       "source_sha256": "8B33752B724C5D09C19068B68810F43BBB2C7F0C77AF84988C8F12FBE4441A8E",
-      "translation": "힘을 다 써버린 아르마는 승화했고\\n그 유해는 봉인을 위한 요석이 되었다네.",
+      "translation": "힘을 다 써버린 알마는 승화했고\\n그 유해는 봉인을 위한 요석이 되었다네.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: japanese_ruby_removed",
       "allow_markup_change": true
@@ -19543,7 +19543,7 @@
       "source_text": "やつは、アルマから力を授かった\\n巫女の血筋──すなわちイーシャを使って\\n《匣》を完全に我が物にするつもりだ。",
       "source_raw_hex": "82E282C282CD81418341838B837D82A982E797CD82F08EF682A982C182BD5C6E9BDE8F9782CC8C8C8BD8849F849F82B782C882ED82BF8343815B8356838382F08E6782C182C45C6E817399B8817482F08AAE915382C989E482AA95A882C982B782E982C282E082E882BE8142",
       "source_sha256": "08FC4CF6566D8B562F1929A44A899D9C600EE0A289F4294A663BC145E3286AE2",
-      "translation": "놈은, 아르마에게 힘을 받은\\n무녀의 혈통인 이샤를 이용해\\n'상자'를 완전히 자기것으로 할 생각일 것일세.",
+      "translation": "놈은, 알마에게 힘을 받은\\n무녀의 혈통인 이샤를 이용해\\n'상자'를 완전히 자기것으로 할 생각일 것일세.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -19624,7 +19624,7 @@
       "source_text": "そして、都の最下層には\\nアルマが《匣》を封じる時に通った\\n暗黒の回廊が広がっているという。",
       "source_raw_hex": "82BB82B582C48141937382CC8DC589BA917782C982CD5C6E8341838B837D82AA817399B8817482F0959582B682E98E9E82C992CA82C182BD5C6E88C38D9582CC89F1984C82AA8D4C82AA82C182C482A282E982C682A282A48142",
       "source_sha256": "F2945EE3533C974CB0C63510B44C63BA04E949820364E34F2C331748D5C8EE81",
-      "translation": "그리고, 도시의 최하층에는\\n아르마가 '상자'를 봉인할때 지나간\\n암흑의 회랑이 펼쳐져 있다고 하네.",
+      "translation": "그리고, 도시의 최하층에는\\n알마가 '상자'를 봉인할때 지나간\\n암흑의 회랑이 펼쳐져 있다고 하네.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -19673,7 +19673,7 @@
       "source_text": "俺が渡した事も含めて……\\nアルマの導きがあったに違いない。",
       "source_raw_hex": "89B482AA936E82B582BD8E9682E08ADC82DF82C4816381635C6E8341838B837D82CC93B182AB82AA82A082C182BD82C988E182A282C882A28142",
       "source_sha256": "3036943BD4A90888045D056CCD7142EF74DD2DF5FD9344762D99681939888488",
-      "translation": "내가 넘겨준 일을 포함해서……\\n아르마의 인도가 있음에 틀림없을걸세.",
+      "translation": "내가 넘겨준 일을 포함해서……\\n알마의 인도가 있음에 틀림없을걸세.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -19771,7 +19771,7 @@
       "source_text": "<scale:0.8>（さすがはアルマの巫女……\\n　俺が話したことなどお見通しだったか。）",
       "source_raw_hex": "3C7363616C653A302E383E816982B382B782AA82CD8341838B837D82CC9BDE8F97816381635C6E814089B482AA986282B582BD82B182C682C882C782A88CA992CA82B582BE82C182BD82A98142816A",
       "source_sha256": "61FA5A5ACBD9861D5FEA7381F7A624D31404EAD2CF5F2432A1736C4BE6964DBC",
-      "translation": "<scale:0.8>(역시 아르마의 무녀……\\n내가 이야기한 것들은 이미 알고 있었구만.)",
+      "translation": "<scale:0.8>(역시 알마의 무녀……\\n내가 이야기한 것들은 이미 알고 있었구만.)",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -20275,7 +20275,7 @@
       "source_text": "アルマの祝祭じゃ、\\n戦士たちの腕比べも催されるんだよ。",
       "source_raw_hex": "8341838B837D82CC8F6A8DD582B682E181415C6E90ED8E6D82BD82BF82CC987294E482D782E08DC382B382EA82E982F182BE82E68142",
       "source_sha256": "B84B6B4AB30B604A9CDD1577EEFB86F226DEF4C87E2EB198B83E0D437890B84D",
-      "translation": "아르마의 축제에선\\n전사들의 힘겨루기도 개최된다네.",
+      "translation": "알마의 축제에선\\n전사들의 힘겨루기도 개최된다네.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -20741,7 +20741,7 @@
       "source_text": "ここに住むレダの者は\\nアルマの導きと伝統ある規律によって\\n日々の生活を送っている。",
       "source_raw_hex": "82B182B182C98F5A82DE838C835F82CC8ED282CD5C6E8341838B837D82CC93B182AB82C69360939D82A082E98B4B97A582C982E682C182C45C6E93FA815882CC90B68A8882F0919782C182C482A282E98142",
       "source_sha256": "AB324890FCFCCDC8D7A01125ACF2B7E3CB640782A6AE104804C9636C2C86A904",
-      "translation": "이곳에 사는 레다 족 사람은\\n아르마의 인도와 전통있는 규율에 의해\\n생활해오고 있지.",
+      "translation": "이곳에 사는 레다 족 사람은\\n알마의 인도와 전통있는 규율에 의해\\n생활해오고 있지.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -21410,7 +21410,7 @@
       "source_text": "祖母さまが若い頃は、\\nレダ族とエレシア人はアルマのもと、\\nともに暮らしていたそうです……",
       "source_raw_hex": "916395EA82B382DC82AA8EE182A28DA082CD81415C6E838C835F91B082C68347838C83568341906C82CD8341838B837D82CC82E082C681415C6E82C682E082C995E982E782B582C482A282BD82BB82A482C582B781638163",
       "source_sha256": "6EC8D80832A7AFA50B973A988072D3F5A943B825C9DB355330214E3B65596BD4",
-      "translation": "할머님이 젊으셨을 때에는\\n레다 족과 에레시아 인이 아르마의 밑에서\\n함께 살아왔다고 해요……",
+      "translation": "할머님이 젊으셨을 때에는\\n레다 족과 에레시아 인이 알마의 밑에서\\n함께 살아왔다고 해요……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -21426,7 +21426,7 @@
       "source_text": "祖母<ruby:-15,2>ば   ば<endruby>さまが若い頃は、\\nレダ族とエレシア人<ruby:0,2>びと<endruby>はアルマのもと、\\nともに暮らしていたそうです……",
       "source_raw_hex": "916395EA3C727562793A2D31352C323E82CE20202082CE3C656E64727562793E82B382DC82AA8EE182A28DA082CD81415C6E838C835F91B082C68347838C83568341906C3C727562793A302C323E82D182C63C656E64727562793E82CD8341838B837D82CC82E082C681415C6E82C682E082C995E982E782B582C482A282BD82BB82A482C582B781638163",
       "source_sha256": "D671AF4CE837A5D72076900821AB89579761691CD8CF75BA0187CCC2696889EE",
-      "translation": "할머님이 젊으셨을 때에는\\n레다 족과 에레시아 인이 아르마의 밑에서\\n함께 살아왔다고 해요……",
+      "translation": "할머님이 젊으셨을 때에는\\n레다 족과 에레시아 인이 알마의 밑에서\\n함께 살아왔다고 해요……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: japanese_ruby_removed",
       "allow_markup_change": true
@@ -22271,7 +22271,7 @@
       "source_text": "今日もたくさん採れたわ。\\nアルマ様に感謝しなくちゃね。",
       "source_raw_hex": "8DA193FA82E082BD82AD82B382F18DCC82EA82BD82ED81425C6E8341838B837D976C82C98AB48ED382B582C882AD82BF82E182CB8142",
       "source_sha256": "5D0D3765DC6A46E84D94E0C36DFB44F247143C2DEAAA9FA4A353A022B8DB4E43",
-      "translation": "오늘도 많이 캤어요.\\n아르마님한테 감사해야지.",
+      "translation": "오늘도 많이 캤어요.\\n알마님한테 감사해야지.",
       "status": "override",
       "notes": "069 미번역 dialogue 초벌 번역 (propagated)"
     },
@@ -22608,7 +22608,7 @@
       "source_text": "今日もたくさん採れたわ。\\nアルマ様に感謝しなくちゃね。",
       "source_raw_hex": "8DA193FA82E082BD82AD82B382F18DCC82EA82BD82ED81425C6E8341838B837D976C82C98AB48ED382B582C882AD82BF82E182CB8142",
       "source_sha256": "5D0D3765DC6A46E84D94E0C36DFB44F247143C2DEAAA9FA4A353A022B8DB4E43",
-      "translation": "오늘도 많이 캤어요.\\n아르마님한테 감사해야지.",
+      "translation": "오늘도 많이 캤어요.\\n알마님한테 감사해야지.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -24576,7 +24576,7 @@
       "source_text": "アルマさまのおつげがあるまで\\nノイはお手伝いしかできないの。",
       "source_raw_hex": "8341838B837D82B382DC82CC82A882C282B082AA82A082E982DC82C55C6E836D834382CD82A88EE8936082A282B582A982C582AB82C882A282CC8142",
       "source_sha256": "DC8AD429C7F37EE5968EC0F61C1FB074852C05FE2E0137F594CA1D8DD6902929",
-      "translation": "아르마님의 계시가 있을때까지\\n노이는 일 도와주는것 밖에 못해.",
+      "translation": "알마님의 계시가 있을때까지\\n노이는 일 도와주는것 밖에 못해.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -24624,7 +24624,7 @@
       "source_text": "でも、アルマさまの\\nおつげがあるまでは\\nやらせてもらえないんだって。",
       "source_raw_hex": "82C582E081418341838B837D82B382DC82CC5C6E82A882C282B082AA82A082E982DC82C582CD5C6E82E282E782B982C482E082E782A682C882A282F182BE82C182C48142",
       "source_sha256": "66B83FC8E5B204BBBBDF9515BA66263865409BB13A0146415E2D6161D65FD0FB",
-      "translation": "하지만 아르마님의\\n계시가 있을때까지는\\n일을 못한대.",
+      "translation": "하지만 알마님의\\n계시가 있을때까지는\\n일을 못한대.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -25445,7 +25445,7 @@
       "source_text": "おぬしはエレシア人なのに\\nまるでアルマが遣<ruby:0,2>つか<endruby>わした\\n戦士のように思えるわい……",
       "source_raw_hex": "82A882CA82B582CD8347838C83568341906C82C882CC82C95C6E82DC82E982C58341838B837D82AA8CAD3C727562793A302C323E82C282A93C656E64727562793E82ED82B582BD5C6E90ED8E6D82CC82E682A482C98E7682A682E982ED82A281638163",
       "source_sha256": "93E7496CD8EB8CE4EF58ABF4C05114EE39B54394FBD7D60B98F56149A5875FF0",
-      "translation": "자네는 에레시아 인이지만\\n마치 아르마가 사자로 보낸\\n전사처럼 보이는구먼……",
+      "translation": "자네는 에레시아 인이지만\\n마치 알마가 사자로 보낸\\n전사처럼 보이는구먼……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: japanese_ruby_removed",
       "allow_markup_change": true
@@ -25560,7 +25560,7 @@
       "source_text": "アルマの巫女は代々\\n白き肌の娘によって受け継がれる。",
       "source_raw_hex": "8341838B837D82CC9BDE8F9782CD91E381585C6E949282AB94A782CC96BA82C982E682C182C48EF382AF8C7082AA82EA82E98142",
       "source_sha256": "671A796DE85879A18B53BC029CD79FE9FB358B19C0AD9309DC73C8C9ED65A4C2",
-      "translation": "아르마의 무녀는 대대로\\n흰색 피부의 소녀에게 이어 내려오고 있다네, ",
+      "translation": "알마의 무녀는 대대로\\n흰색 피부의 소녀에게 이어 내려오고 있다네, ",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -25753,7 +25753,7 @@
       "source_text": "クアテラの北にある島、\\nゼメスには偉大なる精霊神<ruby:-33,2>ア   ル   マ<endruby>が\\n眠っておられるそうじゃ。",
       "source_raw_hex": "834E83418365838982CC966B82C982A082E9938781415C6E835B8381835882C982CD88CC91E582C882E990B897EC905F3C727562793A2D33332C323E8341202020838B202020837D3C656E64727562793E82AA5C6E96B082C182C482A882E782EA82E982BB82A482B682E18142",
       "source_sha256": "A543F4B9B261C5141259AB2BB6D4F7EB5B96D14C2773D03227E722E0E9737EC3",
-      "translation": "쿠아테라의 북쪽에 있는 섬\\n제메스에는 위대한 정령신(아르마)가\\n잠들어 있다고 하지.",
+      "translation": "쿠아테라의 북쪽에 있는 섬\\n제메스에는 위대한 정령신(알마)가\\n잠들어 있다고 하지.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: japanese_ruby_removed",
       "allow_markup_change": true
@@ -25867,7 +25867,7 @@
       "source_text": "ワシらは海や森と……\\n精霊神<ruby:-33,2>ア   ル   マ<endruby>と共に在ることを望んでいる。",
       "source_raw_hex": "838F835682E782CD8A4382E2905882C6816381635C6E90B897EC905F3C727562793A2D33332C323E8341202020838B202020837D3C656E64727562793E82C68BA482C98DDD82E982B182C682F0965D82F182C582A282E98142",
       "source_sha256": "859BA721E5C00E934733415BEDE65B556D359A08B64C8F53E30B1E92FA5FB493",
-      "translation": "우리들은 바다나 숲과……\\n정령신(아르마)와 함께 있는걸 바라고 있지.",
+      "translation": "우리들은 바다나 숲과……\\n정령신(알마)와 함께 있는걸 바라고 있지.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: japanese_ruby_removed",
       "allow_markup_change": true
@@ -27700,7 +27700,7 @@
       "source_text": "触れることでアルマの加護を\\n得ることができると言われている。",
       "source_raw_hex": "904782EA82E982B182C682C58341838B837D82CC89C18CEC82F05C6E93BE82E982B182C682AA82C582AB82E982C68CBE82ED82EA82C482A282E98142",
       "source_sha256": "EF6980AE34F45DEE7431DEF53BC0601449230BC0D577927C251F892C5B08CB5E",
-      "translation": "접촉하면 아르마의 가호를\\n얻을 수 있다고 전해지지.",
+      "translation": "접촉하면 알마의 가호를\\n얻을 수 있다고 전해지지.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -32740,7 +32740,7 @@
       "source_text": "アルマ様のお祭りは\\n一晩夜通しで行われるの。",
       "source_raw_hex": "8341838B837D976C82CC82A88DD582E882CD5C6E88EA94D396E992CA82B582C58D7382ED82EA82E982CC8142",
       "source_sha256": "A7564488DF40568D3A78E0F07D0E3966EFC3F6238B40C047A1432FC9456DC2FE",
-      "translation": "아르마님의 축제는\\n하룻밤 안에 행해져서.",
+      "translation": "알마님의 축제는\\n하룻밤 안에 행해져서.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -36014,7 +36014,7 @@
       "source_text": "アルマ像と邂逅した",
       "source_raw_hex": "8341838B837D919C82C6E7AEE79082B582BD",
       "source_sha256": "B362282D86FF4C44932FD1151C50BECCE6D7F58EA6629B5EF10B91E19BB1E896",
-      "translation": "아르마 씨와 만났다",
+      "translation": "알마 씨와 만났다",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -36801,7 +36801,7 @@
       "source_text": "*アルマ像との邂逅",
       "source_raw_hex": "2A8341838B837D919C82C682CCE7AEE790",
       "source_sha256": "F9A158336EEECD0E9A8081081FF890FB999C40B633B3FEB8F9F0B33290779C5E",
-      "translation": "*아르마 씨와 만남",
+      "translation": "*알마 씨와 만남",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -38917,7 +38917,7 @@
       "source_text": "アルマ像と邂逅した",
       "source_raw_hex": "8341838B837D919C82C6E7AEE79082B582BD",
       "source_sha256": "B362282D86FF4C44932FD1151C50BECCE6D7F58EA6629B5EF10B91E19BB1E896",
-      "translation": "아르마 씨와 만났다",
+      "translation": "알마 씨와 만났다",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -40709,7 +40709,7 @@
       "source_text": "アルマと邂逅した後",
       "source_raw_hex": "8341838B837D82C6E7AEE79082B582BD8CE3",
       "source_sha256": "76B920D55E6EB46A2FD2C44CBA77797828823C030D188EC45BF74403F6F2BA25",
-      "translation": "아르마와 만난 후",
+      "translation": "알마와 만난 후",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -41829,7 +41829,7 @@
       "source_text": "アルマの墳墓",
       "source_raw_hex": "8341838B837D82CC95AD95E6",
       "source_sha256": "21514E7D4C0AF8E8CCC4BFEF661F2BAF6286D5BCCBAA73151C83DF6FA58DCD6C",
-      "translation": "아르마 분묘",
+      "translation": "알마 분묘",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -42231,7 +42231,7 @@
       "source_text": "きっと、聖地のアルマが\\n守って下さっているのでしょう。",
       "source_raw_hex": "82AB82C182C6814190B9926E82CC8341838B837D82AA5C6E8EE782C182C489BA82B382C182C482A282E982CC82C582B582E582A48142",
       "source_sha256": "18012FD5D779620D854517255CFE90871DC230E46AA807E2D81DC1F2328D849F",
-      "translation": "아마, 성지의 아르마가\\n지켜 주고 계시는 거겠지요.",
+      "translation": "아마, 성지의 알마가\\n지켜 주고 계시는 거겠지요.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -42441,7 +42441,7 @@
       "source_text": "この鏡は、\\n代々の巫女に受け継がれたもので\\nアルマの魂が宿ると言われています。",
       "source_raw_hex": "82B182CC8BBE82CD81415C6E91E3815882CC9BDE8F9782C98EF382AF8C7082AA82EA82BD82E082CC82C55C6E8341838B837D82CC8DB082AA8F6882E982C68CBE82ED82EA82C482A282DC82B78142",
       "source_sha256": "3696921E88C1258227F8D0BE5C72E5D60DADE5651D0FDD7AB442C96CF41E8BD3",
-      "translation": "이 거울은, \\n선대의 무녀에게 계승된 것으로\\n아르마의 영혼이 머문다고 전해지고 있습니다.",
+      "translation": "이 거울은, \\n선대의 무녀에게 계승된 것으로\\n알마의 영혼이 머문다고 전해지고 있습니다.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -42537,7 +42537,7 @@
       "source_text": "優しきアルマの祝福が\\n\\x1さんにありますように……",
       "source_raw_hex": "974482B582AB8341838B837D82CC8F6A959F82AA5C6E5C783182B382F182C982A082E882DC82B782E682A482C981638163",
       "source_sha256": "92801157B3F0CDA4B2D93CF6582C99BD761654594F71C31CCC431CE9AFCC6D47",
-      "translation": "부디 아르마의 축복이\\n아돌 씨와 함께 하기를……",
+      "translation": "부디 알마의 축복이\\n아돌 씨와 함께 하기를……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: player_name_expansion",
       "allow_player_name_expansion": true
@@ -42702,7 +42702,7 @@
       "source_text": "優しきアルマの祝福が\\n\\x1さんにありますように……",
       "source_raw_hex": "974482B582AB8341838B837D82CC8F6A959F82AA5C6E5C783182B382F182C982A082E882DC82B782E682A482C981638163",
       "source_sha256": "92801157B3F0CDA4B2D93CF6582C99BD761654594F71C31CCC431CE9AFCC6D47",
-      "translation": "부디 아르마의 축복이\\n아돌 씨와 함께 하기를……",
+      "translation": "부디 알마의 축복이\\n아돌 씨와 함께 하기를……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: player_name_expansion",
       "allow_player_name_expansion": true
@@ -43787,7 +43787,7 @@
       "source_text": "ここの水は、精霊神<ruby:-33,2>ア   ル   マ<endruby>の息吹が\\n込められていると言われていて\\n儀式や治療などに使われるんです。",
       "source_raw_hex": "82B182B182CC908582CD814190B897EC905F3C727562793A2D33332C323E8341202020838B202020837D3C656E64727562793E82CC91A7908182AA5C6E8D9E82DF82E782EA82C482A282E982C68CBE82ED82EA82C482A282C45C6E8B568EAE82E28EA197C382C882C782C98E6782ED82EA82E982F182C582B78142",
       "source_sha256": "6CED1C3890E539C6C6814037348193C5B3B72526EA96F8FCB7C83AEF03EF00C0",
-      "translation": "이곳의 물은 정령신(아르마)의\\n숨결이 깃들어 있다고 전해지며, \\n의식이나 치료 등에 사용되지요.",
+      "translation": "이곳의 물은 정령신(알마)의\\n숨결이 깃들어 있다고 전해지며, \\n의식이나 치료 등에 사용되지요.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: japanese_ruby_removed",
       "allow_markup_change": true
@@ -47416,7 +47416,7 @@
       "source_text": "かつてアルマは《匣》を封じるため\\nこの回廊を通り抜けたそうです。",
       "source_raw_hex": "82A982C282C48341838B837D82CD817399B8817482F0959582B682E982BD82DF5C6E82B182CC89F1984C82F092CA82E894B282AF82BD82BB82A482C582B78142",
       "source_sha256": "10864ED0118A1D74EF996D156292139E2A8FDD8E50E24CA6BCE8EC3A1F381B09",
-      "translation": "일찍이 아르마는 '상자'를 봉인하기 위해\\n이 화랑을 건넜다고 해요.",
+      "translation": "일찍이 알마는 '상자'를 봉인하기 위해\\n이 화랑을 건넜다고 해요.",
       "status": "override",
       "notes": "069 미번역 dialogue 초벌 번역 (propagated)"
     },
@@ -47756,7 +47756,7 @@
       "source_text": "かつてアルマは《匣》を封じるため\\nこの回廊を通り抜けたそうです。",
       "source_raw_hex": "82A982C282C48341838B837D82CD817399B8817482F0959582B682E982BD82DF5C6E82B182CC89F1984C82F092CA82E894B282AF82BD82BB82A482C582B78142",
       "source_sha256": "10864ED0118A1D74EF996D156292139E2A8FDD8E50E24CA6BCE8EC3A1F381B09",
-      "translation": "일찍이 아르마는 '상자'를 봉인하기 위해\\n이 화랑을 건넜다고 해요.",
+      "translation": "일찍이 알마는 '상자'를 봉인하기 위해\\n이 화랑을 건넜다고 해요.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -48256,7 +48256,7 @@
       "source_text": "悪しき人たちに造られながらも\\nアルマが調伏したしもべ……",
       "source_raw_hex": "88AB82B582AB906C82BD82BF82C991A282E782EA82C882AA82E782E05C6E8341838B837D82AA92B2959A82B582BD82B582E082D781638163",
       "source_sha256": "F7047A71B9A5F1FB9EC8891AE2C119E1B486D0462A31B73BB47E8FBCF08EB78B",
-      "translation": "악한 자들에 의해 만들어졌음에도\\n아르마가 택한 종…….",
+      "translation": "악한 자들에 의해 만들어졌음에도\\n알마가 택한 종…….",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -48305,7 +48305,7 @@
       "source_text": "その鏡には、アルマの魂が\\n宿っていると言われています。",
       "source_raw_hex": "82BB82CC8BBE82C982CD81418341838B837D82CC8DB082AA5C6E8F6882C182C482A282E982C68CBE82ED82EA82C482A282DC82B78142",
       "source_sha256": "4A98F1FF05732ACFB8A7C8408D269D3AB6991494E8482C191DC9F25BA65F2A0D",
-      "translation": "그 거울에는 아르마의 혼이\\n깃들어져 있다고 합니다.",
+      "translation": "그 거울에는 알마의 혼이\\n깃들어져 있다고 합니다.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -48743,7 +48743,7 @@
       "source_text": "アルマ……それに母さま……",
       "source_raw_hex": "8341838B837D8163816382BB82EA82C995EA82B382DC81638163",
       "source_sha256": "75E6BB31845203A11983161CFBEF62D2F70FC561F09C2A34E9962AA540641521",
-      "translation": "아르마 님…… 그리고 어머니…….",
+      "translation": "알마 님…… 그리고 어머니…….",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -48888,7 +48888,7 @@
       "source_text": "俺は、アルマから《黒の鍵》を\\n奪った人間どもの末裔にあたる。",
       "source_raw_hex": "89B482CD81418341838B837D82A982E781738D9582CC8CAE817482F05C6E924482C182BD906C8AD482C782E082CC9696E5E182C982A082BD82E98142",
       "source_sha256": "E979C70BB3BFC16F29AF81973CE2E60CFD79E3F4A8E1654A2097A7F734D601C4",
-      "translation": "나는 아르마한테서 '검은 열쇠'를\\n빼앗은 인간들의 후예지.",
+      "translation": "나는 알마한테서 '검은 열쇠'를\\n빼앗은 인간들의 후예지.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -76106,7 +76106,7 @@
       "source_text": "エメラス剣とアルマの間には\\nやはり何らかの関係があるらしいわ。",
       "source_raw_hex": "83478381838983588C9582C68341838B837D82CC8AD482C982CD5C6E82E282CD82E889BD82E782A982CC8AD68C5782AA82A082E982E782B582A282ED8142",
       "source_sha256": "1CCF44D91631D10E9748197ACB68F5EBDE00FB45163787144778237CF3EA7958",
-      "translation": "에멜라스의 검과 아르마의 사이에는\\n역시 어떤 관계가 있는것 같아.",
+      "translation": "에멜라스의 검과 알마의 사이에는\\n역시 어떤 관계가 있는것 같아.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -76202,7 +76202,7 @@
       "source_text": "この技術は遠い昔、\\nアルマによって、あるレダの者へ\\n伝えられたものだとされているわ。",
       "source_raw_hex": "82B182CC8B5A8F7082CD899382A290CC81415C6E8341838B837D82C982E682C182C4814182A082E9838C835F82CC8ED282D65C6E936082A682E782EA82BD82E082CC82BE82C682B382EA82C482A282E982ED8142",
       "source_sha256": "7F29810CC8001A402C5FD97477865AA0656414C4239A044019B9B4E4C41E6FA1",
-      "translation": "그 기술은 먼 옛날, \\n아르마에 의해, 어느 레다 사람에게\\n전해진 것이라고 되어 있어.",
+      "translation": "그 기술은 먼 옛날, \\n알마에 의해, 어느 레다 사람에게\\n전해진 것이라고 되어 있어.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -76394,7 +76394,7 @@
       "source_text": "あなたのエメラス剣は\\nその昔、レダ族がアルマから\\n授かったものだとされているわ。",
       "source_raw_hex": "82A082C882BD82CC83478381838983588C9582CD5C6E82BB82CC90CC8141838C835F91B082AA8341838B837D82A982E75C6E8EF682A982C182BD82E082CC82BE82C682B382EA82C482A282E982ED8142",
       "source_sha256": "54F1FF6BFE6B69DCD5EBC5B3DE9584EC99555F6553D3706B6182B2CDFB13A5F3",
-      "translation": "당신의 에멜라스의 검은\\n옛날, 레다 족이 아르마에게\\n받은 것이라고 되어 있어.",
+      "translation": "당신의 에멜라스의 검은\\n옛날, 레다 족이 알마에게\\n받은 것이라고 되어 있어.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -83694,7 +83694,7 @@
       "source_text": "それは恐らく、レダ族が崇拝する\\n精霊神<ruby:-33,2>ア   ル   マ<endruby>を模したものに違いない。",
       "source_raw_hex": "82BB82EA82CD8BB082E782AD8141838C835F91B082AA9092947182B782E95C6E90B897EC905F3C727562793A2D33332C323E8341202020838B202020837D3C656E64727562793E82F096CD82B582BD82E082CC82C988E182A282C882A28142",
       "source_sha256": "0D516B35D142E999A9BD3362183452CB9344A81A760941B686C81734058FE858",
-      "translation": "그것은 아마도, 레다 족이 숭배하는\\n아르마를 본따 만든 것이 틀림없군.",
+      "translation": "그것은 아마도, 레다 족이 숭배하는\\n알마를 본따 만든 것이 틀림없군.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: japanese_ruby_removed",
       "allow_markup_change": true
@@ -83792,7 +83792,7 @@
       "source_text": "たしか、レダ族の伝説に\\nアルマがこの世の災いを封じたという\\n《匣》の話があったと思ったが……",
       "source_raw_hex": "82BD82B582A98141838C835F91B082CC936090E082C95C6E8341838B837D82AA82B182CC90A282CC8DD082A282F0959582B682BD82C682A282A45C6E817399B8817482CC986282AA82A082C182BD82C68E7682C182BD82AA81638163",
       "source_sha256": "F4C8B9EBFE9E93CFC08D14FDA32223756F56552E5AE2256D0420AD8B2E666578",
-      "translation": "확실히, 레다 족의 전설 중에\\n아르마가 이 세상의 재앙을 봉인했다고 하는\\n'상자'의 이야기가 있었다고 생각하지만……",
+      "translation": "확실히, 레다 족의 전설 중에\\n알마가 이 세상의 재앙을 봉인했다고 하는\\n'상자'의 이야기가 있었다고 생각하지만……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -84442,7 +84442,7 @@
       "source_text": "あの鏡は、アルマの魂が宿る\\nご神体のようなものと聞いている。",
       "source_raw_hex": "82A082CC8BBE82CD81418341838B837D82CC8DB082AA8F6882E95C6E82B2905F91CC82CC82E682A482C882E082CC82C695B782A282C482A282E98142",
       "source_sha256": "DA92578925E524F8ED001926C9A24604A52A45B13ABC6BC6F1E1370A6363E2DF",
-      "translation": "그 거울은, 아르마의 혼이 담긴\\n신체와 같은 물건이라고 들었다.",
+      "translation": "그 거울은, 알마의 혼이 담긴\\n신체와 같은 물건이라고 들었다.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -97557,7 +97557,7 @@
       "source_text": "<color:0xfff2ea8c>アルマの羽根<color:>を\\n手に入れた。",
       "source_raw_hex": "3C636F6C6F723A307866666632656138633E8341838B837D82CC89488DAA3C636F6C6F723A3E82F05C6E8EE882C993FC82EA82BD8142",
       "source_sha256": "E64812154617D8CFA3E0A0FC6BCABE95BA4896A2A27785D9BC950C1743480BB5",
-      "translation": "<color:0xfff2ea8c>아르마의 날개<color:>를\\n얻었다.",
+      "translation": "<color:0xfff2ea8c>알마의 날개<color:>를\\n얻었다.",
       "status": "override",
       "notes": ""
     },
@@ -105319,7 +105319,7 @@
       "source_text": "この有翼の女性像は……\\nやはり精霊神<ruby:-33,2>ア   ル   マ<endruby>を模した物のようだな。",
       "source_raw_hex": "82B182CC974C978382CC8F9790AB919C82CD816381635C6E82E282CD82E890B897EC905F3C727562793A2D33332C323E8341202020838B202020837D3C656E64727562793E82F096CD82B582BD95A882CC82E682A482BE82C88142",
       "source_sha256": "2D7D9F1F5C561E44E35A275194F5DFA1116D1D0D35C58B8E4C5B6C568E9DF1C1",
-      "translation": "이 날개달린 여자조각은……\\n역시 아르마를 본딴 것 같네.",
+      "translation": "이 날개달린 여자조각은……\\n역시 알마를 본딴 것 같네.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: japanese_ruby_removed",
       "allow_markup_change": true
@@ -105886,7 +105886,7 @@
       "source_text": "アルマよ……\\n久しぶりの邂逅と言うべきか。",
       "source_raw_hex": "8341838B837D82E6816381635C6E8B7682B582D482E882CCE7AEE79082C68CBE82A482D782AB82A98142",
       "source_sha256": "2D0CFAE74D60C35584AD172AE758B7510089FBD582F80BAF57859B3ED0C6C0D7",
-      "translation": "아르마여…….\\n오랜만의 해후라고 해야 하나.",
+      "translation": "알마여…….\\n오랜만의 해후라고 해야 하나.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -109284,7 +109284,7 @@
       "source_text": "たぶん今の兄貴は……\\nかつてのアルマより強いはずだ……",
       "source_raw_hex": "82BD82D482F18DA182CC8C5A8B4D82CD816381635C6E82A982C282C482CC8341838B837D82E682E88BAD82A282CD82B882BE81638163",
       "source_sha256": "DD9B90585A9388C15F6333A632C632A5D48627ED000186CC944DEB40411E40CD",
-      "translation": "아마 지금의 형은……\\n옛날의 아르마보다도 강할거야……",
+      "translation": "아마 지금의 형은……\\n옛날의 알마보다도 강할거야……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -109669,7 +109669,7 @@
       "source_text": "たぶん今の兄貴は……\\nかつてのアルマより強いはずだ……",
       "source_raw_hex": "82BD82D482F18DA182CC8C5A8B4D82CD816381635C6E82A982C282C482CC8341838B837D82E682E88BAD82A282CD82B882BE81638163",
       "source_sha256": "DD9B90585A9388C15F6333A632C632A5D48627ED000186CC944DEB40411E40CD",
-      "translation": "아마 지금의 형은……\\n옛날의 아르마보다도 강할거야……",
+      "translation": "아마 지금의 형은……\\n옛날의 알마보다도 강할거야……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -110701,7 +110701,7 @@
       "source_text": "兄貴は負けたんだ……\\nアルマの代理人であるその男に……",
       "source_raw_hex": "8C5A8B4D82CD958982AF82BD82F182BE816381635C6E8341838B837D82CC91E3979D906C82C582A082E982BB82CC926A82C981638163",
       "source_sha256": "7138E22FD85ADF0D90F98C6A3447848B42C17030336182069AA57A7D66521B2C",
-      "translation": "형은 진거야……\\n아르마의 대리인인 저 남자에게…….",
+      "translation": "형은 진거야……\\n알마의 대리인인 저 남자에게…….",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -111762,7 +111762,7 @@
       "source_text": "《黒鍵アルマリオン》……",
       "source_raw_hex": "81738D958CAE8341838B837D838A83498393817481638163",
       "source_sha256": "2F12FB4C9740F7E0336C946019761753384E2FCD8D40D64B440DD2354AF048FC",
-      "translation": "'검은 열쇠 아르마리온'……",
+      "translation": "'검은 열쇠 알마리온'……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -111778,7 +111778,7 @@
       "source_text": "我らの祖先が、アルマから盗んだ\\n《匣》を制御するためのマスターキー。",
       "source_raw_hex": "89E482E782CC916390E682AA81418341838B837D82A982E7939082F182BE5C6E817399B8817482F090A78CE482B782E982BD82DF82CC837D8358835E815B834C815B8142",
       "source_sha256": "8962104C7F150F0362E165CAE778C17F1E5E7E3AD5BFF5AB17518ED9417F2A85",
-      "translation": "나의 조상이, 아르마에게서 훔친\\n'상자'를 제어하기 위한 마스터 키.",
+      "translation": "나의 조상이, 알마에게서 훔친\\n'상자'를 제어하기 위한 마스터 키.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -111810,7 +111810,7 @@
       "source_text": "だからこそ、アルマの力を授かった\\n《巫女》の血筋が必要だったのだよ！",
       "source_raw_hex": "82BE82A982E782B182BB81418341838B837D82CC97CD82F08EF682A982C182BD5C6E81739BDE8F97817482CC8C8C8BD882AA954B977682BE82C182BD82CC82BE82E68149",
       "source_sha256": "DEF6402C5944CE4B198284DFA95F5D64E5EB04DD11633E2285167FDBEFDB8814",
-      "translation": "그렇기 때문에, 아르마의 힘을 잇는\\n'무녀'의 혈족이 필요했던 거다!",
+      "translation": "그렇기 때문에, 알마의 힘을 잇는\\n'무녀'의 혈족이 필요했던 거다!",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
