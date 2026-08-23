@@ -753,6 +753,7 @@ class PatchBuildEditor(ttk.Frame):
         self.apply_option_images = tk.BooleanVar(value=True)
         self.apply_additional_images = tk.BooleanVar(value=True)
         self.apply_ending_movies = tk.BooleanVar(value=True)
+        self.apply_xmb_image = tk.BooleanVar(value=True)
         self.cache_state = tk.StringVar(value="이미지 캐시: 원본 ISO 선택 필요")
         self.counts = tk.StringVar(value="패치 데이터를 확인하지 않았습니다."); self.result = tk.StringVar()
         self._build_ui(); self.after(100, self._poll); self.refresh_data(silent=True)
@@ -777,6 +778,10 @@ class PatchBuildEditor(ttk.Frame):
             image_options, text="엔딩 영상 적용", variable=self.apply_ending_movies,
             command=lambda: self.refresh_data(silent=True))
         self.ending_movies_check.pack(side=tk.LEFT, padx=(12, 0))
+        self.xmb_image_check = ttk.Checkbutton(
+            image_options, text="XMB 한글 이미지 적용", variable=self.apply_xmb_image,
+            command=lambda: self.refresh_data(silent=True))
+        self.xmb_image_check.pack(side=tk.LEFT, padx=(12, 0))
         ttk.Label(image_options, textvariable=self.cache_state).pack(side=tk.LEFT, padx=(12, 0))
         ttk.Label(self, textvariable=self.counts).pack(anchor="w", pady=(10, 4))
         buttons = ttk.Frame(self); buttons.pack(fill=tk.X)
@@ -829,11 +834,13 @@ class PatchBuildEditor(ttk.Frame):
                 include_option_menu_images=self.apply_option_images.get(),
                 include_additional_images=self.apply_additional_images.get(),
                 include_ending_movies=self.apply_ending_movies.get(),
+                include_xmb_image=self.apply_xmb_image.get(),
             )
             option_status = f"적용 {info['option_menu_image_count']:,}" if info["option_menu_images_enabled"] else "제외"
             additional_status = f"적용 {info['additional_image_count']:,}" if info["additional_images_enabled"] else "제외"
             ending_status = f"적용 {info['ending_movie_count']:,}" if info["ending_movies_enabled"] else "제외"
-            self.counts.set(f"대사 override {info['override_count']:,} / 시스템 override {info['system_override_count']:,}·draft {info['system_draft_count']:,} / 아이템 override {info['item_override_count']:,}·draft {info['item_draft_count']:,} / 인물 reviewed {info['cast_person_reviewed_count']:,} / 몬스터 reviewed {info['monster_reviewed_count']:,} / 메뉴 이미지 {option_status} / 추가 이미지 {additional_status} / 엔딩 영상 {ending_status}")
+            xmb_status = f"적용 {info['xmb_image_count']:,}" if info["xmb_image_enabled"] else "제외"
+            self.counts.set(f"대사 override {info['override_count']:,} / 시스템 override {info['system_override_count']:,}·draft {info['system_draft_count']:,} / 아이템 override {info['item_override_count']:,}·draft {info['item_draft_count']:,} / 인물 reviewed {info['cast_person_reviewed_count']:,} / 몬스터 reviewed {info['monster_reviewed_count']:,} / 메뉴 이미지 {option_status} / 추가 이미지 {additional_status} / 엔딩 영상 {ending_status} / XMB 이미지 {xmb_status}")
             if not self.font.get(): self.font.set(info["font"])
             self.refresh_cache_status(silent=True)
         except Exception as exc:
@@ -926,20 +933,22 @@ class PatchBuildEditor(ttk.Frame):
         include_option_images = self.apply_option_images.get()
         include_additional_images = self.apply_additional_images.get()
         include_ending_movies = self.apply_ending_movies.get()
+        include_xmb_image = self.apply_xmb_image.get()
         threading.Thread(
             target=self._worker,
-            args=(mode, iso, output, font, overwrite, include_option_images, include_additional_images, include_ending_movies),
+            args=(mode, iso, output, font, overwrite, include_option_images, include_additional_images, include_ending_movies, include_xmb_image),
             daemon=True,
         ).start()
 
     def _worker(self, mode, iso, output, font, overwrite,
-                include_option_images, include_additional_images, include_ending_movies) -> None:
+                include_option_images, include_additional_images, include_ending_movies, include_xmb_image) -> None:
         try:
             result = run_build(
                 mode, iso, output, font, overwrite=overwrite,
                 include_option_menu_images=include_option_images,
                 include_additional_images=include_additional_images,
                 include_ending_movies=include_ending_movies,
+                include_xmb_image=include_xmb_image,
             )
             self.events.put(("success", mode, result))
         except Exception as exc: self.events.put(("error", str(exc)))
@@ -1013,7 +1022,7 @@ class PatchBuildEditor(ttk.Frame):
     def _set_buttons(self, enabled: bool) -> None:
         state = tk.NORMAL if enabled else tk.DISABLED
         for button in (self.refresh_button, self.option_images_button, self.additional_images_button, self.cache_refresh_button, self.preflight_button, self.build_button): button.configure(state=state)
-        for check in (self.option_images_check, self.additional_images_check, self.ending_movies_check): check.configure(state=state)
+        for check in (self.option_images_check, self.additional_images_check, self.ending_movies_check, self.xmb_image_check): check.configure(state=state)
 
     def _append(self, text: str) -> None:
         self.log.configure(state=tk.NORMAL); self.log.insert(tk.END, text); self.log.see(tk.END); self.log.configure(state=tk.DISABLED)

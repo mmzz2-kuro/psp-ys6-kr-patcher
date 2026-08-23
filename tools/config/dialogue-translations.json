@@ -8524,8 +8524,8 @@
       "source_text": "何と答える？",
       "source_raw_hex": "89BD82C6939A82A682E98148",
       "source_sha256": "A3B6319C14ED706E91EA7990A412CEF6948E8A264D298BD6089228FA99D6999F",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "뭐라고 대답할까?",
+      "status": "override",
       "notes": ""
     },
     {
@@ -12203,8 +12203,8 @@
       "source_text": "何を聞く？",
       "source_raw_hex": "89BD82F095B782AD8148",
       "source_sha256": "23F440AA43DF7F87B380CE9B50E328A146F65EE3B1B677481C6A2D1A29116D65",
-      "translation": "무엇을 들을래?",
-      "status": "untranslated",
+      "translation": "무엇을 물어볼래?",
+      "status": "override",
       "notes": ""
     },
     {
@@ -15208,8 +15208,8 @@
       "source_text": "何を聞く？",
       "source_raw_hex": "89BD82F095B782AD8148",
       "source_sha256": "23F440AA43DF7F87B380CE9B50E328A146F65EE3B1B677481C6A2D1A29116D65",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "무엇을 물어볼래?",
+      "status": "override",
       "notes": ""
     },
     {
@@ -34476,8 +34476,8 @@
       "source_text": "何処から始める？",
       "source_raw_hex": "89BD8F8882A982E78E6E82DF82E98148",
       "source_sha256": "0317F35C0FB2F19ABBAAB6C9CA17910BF74AA0BEF43B7748665F69AE062E81A0",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "어디서부터 시작할까?",
+      "status": "override",
       "notes": ""
     },
     {
@@ -35709,8 +35709,8 @@
       "source_text": "何処から始める？",
       "source_raw_hex": "89BD8F8882A982E78E6E82DF82E98148",
       "source_sha256": "0317F35C0FB2F19ABBAAB6C9CA17910BF74AA0BEF43B7748665F69AE062E81A0",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "어디서부터 시작할까?",
+      "status": "override",
       "notes": ""
     },
     {
@@ -36270,8 +36270,8 @@
       "source_text": "何処から始める？",
       "source_raw_hex": "89BD8F8882A982E78E6E82DF82E98148",
       "source_sha256": "0317F35C0FB2F19ABBAAB6C9CA17910BF74AA0BEF43B7748665F69AE062E81A0",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "어디서부터 시작할까?",
+      "status": "override",
       "notes": ""
     },
     {
@@ -36721,8 +36721,8 @@
       "source_text": "何処から始める？",
       "source_raw_hex": "89BD8F8882A982E78E6E82DF82E98148",
       "source_sha256": "0317F35C0FB2F19ABBAAB6C9CA17910BF74AA0BEF43B7748665F69AE062E81A0",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "어디서부터 시작할까?",
+      "status": "override",
       "notes": ""
     },
     {
@@ -37283,8 +37283,8 @@
       "source_text": "何処から始める？",
       "source_raw_hex": "89BD8F8882A982E78E6E82DF82E98148",
       "source_sha256": "0317F35C0FB2F19ABBAAB6C9CA17910BF74AA0BEF43B7748665F69AE062E81A0",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "어디서부터 시작할까?",
+      "status": "override",
       "notes": ""
     },
     {
@@ -37716,8 +37716,8 @@
       "source_text": "何処から始める？",
       "source_raw_hex": "89BD8F8882A982E78E6E82DF82E98148",
       "source_sha256": "0317F35C0FB2F19ABBAAB6C9CA17910BF74AA0BEF43B7748665F69AE062E81A0",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "어디서부터 시작할까?",
+      "status": "override",
       "notes": ""
     },
     {
@@ -38053,8 +38053,8 @@
       "source_text": "何処から始める？",
       "source_raw_hex": "89BD8F8882A982E78E6E82DF82E98148",
       "source_sha256": "0317F35C0FB2F19ABBAAB6C9CA17910BF74AA0BEF43B7748665F69AE062E81A0",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "어디서부터 시작할까?",
+      "status": "override",
       "notes": ""
     },
     {
@@ -38581,8 +38581,8 @@
       "source_text": "何処から始める？",
       "source_raw_hex": "89BD8F8882A982E78E6E82DF82E98148",
       "source_sha256": "0317F35C0FB2F19ABBAAB6C9CA17910BF74AA0BEF43B7748665F69AE062E81A0",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "어디서부터 시작할까?",
+      "status": "override",
       "notes": ""
     },
     {
@@ -39173,8 +39173,8 @@
       "source_text": "何処から始める？",
       "source_raw_hex": "89BD8F8882A982E78E6E82DF82E98148",
       "source_sha256": "0317F35C0FB2F19ABBAAB6C9CA17910BF74AA0BEF43B7748665F69AE062E81A0",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "어디서부터 시작할까?",
+      "status": "override",
       "notes": ""
     },
     {
@@ -41413,8 +41413,8 @@
       "source_text": "何処から始める？",
       "source_raw_hex": "89BD8F8882A982E78E6E82DF82E98148",
       "source_sha256": "0317F35C0FB2F19ABBAAB6C9CA17910BF74AA0BEF43B7748665F69AE062E81A0",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "어디서부터 시작할까?",
+      "status": "override",
       "notes": ""
     },
     {
@@ -41893,8 +41893,8 @@
       "source_text": "何処から始める？",
       "source_raw_hex": "89BD8F8882A982E78E6E82DF82E98148",
       "source_sha256": "0317F35C0FB2F19ABBAAB6C9CA17910BF74AA0BEF43B7748665F69AE062E81A0",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "어디서부터 시작할까?",
+      "status": "override",
       "notes": ""
     },
     {

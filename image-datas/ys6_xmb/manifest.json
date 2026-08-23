@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "assets": [
+    {
+      "id": "xmb_pic0_korean",
+      "iso_path": "PSP_GAME/PIC0.PNG",
+      "file": "PIC0.PNG",
+      "width": 310,
+      "height": 180,
+      "mode": "RGBA",
+      "original_size": 56082,
+      "original_sha256": "31E69F974EE5517BCD541DC1305256C1379F53A19543C0353D740DC1800851A0",
+      "output_size": 24180,
+      "output_sha256": "D04FAD615E2FEB08D298878FD3A114E160FD234BD4E1D147AC11A4D5D7E95EC7"
+    }
+  ]
+}
