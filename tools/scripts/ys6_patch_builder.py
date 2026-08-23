@@ -60,6 +60,8 @@ def layout(tools_dir: Path | None = None) -> dict[str, Path]:
         "option_menu_edited": patch / "ys6_option_menu" / "edited_buttons",
         "additional_images": patch / "ys6_additional_images",
         "additional_images_edited": patch / "ys6_additional_images" / "edited_parts",
+        "ending_movies": patch / "ys6_ending_movies",
+        "ending_movies_manifest": patch / "ys6_ending_movies" / "manifest.json",
     }
 
 
@@ -69,13 +71,16 @@ def find_default_font() -> Path | None:
 
 
 def inspect_inputs(tools_dir: Path | None = None, *, include_option_menu_images: bool = True,
-                   include_additional_images: bool = True) -> dict:
+                   include_additional_images: bool = True,
+                   include_ending_movies: bool = True) -> dict:
     paths = layout(tools_dir)
     excluded = {"tools", "work", "option_menu_edited", "additional_images_edited"}
     if not include_option_menu_images:
         excluded.update({"option_menu", "option_menu_source", "option_menu_manifest"})
     if not include_additional_images:
         excluded.add("additional_images")
+    if not include_ending_movies:
+        excluded.update({"ending_movies", "ending_movies_manifest"})
     required = [value for key, value in paths.items() if key not in excluded]
     missing = [str(path) for path in required if not path.exists()]
     if missing: raise PatchBuilderError("필수 파일 없음: " + ", ".join(missing))
@@ -100,6 +105,12 @@ def inspect_inputs(tools_dir: Path | None = None, *, include_option_menu_images:
                     if include_option_menu_images and paths["option_menu_edited"].exists() else [])
     additional_files = (sorted(paths["additional_images_edited"].rglob("*.png"))
                         if include_additional_images and paths["additional_images_edited"].exists() else [])
+    ending_manifest = (json.loads(paths["ending_movies_manifest"].read_text(encoding="utf-8-sig"))
+                       if include_ending_movies else {"movies": []})
+    for movie in ending_manifest["movies"]:
+        movie_path = paths["ending_movies"] / movie["file"]
+        if not movie_path.exists(): raise PatchBuilderError(f"엔딩 영상 파일 없음: {movie_path}")
+        if sha256_file(movie_path) != movie["output_sha256"]: raise PatchBuilderError(f"엔딩 영상 SHA-256 불일치: {movie['file']}")
     return {
         "dialogue_records": len(dialogue["records"]),
         "override_count": sum(row.get("status") == "override" for row in dialogue["records"]),
@@ -118,6 +129,8 @@ def inspect_inputs(tools_dir: Path | None = None, *, include_option_menu_images:
         "additional_image_count": len(additional_files),
         "additional_image_files": [str(path.relative_to(paths["additional_images_edited"])).replace("\\", "/") for path in additional_files],
         "additional_images_enabled": include_additional_images,
+        "ending_movie_count": len(ending_manifest["movies"]),
+        "ending_movies_enabled": include_ending_movies,
         "font": str(find_default_font() or ""), "paths": paths, "config": config,
     }
 
@@ -125,11 +138,13 @@ def inspect_inputs(tools_dir: Path | None = None, *, include_option_menu_images:
 def run_build(mode: str, iso: Path, output: Path | None = None, font: Path | None = None,
               tools_dir: Path | None = None, overwrite: bool = False,
               include_option_menu_images: bool = True,
-              include_additional_images: bool = True) -> dict:
+              include_additional_images: bool = True,
+              include_ending_movies: bool = True) -> dict:
     info = inspect_inputs(
         tools_dir,
         include_option_menu_images=include_option_menu_images,
         include_additional_images=include_additional_images,
+        include_ending_movies=include_ending_movies,
     ); paths, config = info["paths"], info["config"]
     font = font or find_default_font()
     if font is None or not font.exists(): raise PatchBuilderError("굴림 TTC/TTF 폰트를 찾을 수 없습니다")
@@ -152,6 +167,7 @@ def run_build(mode: str, iso: Path, output: Path | None = None, font: Path | Non
         option_menu_workspace=paths["option_menu"] if include_option_menu_images else None,
         option_menu_source=paths["option_menu_source"] if include_option_menu_images else None,
         additional_image_workspace=paths["additional_images"] if include_additional_images else None,
+        ending_movie_workspace=paths["ending_movies"] if include_ending_movies else None,
         output_iso=output, overwrite=overwrite,
     )
     return execute(args)
@@ -165,12 +181,14 @@ def main(argv=None) -> int:
     parser.add_argument("--output", type=Path); parser.add_argument("--font", type=Path); parser.add_argument("--overwrite", action="store_true")
     parser.add_argument("--no-option-menu-images", action="store_true")
     parser.add_argument("--no-additional-images", action="store_true")
+    parser.add_argument("--no-ending-movies", action="store_true")
     args = parser.parse_args(argv)
     try:
         if args.mode == "inspect":
             result = inspect_inputs(
                 include_option_menu_images=not args.no_option_menu_images,
                 include_additional_images=not args.no_additional_images,
+                include_ending_movies=not args.no_ending_movies,
             ); result = {key:value for key,value in result.items() if key not in {"paths", "config"}}
         else:
             if args.iso is None: parser.error(f"{args.mode} requires --iso")
@@ -178,6 +196,7 @@ def main(argv=None) -> int:
                 args.mode, args.iso, args.output, args.font, overwrite=args.overwrite,
                 include_option_menu_images=not args.no_option_menu_images,
                 include_additional_images=not args.no_additional_images,
+                include_ending_movies=not args.no_ending_movies,
             )
         print(json.dumps(result.get("summary", result), ensure_ascii=False, indent=2)); return 0
     except (OSError, ValueError, KeyError, json.JSONDecodeError, PatchBuilderError) as exc:

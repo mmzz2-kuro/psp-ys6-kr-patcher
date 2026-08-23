@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "movies": [
+    {
+      "id": "im03a_kaizoku",
+      "file": "im03a_kaizoku.pmf",
+      "iso_path": "PSP_GAME/USRDIR/data/movie/im03a_kaizoku.pmf",
+      "original_size": 11786240,
+      "original_sha256": "ACD6DD575DCA3CA61250A11AC90C92A4E7838B8575CB883E9F7A9FF162255932",
+      "output_sha256": "2178AF0D62819423E37B94BDE07380D005BDE77A206B9FD0DED443C425688D58",
+      "frame_count": 2458
+    },
+    {
+      "id": "im03b_kazaminooka",
+      "file": "im03b_kazaminooka.pmf",
+      "iso_path": "PSP_GAME/USRDIR/data/movie/im03b_kazaminooka.pmf",
+      "original_size": 10774528,
+      "original_sha256": "90795FC39BE37F51901FE0DCEF4A6DF2C9DA0970EF45C46297A84F64393CE103",
+      "output_sha256": "A84E7D2CA8E779457C9D047FA9B43173229F3040490CB1A5C42F491A95166E56",
+      "frame_count": 2278
+    }
+  ]
+}

@@ -43433,7 +43433,7 @@
       "source_text": "うっわー！\\nなにあれ、すごい綺麗じゃん！",
       "source_raw_hex": "82A482C182ED815B81495C6E82C882C982A082EA814182B782B282A2E35997ED82B682E182F18149",
       "source_sha256": "C6BB9535D1B4C450AB725A5808D3BBDB1330009EC174F77BAAA03C9ABC0AD67C",
-      "translation": "우와-!\\n뭐야 저건, 무지 예쁘다!",
+      "translation": "우와!\\n저게 뭐야? 정말 예쁘잖아!",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -43450,7 +43450,7 @@
       "source_text": "おお……何たることだ……",
       "source_raw_hex": "82A882A88163816389BD82BD82E982B182C682BE81638163",
       "source_sha256": "B51C605BDA4659AEFD898B76F8D2B0F0A42958BA895B0F0038E332F54AB3C0E7",
-      "translation": "오오……무슨 일인건가……",
+      "translation": "오오…… 이게 무슨 일인가……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -43466,7 +43466,7 @@
       "source_text": "オルハよ、あの翼はもしや……",
       "source_raw_hex": "8349838B836E82E6814182A082CC978382CD82E082B582E281638163",
       "source_sha256": "87AB5665C113CC76774A5C689679D3939C43DEC51BDDB99E1DE2D1F2D31798CE",
-      "translation": "오르하여, 그 날개는 어쩌면……",
+      "translation": "오르하, 저 날개는 혹시……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -43498,7 +43498,7 @@
       "source_text": "アルマと……\\n……母さまたちです……………",
       "source_raw_hex": "8341838B837D82C6816381635C6E8163816395EA82B382DC82BD82BF82C582B781638163816381638163",
       "source_sha256": "7FD2F5872EF0FA04CD96BF85F1AE928A0D5E6EE057F5614FF687A804511B1152",
-      "translation": "아르마와……\\n……어머니들입니다……………",
+      "translation": "알마와……\\n……어머니들이에요……………",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -85642,7 +85642,7 @@
       "source_text": "やばいな……\\n近づきすぎると巻き込まれるぞ。",
       "source_raw_hex": "82E282CE82A282C8816381635C6E8BDF82C382AB82B782AC82E982C68AAA82AB8D9E82DC82EA82E982BC8142",
       "source_sha256": "9F56A5856885671CA63C5FE75D9685D98662FE87CBFCFD71C0E8A819537E544E",
-      "translation": "위험한데……\\n너무 접근하면 말려들고 말 거야.",
+      "translation": "위험해……\\n너무 가까이 가면 휘말릴 거야.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -85674,7 +85674,7 @@
       "source_text": "あの中に\\x1が\\nいるってのは本当なのかよ！？",
       "source_raw_hex": "82A082CC928682C95C783182AA5C6E82A282E982C182C482CC82CD967B939682C882CC82A982E681498148",
       "source_sha256": "ED96C15ABE476613F50DCFE2E9816E7D63BA8E0FD2DBB6A7B799EB18B9E35505",
-      "translation": "저 안에아돌이\\n있다는 게 사실이야!?",
+      "translation": "저 안에 아돌이\\n있다는 게 정말이야!?",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: player_name_expansion",
       "allow_player_name_expansion": true
@@ -85691,7 +85691,7 @@
       "source_text": "ああ……本当だ……",
       "source_raw_hex": "82A082A081638163967B939682BE81638163",
       "source_sha256": "12664FBDB17B69DA2A96E49A697BDFC4824CFB5FC308AA0623AB0453CB502FCE",
-      "translation": "그래…… 사실이다……",
+      "translation": "그래…… 사실이야……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -85707,7 +85707,7 @@
       "source_text": "すまねえ、俺が頼んだせいで……",
       "source_raw_hex": "82B782DC82CB82A6814189B482AA978A82F182BE82B982A282C581638163",
       "source_sha256": "8BBA390A8B7F2D948E878EA5F86D84C2B03F788A2B6D41CA9CF3332F8BD7E427",
-      "translation": "미안, 내가 부탁한 탓에……",
+      "translation": "미안하다. 내가 부탁하는 바람에……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -85723,7 +85723,7 @@
       "source_text": "そ、そんな……\\nそんなのってないよっ！",
       "source_raw_hex": "82BB814182BB82F182C8816381635C6E82BB82F182C882CC82C182C482C882A282E682C18149",
       "source_sha256": "5336F9C0204503C0C21839B98DFA2E2BFEE2B5CF73D2A6B910CADA9F7E269A9D",
-      "translation": "그, 그런 일이……\\n어떻게 그럴 수 있어!",
+      "translation": "그, 그럴 수가……\\n이건 너무하잖아!",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -85739,7 +85739,7 @@
       "source_text": "どうしていつも\\n\\x1ばっかり危険な目に……",
       "source_raw_hex": "82C782A482B582C482A282C282E05C6E5C783182CE82C182A982E88AEB8CAF82C896DA82C981638163",
       "source_sha256": "8221267675D72A67BF97D9D9DFA6A9172FAEF9391BF4F56CF4783D6EFC1D6CCD",
-      "translation": "어째서 항상\\n아돌만 위험한 상황에……",
+      "translation": "왜 언제나\\n아돌만 위험한 일을 겪는 거야……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036) | normalized 039: player_name_expansion",
       "allow_player_name_expansion": true
@@ -85772,7 +85772,7 @@
       "source_text": "…………あ……………………",
       "source_raw_hex": "816381638163816382A081638163816381638163816381638163",
       "source_sha256": "E43070D4398B5CF8C5E0CA1D48C4D3768B6237F741A627336478B2C7D30070A8",
-      "translation": "………… 아……………………",
+      "translation": "…………아……………………",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -109975,7 +109975,7 @@
       "source_text": "…………………………………",
       "source_raw_hex": "8163816381638163816381638163816381638163816381638163",
       "source_sha256": "87203F61DF69B5EEC8E00B65671DF1FC19CD5D7EB1F6C5BDD4DCF17C0138582A",
-      "translation": "………………………………….",
+      "translation": "…………………………………",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
