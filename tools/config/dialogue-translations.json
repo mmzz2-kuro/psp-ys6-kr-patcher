@@ -34748,8 +34748,8 @@
       "source_text": "どのパターン？",
       "source_raw_hex": "82C782CC8370835E815B83938148",
       "source_sha256": "53A8D6CA1CC1CEAE4796B8A5C65218E826E1805C342948785BB1333FF29F9012",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "어떤 버튼?",
+      "status": "override",
       "notes": ""
     },
     {
@@ -39285,8 +39285,8 @@
       "source_text": "どのパターン？",
       "source_raw_hex": "82C782CC8370835E815B83938148",
       "source_sha256": "53A8D6CA1CC1CEAE4796B8A5C65218E826E1805C342948785BB1333FF29F9012",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "어떤 버튼?",
+      "status": "override",
       "notes": ""
     },
     {
@@ -40597,8 +40597,8 @@
       "source_text": "どのパターン？",
       "source_raw_hex": "82C782CC8370835E815B83938148",
       "source_sha256": "53A8D6CA1CC1CEAE4796B8A5C65218E826E1805C342948785BB1333FF29F9012",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "어떤 버튼?",
+      "status": "override",
       "notes": ""
     },
     {
@@ -40805,8 +40805,8 @@
       "source_text": "どの状態？",
       "source_raw_hex": "82C782CC8FF391D48148",
       "source_sha256": "4FB0967EE2A05C4DC6BE8D46733287E830921980FF67BBDE80F77DA8AF1A7FB8",
-      "translation": "",
-      "status": "untranslated",
+      "translation": "어떤 상태?",
+      "status": "override",
       "notes": ""
     },
     {
