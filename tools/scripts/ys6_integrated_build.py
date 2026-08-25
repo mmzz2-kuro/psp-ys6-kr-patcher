@@ -12,6 +12,7 @@ try:
     from tools.scripts.ys6_cast_name_workspace import load_workspace as load_cast_workspace,reviewed_records as reviewed_cast_records,validate_workspace as validate_cast_workspace
     from tools.scripts.ys6_hangul_codec import encode_translation,extend_mapping,write_mapping
     from tools.scripts.ys6_hangul_font_build import build as build_font
+    from tools.scripts.ys6_analog_mode_patch import patch_bytes as patch_analog_mode
     from tools.scripts.ys6_invinfo import parse as parse_invinfo,patch as patch_invinfo,sha256 as invinfo_sha256
     from tools.scripts.ys6_item_workspace import load_workspace as load_item_workspace,validate_workspace as validate_item_workspace
     from tools.scripts.ys6_system_message_workspace import load_workspace as load_system_workspace,patch_overrides as patch_system_messages,validate_workspace as validate_system_workspace
@@ -30,6 +31,7 @@ except ModuleNotFoundError:
         from .ys6_cast_name_workspace import load_workspace as load_cast_workspace,reviewed_records as reviewed_cast_records,validate_workspace as validate_cast_workspace
         from .ys6_hangul_codec import encode_translation,extend_mapping,write_mapping
         from .ys6_hangul_font_build import build as build_font
+        from .ys6_analog_mode_patch import patch_bytes as patch_analog_mode
         from .ys6_invinfo import parse as parse_invinfo,patch as patch_invinfo,sha256 as invinfo_sha256
         from .ys6_item_workspace import load_workspace as load_item_workspace,validate_workspace as validate_item_workspace
         from .ys6_system_message_workspace import load_workspace as load_system_workspace,patch_overrides as patch_system_messages,validate_workspace as validate_system_workspace
@@ -47,6 +49,7 @@ except ModuleNotFoundError:
         from ys6_cast_name_workspace import load_workspace as load_cast_workspace,reviewed_records as reviewed_cast_records,validate_workspace as validate_cast_workspace
         from ys6_hangul_codec import encode_translation,extend_mapping,write_mapping
         from ys6_hangul_font_build import build as build_font
+        from ys6_analog_mode_patch import patch_bytes as patch_analog_mode
         from ys6_invinfo import parse as parse_invinfo,patch as patch_invinfo,sha256 as invinfo_sha256
         from ys6_item_workspace import load_workspace as load_item_workspace,validate_workspace as validate_item_workspace
         from ys6_system_message_workspace import load_workspace as load_system_workspace,patch_overrides as patch_system_messages,validate_workspace as validate_system_workspace
@@ -180,6 +183,13 @@ def execute(args)->dict:
   try:eboot_data,system_rows=patch_system_messages(eboot_data,system_workspace,mapping)
   except ValueError as exc:raise IntegratedBuildError(f"system-message patch failed: {exc}") from exc
  overrides={"한":args.han_override};patched_eboot,glyph_report,atlas=build_font(eboot_data,mapping,args.font,12,overrides,horizontal_left_inset=args.horizontal_left_inset)
+ analog_report=None
+ if getattr(args,"analog_stick_patch",False):
+  try:patched_eboot,analog_report=patch_analog_mode(patched_eboot)
+  except ValueError as exc:raise IntegratedBuildError(f"analog-stick patch failed: {exc}") from exc
+  (args.work/"analog-stick-report.json").write_text(json.dumps(analog_report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+ else:
+  (args.work/"analog-stick-report.json").unlink(missing_ok=True)
  (args.work/"EBOOT.BIN").write_bytes(patched_eboot);(args.work/"glyph-report.json").write_text(json.dumps({"visible_width":12,"horizontal_left_inset":args.horizontal_left_inset,"glyphs":glyph_report},ensure_ascii=False,indent=2)+"\n",encoding="utf-8");atlas.resize((atlas.width*8,atlas.height*8),Image.Resampling.NEAREST).save(args.work/"glyph-atlas.png")
  archive_cache={};archive_original={};xso_rows=[];translation_rows=[];overflow=[];rebuilt_containers={}
  castinfo_rows=[];item_rows=[];extra_replacements=[];init_original=None;patched_init=None;option_menu_report=None;additional_image_reports=[];ending_movie_reports=[];xmb_image_reports=[]
@@ -401,6 +411,10 @@ def execute(args)->dict:
  write_csv(args.work/"item-report.csv",item_rows,["index","resource_id","source_name","translation_name","translation_description","name_length","description_length"])
  write_csv(args.work/"system-message-report.csv",system_rows,["identifier","offset_hex","source","translation","allocated_size","encoded_length","encoded_hex"])
  manifest={"schema_version":1,"mode":args.mode,"inputs":{"iso":str(iso),"iso_sha256":EXPECTED_ISO_SHA256,"workspace":str(args.workspace),"workspace_sha256":file_sha256(args.workspace),"cast_name_workspace":str(args.cast_name_workspace) if args.cast_name_workspace else None,"cast_name_workspace_sha256":file_sha256(args.cast_name_workspace) if args.cast_name_workspace else None,"item_workspace":str(args.item_workspace) if getattr(args,"item_workspace",None) else None,"item_workspace_sha256":file_sha256(args.item_workspace) if getattr(args,"item_workspace",None) else None,"system_message_workspace":str(args.system_message_workspace) if getattr(args,"system_message_workspace",None) else None,"system_message_workspace_sha256":file_sha256(args.system_message_workspace) if getattr(args,"system_message_workspace",None) else None,"option_menu_images_enabled":option_workspace is not None,"additional_images_enabled":additional_workspace is not None,"ending_movies_enabled":ending_workspace is not None,"xmb_image_enabled":xmb_workspace is not None,"catalog_sha256":file_sha256(args.catalog),"runtime_map_sha256":file_sha256(args.runtime_map),"original_eboot_sha256":file_sha256(args.original_eboot),"seed_mapping_sha256":file_sha256(args.seed_mapping)},"font":{"visible_width":12,"horizontal_left_inset":args.horizontal_left_inset},"summary":preflight,"eboot":{"sha256":sha256(patched_eboot)},"xso":xso_rows,"archives":archive_rows,"castinfo":castinfo_rows,"items":item_rows,"system_messages":system_rows,"option_menu":option_menu_report,"additional_images":additional_image_reports,"ending_movies":ending_movie_reports,"xmb_images":xmb_image_reports,"iso":None,"valid":True}
+ preflight.update({"analog_stick_patch_enabled":getattr(args,"analog_stick_patch",False),"analog_stick_instruction_change_count":analog_report["instruction_change_count"] if analog_report else 0,"analog_stick_changed_byte_count":analog_report["changed_byte_count"] if analog_report else 0})
+ manifest["inputs"]["analog_stick_patch_enabled"]=getattr(args,"analog_stick_patch",False)
+ manifest["eboot"]["analog_stick"]=analog_report
+ (args.work/"preflight-report.json").write_text(json.dumps(preflight,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
  if args.mode=="build":
   result=patch_atomic(iso,args.output_iso,iso_replacements,EXPECTED_ISO_SHA256,args.overwrite);manifest["iso"]={"path":str(args.output_iso),**result}
  (args.work/"build-manifest.json").write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");return manifest

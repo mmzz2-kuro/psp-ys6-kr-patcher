@@ -75,7 +75,8 @@ def find_default_font() -> Path | None:
 def inspect_inputs(tools_dir: Path | None = None, *, include_option_menu_images: bool = True,
                    include_additional_images: bool = True,
                    include_ending_movies: bool = True,
-                   include_xmb_image: bool = True) -> dict:
+                   include_xmb_image: bool = True,
+                   include_analog_stick: bool = False) -> dict:
     paths = layout(tools_dir)
     excluded = {"tools", "work", "option_menu_edited", "additional_images_edited"}
     if not include_option_menu_images:
@@ -144,6 +145,7 @@ def inspect_inputs(tools_dir: Path | None = None, *, include_option_menu_images:
         "ending_movies_enabled": include_ending_movies,
         "xmb_image_count": len(xmb_manifest["assets"]),
         "xmb_image_enabled": include_xmb_image,
+        "analog_stick_patch_enabled": include_analog_stick,
         "font": str(find_default_font() or ""), "paths": paths, "config": config,
     }
 
@@ -153,13 +155,15 @@ def run_build(mode: str, iso: Path, output: Path | None = None, font: Path | Non
               include_option_menu_images: bool = True,
               include_additional_images: bool = True,
               include_ending_movies: bool = True,
-              include_xmb_image: bool = True) -> dict:
+              include_xmb_image: bool = True,
+              include_analog_stick: bool = False) -> dict:
     info = inspect_inputs(
         tools_dir,
         include_option_menu_images=include_option_menu_images,
         include_additional_images=include_additional_images,
         include_ending_movies=include_ending_movies,
         include_xmb_image=include_xmb_image,
+        include_analog_stick=include_analog_stick,
     ); paths, config = info["paths"], info["config"]
     font = font or find_default_font()
     if font is None or not font.exists(): raise PatchBuilderError("굴림 TTC/TTF 폰트를 찾을 수 없습니다")
@@ -184,6 +188,7 @@ def run_build(mode: str, iso: Path, output: Path | None = None, font: Path | Non
         additional_image_workspace=paths["additional_images"] if include_additional_images else None,
         ending_movie_workspace=paths["ending_movies"] if include_ending_movies else None,
         xmb_workspace=paths["xmb"] if include_xmb_image else None,
+        analog_stick_patch=include_analog_stick,
         output_iso=output, overwrite=overwrite,
     )
     return execute(args)
@@ -199,6 +204,7 @@ def main(argv=None) -> int:
     parser.add_argument("--no-additional-images", action="store_true")
     parser.add_argument("--no-ending-movies", action="store_true")
     parser.add_argument("--no-xmb-image", action="store_true")
+    parser.add_argument("--analog-stick", action="store_true")
     args = parser.parse_args(argv)
     try:
         if args.mode == "inspect":
@@ -207,6 +213,7 @@ def main(argv=None) -> int:
                 include_additional_images=not args.no_additional_images,
                 include_ending_movies=not args.no_ending_movies,
                 include_xmb_image=not args.no_xmb_image,
+                include_analog_stick=args.analog_stick,
             ); result = {key:value for key,value in result.items() if key not in {"paths", "config"}}
         else:
             if args.iso is None: parser.error(f"{args.mode} requires --iso")
@@ -216,6 +223,7 @@ def main(argv=None) -> int:
                 include_additional_images=not args.no_additional_images,
                 include_ending_movies=not args.no_ending_movies,
                 include_xmb_image=not args.no_xmb_image,
+                include_analog_stick=args.analog_stick,
             )
         print(json.dumps(result.get("summary", result), ensure_ascii=False, indent=2)); return 0
     except (OSError, ValueError, KeyError, json.JSONDecodeError, PatchBuilderError) as exc:
