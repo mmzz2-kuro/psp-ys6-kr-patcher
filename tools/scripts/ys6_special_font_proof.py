@@ -6,6 +6,7 @@ import argparse
 import hashlib
 import json
 import struct
+import sys
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
@@ -35,6 +36,7 @@ TEST_STRING_OFFSET = 0x147B58
 TEST_SOURCE = "再開".encode("cp932")
 TEST_TEXT = "한글"
 SLOTS = ((0xE5E5, "한"), (0xE978, "글"))
+VISIBLE_DIALOGUE_SLOTS = ((0x9597, "한", "風"), (0x8B43, "글", "気"))
 
 
 def sha(data: bytes) -> str:
@@ -125,6 +127,38 @@ def build_proof(boot: bytes, font_path: Path) -> tuple[bytes, dict, Image.Image]
     return result, report, atlas
 
 
+def build_visible_dialogue_proof(boot: bytes, font_path: Path) -> tuple[bytes, dict, Image.Image]:
+    if sha(boot) != BOOT_SHA256: raise ValueError(f"SPECIAL VERSION BOOT.BIN SHA-256 mismatch: {sha(boot)}")
+    if boot[FONT_OFFSET:FONT_OFFSET + 2] != b"\x40\x81": raise ValueError("font table signature mismatch")
+    output = bytearray(boot); reports = []; previews = []; allowed = set()
+    for code, character, source_character in VISIBLE_DIALOGUE_SLOTS:
+        hits = []
+        for index in range(FONT_COUNT):
+            record_offset = FONT_OFFSET + index * RECORD_SIZE
+            if struct.unpack_from("<H", boot, record_offset)[0] == code: hits.append((index, record_offset))
+        if len(hits) != 1: raise ValueError(f"expected one font code 0x{code:04X}, found {len(hits)}")
+        index, record_offset = hits[0]; bitmap_offset = record_offset + 2
+        bitmap, preview = render_glyph(character, font_path); before = boot[bitmap_offset:bitmap_offset + GLYPH_SIZE]
+        output[bitmap_offset:bitmap_offset + GLYPH_SIZE] = bitmap
+        allowed.update(range(bitmap_offset, bitmap_offset + GLYPH_SIZE)); previews.append(preview)
+        reports.append({"source_character": source_character, "character": character, "game_code": f"0x{code:04X}",
+                        "font_index": index, "record_offset": f"0x{record_offset:X}", "bitmap_offset": f"0x{bitmap_offset:X}",
+                        "original_bitmap_sha256": sha(before), "output_bitmap_sha256": sha(bitmap)})
+    changed = [index for index, (left, right) in enumerate(zip(boot, output)) if left != right]
+    if any(index not in allowed for index in changed): raise ValueError("unexpected changed byte outside visible proof glyphs")
+    atlas = Image.new("L", (GLYPH_WIDTH * len(previews), GLYPH_HEIGHT), 0)
+    for index, preview in enumerate(previews): atlas.paste(preview, (index * GLYPH_WIDTH, 0))
+    result = bytes(output)
+    report = {"valid": True, "profile": "ULJM-05155-visible-dialogue", "font_offset": f"0x{FONT_OFFSET:X}",
+              "font_count": FONT_COUNT, "record_size": RECORD_SIZE, "glyph_width": GLYPH_WIDTH,
+              "glyph_height": GLYPH_HEIGHT, "test_source": "風がざわめいた気がして……",
+              "test_expected_display": "한がざわめいた글がして……", "input_size": len(boot), "output_size": len(result),
+              "input_sha256": sha(boot), "output_sha256": sha(result), "changed_byte_count": len(changed),
+              "changed_ranges": [{"start": f"0x{start:X}", "length": length} for start, length in contiguous_ranges(changed)],
+              "glyphs": reports}
+    return result, report, atlas
+
+
 def contiguous_ranges(offsets: list[int]) -> list[tuple[int, int]]:
     if not offsets: return []
     result = []; start = previous = offsets[0]
@@ -136,13 +170,17 @@ def contiguous_ranges(offsets: list[int]) -> list[tuple[int, int]]:
 
 
 def main() -> int:
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"): stream.reconfigure(encoding="utf-8", errors="backslashreplace")
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("iso", type=Path); parser.add_argument("work", type=Path); parser.add_argument("--font", type=Path, required=True)
-    parser.add_argument("--output-iso", type=Path); parser.add_argument("--overwrite", action="store_true"); args = parser.parse_args()
+    parser.add_argument("--output-iso", type=Path); parser.add_argument("--overwrite", action="store_true")
+    parser.add_argument("--visible-dialogue", action="store_true"); args = parser.parse_args()
     if sha(args.iso.read_bytes()) != ISO_SHA256: raise ValueError("SPECIAL VERSION ISO SHA-256 mismatch")
     boot = read_iso_file(args.iso, "PSP_GAME/SYSDIR/BOOT.BIN"); eboot = read_iso_file(args.iso, "PSP_GAME/SYSDIR/EBOOT.BIN")
     if sha(eboot) != EBOOT_SHA256: raise ValueError("SPECIAL VERSION EBOOT.BIN SHA-256 mismatch")
-    patched, report, atlas = build_proof(boot, args.font); args.work.mkdir(parents=True, exist_ok=True)
+    builder = build_visible_dialogue_proof if args.visible_dialogue else build_proof
+    patched, report, atlas = builder(boot, args.font); args.work.mkdir(parents=True, exist_ok=True)
     boot_path = args.work / "BOOT-font-proof.bin"; eboot_path = args.work / "EBOOT-font-proof.bin"
     patched_eboot = patched + eboot[len(patched):]
     if len(patched_eboot) != len(eboot): raise ValueError("padded EBOOT size mismatch")

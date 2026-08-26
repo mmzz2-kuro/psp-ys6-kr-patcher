@@ -10,7 +10,7 @@ try:
     from tools.scripts.ys6_arc import find_file,parse_archive,replace_file
     from tools.scripts.ys6_castinfo import encode_game_name,patch_name
     from tools.scripts.ys6_cast_name_workspace import load_workspace as load_cast_workspace,reviewed_records as reviewed_cast_records,validate_workspace as validate_cast_workspace
-    from tools.scripts.ys6_hangul_codec import encode_translation,extend_mapping,write_mapping
+    from tools.scripts.ys6_hangul_codec import encode_translation,require_complete_mapping,write_mapping
     from tools.scripts.ys6_hangul_font_build import build as build_font
     from tools.scripts.ys6_analog_mode_patch import patch_bytes as patch_analog_mode
     from tools.scripts.ys6_invinfo import parse as parse_invinfo,patch as patch_invinfo,sha256 as invinfo_sha256
@@ -18,7 +18,7 @@ try:
     from tools.scripts.ys6_system_message_workspace import load_workspace as load_system_workspace,patch_overrides as patch_system_messages,validate_workspace as validate_system_workspace
     from tools.scripts.ys6_iso_multi_patch import Replacement,patch_atomic
     from tools.scripts.ys6_pmf_rebuild import inspect as inspect_pmf
-    from tools.scripts.ys6_option_menu_image import compose as compose_option_menu
+    from tools.scripts.ys6_option_menu_precompile import load_cached as load_cached_option_menu
     from tools.scripts.ys6_additional_image_patch import build_container as build_image_container,cache_identity,compose_collection_picture,compose_collection_surface,compose_payload,edited_count
     from tools.scripts.ys6_translation_workspace import validate
     from tools.scripts.ys6_xso import parse_xso,rebuild_xso
@@ -29,7 +29,7 @@ except ModuleNotFoundError:
         from .ys6_arc import find_file,parse_archive,replace_file
         from .ys6_castinfo import encode_game_name,patch_name
         from .ys6_cast_name_workspace import load_workspace as load_cast_workspace,reviewed_records as reviewed_cast_records,validate_workspace as validate_cast_workspace
-        from .ys6_hangul_codec import encode_translation,extend_mapping,write_mapping
+        from .ys6_hangul_codec import encode_translation,require_complete_mapping,write_mapping
         from .ys6_hangul_font_build import build as build_font
         from .ys6_analog_mode_patch import patch_bytes as patch_analog_mode
         from .ys6_invinfo import parse as parse_invinfo,patch as patch_invinfo,sha256 as invinfo_sha256
@@ -37,7 +37,7 @@ except ModuleNotFoundError:
         from .ys6_system_message_workspace import load_workspace as load_system_workspace,patch_overrides as patch_system_messages,validate_workspace as validate_system_workspace
         from .ys6_iso_multi_patch import Replacement,patch_atomic
         from .ys6_pmf_rebuild import inspect as inspect_pmf
-        from .ys6_option_menu_image import compose as compose_option_menu
+        from .ys6_option_menu_precompile import load_cached as load_cached_option_menu
         from .ys6_additional_image_patch import build_container as build_image_container,cache_identity,compose_collection_picture,compose_collection_surface,compose_payload,edited_count
         from .ys6_translation_workspace import validate
         from .ys6_xso import parse_xso,rebuild_xso
@@ -47,7 +47,7 @@ except ModuleNotFoundError:
         from ys6_arc import find_file,parse_archive,replace_file
         from ys6_castinfo import encode_game_name,patch_name
         from ys6_cast_name_workspace import load_workspace as load_cast_workspace,reviewed_records as reviewed_cast_records,validate_workspace as validate_cast_workspace
-        from ys6_hangul_codec import encode_translation,extend_mapping,write_mapping
+        from ys6_hangul_codec import encode_translation,require_complete_mapping,write_mapping
         from ys6_hangul_font_build import build as build_font
         from ys6_analog_mode_patch import patch_bytes as patch_analog_mode
         from ys6_invinfo import parse as parse_invinfo,patch as patch_invinfo,sha256 as invinfo_sha256
@@ -55,7 +55,7 @@ except ModuleNotFoundError:
         from ys6_system_message_workspace import load_workspace as load_system_workspace,patch_overrides as patch_system_messages,validate_workspace as validate_system_workspace
         from ys6_iso_multi_patch import Replacement,patch_atomic
         from ys6_pmf_rebuild import inspect as inspect_pmf
-        from ys6_option_menu_image import compose as compose_option_menu
+        from ys6_option_menu_precompile import load_cached as load_cached_option_menu
         from ys6_additional_image_patch import build_container as build_image_container,cache_identity,compose_collection_picture,compose_collection_surface,compose_payload,edited_count
         from ys6_translation_workspace import validate
         from ys6_xso import parse_xso,rebuild_xso
@@ -136,7 +136,7 @@ def sync_additional_runtime_copies(resource:dict,original_container:bytes,patche
 def build_mapping(groups:list[dict],usage:dict,seed:list[dict],extra_text:str="")->list[dict]:
  text="".join(r["translation"] for g in groups for r in g["records"])+extra_text
  additional="".join(dict.fromkeys(c for c in text if "가"<=c<="힣" or c in "「」"))
- return extend_mapping(usage,seed,additional)
+ return require_complete_mapping(usage,seed,additional)
 
 def rebuild_group(original:bytes,group:dict,mapping:list[dict],temp:Path)->tuple[bytes,dict,list[dict]]:
  source=temp/"source.xso";source.write_bytes(original);parsed=parse_xso(source); replacements={};rows=[]
@@ -156,7 +156,7 @@ def write_csv(path:Path,rows:list[dict],fields:list[str]):
  with path.open("w",encoding="utf-8-sig",newline="") as f:w=csv.DictWriter(f,fieldnames=fields,extrasaction="ignore");w.writeheader();w.writerows(rows)
 
 def execute(args)->dict:
- iso=args.iso; workspace=json.loads(args.workspace.read_text(encoding="utf-8-sig"));catalog=json.loads(args.catalog.read_text(encoding="utf-8-sig"));runtime_map=json.loads(args.runtime_map.read_text(encoding="utf-8-sig"));usage=json.loads(args.font_usage.read_text(encoding="utf-8-sig"));seed=json.loads(args.seed_mapping.read_text(encoding="utf-8-sig"))["mappings"]
+ iso=args.iso; workspace=json.loads(args.workspace.read_text(encoding="utf-8-sig"));catalog=json.loads(args.catalog.read_text(encoding="utf-8-sig"));runtime_map=json.loads(args.runtime_map.read_text(encoding="utf-8-sig"));usage=json.loads(args.font_usage.read_text(encoding="utf-8-sig"));mapping_document=json.loads(args.seed_mapping.read_text(encoding="utf-8-sig"));seed=mapping_document["mappings"]
  if int(runtime_map.get("schema_version",0))<2:raise IntegratedBuildError("runtime map schema v2 or newer is required")
  if file_sha256(iso)!=EXPECTED_ISO_SHA256:raise IntegratedBuildError("original ISO SHA-256 mismatch")
  if file_sha256(args.original_eboot)!=EBOOT_ORIGINAL_SHA256:raise IntegratedBuildError("decrypted original EBOOT SHA-256 mismatch")
@@ -240,9 +240,9 @@ def execute(args)->dict:
   if embedded_payload!=source_payload:raise IntegratedBuildError("option-menu source payload does not match init.bin")
   option_dir=args.work/"option-menu";option_dir.mkdir(exist_ok=True)
   option_payload_file=option_dir/"static_tex.dds";option_container_file=option_dir/"static_tex.dds.z"
-  try:option_menu_report=compose_option_menu(option_source,option_workspace,option_payload_file,option_container_file,option_entry.allocated_size)
+  try:option_container,option_payload,option_menu_report=load_cached_option_menu(iso,option_workspace)
   except ValueError as exc:raise IntegratedBuildError(f"option-menu image patch failed: {exc}") from exc
-  option_container=option_container_file.read_bytes();patched_init=replace_file(patched_init,option_entry,option_container)
+  option_payload_file.write_bytes(option_payload);option_container_file.write_bytes(option_container);option_menu_report["precompiled_cache_used"]=True;patched_init=replace_file(patched_init,option_entry,option_container)
   standalone_option,standalone_option_record=read_iso_file(iso,standalone_option_path)
   valid,standalone_payload,error=verify_container_bytes(standalone_option)
   if not valid or standalone_payload!=source_payload:raise IntegratedBuildError(f"option-menu standalone payload mismatch: {error or ''}")
@@ -404,13 +404,13 @@ def execute(args)->dict:
  original_iso_eboot,eboot_record=read_iso_file(iso,EBOOT_PATH);iso_replacements.insert(0,Replacement(EBOOT_PATH,args.work/"EBOOT.BIN",len(original_iso_eboot),sha256(original_iso_eboot)))
  expected_replacement_count=1+len(archive_rows)+len(standalone_rows)+len(extra_replacements)
  if len(iso_replacements)!=expected_replacement_count:raise IntegratedBuildError(f"ISO replacement count mismatch: expected={expected_replacement_count}, actual={len(iso_replacements)}")
- preflight={"valid":True,"override_count":len(selected),"reviewed_count":len(selected),"xso_count":len(groups),"archive_count":len(archive_rows),"standalone_count":len(standalone_rows),"castinfo_count":len(castinfo_rows),"item_count":len(item_rows),"system_message_count":len(system_rows),"option_menu_images_enabled":option_workspace is not None,"option_menu_image_count":len(option_files),"option_menu_changed_block_count":option_menu_report["changed_dxt1_block_count"] if option_menu_report else 0,"additional_images_enabled":additional_workspace is not None,"additional_image_count":additional_count,"additional_image_resource_count":len(additional_image_reports),"additional_image_changed_block_count":sum(x["changed_block_count"] for x in additional_image_reports),"additional_image_runtime_copy_count":sum(x.get("runtime_copy_count",0) for x in additional_image_reports),"additional_image_runtime_copy_replaced_count":sum(x.get("runtime_copy_replaced_count",0) for x in additional_image_reports),"ending_movies_enabled":ending_workspace is not None,"ending_movie_count":len(ending_movie_reports),"xmb_image_enabled":xmb_workspace is not None,"xmb_image_count":len(xmb_image_reports),"glyph_count":len(mapping),"overflow":[]};(args.work/"preflight-report.json").write_text(json.dumps(preflight,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+ preflight={"valid":True,"override_count":len(selected),"reviewed_count":len(selected),"xso_count":len(groups),"archive_count":len(archive_rows),"standalone_count":len(standalone_rows),"castinfo_count":len(castinfo_rows),"item_count":len(item_rows),"system_message_count":len(system_rows),"option_menu_images_enabled":option_workspace is not None,"option_menu_image_count":len(option_files),"option_menu_changed_block_count":option_menu_report["changed_dxt1_block_count"] if option_menu_report else 0,"additional_images_enabled":additional_workspace is not None,"additional_image_count":additional_count,"additional_image_resource_count":len(additional_image_reports),"additional_image_changed_block_count":sum(x["changed_block_count"] for x in additional_image_reports),"additional_image_runtime_copy_count":sum(x.get("runtime_copy_count",0) for x in additional_image_reports),"additional_image_runtime_copy_replaced_count":sum(x.get("runtime_copy_replaced_count",0) for x in additional_image_reports),"ending_movies_enabled":ending_workspace is not None,"ending_movie_count":len(ending_movie_reports),"xmb_image_enabled":xmb_workspace is not None,"xmb_image_count":len(xmb_image_reports),"glyph_count":len(mapping),"hangul_mapping_revision":int(mapping_document.get("mapping_revision",0)),"hangul_mapping_sha256":file_sha256(args.seed_mapping),"overflow":[]};(args.work/"preflight-report.json").write_text(json.dumps(preflight,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
  write_csv(args.work/"translation-report.csv",translation_rows,["xso_sha256","runtime_key","string_index","source_text","translation","original_length","replacement_length","delta","origin_paths"]);write_csv(args.work/"xso-report.csv",xso_rows,["xso_sha256","runtime_key","entry_flags_hex","entry_kind","mapping_status","replacement_count","original_size","rebuilt_size","compressed_size","allocated_size","remaining_slack","original_sha256","rebuilt_sha256"]);write_csv(args.work/"archive-report.csv",archive_rows,["iso_path","size","modified_xso_count","modified_additional_image_count","original_sha256","output_sha256"])
  write_csv(args.work/"standalone-report.csv",standalone_rows,["iso_path","runtime_key","original_size","compressed_size","allocated_size","remaining_slack","original_sha256","output_sha256"])
  write_csv(args.work/"castinfo-report.csv",castinfo_rows,["identifier","source","name","encoded_name_hex","standalone_path","archive_path","entry_index","entry_flags_hex","size","changed_byte_count","original_sha256","output_sha256"])
  write_csv(args.work/"item-report.csv",item_rows,["index","resource_id","source_name","translation_name","translation_description","name_length","description_length"])
  write_csv(args.work/"system-message-report.csv",system_rows,["identifier","offset_hex","source","translation","allocated_size","encoded_length","encoded_hex"])
- manifest={"schema_version":1,"mode":args.mode,"inputs":{"iso":str(iso),"iso_sha256":EXPECTED_ISO_SHA256,"workspace":str(args.workspace),"workspace_sha256":file_sha256(args.workspace),"cast_name_workspace":str(args.cast_name_workspace) if args.cast_name_workspace else None,"cast_name_workspace_sha256":file_sha256(args.cast_name_workspace) if args.cast_name_workspace else None,"item_workspace":str(args.item_workspace) if getattr(args,"item_workspace",None) else None,"item_workspace_sha256":file_sha256(args.item_workspace) if getattr(args,"item_workspace",None) else None,"system_message_workspace":str(args.system_message_workspace) if getattr(args,"system_message_workspace",None) else None,"system_message_workspace_sha256":file_sha256(args.system_message_workspace) if getattr(args,"system_message_workspace",None) else None,"option_menu_images_enabled":option_workspace is not None,"additional_images_enabled":additional_workspace is not None,"ending_movies_enabled":ending_workspace is not None,"xmb_image_enabled":xmb_workspace is not None,"catalog_sha256":file_sha256(args.catalog),"runtime_map_sha256":file_sha256(args.runtime_map),"original_eboot_sha256":file_sha256(args.original_eboot),"seed_mapping_sha256":file_sha256(args.seed_mapping)},"font":{"visible_width":12,"horizontal_left_inset":args.horizontal_left_inset},"summary":preflight,"eboot":{"sha256":sha256(patched_eboot)},"xso":xso_rows,"archives":archive_rows,"castinfo":castinfo_rows,"items":item_rows,"system_messages":system_rows,"option_menu":option_menu_report,"additional_images":additional_image_reports,"ending_movies":ending_movie_reports,"xmb_images":xmb_image_reports,"iso":None,"valid":True}
+ manifest={"schema_version":1,"mode":args.mode,"inputs":{"iso":str(iso),"iso_sha256":EXPECTED_ISO_SHA256,"workspace":str(args.workspace),"workspace_sha256":file_sha256(args.workspace),"cast_name_workspace":str(args.cast_name_workspace) if args.cast_name_workspace else None,"cast_name_workspace_sha256":file_sha256(args.cast_name_workspace) if args.cast_name_workspace else None,"item_workspace":str(args.item_workspace) if getattr(args,"item_workspace",None) else None,"item_workspace_sha256":file_sha256(args.item_workspace) if getattr(args,"item_workspace",None) else None,"system_message_workspace":str(args.system_message_workspace) if getattr(args,"system_message_workspace",None) else None,"system_message_workspace_sha256":file_sha256(args.system_message_workspace) if getattr(args,"system_message_workspace",None) else None,"option_menu_images_enabled":option_workspace is not None,"additional_images_enabled":additional_workspace is not None,"ending_movies_enabled":ending_workspace is not None,"xmb_image_enabled":xmb_workspace is not None,"catalog_sha256":file_sha256(args.catalog),"runtime_map_sha256":file_sha256(args.runtime_map),"original_eboot_sha256":file_sha256(args.original_eboot),"hangul_mapping_revision":int(mapping_document.get("mapping_revision",0)),"hangul_mapping_sha256":file_sha256(args.seed_mapping)},"font":{"visible_width":12,"horizontal_left_inset":args.horizontal_left_inset},"summary":preflight,"eboot":{"sha256":sha256(patched_eboot)},"xso":xso_rows,"archives":archive_rows,"castinfo":castinfo_rows,"items":item_rows,"system_messages":system_rows,"option_menu":option_menu_report,"additional_images":additional_image_reports,"ending_movies":ending_movie_reports,"xmb_images":xmb_image_reports,"iso":None,"valid":True}
  preflight.update({"analog_stick_patch_enabled":getattr(args,"analog_stick_patch",False),"analog_stick_instruction_change_count":analog_report["instruction_change_count"] if analog_report else 0,"analog_stick_changed_byte_count":analog_report["changed_byte_count"] if analog_report else 0})
  manifest["inputs"]["analog_stick_patch_enabled"]=getattr(args,"analog_stick_patch",False)
  manifest["eboot"]["analog_stick"]=analog_report

@@ -7,6 +7,7 @@ import argparse
 import hashlib
 import json
 import sys
+import tempfile
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -16,6 +17,7 @@ try:
     from tools.scripts.ys6_cast_name_workspace import validate_workspace as validate_cast
     from tools.scripts.ys6_item_workspace import validate_workspace as validate_items
     from tools.scripts.ys6_system_message_workspace import validate_workspace as validate_system_messages
+    from tools.scripts.ys6_hangul_codec import append_mapping, missing_mapping_characters, validate_fixed_mapping
 except ModuleNotFoundError:
     try:
         from .ys6_integrated_build import execute
@@ -23,12 +25,14 @@ except ModuleNotFoundError:
         from .ys6_cast_name_workspace import validate_workspace as validate_cast
         from .ys6_item_workspace import validate_workspace as validate_items
         from .ys6_system_message_workspace import validate_workspace as validate_system_messages
+        from .ys6_hangul_codec import append_mapping, missing_mapping_characters, validate_fixed_mapping
     except ImportError:
         from ys6_integrated_build import execute
         from ys6_translation_workspace import validate as validate_dialogue
         from ys6_cast_name_workspace import validate_workspace as validate_cast
         from ys6_item_workspace import validate_workspace as validate_items
         from ys6_system_message_workspace import validate_workspace as validate_system_messages
+        from ys6_hangul_codec import append_mapping, missing_mapping_characters, validate_fixed_mapping
 
 
 class PatchBuilderError(Exception):
@@ -51,7 +55,7 @@ def layout(tools_dir: Path | None = None) -> dict[str, Path]:
         "items": config / "item-translations.json",
         "system_messages": config / "system-messages.json",
         "build_config": patch / "build-config.json", "runtime_map": patch / "runtime-archive-map.json",
-        "font_usage": patch / "font-usage.json", "seed_mapping": patch / "seed-mapping.json",
+        "font_usage": patch / "font-usage.json", "seed_mapping": patch / "hangul-mapping-uljm05009.json",
         "original_eboot": patch / "original-eboot.bin", "han_override": patch / "hangul-98fc-manual.txt",
         "standalone_paths": patch / "standalone-paths.json", "work": patch / "work" / "current",
         "option_menu": patch / "ys6_option_menu",
@@ -70,6 +74,47 @@ def layout(tools_dir: Path | None = None) -> dict[str, Path]:
 def find_default_font() -> Path | None:
     candidates = [Path("C:/Windows/Fonts/gulim.ttc"), Path("C:/Windows/Fonts/gulim.ttf")]
     return next((path for path in candidates if path.exists()), None)
+
+
+def collect_mapping_text(dialogue: dict, cast: dict, items: dict, system_messages: dict) -> str:
+    parts = [row.get("translation", "") for row in dialogue["records"] if row.get("status") == "override"]
+    parts.extend(row.get("translation", "") for row in cast["records"] if row.get("status") == "reviewed")
+    for row in items["records"]:
+        if row.get("status") == "override":
+            parts.extend((row.get("translation_name", ""), row.get("translation_description", "")))
+    parts.extend(row.get("translation", "") for row in system_messages["records"] if row.get("status") == "override")
+    text = "".join(parts)
+    return "".join(character for character in text if "가" <= character <= "힣" or character in "「」")
+
+
+def update_hangul_mapping(tools_dir: Path | None = None) -> dict:
+    paths = layout(tools_dir)
+    usage = json.loads(paths["font_usage"].read_text(encoding="utf-8-sig"))
+    document = json.loads(paths["seed_mapping"].read_text(encoding="utf-8-sig"))
+    dialogue = json.loads(paths["dialogue"].read_text(encoding="utf-8-sig"))
+    cast = json.loads(paths["cast"].read_text(encoding="utf-8-sig"))
+    items = json.loads(paths["items"].read_text(encoding="utf-8-sig"))
+    system_messages = json.loads(paths["system_messages"].read_text(encoding="utf-8-sig"))
+    updated, added = append_mapping(
+        usage, document["mappings"], collect_mapping_text(dialogue, cast, items, system_messages)
+    )
+    old_revision = int(document.get("mapping_revision", 0))
+    if added:
+        document["mapping_revision"] = old_revision + 1
+        document["mappings"] = updated
+        encoded = (json.dumps(document, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
+        paths["seed_mapping"].parent.mkdir(parents=True, exist_ok=True)
+        with tempfile.NamedTemporaryFile("wb", dir=paths["seed_mapping"].parent, delete=False) as stream:
+            stream.write(encoded)
+            temporary = Path(stream.name)
+        temporary.replace(paths["seed_mapping"])
+    return {
+        "changed": bool(added), "added_count": len(added),
+        "added_characters": [row["character"] for row in added],
+        "mapping_count": len(updated),
+        "mapping_revision": old_revision + (1 if added else 0),
+        "mapping_sha256": sha256_file(paths["seed_mapping"]),
+    }
 
 
 def inspect_inputs(tools_dir: Path | None = None, *, include_option_menu_images: bool = True,
@@ -99,6 +144,12 @@ def inspect_inputs(tools_dir: Path | None = None, *, include_option_menu_images:
     cast = json.loads(paths["cast"].read_text(encoding="utf-8-sig"))
     items = json.loads(paths["items"].read_text(encoding="utf-8-sig"))
     system_messages = json.loads(paths["system_messages"].read_text(encoding="utf-8-sig"))
+    usage = json.loads(paths["font_usage"].read_text(encoding="utf-8-sig"))
+    mapping_document = json.loads(paths["seed_mapping"].read_text(encoding="utf-8-sig"))
+    validate_fixed_mapping(usage, mapping_document["mappings"])
+    mapping_missing = missing_mapping_characters(
+        mapping_document["mappings"], collect_mapping_text(dialogue, cast, items, system_messages)
+    )
     dialogue_report = validate_dialogue(dialogue)
     cast_errors = validate_cast(cast)
     item_errors = validate_items(items)
@@ -146,6 +197,11 @@ def inspect_inputs(tools_dir: Path | None = None, *, include_option_menu_images:
         "xmb_image_count": len(xmb_manifest["assets"]),
         "xmb_image_enabled": include_xmb_image,
         "analog_stick_patch_enabled": include_analog_stick,
+        "hangul_mapping_count": len(mapping_document["mappings"]),
+        "hangul_mapping_revision": int(mapping_document.get("mapping_revision", 0)),
+        "hangul_mapping_sha256": sha256_file(paths["seed_mapping"]),
+        "hangul_mapping_missing_count": len(mapping_missing),
+        "hangul_mapping_missing_characters": mapping_missing,
         "font": str(find_default_font() or ""), "paths": paths, "config": config,
     }
 

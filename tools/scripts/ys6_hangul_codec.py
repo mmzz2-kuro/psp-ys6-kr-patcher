@@ -128,6 +128,77 @@ def extend_mapping(usage_document: dict, existing: list[dict], text: str) -> lis
     return result
 
 
+def validate_fixed_mapping(usage_document: dict, mapping: list[dict]) -> None:
+    """Validate that every fixed assignment still targets one safe font record."""
+    records_by_index = {int(record["font_index"]): record for record in usage_document["records"]}
+    characters: set[str] = set()
+    codes: set[int] = set()
+    indices: set[int] = set()
+    for row in mapping:
+        character = row["character"]
+        code = int(row["game_code"], 0)
+        index = int(row["font_index"])
+        if character in characters:
+            raise ValueError(f"duplicate mapped character: {character!r}")
+        if code in codes:
+            raise ValueError(f"duplicate mapped game code: 0x{code:04X}")
+        if index in indices:
+            raise ValueError(f"duplicate mapped font index: {index}")
+        record = records_by_index.get(index)
+        if record is None:
+            raise ValueError(f"mapped font index is absent from usage data: {index}")
+        if int(record["game_code"], 0) != code:
+            raise ValueError(
+                f"mapped code/index mismatch: {character!r}: 0x{code:04X} != {record['game_code']}"
+            )
+        if int(record["duplicate_code_count"]) != 1:
+            raise ValueError(f"mapped game code is not unique: 0x{code:04X}")
+        characters.add(character)
+        codes.add(code)
+        indices.add(index)
+
+
+def missing_mapping_characters(mapping: list[dict], text: str) -> list[str]:
+    mapped = {row["character"] for row in mapping}
+    return sorted(
+        {character for character in text if ord(character) >= 0x80 and character not in mapped},
+        key=ord,
+    )
+
+
+def require_complete_mapping(usage_document: dict, mapping: list[dict], text: str) -> list[dict]:
+    """Return an unchanged fixed mapping, or fail instead of silently reallocating it."""
+    validate_fixed_mapping(usage_document, mapping)
+    missing = missing_mapping_characters(mapping, text)
+    if missing:
+        preview = " ".join(f"{character}(U+{ord(character):04X})" for character in missing[:20])
+        suffix = f" 외 {len(missing) - 20}자" if len(missing) > 20 else ""
+        raise ValueError(f"canonical mapping update required: {preview}{suffix}")
+    return [dict(row) for row in mapping]
+
+
+def append_mapping(usage_document: dict, existing: list[dict], text: str) -> tuple[list[dict], list[dict]]:
+    """Append new characters deterministically while preserving every existing assignment."""
+    validate_fixed_mapping(usage_document, existing)
+    result = [dict(row) for row in existing]
+    needed = missing_mapping_characters(result, text)
+    assigned_codes = {int(row["game_code"], 0) for row in result}
+    candidates = [
+        record for record in usage_document["records"]
+        if record["status"] == "unused_candidate"
+        and record["duplicate_code_count"] == 1
+        and record["original_character"]
+        and int(record["game_code"], 0) not in assigned_codes
+    ]
+    candidates.sort(key=lambda record: int(record["font_index"]), reverse=True)
+    if len(candidates) < len(needed):
+        raise ValueError(f"not enough safe slots: need={len(needed)}, have={len(candidates)}")
+    added = [_mapping_row(character, record, "stable_append") for character, record in zip(needed, candidates)]
+    result.extend(added)
+    validate_fixed_mapping(usage_document, result)
+    return result, added
+
+
 def write_mapping(mapping: list[dict], json_path: Path, csv_path: Path) -> None:
     document = {"schema_version": 1, "mappings": mapping}
     json_path.parent.mkdir(parents=True, exist_ok=True)

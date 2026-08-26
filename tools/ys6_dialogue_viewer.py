@@ -35,14 +35,16 @@ except ModuleNotFoundError:
     )
 try:
     from tools.scripts.ys6_translation_workspace import normalize_editor_translation
-    from tools.scripts.ys6_patch_builder import find_default_font, inspect_inputs, run_build
+    from tools.scripts.ys6_patch_builder import find_default_font, inspect_inputs, run_build, update_hangul_mapping
     from tools.scripts.ys6_additional_image_precompile import cache_status, precompile as precompile_additional_images
+    from tools.scripts.ys6_option_menu_precompile import cache_status as option_cache_status, precompile as precompile_option_menu
     from tools.scripts.ys6_item_workspace import encoded_length as item_encoded_length, load_workspace as load_item_workspace, validate_workspace as validate_item_workspace
     from tools.scripts.ys6_system_message_workspace import encoded_length as system_encoded_length, load_workspace as load_system_workspace, validate_workspace as validate_system_workspace
 except ModuleNotFoundError:
     from scripts.ys6_translation_workspace import normalize_editor_translation
-    from scripts.ys6_patch_builder import find_default_font, inspect_inputs, run_build
+    from scripts.ys6_patch_builder import find_default_font, inspect_inputs, run_build, update_hangul_mapping
     from scripts.ys6_additional_image_precompile import cache_status, precompile as precompile_additional_images
+    from scripts.ys6_option_menu_precompile import cache_status as option_cache_status, precompile as precompile_option_menu
     from scripts.ys6_item_workspace import encoded_length as item_encoded_length, load_workspace as load_item_workspace, validate_workspace as validate_item_workspace
     from scripts.ys6_system_message_workspace import encoded_length as system_encoded_length, load_workspace as load_system_workspace, validate_workspace as validate_system_workspace
 
@@ -794,6 +796,7 @@ class PatchBuildEditor(ttk.Frame):
         self.option_images_button = ttk.Button(buttons, text="메뉴 이미지 폴더", command=self.open_option_images); self.option_images_button.pack(side=tk.LEFT, padx=(6, 0))
         self.additional_images_button = ttk.Button(buttons, text="추가 이미지 폴더", command=self.open_additional_images); self.additional_images_button.pack(side=tk.LEFT, padx=(6, 0))
         self.cache_refresh_button = ttk.Button(buttons, text="이미지 캐시 갱신", command=self.start_cache_refresh); self.cache_refresh_button.pack(side=tk.LEFT, padx=(6, 0))
+        self.mapping_update_button = ttk.Button(buttons, text="글리프 매핑 갱신", command=self.update_glyph_mapping); self.mapping_update_button.pack(side=tk.LEFT, padx=(6, 0))
         self.preflight_button = ttk.Button(buttons, text="사전 검증", command=lambda: self.start("preflight")); self.preflight_button.pack(side=tk.LEFT, padx=(6, 0))
         self.build_button = ttk.Button(buttons, text="패치 ISO 만들기", command=lambda: self.start("build")); self.build_button.pack(side=tk.LEFT, padx=(6, 0))
         self.progress = ttk.Progressbar(buttons, mode="indeterminate", length=180); self.progress.pack(side=tk.RIGHT)
@@ -847,7 +850,10 @@ class PatchBuildEditor(ttk.Frame):
             ending_status = f"적용 {info['ending_movie_count']:,}" if info["ending_movies_enabled"] else "제외"
             xmb_status = f"적용 {info['xmb_image_count']:,}" if info["xmb_image_enabled"] else "제외"
             analog_status = "적용" if info["analog_stick_patch_enabled"] else "제외"
-            self.counts.set(f"대사 override {info['override_count']:,} / 시스템 override {info['system_override_count']:,}·draft {info['system_draft_count']:,} / 아이템 override {info['item_override_count']:,}·draft {info['item_draft_count']:,} / 인물 reviewed {info['cast_person_reviewed_count']:,} / 몬스터 reviewed {info['monster_reviewed_count']:,} / 메뉴 이미지 {option_status} / 추가 이미지 {additional_status} / 엔딩 영상 {ending_status} / XMB 이미지 {xmb_status} / 아날로그 스틱 {analog_status}")
+            mapping_status = f"rev.{info['hangul_mapping_revision']} {info['hangul_mapping_count']:,}자"
+            if info["hangul_mapping_missing_count"]:
+                mapping_status += f" / 미등록 {info['hangul_mapping_missing_count']:,}자"
+            self.counts.set(f"대사 override {info['override_count']:,} / 시스템 override {info['system_override_count']:,}·draft {info['system_draft_count']:,} / 아이템 override {info['item_override_count']:,}·draft {info['item_draft_count']:,} / 인물 reviewed {info['cast_person_reviewed_count']:,} / 몬스터 reviewed {info['monster_reviewed_count']:,} / 글리프 {mapping_status} / 메뉴 이미지 {option_status} / 추가 이미지 {additional_status} / 엔딩 영상 {ending_status} / XMB 이미지 {xmb_status} / 아날로그 스틱 {analog_status}")
             if not self.font.get(): self.font.set(info["font"])
             self.refresh_cache_status(silent=True)
         except Exception as exc:
@@ -855,7 +861,7 @@ class PatchBuildEditor(ttk.Frame):
             if not silent: messagebox.showerror("패치 데이터", str(exc))
 
     def refresh_cache_status(self, silent: bool = False) -> None:
-        if not self.apply_additional_images.get():
+        if not self.apply_additional_images.get() and not self.apply_option_images.get():
             self.cache_state.set("이미지 캐시: 사용 안 함")
             return
         raw_iso = self.iso.get().strip()
@@ -863,9 +869,15 @@ class PatchBuildEditor(ttk.Frame):
             self.cache_state.set("이미지 캐시: 원본 ISO 선택 필요")
             return
         try:
-            info = inspect_inputs(include_option_menu_images=False, include_additional_images=True)
-            status = cache_status(Path(raw_iso), info["paths"]["additional_images"])
-            self.cache_state.set(f"이미지 캐시: {status['message']}")
+            info = inspect_inputs(
+                include_option_menu_images=self.apply_option_images.get(),
+                include_additional_images=self.apply_additional_images.get())
+            messages = []
+            if self.apply_option_images.get():
+                messages.append(option_cache_status(Path(raw_iso), info["paths"]["option_menu"])["message"])
+            if self.apply_additional_images.get():
+                messages.append(cache_status(Path(raw_iso), info["paths"]["additional_images"])["message"])
+            self.cache_state.set("이미지 캐시: " + " / ".join(messages))
         except Exception as exc:
             self.cache_state.set(f"이미지 캐시: 확인 오류 ({exc})")
             if not silent:
@@ -874,16 +886,19 @@ class PatchBuildEditor(ttk.Frame):
     def start_cache_refresh(self) -> None:
         if self.running:
             return
-        if not self.apply_additional_images.get():
-            messagebox.showwarning("이미지 캐시", "추가 이미지 적용을 먼저 선택해 주세요.")
+        if not self.apply_additional_images.get() and not self.apply_option_images.get():
+            messagebox.showwarning("이미지 캐시", "옵션 메뉴 또는 추가 이미지 적용을 먼저 선택해 주세요.")
             return
         raw_iso = self.iso.get().strip()
         if not raw_iso:
             messagebox.showwarning("이미지 캐시", "원본 ISO를 선택해 주세요.")
             return
         try:
-            info = inspect_inputs(include_option_menu_images=False, include_additional_images=True)
-            workspace = info["paths"]["additional_images"]
+            info = inspect_inputs(
+                include_option_menu_images=self.apply_option_images.get(),
+                include_additional_images=self.apply_additional_images.get())
+            option_workspace = info["paths"]["option_menu"]
+            additional_workspace = info["paths"]["additional_images"]
         except Exception as exc:
             messagebox.showerror("이미지 캐시", str(exc))
             return
@@ -895,11 +910,47 @@ class PatchBuildEditor(ttk.Frame):
         self._append(f"이미지 캐시 갱신 시작: {raw_iso}\n")
         threading.Thread(
             target=self._cache_worker,
-            args=(Path(raw_iso), workspace),
+            args=(Path(raw_iso), option_workspace, additional_workspace,
+                  self.apply_option_images.get(), self.apply_additional_images.get()),
             daemon=True,
         ).start()
 
-    def _cache_worker(self, iso: Path, workspace: Path) -> None:
+    def update_glyph_mapping(self) -> None:
+        if self.running or not self._save_pending():
+            return
+        try:
+            info = inspect_inputs(
+                include_option_menu_images=self.apply_option_images.get(),
+                include_additional_images=self.apply_additional_images.get(),
+                include_ending_movies=self.apply_ending_movies.get(),
+                include_xmb_image=self.apply_xmb_image.get(),
+                include_analog_stick=self.apply_analog_stick.get(),
+            )
+            missing = info["hangul_mapping_missing_characters"]
+            if not missing:
+                messagebox.showinfo("글리프 매핑", "새로 등록할 한글 글리프가 없습니다.")
+                return
+            preview = " ".join(missing[:40]) + (f" 외 {len(missing) - 40}자" if len(missing) > 40 else "")
+            if not messagebox.askyesno(
+                "글리프 매핑 갱신",
+                f"미등록 글리프 {len(missing)}자를 기존 매핑 뒤에 추가합니다.\n"
+                "기존 글자의 코드와 글꼴 위치는 변경되지 않습니다.\n\n"
+                f"추가 문자: {preview}\n\n계속하시겠습니까?",
+            ):
+                return
+            report = update_hangul_mapping()
+            self._append(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
+            self.refresh_data(silent=True)
+            messagebox.showinfo(
+                "글리프 매핑",
+                f"매핑 갱신 완료: revision {report['mapping_revision']}, "
+                f"신규 {report['added_count']}자, 전체 {report['mapping_count']}자",
+            )
+        except Exception as exc:
+            messagebox.showerror("글리프 매핑 갱신 실패", str(exc))
+
+    def _cache_worker(self, iso: Path, option_workspace: Path, additional_workspace: Path,
+                      include_option: bool, include_additional: bool) -> None:
         try:
             def report(resource_id: str, position: int, total: int) -> None:
                 self.events.put(("cache_progress", resource_id, position, total))
@@ -907,8 +958,17 @@ class PatchBuildEditor(ttk.Frame):
             def report_plan(plan: dict) -> None:
                 self.events.put(("cache_plan", plan))
 
-            result = precompile_additional_images(
-                iso, workspace, progress=report, planned=report_plan)
+            option_result = (precompile_option_menu(iso, option_workspace) if include_option else
+                             {"changed": False, "reuse_count": 0, "rebuild_count": 0,
+                              "elapsed_seconds": 0, "cache_bytes": 0})
+            additional_result = (precompile_additional_images(
+                iso, additional_workspace, progress=report, planned=report_plan) if include_additional else
+                {"changed": False, "resource_count": 0, "reuse_count": 0, "rebuild_count": 0,
+                 "new_count": 0, "remove_count": 0, "elapsed_seconds": 0, "cache_bytes": 0})
+            result = {**additional_result, "option_menu": option_result,
+                      "changed": option_result["changed"] or additional_result["changed"],
+                      "cache_bytes": option_result["cache_bytes"] + additional_result["cache_bytes"],
+                      "elapsed_seconds": round(option_result["elapsed_seconds"] + additional_result["elapsed_seconds"], 3)}
             self.events.put(("cache_success", result))
         except Exception as exc:
             self.events.put(("cache_error", str(exc)))
@@ -995,6 +1055,8 @@ class PatchBuildEditor(ttk.Frame):
                     data = event[1]
                     self.progress.configure(value=self.progress.cget("maximum"))
                     self._append(json.dumps({
+                        "option_menu_reused": data["option_menu"]["reuse_count"],
+                        "option_menu_rebuilt": data["option_menu"]["rebuild_count"],
                         "resource_count": data["resource_count"],
                         "reuse_count": data["reuse_count"],
                         "rebuild_count": data["rebuild_count"],
@@ -1005,12 +1067,12 @@ class PatchBuildEditor(ttk.Frame):
                     }, ensure_ascii=False, indent=2) + "\n")
                     if data["changed"]:
                         self.result.set(
-                            f"이미지 캐시 갱신 완료: 재사용 {data['reuse_count']} / "
-                            f"재압축 {data['rebuild_count'] + data['new_count']}")
+                            f"이미지 캐시 갱신 완료: 옵션 재생성 {data['option_menu']['rebuild_count']} / "
+                            f"추가 이미지 재사용 {data['reuse_count']}·재압축 {data['rebuild_count'] + data['new_count']}")
                     else:
                         self.result.set("이미지 캐시가 이미 최신입니다")
                     self._finish()
-                    message = ("추가 이미지 캐시 갱신이 완료되었습니다."
+                    message = ("옵션 메뉴와 추가 이미지 캐시 갱신이 완료되었습니다."
                                if data["changed"] else "이미지 캐시가 이미 최신입니다.")
                     messagebox.showinfo("이미지 캐시", message)
                 elif event[0] == "cache_error":
@@ -1031,7 +1093,7 @@ class PatchBuildEditor(ttk.Frame):
 
     def _set_buttons(self, enabled: bool) -> None:
         state = tk.NORMAL if enabled else tk.DISABLED
-        for button in (self.refresh_button, self.option_images_button, self.additional_images_button, self.cache_refresh_button, self.preflight_button, self.build_button): button.configure(state=state)
+        for button in (self.refresh_button, self.option_images_button, self.additional_images_button, self.cache_refresh_button, self.mapping_update_button, self.preflight_button, self.build_button): button.configure(state=state)
         for check in (self.option_images_check, self.additional_images_check, self.ending_movies_check, self.xmb_image_check, self.analog_stick_check): check.configure(state=state)
 
     def _append(self, text: str) -> None:

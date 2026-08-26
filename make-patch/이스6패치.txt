@@ -10,3 +10,10 @@ Filesize : 866,254,848 bytes
 CRC32 : 081AA701
 MD5 : 45eb6b8353ab87901619b0148f6aeef0
 SHA-1 : 917299788423cab8779ea7b73a333a9780e05a26
+
+Patched v0.9 (한글 버전) - 아날로그 스틱버전
+Filesize : 866,254,848 bytes
+CRC32 : A409AAC4
+MD5 : 33fdd443a9cc2f30df63bc226dbf7ed8
+SHA-1 : 6b7c47c4910f9da32fe3e5dcd5ae311e40064c50
+
