@@ -35,14 +35,14 @@ except ModuleNotFoundError:
     )
 try:
     from tools.scripts.ys6_translation_workspace import normalize_editor_translation
-    from tools.scripts.ys6_patch_builder import find_default_font, inspect_inputs, run_build, update_hangul_mapping
+    from tools.scripts.ys6_patch_builder import detect_iso_profile, find_default_font, inspect_inputs, run_build, update_hangul_mapping
     from tools.scripts.ys6_additional_image_precompile import cache_status, precompile as precompile_additional_images
     from tools.scripts.ys6_option_menu_precompile import cache_status as option_cache_status, precompile as precompile_option_menu
     from tools.scripts.ys6_item_workspace import encoded_length as item_encoded_length, load_workspace as load_item_workspace, validate_workspace as validate_item_workspace
     from tools.scripts.ys6_system_message_workspace import encoded_length as system_encoded_length, load_workspace as load_system_workspace, validate_workspace as validate_system_workspace
 except ModuleNotFoundError:
     from scripts.ys6_translation_workspace import normalize_editor_translation
-    from scripts.ys6_patch_builder import find_default_font, inspect_inputs, run_build, update_hangul_mapping
+    from scripts.ys6_patch_builder import detect_iso_profile, find_default_font, inspect_inputs, run_build, update_hangul_mapping
     from scripts.ys6_additional_image_precompile import cache_status, precompile as precompile_additional_images
     from scripts.ys6_option_menu_precompile import cache_status as option_cache_status, precompile as precompile_option_menu
     from scripts.ys6_item_workspace import encoded_length as item_encoded_length, load_workspace as load_item_workspace, validate_workspace as validate_item_workspace
@@ -758,6 +758,8 @@ class PatchBuildEditor(ttk.Frame):
         self.apply_xmb_image = tk.BooleanVar(value=True)
         self.apply_analog_stick = tk.BooleanVar(value=True)
         self.cache_state = tk.StringVar(value="이미지 캐시: 원본 ISO 선택 필요")
+        self.profile_state = tk.StringVar(value="판본: 원본 ISO 선택 필요")
+        self.current_profile = None
         self.counts = tk.StringVar(value="패치 데이터를 확인하지 않았습니다."); self.result = tk.StringVar()
         self._build_ui(); self.after(100, self._poll); self.refresh_data(silent=True)
 
@@ -768,6 +770,7 @@ class PatchBuildEditor(ttk.Frame):
             ttk.Entry(form, textvariable=variable).grid(row=row, column=1, sticky="ew", pady=4)
             ttk.Button(form, text="찾아보기", command=command).grid(row=row, column=2, padx=(6, 0), pady=4)
         form.columnconfigure(1, weight=1)
+        ttk.Label(self, textvariable=self.profile_state, foreground="#1f4e79").pack(anchor="w", pady=(6, 0))
         image_options = ttk.Frame(self); image_options.pack(fill=tk.X, pady=(8, 0))
         self.option_images_check = ttk.Checkbutton(
             image_options, text="옵션 메뉴 이미지 적용", variable=self.apply_option_images,
@@ -807,8 +810,34 @@ class PatchBuildEditor(ttk.Frame):
         selected = filedialog.askopenfilename(title="Ys VI 원본 ISO 선택", filetypes=[("ISO", "*.iso")])
         if selected:
             self.iso.set(selected)
-            if not self.output.get(): self.output.set(str(Path(selected).with_name("Ys VI - Korean Patched.iso")))
-            self.refresh_cache_status(silent=True)
+            self.profile_state.set("판본: 감지 중…")
+            self.current_profile = None
+            self._set_buttons(False)
+            threading.Thread(target=self._profile_worker, args=(Path(selected),), daemon=True).start()
+
+    def _profile_worker(self, iso: Path) -> None:
+        try:
+            self.events.put(("profile_success", iso, detect_iso_profile(iso)))
+        except Exception as exc:
+            self.events.put(("profile_error", iso, str(exc)))
+
+    def _apply_profile(self, iso: Path, detected: dict) -> None:
+        if Path(self.iso.get().strip()) != iso:
+            return
+        self.current_profile = detected["profile"]
+        special = self.current_profile == "ULJM-05155"
+        self.profile_state.set(f"판본: {detected['profile_name']} ({detected['profile']})")
+        current_name = Path(self.output.get()).name if self.output.get() else ""
+        known_defaults = {"Ys VI - Korean Patched.iso", "Ys VI Special Version - Korean Patched.iso"}
+        if not current_name or current_name in known_defaults:
+            self.output.set(str(iso.with_name(detected["default_output_name"])))
+        if special:
+            for variable in (self.apply_option_images, self.apply_additional_images, self.apply_ending_movies,
+                             self.apply_xmb_image, self.apply_analog_stick):
+                variable.set(False)
+            self.cache_state.set("부가 옵션: SPECIAL VERSION 미지원")
+        self._set_buttons(True)
+        self.refresh_data(silent=True)
 
     def choose_output(self) -> None:
         selected = filedialog.asksaveasfilename(title="패치 ISO 저장", defaultextension=".iso", initialfile="Ys VI - Korean Patched.iso", filetypes=[("ISO", "*.iso")])
@@ -838,13 +867,30 @@ class PatchBuildEditor(ttk.Frame):
 
     def refresh_data(self, silent: bool = False) -> None:
         try:
+            selected_iso = Path(self.iso.get().strip()) if self.iso.get().strip() else None
             info = inspect_inputs(
                 include_option_menu_images=self.apply_option_images.get(),
                 include_additional_images=self.apply_additional_images.get(),
                 include_ending_movies=self.apply_ending_movies.get(),
                 include_xmb_image=self.apply_xmb_image.get(),
                 include_analog_stick=self.apply_analog_stick.get(),
+                iso=selected_iso,
             )
+            self.current_profile = info.get("profile", self.current_profile)
+            if self.current_profile == "ULJM-05155":
+                self.profile_state.set("판본: SPECIAL VERSION (ULJM-05155)")
+                self.counts.set(
+                    f"SPECIAL VERSION IDM 적용 {info['override_count']:,} / "
+                    f"고유 문구 {info['dialogue_records']:,} / "
+                    f"인물·몬스터 {info['cast_reviewed_count']:,} / "
+                    f"아이템 {info['item_override_count']:,}·검토 제외 {info['item_excluded_count']:,} / "
+                    f"글리프 rev.{info['hangul_mapping_revision']} {info['hangul_mapping_count']:,}자 / "
+                    "일반판 부가 옵션 미지원"
+                )
+                if info["font"]:
+                    self.font.set(info["font"])
+                self._set_buttons(True)
+                return
             option_status = f"적용 {info['option_menu_image_count']:,}" if info["option_menu_images_enabled"] else "제외"
             additional_status = f"적용 {info['additional_image_count']:,}" if info["additional_images_enabled"] else "제외"
             ending_status = f"적용 {info['ending_movie_count']:,}" if info["ending_movies_enabled"] else "제외"
@@ -1034,6 +1080,17 @@ class PatchBuildEditor(ttk.Frame):
                         iso = data["iso"]; self.result.set(f"완료: SHA-256 {iso['output_iso_sha256']}"); self._append(f"출력: {iso['path']}\n")
                     else: self.result.set("사전 검증 완료")
                     self._finish()
+                elif event[0] == "profile_success":
+                    _, iso, detected = event
+                    self._apply_profile(iso, detected)
+                elif event[0] == "profile_error":
+                    _, iso, message = event
+                    if Path(self.iso.get().strip()) == iso:
+                        self.current_profile = None
+                        self.profile_state.set("판본: 지원하지 않는 ISO")
+                        self.counts.set(message)
+                        self._set_buttons(True)
+                        messagebox.showerror("ISO 판본 감지 실패", message)
                 elif event[0] == "cache_progress":
                     _, resource_id, position, total = event
                     self.progress.configure(maximum=max(total, 1), value=position - 1)
@@ -1093,8 +1150,10 @@ class PatchBuildEditor(ttk.Frame):
 
     def _set_buttons(self, enabled: bool) -> None:
         state = tk.NORMAL if enabled else tk.DISABLED
-        for button in (self.refresh_button, self.option_images_button, self.additional_images_button, self.cache_refresh_button, self.mapping_update_button, self.preflight_button, self.build_button): button.configure(state=state)
-        for check in (self.option_images_check, self.additional_images_check, self.ending_movies_check, self.xmb_image_check, self.analog_stick_check): check.configure(state=state)
+        for button in (self.refresh_button, self.preflight_button, self.build_button): button.configure(state=state)
+        special_state = tk.DISABLED if self.current_profile == "ULJM-05155" else state
+        for button in (self.option_images_button, self.additional_images_button, self.cache_refresh_button, self.mapping_update_button): button.configure(state=special_state)
+        for check in (self.option_images_check, self.additional_images_check, self.ending_movies_check, self.xmb_image_check, self.analog_stick_check): check.configure(state=special_state)
 
     def _append(self, text: str) -> None:
         self.log.configure(state=tk.NORMAL); self.log.insert(tk.END, text); self.log.see(tk.END); self.log.configure(state=tk.DISABLED)

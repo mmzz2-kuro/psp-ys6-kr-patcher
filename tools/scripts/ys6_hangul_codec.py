@@ -78,7 +78,7 @@ def encode_text(text: str, mapping: list[dict]) -> bytes:
 
 
 FULLWIDTH_PUNCTUATION = {",": "，", ".": "．", "?": "？", "!": "！"}
-GAME_CP932_PUNCTUATION = set(FULLWIDTH_PUNCTUATION.values()) | {"…", "　"}
+GAME_CP932_PUNCTUATION = set(FULLWIDTH_PUNCTUATION.values()) | {"…", "　", "「", "」"}
 
 
 def normalize_game_punctuation(text: str) -> str:

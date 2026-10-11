@@ -70004,7 +70004,7 @@
       "source_text": "しかし《大渦》がある限り\\n脱出するのは不可能に近い……",
       "source_raw_hex": "82B582A982B5817391E58951817482AA82A082E98CC082E85C6E92458F6F82B782E982CC82CD957389C2945C82C98BDF82A281638163",
       "source_sha256": "CAD1418E55531F138B75B32A157FF6E2AF4FB0ED2F481F932E403C598EC60C9F",
-      "translation": "하지만 '대소용돌이'가 있는 한\\n탈출하는 것은 불가능에 가깝다……",
+      "translation": "하지만 대소용돌이가 있는 한\\n탈출하는 것은 불가능에 가깝다……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -70262,7 +70262,7 @@
       "source_text": "まるで大渦が消えるのを\\n待ち構えていたかのようです……",
       "source_raw_hex": "82DC82E982C591E5895182AA8FC182A682E982CC82F05C6E91D282BF8D5C82A682C482A282BD82A982CC82E682A482C582B781638163",
       "source_sha256": "E1B81F08A62442067B4D39233D9ACBA1C2BF9339EB962BECF9B6B83BFB04BDAE",
-      "translation": "마치 대소용돌이가 없어지기를\\n기다리고 있었다는 듯이……",
+      "translation": "마치 대소용돌이가 없어지기를\\n기다렸다는 듯이……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -70294,7 +70294,7 @@
       "source_text": "まるで大渦が消えるのを\\n待ち構えていたかのようですね……",
       "source_raw_hex": "82DC82E982C591E5895182AA8FC182A682E982CC82F05C6E91D282BF8D5C82A682C482A282BD82A982CC82E682A482C582B782CB81638163",
       "source_sha256": "38A36017656A86C774CD54BD2820DD542AEFEEA36E2446499667AE200DA7A808",
-      "translation": "마치 대소용돌이가 없어지기를\\n기다렸다는 듯이 말이죠……",
+      "translation": "마치 대소용돌이가 없어지기를\\n기다렸다는 듯이……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -70326,7 +70326,7 @@
       "source_text": "町の様子にずいぶん\\nびっくりされていたようです。",
       "source_raw_hex": "92AC82CC976C8E7182C982B882A282D482F15C6E82D182C182AD82E882B382EA82C482A282BD82E682A482C582B78142",
       "source_sha256": "1C877C9DB568AC6DE82C87EB2CB6C28451F60A323777E2E34E77C95B7DC59078",
-      "translation": "마을의 모습에\\n대단히 놀라신 것 같습니다.",
+      "translation": "마을 모습에\\n대단히 놀라신 것 같습니다.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -70358,7 +70358,7 @@
       "source_text": "バスラム様は町の様子に\\nびっくりされていたようです。",
       "source_raw_hex": "836F835883898380976C82CD92AC82CC976C8E7182C95C6E82D182C182AD82E882B382EA82C482A282BD82E682A482C582B78142",
       "source_sha256": "7C98EC86FE161BB0E6C1AA2FDFA896E0368B7D479CE37F6236AEDBE16FCD70B6",
-      "translation": "바스람님은 마을의 모습에\\n대단히 놀라신 것 같습니다.",
+      "translation": "바스람님은 마을 모습에\\n대단히 놀라신 것 같습니다.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -70374,7 +70374,7 @@
       "source_text": "カナン平原の洞窟には、\\nずいぶんと固い殻を持つ\\n貝の魔物が棲息しています。",
       "source_raw_hex": "834A8369839395BD8CB482CC93B48C4182C982CD81415C6E82B882A282D482F182C68CC582A28A6B82F08E9D82C25C6E8A4C82CC968295A882AA90B191A782B582C482A282DC82B78142",
       "source_sha256": "ADB3CF41CCBBD39BB8410F8DDAE6542A111AD3E88A0CB70B8F17FB96499FF0B9",
-      "translation": "카난평원의 동굴에는, \\n대단히 단단한 껍질을 가진\\n조개모양의 마물이 서식하고 있습니다.",
+      "translation": "카난평원 동굴에는, \\n아주 단단한 껍질을 가진\\n조개모양의 마물이 서식하고 있습니다.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -70406,7 +70406,7 @@
       "source_text": "ラーバ先生にお貸しした際、\\nお弟子さんがなくしてしまったのです。",
       "source_raw_hex": "8389815B836F90E690B682C982A891DD82B582B582BD8DDB81415C6E82A892ED8E7182B382F182AA82C882AD82B582C482B582DC82C182BD82CC82C582B78142",
       "source_sha256": "EE228EA53479B76CEC5BEBD279480A6D3CEDA255C6BC580EF327CFD0F37C02E9",
-      "translation": "라바 선생님께 빌려드렸지만, \\n그 제자가 잃어버렸습니다.",
+      "translation": "라바선생님께 빌려드렸지만, \\n그 제자가 잃어버렸습니다.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -70422,7 +70422,7 @@
       "source_text": "弱りましたね……\\nあの鈴なしでは容易に\\n平原の洞窟へは入れません。",
       "source_raw_hex": "8EE382E882DC82B582BD82CB816381635C6E82A082CC97E982C882B582C582CD976588D582C95C6E95BD8CB482CC93B48C4182D682CD93FC82EA82DC82B982F18142",
       "source_sha256": "A2481B6676828ED12F0FFDB13BB156BBFBC850950C0DA2674BA4A090DD6CCD1E",
-      "translation": "어쩔 수 없네요……\\n그 방울이 없이는 쉽게\\n평원의 동굴는 들어갈 수 없습니다.",
+      "translation": "어쩔 수 없네요……\\n그 방울 없이는 쉽게\\n평원 동굴에 들어갈 수 없습니다.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -70438,7 +70438,7 @@
       "source_text": "弱りましたね……\\nあの鈴なしでは容易に\\n平原の洞窟へ入れません。",
       "source_raw_hex": "8EE382E882DC82B582BD82CB816381635C6E82A082CC97E982C882B582C582CD976588D582C95C6E95BD8CB482CC93B48C4182D693FC82EA82DC82B982F18142",
       "source_sha256": "DC3FD5CDB3DC6975BC2DAEF4580808190D4D04671899239279361C95CDDEE389",
-      "translation": "어쩔 수 없네요……\\n그 방울이 없이는 쉽게\\n평원의 동굴는 들어갈 수 없습니다.",
+      "translation": "어쩔 수 없네요……\\n그 방울 없이는 쉽게\\n평원 동굴에 들어갈 수 없습니다.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -70454,7 +70454,7 @@
       "source_text": "先生のお弟子さんは\\nどこでなくしたんでしょうか……",
       "source_raw_hex": "90E690B682CC82A892ED8E7182B382F182CD5C6E82C782B182C582C882AD82B582BD82F182C582B582E582A482A981638163",
       "source_sha256": "B6C11DE88F5AE108545ADCFCF473AED58CD0C5B423F5DBAE9B575AA00CB1B19E",
-      "translation": "선생님의 제자는\\n어디서 잃어버린걸까……",
+      "translation": "선생님 제자는\\n어디서 잃어버린걸까……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -70646,7 +70646,7 @@
       "source_text": "見慣れない魔獣が\\n橋のたもとに居着いてしまって、\\n作業が難航しているようなのです。",
       "source_raw_hex": "8CA98AB582EA82C882A296828F6282AA5C6E8BB482CC82BD82E082C682C98B8F928582A282C482B582DC82C182C481415C6E8DEC8BC682AA93EF8D7182B582C482A282E982E682A482C882CC82C582B78142",
       "source_sha256": "CF2483EE704C3029718E79AC37F61DA5FB0443FB29B027DDFD5F47C175CA6DE2",
-      "translation": "보지 못했던 마물들이\\n다리의 근처에 자리를 잡아버려서, \\n작업에 난항을 겪고 있는 것 같습니다.",
+      "translation": "낯선 마물이\\n다리 근처에 자리를 잡아서, \\n작업에 난항을 겪는 것 같습니다.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -70694,7 +70694,7 @@
       "source_text": "いえ、町の人間が\\nそのようなものを目撃したという\\n報告は入っていませんよ。",
       "source_raw_hex": "82A282A6814192AC82CC906C8AD482AA5C6E82BB82CC82E682A482C882E082CC82F096DA8C8282B582BD82C682A282A45C6E95F18D9082CD93FC82C182C482A282DC82B982F182E68142",
       "source_sha256": "6EE5D7859F9D386608D3C84821ACA329859234F9C0FE22AB44A83A70A8DD3032",
-      "translation": "아니오, 마을의 사람둘에\\n그런 것을 목격했다는\\n보고는 들어와 있지 않습니다.",
+      "translation": "아니오, 마을 사람들이\\n그런 것을 목격했다는\\n보고는 없습니다.",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },
@@ -70758,7 +70758,7 @@
       "source_text": "日ごろのいさかいを考えると\\nクアテラの方々が疑うのも\\n無理はないかもしれませんね……",
       "source_raw_hex": "93FA82B282EB82CC82A282B382A982A282F08D6C82A682E982C65C6E834E83418365838982CC95FB815882AA8B5E82A482CC82E05C6E96B3979D82CD82C882A282A982E082B582EA82DC82B982F182CB81638163",
       "source_sha256": "5A169DD3A481A4A73BC7E9538ABF8BA87374D6D9A105D16D8D747F1EF2AAF11D",
-      "translation": "평소의 상황을 생각해 보면\\n쿠아테라의 분들이 의심하는 것도\\n무리는 아닐지도 모르겠습니다……",
+      "translation": "평소 상황을 생각해 보면\\n쿠아테라 분들이 의심하는 것도\\n무리는 아닐지도 모르겠습니다……",
       "status": "override",
       "notes": "Windows 한국어 패치 전체 번역 교체; 재검수 필요 (issue 036)"
     },

@@ -18,6 +18,11 @@ try:
     from tools.scripts.ys6_item_workspace import validate_workspace as validate_items
     from tools.scripts.ys6_system_message_workspace import validate_workspace as validate_system_messages
     from tools.scripts.ys6_hangul_codec import append_mapping, missing_mapping_characters, validate_fixed_mapping
+    from tools.scripts.ys6_special_patch_builder import (
+        PROFILE as SPECIAL_PROFILE,
+        inspect_inputs as inspect_special_inputs,
+        run_build as run_special_build,
+    )
 except ModuleNotFoundError:
     try:
         from .ys6_integrated_build import execute
@@ -26,6 +31,11 @@ except ModuleNotFoundError:
         from .ys6_item_workspace import validate_workspace as validate_items
         from .ys6_system_message_workspace import validate_workspace as validate_system_messages
         from .ys6_hangul_codec import append_mapping, missing_mapping_characters, validate_fixed_mapping
+        from .ys6_special_patch_builder import (
+            PROFILE as SPECIAL_PROFILE,
+            inspect_inputs as inspect_special_inputs,
+            run_build as run_special_build,
+        )
     except ImportError:
         from ys6_integrated_build import execute
         from ys6_translation_workspace import validate as validate_dialogue
@@ -33,10 +43,18 @@ except ModuleNotFoundError:
         from ys6_item_workspace import validate_workspace as validate_items
         from ys6_system_message_workspace import validate_workspace as validate_system_messages
         from ys6_hangul_codec import append_mapping, missing_mapping_characters, validate_fixed_mapping
+        from ys6_special_patch_builder import (
+            PROFILE as SPECIAL_PROFILE,
+            inspect_inputs as inspect_special_inputs,
+            run_build as run_special_build,
+        )
 
 
 class PatchBuilderError(Exception):
     pass
+
+
+STANDARD_PROFILE = "ULJM-05009"
 
 
 def sha256_file(path: Path) -> str:
@@ -74,6 +92,21 @@ def layout(tools_dir: Path | None = None) -> dict[str, Path]:
 def find_default_font() -> Path | None:
     candidates = [Path("C:/Windows/Fonts/gulim.ttc"), Path("C:/Windows/Fonts/gulim.ttf")]
     return next((path for path in candidates if path.exists()), None)
+
+
+def detect_iso_profile(iso: Path, tools_dir: Path | None = None) -> dict:
+    if not iso.exists():
+        raise PatchBuilderError(f"원본 ISO를 찾을 수 없습니다: {iso}")
+    actual = sha256_file(iso)
+    standard = json.loads(layout(tools_dir)["build_config"].read_text(encoding="utf-8-sig"))
+    special = inspect_special_inputs(tools_dir)
+    if actual == standard["original_iso_sha256"]:
+        return {"profile": STANDARD_PROFILE, "profile_name": "일반판", "iso_sha256": actual,
+                "default_output_name": standard["default_output_name"]}
+    if actual == special["config"]["original_iso_sha256"]:
+        return {"profile": SPECIAL_PROFILE, "profile_name": "SPECIAL VERSION", "iso_sha256": actual,
+                "default_output_name": special["default_output_name"]}
+    raise PatchBuilderError(f"지원하지 않는 Ys VI ISO입니다. SHA-256: {actual}")
 
 
 def collect_mapping_text(dialogue: dict, cast: dict, items: dict, system_messages: dict) -> str:
@@ -121,7 +154,12 @@ def inspect_inputs(tools_dir: Path | None = None, *, include_option_menu_images:
                    include_additional_images: bool = True,
                    include_ending_movies: bool = True,
                    include_xmb_image: bool = True,
-                   include_analog_stick: bool = False) -> dict:
+                   include_analog_stick: bool = False,
+                   iso: Path | None = None) -> dict:
+    if iso is not None:
+        detected = detect_iso_profile(iso, tools_dir)
+        if detected["profile"] == SPECIAL_PROFILE:
+            return inspect_special_inputs(tools_dir)
     paths = layout(tools_dir)
     excluded = {"tools", "work", "option_menu_edited", "additional_images_edited"}
     if not include_option_menu_images:
@@ -175,6 +213,9 @@ def inspect_inputs(tools_dir: Path | None = None, *, include_option_menu_images:
         if not asset_path.exists(): raise PatchBuilderError(f"XMB 이미지 파일 없음: {asset_path}")
         if sha256_file(asset_path) != asset["output_sha256"]: raise PatchBuilderError(f"XMB 이미지 SHA-256 불일치: {asset['file']}")
     return {
+        "profile": STANDARD_PROFILE,
+        "profile_name": "일반판",
+        "default_output_name": config["default_output_name"],
         "dialogue_records": len(dialogue["records"]),
         "override_count": sum(row.get("status") == "override" for row in dialogue["records"]),
         "draft_count": sum(row.get("status") == "draft" for row in dialogue["records"]),
@@ -213,6 +254,9 @@ def run_build(mode: str, iso: Path, output: Path | None = None, font: Path | Non
               include_ending_movies: bool = True,
               include_xmb_image: bool = True,
               include_analog_stick: bool = False) -> dict:
+    detected = detect_iso_profile(iso, tools_dir)
+    if detected["profile"] == SPECIAL_PROFILE:
+        return run_special_build(mode, iso, output, font, tools_dir, overwrite)
     info = inspect_inputs(
         tools_dir,
         include_option_menu_images=include_option_menu_images,
@@ -270,6 +314,7 @@ def main(argv=None) -> int:
                 include_ending_movies=not args.no_ending_movies,
                 include_xmb_image=not args.no_xmb_image,
                 include_analog_stick=args.analog_stick,
+                iso=args.iso,
             ); result = {key:value for key,value in result.items() if key not in {"paths", "config"}}
         else:
             if args.iso is None: parser.error(f"{args.mode} requires --iso")

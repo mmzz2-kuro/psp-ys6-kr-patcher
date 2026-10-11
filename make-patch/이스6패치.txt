@@ -4,6 +4,15 @@ Filesize : 866,254,848 bytes
 CRC32 : 32EBA347
 MD5 : 7a6065a5e80920d40751db116a64d7a1
 SHA-1 : 16ec13fc368e8266263e0637394d7e0102325292
+SHA-256 : 0133dc75eeefb7e1864180c88e486d2eebe9ae3d1dbfa990bef57e28baae082b
+
+
+Patched v1.0 (한글 버전) - 아날로그 스틱버전
+CRC32 : D18E81D9
+MD5 : d995117a06f723f3c0993a0d6376fbd4
+SHA-1 : adcb75eb2e773248caabb1769f6d42539e6959b3
+SHA-256 : 0b5e5faa7aebfaf5330afb6f58eccf0162221816d797dc9931eaab3582a3f6e0
+
 
 Patched v0.9 (한글 버전)
 Filesize : 866,254,848 bytes
